@@ -49,7 +49,7 @@ export default class Requests extends Component {
     return (
       <View style={styles.container}>
 
-        {display}
+        {showWelcomePage}
 
       </View>
     );
@@ -58,9 +58,8 @@ export default class Requests extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 9,
     // borderWidth: 3,
-    borderColor: 'black',
   },
   wrapper: {
     marginTop: 50,

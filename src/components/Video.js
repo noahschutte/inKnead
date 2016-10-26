@@ -27,7 +27,7 @@ export default class VideoExample extends Component {
     } else if (this.props.userRequest) {
       content = this.props.request.video
     } else {
-      content = this.props.url
+      content = "http://techslides.com/demos/sample-videos/small.mp4"
     }
     const videoDisplay = <Video
       source={{ uri: content }}

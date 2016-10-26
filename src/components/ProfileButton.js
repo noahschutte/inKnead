@@ -7,7 +7,7 @@ export default class ProfileButton extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TouchableOpacity onPress={this.onProfilePress.bind(this)}>
           <Image
             style={styles.profileButton}
@@ -20,8 +20,13 @@ export default class ProfileButton extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // borderWidth: 2,
+  },
   profileButton: {
-    left: 30,
     height: 40,
     width: 30,
   },

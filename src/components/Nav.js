@@ -18,18 +18,17 @@ export default class Nav extends Component {
 
     return (
       <View style={styles.container}>
+
+        {leftButton}
+
         <View style={styles.logo}>
           <Text style={styles.text}>
             in knead
           </Text>
         </View>
-        <View style={styles.navigation}>
 
-          {leftButton}
+        {createRequestButton}
 
-          {createRequestButton}
-
-        </View>
       </View>
     );
   };
@@ -37,33 +36,23 @@ export default class Nav extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    zIndex: 1,
-    height: 85,
-    paddingTop: 30,
+    flex: 1,
     backgroundColor: '#ce0000',
+    flexDirection: 'row',
+    borderColor: 'blue',
     // borderWidth: 3,
-    // borderColor: 'blue',
   },
   logo: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    paddingBottom: 21,
-    backgroundColor: '#ce0000',
+    flex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'green',
+    // borderWidth: 2,
   },
   text: {
-    marginTop: 5,
     fontWeight: 'bold',
     color: 'white',
     fontSize: 20,
     textAlign: 'center',
-  },
-  navigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
 });
