@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Swiper from 'react-native-swiper';
 import Request from './Request';
 import Landing from './Landing';
 
@@ -35,27 +34,16 @@ export default class Requests extends Component {
 
     if (this.state.errorMessage === "No current requests.") {
       display =
-        <Swiper
-          showsButtons={false}
-          showsPagination={false}
-          style={styles.wrapper}
-          >
-          <Landing noRequests key={"welcome"} {...this.props} />
-        </Swiper>;
+        <Landing noRequests key={"welcome"} {...this.props} />
     } else if (this.state.errorMessage === "Requests recieved.") {
-      display =
-        <Swiper
-          showsButtons={true}
-          showsPagination={false}
-          style={styles.wrapper}
-          >
-          {this.props.requests.map((request, i) => {
-            return (
-              <Request key={i} request={request} {...this.props} />
-            )
-          })}
-        </Swiper>;
-        display.props.children.unshift(showWelcomePage);
+      // display =
+      //     {this.props.requests.map((request, i) => {
+      //       return (
+      //         <Request key={i} request={request} {...this.props} />
+      //       )
+      //     })}
+        // display.props.children.unshift(showWelcomePage);
+      <Landing noRequests key={"welcome"} {...this.props} />
     }
 
     return (
