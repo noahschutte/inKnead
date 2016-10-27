@@ -3,32 +3,34 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import ProfileButton from './ProfileButton';
 import CreateRequestButton from './CreateRequestButton';
 import BackButton from './BackButton';
+import Activity from './Activity';
 
 export default class Nav extends Component {
   render() {
     let leftButton;
-    let createRequestButton;
+    let activity;
+    let rightButton;
+
+    activity = <Activity {...this.props} />
 
     if (this.props.backButton) {
       leftButton = <BackButton {...this.props} />
     } else if (this.props.route.name === "main") {
       leftButton = <ProfileButton {...this.props} />
-      createRequestButton = <CreateRequestButton {...this.props} />
+      rightButton = <CreateRequestButton {...this.props} />
     }
 
     return (
       <View style={styles.container}>
-
-        {leftButton}
-
-        <View style={styles.logo}>
-          <Text style={styles.text}>
-            in knead
-          </Text>
+        <View style={styles.leftBox}>
+          {leftButton}
         </View>
-
-        {createRequestButton}
-
+        <View style={styles.centerBox}>
+          {activity}
+        </View>
+        <View style={styles.rightBox}>
+          {rightButton}
+        </View>
       </View>
     );
   };
@@ -40,19 +42,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#ce0000',
     flexDirection: 'row',
     borderColor: 'blue',
-    // borderWidth: 3,
+    borderWidth: 3,
   },
-  logo: {
+  leftBox: {
+    flex: 1,
+    borderColor: 'yellow',
+    borderWidth: 3,
+  },
+  centerBox: {
     flex: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     borderColor: 'green',
-    // borderWidth: 2,
+    borderWidth: 2,
   },
-  text: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
+  rightBox: {
+    flex: 1,
+    borderWidth: 3,
   },
 });
