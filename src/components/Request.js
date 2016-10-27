@@ -139,8 +139,11 @@ export default class Request extends Component {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hours ago`
     }
-    const display =
+    return (
       <View style={styles.container}>
+
+        <VideoExample userRequest {...this.props} />
+
         <View style={styles.header}>
           <Text style={styles.firstName}>
             {request.first_name}
@@ -150,19 +153,16 @@ export default class Request extends Component {
           </Text>
         </View>
 
-        <VideoExample userRequest {...this.props} />
-
         {hasDonor}
         {requestText}
         {showDonateButton}
+
         <Text style={styles.errorMessage}>
           {this.state.errorMessage}
         </Text>
+
         {activeDonation}
-      </View>
-    return (
-      <View>
-        {display}
+        
       </View>
     )
   }
@@ -170,11 +170,11 @@ export default class Request extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
     flex: 1,
-    alignItems: 'center',
-    // borderWidth: 3,
+    // marginTop: 20,
+    // alignItems: 'center',
     borderColor: 'yellow',
+    borderWidth: 3,
   },
   header: {
     justifyContent: 'center',

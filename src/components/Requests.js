@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import Request from './Request';
 import Landing from './Landing';
 
@@ -29,7 +29,22 @@ export default class Requests extends Component {
     });
   }
   render() {
+    let requests;
     let display;
+
+    console.log("requests", this.props.requests.length > 0);
+
+    if (this.props.requests.length > 0) {
+      requests =
+      <Request request={this.props.requests[0]} {...this.props} />
+        // {this.props.requests.map((request, i) => {
+          // return (
+            // <Request key={i} request={request} {...this.props} />
+          // )
+        // })}
+    }
+
+
     const showWelcomePage = <Landing key={"welcome"} {...this.props} />
 
     if (this.state.errorMessage === "No current requests.") {
@@ -48,9 +63,9 @@ export default class Requests extends Component {
 
     return (
       <View style={styles.container}>
-
-        {display}
-
+        <ScrollView style={styles.scrollView}>
+          {requests}
+        </ScrollView>
       </View>
     );
   }
@@ -58,9 +73,14 @@ export default class Requests extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 9,
+    borderWidth: 3,
+    borderColor: 'green',
+  },
+  scrollView: {
     flex: 1,
-    // borderWidth: 3,
-    borderColor: 'black',
+    borderColor: 'red',
+    borderWidth: 3,
   },
   wrapper: {
     marginTop: 50,

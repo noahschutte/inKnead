@@ -7,7 +7,7 @@ export default class createRequestButton extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TouchableOpacity onPress={this.onNewRequestPress.bind(this)}>
           <Image
             style={styles.createRequestButton}
@@ -20,8 +20,13 @@ export default class createRequestButton extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderWidth: 3,
+  },
   createRequestButton: {
-    right: 30,
     height: 40,
     width: 40,
   },
