@@ -3,12 +3,12 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 export default class MenuButton extends Component {
   onMenuPress() {
-    this.props.navigator.push({name: 'menu'});
   }
   render() {
+    console.log("isOpen", this.props.isOpen);
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.onMenuPress.bind(this)}>
+        <TouchableOpacity onPress={this.props.toggleMenu}>
           <Image
             style={styles.menuButton}
             source={require('../../assets/menuButton.png')}

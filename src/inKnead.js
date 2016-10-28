@@ -20,7 +20,7 @@ const ROUTES = {
   request: Request,
   newRequest: NewRequest,
   camera: Camera,
-  webViewExample: WebViewExample
+  webViewExample: WebViewExample,
 };
 
 export default class inknead extends Component {
