@@ -90,6 +90,7 @@ export default class Requests extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 9,
+    backgroundColor: 'white',
     borderWidth: 3,
     borderColor: 'green',
   },

@@ -167,8 +167,6 @@ export default class NewRequest extends Component {
     } else {
       display =
       <View style={styles.container}>
-        <Nav backButton {...this.props} />
-
         <View style={styles.wrapper}>
 
           <View style={styles.formTitle}>
@@ -240,12 +238,12 @@ export default class NewRequest extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 9,
   },
   wrapper: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     backgroundColor: 'white',
     // borderWidth: 3,
   },

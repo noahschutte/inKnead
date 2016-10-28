@@ -7,7 +7,6 @@ export default class GuestView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Nav backButton {...this.props} />
         <View style={styles.wrapper}>
           <Text style={styles.title}>
             in knead
@@ -33,11 +32,12 @@ const styles=StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: 'white',
     // borderWidth: 2,
     borderColor: 'red',
   },
   wrapper: {
-    flex: 1,
+    flex: 9,
     marginTop: 100,
     alignItems: 'center',
     justifyContent: 'flex-start',

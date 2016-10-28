@@ -16,13 +16,13 @@ export default class Nav extends Component {
     let activity;
     let rightButton;
 
-    activity = <Activity {...this.props} />
+    leftButton = <MenuButton {...this.props} />
 
     if (this.props.backButton) {
       leftButton = <BackButton {...this.props} />
     } else if (this.props.route.name === "main") {
-      leftButton = <MenuButton {...this.props} />
       rightButton = <InfoButton {...this.props} />
+      activity = <Activity {...this.props} />
     }
 
     return (
@@ -52,17 +52,17 @@ const styles = StyleSheet.create({
   leftBox: {
     flex: 1,
     borderColor: 'yellow',
-    borderWidth: 3,
+    // borderWidth: 3,
   },
   centerBox: {
     flex: 3,
     // alignItems: 'center',
     // justifyContent: 'center',
     borderColor: 'purple',
-    borderWidth: 2,
+    // borderWidth: 2,
   },
   rightBox: {
     flex: 1,
-    borderWidth: 3,
+    // borderWidth: 3,
   },
 });

@@ -3,42 +3,30 @@ import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
 
 export default class Menu extends Component {
   onMainButtonPress() {
-    console.log("hit main");
-    console.log("navigator", this.props.navigator.state.routeStack[0].name);
-    if (this.props.navigator.state.routeStack[0].name !== 'main') {
-      this.props.navigator.immediatelyResetRouteStack(['main'])
-      console.log("navigator", this.props.navigator.state.routeStack[0].name);
+    console.log("hit requests");
+    if (this.props.currentDisplay !== 'requests') {
+      this.props.changeDisplay('requests')
     }
-    // console.log("toggleMenu", this.props.toggleMenu);
-    // console.log("isOpen", this.props.isOpen);
     this.props.toggleMenu(false)
-    // console.log("toggleMenu", this.props.toggleMenu);
-    // console.log("isOpen", this.props.isOpen);
   }
   onHowToButtonPress() {
     console.log("hit howTo");
-    console.log("navigator", this.props.navigator.state.routeStack[0].name);
-    if (this.props.navigator.state.routeStack[0].name !== 'howTo') {
-      this.props.navigator.immediatelyResetRouteStack(['howTo'])
-      console.log("navigator", this.props.navigator.state.routeStack[0].name);
+    if (this.props.currentDisplay !== 'howTo') {
+      this.props.changeDisplay('howTo')
     }
     this.props.toggleMenu(false)
   }
   onProfileButtonPress() {
     console.log("hit profile");
-    console.log("navigator", this.props.navigator.state.routeStack[0].name);
-    if (this.props.navigator.state.routeStack[0].name !== 'profile') {
-      this.props.navigator.push('profile');
-      console.log("navigator", this.props.navigator.state.routeStack[0].name);
+    if (this.props.currentDisplay !== 'profile') {
+      this.props.changeDisplay('profile')
     }
     this.props.toggleMenu(false)
   }
   onNewRequestButtonPress() {
     console.log("hit newRequest");
-    console.log("navigator", this.props.navigator.state.routeStack[0].name);
-    if (this.props.navigator.state.routeStack[0].name !== 'newRequest') {
-      this.props.navigator.immediatelyResetRouteStack(['newRequest'])
-      console.log("navigator", this.props.navigator.state.routeStack[0].name);
+    if (this.props.currentDisplay !== 'newRequest') {
+      this.props.changeDisplay('newRequest')
     }
     this.props.toggleMenu(false)
   }
