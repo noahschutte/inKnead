@@ -5,7 +5,7 @@ import LoginContainer from './LoginContainer';
 import Nav from './Nav';
 import GuestView from './GuestView';
 
-export default class UserProfile extends Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props)
 
@@ -47,6 +47,7 @@ export default class UserProfile extends Component {
   render() {
     let display;
     if (this.props.user === null) {
+      console.log("null user");
       display = <GuestView {...this.props} />
     } else {
       display =

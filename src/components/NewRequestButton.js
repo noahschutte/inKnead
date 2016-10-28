@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-export default class MenuButton extends Component {
-  onMenuButtonPress() {
-    this.props.toggleMenu(true)
+export default class NewRequestButton extends Component {
+  onNewRequestPress() {
+    this.props.navigator.push({name: 'newRequest'});
   }
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.onMenuButtonPress.bind(this)}>
+        <TouchableOpacity onPress={this.onNewRequestPress.bind(this)}>
           <Image
-            style={styles.menuButton}
-            source={require('../../assets/menuButton.png')}
+            style={styles.newRequestButton}
+            source={require('../../assets/add.png')}
             />
         </TouchableOpacity>
       </View>
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // borderWidth: 3,
   },
-  menuButton: {
-    height: 30,
-    width: 30,
+  newRequestButton: {
+    height: 40,
+    width: 40,
   },
 })

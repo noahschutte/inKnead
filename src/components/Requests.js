@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, TouchableHighlight, Text, StyleSheet } from 'react-native';
+import { View, ListView, Text, StyleSheet } from 'react-native';
 import Landing from './Landing';
 import Request from './Request';
 

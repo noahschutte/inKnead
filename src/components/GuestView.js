@@ -4,7 +4,6 @@ import Nav from './Nav';
 import LoginContainer from './LoginContainer';
 
 export default class GuestView extends Component {
-
   render() {
     return (
       <View style={styles.container}>
