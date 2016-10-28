@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import Request from './Request';
+import { View, ListView, TouchableHighlight, Text, StyleSheet } from 'react-native';
 import Landing from './Landing';
+import Request from './Request';
 
 export default class Requests extends Component {
   constructor(props) {
     super(props)
 
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
+      loading: true,
+      dataSource: ds.cloneWithRows(this._genRows({})),
       errorMessage: ' ',
-    };
+    }
   }
   componentWillMount() {
     fetch('http://localhost:3000/requests')
@@ -22,50 +25,63 @@ export default class Requests extends Component {
       } else {
         this.props.collectRequests(responseJson.requests)
         this.setState({errorMessage: "Requests recieved."})
+        this.setState({loading: !this.state.loading})
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
       }
     })
     .catch((error) => {
       console.error(error);
     });
   }
+  _renderRow(rowData) {
+    return <Request request={this.props.requests[rowData]} {...this.props} />
+  }
+  _genRows() {
+    if (this.props.requests) {
+      let requestsLength = this.props.requests.length
+      let result = [];
+      for (let i = 0; i < requestsLength; i += 1) {
+        result.push(i)
+      }
+      return result
+    } else {
+      return [0]
+    }
+  }
   render() {
-    let requests;
+    // if (this.state.errorMessage === "No current requests.") {
+    //   display =
+    //     <Landing noRequests key={"welcome"} {...this.props} />
+    // } else if (this.state.errorMessage === "Requests recieved.") {
+    //   display =
+    //       {this.props.requests.map((request, i) => {
+    //         return (
+    //           <Request key={i} request={request} {...this.props} />
+    //         )
+    //       })}
+    //     display.props.children.unshift(showWelcomePage);
+    //   <Landing noRequests key={"welcome"} {...this.props} />
+    // }
+
     let display;
-
-    console.log("requests", this.props.requests.length > 0);
-
-    if (this.props.requests.length > 0) {
-      requests =
-      <Request request={this.props.requests[0]} {...this.props} />
-        // {this.props.requests.map((request, i) => {
-          // return (
-            // <Request key={i} request={request} {...this.props} />
-          // )
-        // })}
-    }
-
-
-    const showWelcomePage = <Landing key={"welcome"} {...this.props} />
-
-    if (this.state.errorMessage === "No current requests.") {
+    if (this.state.loading) {
       display =
-        <Landing noRequests key={"welcome"} {...this.props} />
-    } else if (this.state.errorMessage === "Requests recieved.") {
-      // display =
-      //     {this.props.requests.map((request, i) => {
-      //       return (
-      //         <Request key={i} request={request} {...this.props} />
-      //       )
-      //     })}
-        // display.props.children.unshift(showWelcomePage);
-      <Landing noRequests key={"welcome"} {...this.props} />
+          <Text>Loading...</Text>
+    } else {
+      display =
+          <ListView
+            style={styles.listViewContainer}
+            dataSource={this.state.dataSource}
+            renderRow={this._renderRow.bind(this)}
+            enableEmptySections={true}
+            />
     }
-
+    // this._renderRow.bind(this, 0)
+    // (rowData) => <Text>{rowData}</Text>
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.scrollView}>
-          {requests}
-        </ScrollView>
+        {display}
       </View>
     );
   }
@@ -77,7 +93,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'green',
   },
-  scrollView: {
+  listViewContainer: {
     flex: 1,
     borderColor: 'red',
     borderWidth: 3,
