@@ -52,7 +52,6 @@ export default class Profile extends Component {
     } else {
       display =
       <View style={styles.container}>
-        <Nav backButton {...this.props} />
         <View style={styles.wrapper}>
 
           <View style={styles.instructionsContainer}>
@@ -120,18 +119,19 @@ export default class Profile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 9,
     // borderWidth: 3,
   },
   wrapper: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'white',
-    // borderWidth: 3,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    backgroundColor: 'white',
+    borderColor: 'green',
+    borderWidth: 3,
   },
   instructionsContainer: {
-    width: 250,
+    // width: 250,
   },
   instructions: {
     textAlign: 'center',
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   updatedEmailButton: {
-
+    height: 50,
   },
   email: {
     textAlign: 'center',

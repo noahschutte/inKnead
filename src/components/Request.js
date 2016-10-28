@@ -14,7 +14,7 @@ export default class Request extends Component {
   onDonatePress(request) {
     if (this.props.user === null) {
       this.props.onGuestDonation(true)
-      this.props.navigator.push({name: 'guestView'})
+      this.props.changeDisplay('profile')
     } else if (this.props.user.id === request.creator_id) {
       this.setState({errorMessage: 'Really, you want to donate to yourself?'})
     } else if (this.props.activeDonation) {
