@@ -19,7 +19,7 @@ export default class Activity extends Component {
       "Private",
     ]
     return (
-      <View style={styles.containter}>
+      <View style={styles.container}>
         <SegmentedControls
           tint={'#ce0000'}
           options={ scope }
@@ -34,8 +34,10 @@ export default class Activity extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
+    // flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 3,
+    borderColor: 'purple',
   },
 })

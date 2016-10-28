@@ -40,7 +40,7 @@ export default class VideoExample extends Component {
       resizeMode={'contain'}
       onEnd={this.onEnd}
       repeat={true}
-      style={styles.image}
+      style={styles.video}
       />;
     let playButton;
     if (this.state.paused) {
@@ -72,13 +72,42 @@ export default class VideoExample extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 250,
-    width: 250,
-    // flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    // height: 250,
+    // width: 250,
+    // alignItems: 'center',
+    // justifyContent: 'center',
     borderColor: 'red',
     borderWidth: 2,
+  },
+  video: {
+    flex: 1,
+    height: null,
+    width: null,
+    // resizeMode: 'contain',
+    // position: 'absolute',
+  },
+  image: {
+    // height: 250,
+    // width: 250,
+  },
+  playButtonContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    borderColor: 'orange',
+    borderWidth: 2,
+  },
+  playButton: {
+    width: 50,
+    height: 50,
+    // top: 100,
+    // left: 100,
   },
   fullscreen: {
     position: 'absolute',
@@ -86,23 +115,5 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-  },
-  image: {
-    height: 250,
-    width: 250,
-  },
-  playButtonContainer: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-  },
-  playButton: {
-    top: 100,
-    left: 100,
-    width: 50,
-    height: 50,
   },
 });

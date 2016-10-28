@@ -74,55 +74,56 @@ export default class Request extends Component {
 
     if (request.donor_id) {
       hasDonor =
-        <Image
-          style={styles.received}
-          source={require('../../assets/received.png')}
-          />
+      <Image
+      style={styles.received}
+      source={require('../../assets/received.png')}
+      />
       showDonateButton =
-        <Image
-          style={styles.disabledDonateButton}
-          source={require('../../assets/donate.png')}
-          />
+      <Image
+      style={styles.disabledDonateButton}
+      source={require('../../assets/donate.png')}
+      />
     } else if (this.props.user === null || this.props.user.id === request.creator_id || this.props.activeDonation) {
       showDonateButton =
-        <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
-          <Image
-            style={styles.disabledDonateButton}
-            source={require('../../assets/donate.png')}
-            />
-        </TouchableOpacity>
+      <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
+      <Image
+      style={styles.disabledDonateButton}
+      source={require('../../assets/donate.png')}
+      />
+      </TouchableOpacity>
     } else {
       showDonateButton =
-        <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
-          <Image
-            style={styles.donateButton}
-            source={require('../../assets/donate.png')}
-            />
-        </TouchableOpacity>
+      <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
+      <Image
+      style={styles.donateButton}
+      source={require('../../assets/donate.png')}
+      />
+      </TouchableOpacity>
     }
+
     if (this.props.activeDonation) {
       activeDonation =
-        <View style={styles.instructionsContainer}>
-          <TouchableOpacity
-            onPress={this.handleInstructions.bind(this)}
-            >
-            <Text style={styles.instructions}>
-              You have an active donation. Click here to view the donation instructions. You will be eligible to donate again 30 minutes after you've completed your active donation.
-            </Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.instructionsContainer}>
+      <TouchableOpacity
+      onPress={this.handleInstructions.bind(this)}
+      >
+      <Text style={styles.instructions}>
+      You have an active donation. Click here to view the donation instructions. You will be eligible to donate again 30 minutes after you've completed your active donation.
+      </Text>
+      </TouchableOpacity>
+      </View>
     }
     let requestText;
     if (request.pizzas > 1) {
       requestText =
-        <Text style={styles.request}>
-          {request.pizzas} pizzas from {request.vendor}
-        </Text>
+      <Text style={styles.request}>
+      {request.pizzas} pizzas from {request.vendor}
+      </Text>
     } else {
       requestText =
-        <Text style={styles.request}>
-          {request.pizzas} pizza from {request.vendor}
-        </Text>
+      <Text style={styles.request}>
+      {request.pizzas} pizza from {request.vendor}
+      </Text>
     }
     let timeAgo;
     let displayTime;
@@ -139,30 +140,30 @@ export default class Request extends Component {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hours ago`
     }
+
     return (
       <View style={styles.container}>
-
-        <VideoExample userRequest {...this.props} />
-
-        <View style={styles.header}>
-          <Text style={styles.firstName}>
-            {request.first_name}
-          </Text>
-          <Text style={styles.dateTime}>
-            {displayTime}
-          </Text>
+        <View style={styles.videoContainer}>
+          <VideoExample userRequest {...this.props} />
         </View>
 
-        {hasDonor}
-        {requestText}
-        {showDonateButton}
-
-        <Text style={styles.errorMessage}>
-          {this.state.errorMessage}
-        </Text>
-
-        {activeDonation}
-        
+        <View style={styles.infoContainer}>
+          <View style={styles.header}>
+            <Text style={styles.firstName}>
+              {request.first_name}
+            </Text>
+            <Text style={styles.dateTime}>
+              {displayTime}
+            </Text>
+          </View>
+          {hasDonor}
+          {requestText}
+          {showDonateButton}
+          <Text style={styles.errorMessage}>
+            {this.state.errorMessage}
+          </Text>
+          {activeDonation}
+        </View>
       </View>
     )
   }
@@ -171,10 +172,15 @@ export default class Request extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: 20,
-    // alignItems: 'center',
+    flexDirection: 'row',
     borderColor: 'yellow',
     borderWidth: 3,
+  },
+  videoContainer: {
+    flex: 1,
+  },
+  infoContainer: {
+    flex: 1,
   },
   header: {
     justifyContent: 'center',

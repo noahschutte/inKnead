@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 3,
     // alignItems: 'center',
     // justifyContent: 'center',
-    borderColor: 'green',
+    borderColor: 'purple',
     borderWidth: 2,
   },
   rightBox: {
