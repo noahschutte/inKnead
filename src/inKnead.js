@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navigator } from 'react-native';
-import UserProfile from './components/UserProfile';
+import Profile from './components/Profile';
 import Requests from './components/Requests';
 import Request from './components/Request';
 import NewRequest from './components/NewRequest';
@@ -15,7 +15,7 @@ const ROUTES = {
   main: Main,
   guestView: GuestView,
   instructions: Instructions,
-  userProfile: UserProfile,
+  profile: Profile,
   requests: Requests,
   request: Request,
   newRequest: NewRequest,
@@ -131,7 +131,7 @@ export default class inknead extends Component {
   }
   render() {
     const sceneConfig = (renderScene) => {
-      if (renderScene.name === 'userProfile') {
+      if (renderScene.name === 'profile') {
         return Navigator.SceneConfigs.FloatFromLeft
       } else if (renderScene.name === 'newRequest'){
         return Navigator.SceneConfigs.FloatFromRight

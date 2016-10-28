@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import ProfileButton from './ProfileButton';
-import CreateRequestButton from './CreateRequestButton';
+import NewRequestButton from './NewRequestButton';
 import BackButton from './BackButton';
 import Activity from './Activity';
 import MenuButton from './MenuButton';
+import InfoButton from './InfoButton';
 
 export default class Nav extends Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     let leftButton;
     let activity;
@@ -18,7 +22,7 @@ export default class Nav extends Component {
       leftButton = <BackButton {...this.props} />
     } else if (this.props.route.name === "main") {
       leftButton = <MenuButton {...this.props} />
-      rightButton = <CreateRequestButton {...this.props} />
+      rightButton = <InfoButton {...this.props} />
     }
 
     return (

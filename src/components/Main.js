@@ -14,13 +14,13 @@ export default class Main extends Component {
     }
     this.toggleMenu = this.toggleMenu.bind(this);
   }
-  toggleMenu() {
-    this.setState({isOpen: true})
+  toggleMenu(isOpen) {
+    this.setState({isOpen})
   }
 
   render() {
     const menu =
-      <Menu {...this.props} />
+      <Menu toggleMenu={this.toggleMenu} {...this.props} />
 
     return (
       <SideMenu
@@ -28,7 +28,8 @@ export default class Main extends Component {
         isOpen={this.state.isOpen}
         {...this.props} >
         <View style={styles.container}>
-          <Nav isOpen={this.state.isOpen} toggleMenu={this.toggleMenu} {...this.props} />
+          <Nav toggleMenu={this.toggleMenu} isOpen={this.state.isOpen} {...this.props} />
+
           <Requests {...this.props} />
         </View>
       </SideMenu>

@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-export default class createRequestButton extends Component {
-  onNewRequestPress() {
-    this.props.navigator.push({name: 'newRequest'});
-  }
+export default class InfoButton extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.onNewRequestPress.bind(this)}>
+        <TouchableOpacity onPress={this.props.toggleInfo}>
           <Image
-            style={styles.createRequestButton}
-            source={require('../../assets/add.png')}
+            style={styles.menuButton}
+            source={require('../../assets/infoButton.png')}
             />
         </TouchableOpacity>
       </View>
@@ -26,8 +23,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // borderWidth: 3,
   },
-  createRequestButton: {
-    height: 40,
-    width: 40,
+  menuButton: {
+    height: 30,
+    width: 30,
   },
 })
