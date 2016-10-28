@@ -15,7 +15,8 @@
     "react-native-radio-buttons": "^0.13.0",
     "react-native-side-menu": "^0.20.1",
     "react-native-video": "^0.9.0",
-    "react-native-viewpager-es6": "^0.2.5"
+    "react-native-viewpager-es6": "^0.2.5",
+    "rn-viewpager": "^1.1.3"
   },
   "jest": {
     "preset": "jest-react-native"
