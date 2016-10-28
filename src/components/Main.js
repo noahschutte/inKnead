@@ -4,6 +4,7 @@ import Nav from './Nav';
 import Requests from './Requests';
 import Profile from './Profile';
 import NewRequest from './NewRequest';
+import HowTo from './HowTo';
 import Menu from './Menu';
 import SideMenu from 'react-native-side-menu';
 
@@ -30,7 +31,6 @@ export default class Main extends Component {
       <Menu toggleMenu={this.toggleMenu} currentDisplay={this.currentDisplay} changeDisplay={this.changeDisplay} {...this.props} />
 
     let display;
-    console.log("display", this.state.display);
     if (this.state.display === 'requests') {
       display = <Requests changeDisplay={this.changeDisplay} {...this.props} />
     } else if (this.state.display === 'profile') {
