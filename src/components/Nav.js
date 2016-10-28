@@ -4,6 +4,7 @@ import ProfileButton from './ProfileButton';
 import CreateRequestButton from './CreateRequestButton';
 import BackButton from './BackButton';
 import Activity from './Activity';
+import MenuButton from './MenuButton';
 
 export default class Nav extends Component {
   render() {
@@ -16,7 +17,7 @@ export default class Nav extends Component {
     if (this.props.backButton) {
       leftButton = <BackButton {...this.props} />
     } else if (this.props.route.name === "main") {
-      leftButton = <ProfileButton {...this.props} />
+      leftButton = <MenuButton {...this.props} />
       rightButton = <CreateRequestButton {...this.props} />
     }
 
