@@ -16,11 +16,10 @@ export default class Nav extends Component {
     let activity;
     let rightButton;
 
-    leftButton = <MenuButton {...this.props} />
-
     if (this.props.backButton) {
       leftButton = <BackButton {...this.props} />
-    } else if (this.props.currentDisplay === 'requests') {
+    } else if (this.props.navigator.state.routeStack[0].name === 'main') {
+      leftButton = <MenuButton {...this.props} />
       rightButton = <NewRequestButton {...this.props} />
       activity = <Activity currentScope={this.props.currentScope} changeScope={this.changeScope} {...this.props} />
     }

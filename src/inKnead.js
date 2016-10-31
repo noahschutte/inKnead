@@ -10,6 +10,7 @@ import Instructions from './components/Instructions';
 import FBSDK, { AccessToken, LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import GuestView from './components/GuestView';
 import WebViewExample from './components/WebViewExample';
+import HowTo from './components/HowTo';
 
 const ROUTES = {
   main: Main,
@@ -21,6 +22,7 @@ const ROUTES = {
   newRequest: NewRequest,
   camera: Camera,
   webViewExample: WebViewExample,
+  howTo: HowTo,
 };
 
 export default class inknead extends Component {
@@ -32,6 +34,7 @@ export default class inknead extends Component {
       guestDonation: false,
       currentEmail: '',
       requests: [],
+      userActivity: [],
       totalDonatedPizzas: 0,
       url: '',
       activeDonation: null,
@@ -41,6 +44,7 @@ export default class inknead extends Component {
     this.onUserChange = this.onUserChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
     this.collectRequests = this.collectRequests.bind(this);
+    this.collectUserActivity = this.collectUserActivity.bind(this);
     this.sumDonatedPizzas = this.sumDonatedPizzas.bind(this);
     this.renderScene = this.renderScene.bind(this);
     this.handleGuestDonation = this.handleGuestDonation.bind(this);
@@ -110,6 +114,9 @@ export default class inknead extends Component {
   collectRequests(requests) {
     this.setState({requests})
   }
+  collectUserActivity(userActivity) {
+    this.setState({userActivity})
+  }
   sumDonatedPizzas(totalDonatedPizzas) {
     this.setState({totalDonatedPizzas})
   }
@@ -127,19 +134,19 @@ export default class inknead extends Component {
   }
   renderScene(route, navigator) {
     const Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} onGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
+    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} onGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectUserActivity={this.collectUserActivity} userActivity={this.state.userActivity} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
   }
   render() {
     const sceneConfig = (renderScene) => {
-      if (renderScene.name === 'profile') {
-        return Navigator.SceneConfigs.FloatFromLeft
-      } else if (renderScene.name === 'newRequest'){
-        return Navigator.SceneConfigs.FloatFromRight
-      } else if (renderScene.name === 'instructions') {
-        return Navigator.SceneConfigs.VerticalUpSwipeJump
-      } else {
-        return Navigator.SceneConfigs.FloatFromRight
-      }
+      return Navigator.SceneConfigs.FloatFromRight
+      // if (renderScene.name === 'profile') {
+      //   return Navigator.SceneConfigs.FloatFromLeft
+      // } else if (renderScene.name === 'newRequest'){
+      // } else if (renderScene.name === 'instructions') {
+      //   return Navigator.SceneConfigs.VerticalUpSwipeJump
+      // } else {
+      //   return Navigator.SceneConfigs.FloatFromRight
+      // }
     }
     return (
       <Navigator

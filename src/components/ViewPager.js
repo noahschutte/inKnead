@@ -29,7 +29,6 @@ export default class HowTo extends Component {
     );
   }
   render() {
-    console.log("device width", deviceWidth);
     return (
       <ViewPager
         style={this.props.viewpageStyle}

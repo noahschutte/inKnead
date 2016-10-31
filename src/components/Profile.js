@@ -47,11 +47,9 @@ export default class Profile extends Component {
   render() {
     let display;
     if (this.props.user === null) {
-      console.log("null user");
       display = <GuestView {...this.props} />
     } else {
       display =
-      <View style={styles.container}>
         <View style={styles.wrapper}>
 
           <View style={styles.instructionsContainer}>
@@ -105,12 +103,11 @@ export default class Profile extends Component {
             navigator={this.props.navigator}
             {...this.props}
             />
-
         </View>
-      </View>
     }
     return (
       <View style={styles.container}>
+        <Nav backButton {...this.props} />
         {display}
       </View>
     )
@@ -119,11 +116,11 @@ export default class Profile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 9,
+    flex: 1,
     // borderWidth: 3,
   },
   wrapper: {
-    flex: 1,
+    flex: 9,
     // alignItems: 'center',
     // justifyContent: 'center',
     backgroundColor: 'white',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, Text, StyleSheet } from 'react-native';
+import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Landing from './Landing';
 import Request from './Request';
 
@@ -9,10 +9,34 @@ export default class Requests extends Component {
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
+      refreshing: false,
       loading: true,
       dataSource: ds.cloneWithRows(this._genRows({})),
       errorMessage: ' ',
     }
+  }
+  _onRefresh() {
+    // this.setState({loading: !this.state.loading})
+    this.setState({refreshing: true});
+    fetch('http://localhost:3000/requests')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+      this.props.handleWelcomeUrl(responseJson.url)
+      if (responseJson.errorMessage) {
+        this.setState({errorMessage: responseJson.errorMessage})
+      } else {
+        this.props.collectRequests(responseJson.requests)
+        this.setState({errorMessage: "Requests recieved."})
+        // this.setState({loading: !this.state.loading})
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    this.setState({refreshing: false});
   }
   componentWillMount() {
     fetch('http://localhost:3000/requests')
@@ -75,6 +99,12 @@ export default class Requests extends Component {
             dataSource={this.state.dataSource}
             renderRow={this._renderRow.bind(this)}
             enableEmptySections={true}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh.bind(this)}
+                />
+            }
             />
     }
     // this._renderRow.bind(this, 0)
