@@ -30,14 +30,14 @@ export default class GuestView extends Component {
 
 const styles=StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 9,
     justifyContent: 'center',
     backgroundColor: 'white',
     // borderWidth: 2,
     borderColor: 'red',
   },
   wrapper: {
-    flex: 9,
+    flex: 1,
     marginTop: 100,
     alignItems: 'center',
     justifyContent: 'flex-start',

@@ -3,7 +3,8 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 export default class NewRequestButton extends Component {
   onNewRequestPress() {
-    this.props.changeDisplay('newRequest')
+    // this.props.changeDisplay('newRequest')
+    this.props.navigator.push({name: 'newRequest'})
   }
   render() {
     return (

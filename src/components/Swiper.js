@@ -4,22 +4,22 @@ import {IndicatorViewPager, PagerTitleIndicator, PagerTabIndicator, PagerDotIndi
 
 export default class Swiper extends Component {
   _renderTitleIndicator() {
-    return <PagerTitleIndicator titles={['one', 'two', 'three']} />;
+    return <PagerTitleIndicator titles={['Update Email', 'Donate', 'Request']} />;
   }
   _renderDotIndicator() {
     return <PagerDotIndicator pageCount={3} />;
   }
   _renderTabIndicator() {
     let tabs = [{
+      text: 'Update Email',
+      iconSource: require('../../assets/left_caret.png'),
+      selectedIconSource: require('../../assets/left_caret.png')
+    },{
       text: 'Donate',
       iconSource: require('../../assets/left_caret.png'),
       selectedIconSource: require('../../assets/left_caret.png')
     },{
-      text: 'Send Gift Video',
-      iconSource: require('../../assets/left_caret.png'),
-      selectedIconSource: require('../../assets/left_caret.png')
-    },{
-      text: 'Create Request',
+      text: 'Request',
       iconSource: require('../../assets/left_caret.png'),
       selectedIconSource: require('../../assets/left_caret.png')
     }];
@@ -33,13 +33,13 @@ export default class Swiper extends Component {
           indicator={this._renderTabIndicator()}
           >
           <View style={{backgroundColor:'cadetblue'}}>
-            <Text>page one</Text>
+            <Text>Update Email</Text>
           </View>
           <View style={{backgroundColor:'cornflowerblue'}}>
-            <Text>page two</Text>
+            <Text>Donate</Text>
           </View>
           <View style={{backgroundColor:'#1AA094'}}>
-            <Text>page three</Text>
+            <Text>Request</Text>
           </View>
         </IndicatorViewPager>
       </View>

@@ -3,30 +3,29 @@ import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
 
 export default class Menu extends Component {
   onMainButtonPress() {
-    console.log("hit requests");
     if (this.props.currentDisplay !== 'requests') {
       this.props.changeDisplay('requests')
     }
     this.props.toggleMenu(false)
   }
   onHowToButtonPress() {
-    console.log("hit howTo");
     if (this.props.currentDisplay !== 'howTo') {
-      this.props.changeDisplay('howTo')
+      // this.props.changeDisplay('howTo')
+      this.props.navigator.push({name: 'howTo'})
     }
     this.props.toggleMenu(false)
   }
   onProfileButtonPress() {
-    console.log("hit profile");
     if (this.props.currentDisplay !== 'profile') {
-      this.props.changeDisplay('profile')
+      // this.props.changeDisplay('profile')
+      this.props.navigator.push({name: 'profile'})
     }
     this.props.toggleMenu(false)
   }
   onNewRequestButtonPress() {
-    console.log("hit newRequest");
     if (this.props.currentDisplay !== 'newRequest') {
-      this.props.changeDisplay('newRequest')
+      // this.props.changeDisplay('newRequest')
+      this.props.navigator.push({name: 'newRequest'})
     }
     this.props.toggleMenu(false)
   }

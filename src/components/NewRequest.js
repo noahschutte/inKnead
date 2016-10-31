@@ -166,7 +166,6 @@ export default class NewRequest extends Component {
       display = <GuestView {...this.props} />
     } else {
       display =
-      <View style={styles.container}>
         <View style={styles.wrapper}>
 
           <View style={styles.formTitle}>
@@ -224,12 +223,11 @@ export default class NewRequest extends Component {
             onPress={this.onSubmitRequest.bind(this)}
             />
         </View>
-
-      </View>
     }
 
     return (
       <View style={styles.container}>
+        <Nav backButton {...this.props} />
         {display}
       </View>
     );
@@ -238,10 +236,10 @@ export default class NewRequest extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 9,
+    flex: 1,
   },
   wrapper: {
-    flex: 1,
+    flex: 9,
     // alignItems: 'center',
     // justifyContent: 'center',
     backgroundColor: 'white',

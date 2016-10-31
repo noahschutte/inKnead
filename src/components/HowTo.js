@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ViewPager from './ViewPager';
 import Swiper from './Swiper';
+import Nav from './Nav';
 
 export default class HowTo extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Swiper {...this.props} />
+        <Nav backButton {...this.props} />
+        <View style={styles.wrapper}>
+          <Swiper {...this.props} />
+        </View>
       </View>
     )
   }
@@ -16,11 +20,14 @@ export default class HowTo extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 9,
+    flex: 1,
     // borderColor: 'red',
     // borderWidth: 3,
   },
-  viewpager:{
+  wrapper: {
+    flex: 9,
+  },
+  viewpager: {
     flex: 1,
     borderColor: 'red',
     borderWidth: 3,
