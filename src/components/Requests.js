@@ -18,7 +18,7 @@ export default class Requests extends Component {
   _onRefresh() {
     // this.setState({loading: !this.state.loading})
     this.setState({refreshing: true});
-    fetch('http://localhost:3000/requests')
+    fetch('http://192.168.0.101.xip.io:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -39,7 +39,7 @@ export default class Requests extends Component {
     this.setState({refreshing: false});
   }
   componentWillMount() {
-    fetch('http://localhost:3000/requests')
+    fetch('http://192.168.0.101.xip.io:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)

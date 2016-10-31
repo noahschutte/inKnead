@@ -17,7 +17,7 @@ export default class Instructions extends Component {
   }
   componentWillMount() {
     const userID = this.props.activeDonation.creator_id
-    fetch(`http://localhost:3000/users/${userID}`)
+    fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage) {

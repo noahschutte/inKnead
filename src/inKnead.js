@@ -54,7 +54,7 @@ export default class inknead extends Component {
     this.handleNewRequestErrorMessage = this.handleNewRequestErrorMessage.bind(this);
   }
   createSession(userInfo) {
-    fetch('http://localhost:3000/users', {
+    fetch('http://192.168.0.101.xip.io:3000/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
