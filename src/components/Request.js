@@ -38,7 +38,7 @@ export default class Request extends Component {
   }
   onConfirmPress(request) {
     const userID = this.props.user.id;
-    fetch(`http://localhost:3000/requests/${request.id}`, {
+    fetch(`http://192.168.0.101.xip.io:3000/requests/${request.id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
