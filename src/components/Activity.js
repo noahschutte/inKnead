@@ -3,16 +3,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
 export default class Activity extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      scope: '',
-    };
-  }
-  selectedScope(scope) {
-    this.setState({scope})
-  }
   render() {
     const scope = [
       "Global",
@@ -23,8 +13,8 @@ export default class Activity extends Component {
         <SegmentedControls
           tint={'#ce0000'}
           options={ scope }
-          onSelection={ this.selectedScope.bind(this) }
-          selectedOption={ this.state.scope }
+          onSelection={ this.props.changeScope.bind(this) }
+          selectedOption={ this.props.currentScope }
           />
       </View>
     )
