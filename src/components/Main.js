@@ -15,9 +15,11 @@ export default class Main extends Component {
     this.state = {
       display: 'requests',
       isOpen: false,
+      scope: 'Global',
     }
     this.toggleMenu = this.toggleMenu.bind(this);
     this.changeDisplay = this.changeDisplay.bind(this);
+    this.changeScope = this.changeScope.bind(this);
   }
   toggleMenu(isOpen) {
     this.setState({isOpen})
@@ -25,14 +27,17 @@ export default class Main extends Component {
   changeDisplay(display) {
     this.setState({display})
   }
+  changeScope(scope) {
+    this.setState({scope})
+  }
 
   render() {
     const menu =
-      <Menu toggleMenu={this.toggleMenu} currentDisplay={this.currentDisplay} changeDisplay={this.changeDisplay} {...this.props} />
+      <Menu toggleMenu={this.toggleMenu} currentDisplay={this.state.display} changeDisplay={this.changeDisplay} {...this.props} />
 
     let display;
     if (this.state.display === 'requests') {
-      display = <Requests changeDisplay={this.changeDisplay} {...this.props} />
+      display = <Requests currentScope={this.state.scope} {...this.props} />
     } else if (this.state.display === 'profile') {
       display = <Profile {...this.props} />
     } else if (this.state.display === 'howTo') {
@@ -46,7 +51,7 @@ export default class Main extends Component {
         isOpen={this.state.isOpen}
         {...this.props} >
         <View style={styles.container}>
-          <Nav toggleMenu={this.toggleMenu} isOpen={this.state.isOpen} {...this.props} />
+          <Nav toggleMenu={this.toggleMenu} isOpen={this.state.isOpen} currentDisplay={this.state.display} changeDisplay={this.changeDisplay} currentScope={this.state.scope} changeScope={this.changeScope} {...this.props} />
 
           {display}
         </View>

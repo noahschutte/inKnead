@@ -20,9 +20,13 @@ export default class Nav extends Component {
 
     if (this.props.backButton) {
       leftButton = <BackButton {...this.props} />
-    } else if (this.props.route.name === "main") {
-      rightButton = <InfoButton {...this.props} />
-      activity = <Activity {...this.props} />
+    } else if (this.props.currentDisplay === 'requests') {
+      rightButton = <NewRequestButton {...this.props} />
+      activity = <Activity currentScope={this.props.currentScope} changeScope={this.changeScope} {...this.props} />
+    }
+
+    if (this.props.currentScope === 'global') {
+
     }
 
     return (
