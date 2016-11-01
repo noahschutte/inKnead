@@ -7,6 +7,7 @@ import NewRequest from './NewRequest';
 import HowTo from './HowTo';
 import Menu from './Menu';
 import SideMenu from 'react-native-side-menu';
+import History from './History';
 
 export default class Main extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ export default class Main extends Component {
   }
   changeScope(scope) {
     this.setState({scope})
+    console.log("scope", this.state.scope);
   }
 
   render() {
@@ -36,14 +38,11 @@ export default class Main extends Component {
       <Menu toggleMenu={this.toggleMenu} currentDisplay={this.state.display} changeDisplay={this.changeDisplay} {...this.props} />
 
     let display;
-    if (this.state.display === 'requests') {
+    if (this.state.scope === 'Global') {
       display = <Requests currentScope={this.state.scope} {...this.props} />
-    } else if (this.state.display === 'profile') {
-      display = <Profile {...this.props} />
-    } else if (this.state.display === 'howTo') {
-      display = <HowTo {...this.props} />
-    } else if (this.state.display === 'newRequest') {
-      display = <NewRequest {...this.props} />
+    } else if (this.state.scope === 'Private') {
+      console.log("Main.state.display", this.state.display);
+      display = <History currentScope={this.state.scope} {...this.props} />
     }
     return (
       <SideMenu

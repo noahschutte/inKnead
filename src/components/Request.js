@@ -1,106 +1,22 @@
 import React, { Component } from 'react';
 import { AlertIOS, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import VideoExample from './Video';
+import Video from './Video';
 import Button from './Button';
 
 export default class Request extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      errorMessage: ' ',
-    }
-  }
-  onDonatePress(request) {
-    if (this.props.user === null) {
-      this.props.onGuestDonation(true)
-      this.props.navigator.push({name: 'profile'})
-      // this.props.changeDisplay('profile')
-    } else if (this.props.user.id === request.creator_id) {
-      this.setState({errorMessage: 'Really, you want to donate to yourself?'})
-    } else if (this.props.activeDonation) {
-      this.setState({errorMessage: 'You have recently made a donation.'})
-    } else {
-      AlertIOS.alert(
-        `Are you sure you want to donate ${request.pizzas} pizza(s)?`,
-        `You will have 30 minutes to send an online gift card. Failure to complete the donation could have you removed from the community.`,
-        [
-          {
-            text: 'Cancel',
-          },
-          {
-            text: 'Donate',
-            onPress: this.onConfirmPress.bind(this, request),
-          }
-        ]
-      )
-    }
-  }
-  onConfirmPress(request) {
-    const userID = this.props.user.id;
-    fetch(`http://192.168.0.101.xip.io:3000/requests/${request.id}`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'PATCH',
-      body: JSON.stringify({userID})
-    })
-    .then((response) => {
-      return response.json()})
-    .then((responseJson) => {
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
-        this.props.collectRequests(responseJson.requests)
-        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-        this.props.collectActiveDonation(request)
-        this.setState({errorMessage: ' '})
-        this.props.navigator.push({name: 'instructions'})
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
   handleInstructions() {
     this.props.navigator.push({name: 'instructions'})
+  }
+  showRequest() {
+    this.props.collectRequest(this.props.selectedRequest)
+    this.props.navigator.push({name: 'requestShow'})
   }
 
   render() {
     let hasDonor;
     let showDonateButton;
-    let request = this.props.request;
+    let request = this.props.selectedRequest;
     let activeDonation;
-
-    if (request.donor_id) {
-      hasDonor =
-      <Image
-      style={styles.received}
-      source={require('../../assets/received.png')}
-      />
-      showDonateButton =
-      <Image
-      style={styles.disabledDonateButton}
-      source={require('../../assets/donate.png')}
-      />
-    } else if (this.props.user === null || this.props.user.id === request.creator_id || this.props.activeDonation) {
-      showDonateButton =
-      <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
-      <Image
-      style={styles.disabledDonateButton}
-      source={require('../../assets/donate.png')}
-      />
-      </TouchableOpacity>
-    } else {
-      showDonateButton =
-      <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
-      <Image
-      style={styles.donateButton}
-      source={require('../../assets/donate.png')}
-      />
-      </TouchableOpacity>
-    }
 
     if (this.props.activeDonation) {
       activeDonation =
@@ -144,27 +60,23 @@ export default class Request extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.videoContainer}>
-          <VideoExample userRequest {...this.props} />
-        </View>
-
-        <View style={styles.infoContainer}>
-          <View style={styles.header}>
-            <Text style={styles.firstName}>
-              {request.first_name}
-            </Text>
-            <Text style={styles.dateTime}>
-              {displayTime}
-            </Text>
+        <TouchableOpacity onPress={this.showRequest.bind(this)} style={styles.wrapper}>
+          <View style={styles.videoContainer}>
+            <Video userRequest {...this.props} />
           </View>
-          {hasDonor}
-          {requestText}
-          {showDonateButton}
-          <Text style={styles.errorMessage}>
-            {this.state.errorMessage}
-          </Text>
-          {activeDonation}
-        </View>
+          <View style={styles.infoContainer}>
+            <View style={styles.header}>
+              <Text style={styles.firstName}>
+                {request.first_name}
+              </Text>
+              <Text style={styles.dateTime}>
+                {displayTime}
+              </Text>
+            </View>
+            {hasDonor}
+            {requestText}
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -172,6 +84,9 @@ export default class Request extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  wrapper: {
     flex: 1,
     flexDirection: 'row',
     borderColor: 'yellow',
@@ -225,20 +140,20 @@ const styles = StyleSheet.create({
     left: 100,
   },
   instructionsContainer: {
-    zIndex: 1,
-    flex: 1,
+    // zIndex: 1,
+    // flex: 1,
     borderWidth: 1,
-    marginTop: 15,
-    borderRadius: 5,
+    // marginTop: 15,
+    // borderRadius: 5,
     borderColor: 'green',
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
   },
   instructions: {
-    flex: 1,
-    textAlign: 'center',
+    // flex: 1,
+    // textAlign: 'center',
     fontWeight: 'bold',
     color: 'white',
-    padding: 5,
+    // padding: 5,
   },
   errorMessage: {
     color: 'red',
