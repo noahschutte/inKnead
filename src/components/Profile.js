@@ -98,11 +98,13 @@ export default class Profile extends Component {
               />
           </View>
 
-          <LoginContainer
+          <View style={styles.loginContainer}>
+            <LoginContainer
             onUserChange={this.props.onUserChange}
             navigator={this.props.navigator}
             {...this.props}
             />
+          </View>
         </View>
     }
     return (
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   updatedEmailButton: {
-    height: 50,
+    // height: 50,
   },
   email: {
     textAlign: 'center',
@@ -175,5 +177,9 @@ const styles = StyleSheet.create({
     color: '#ce0000',
     fontWeight: 'bold',
     paddingBottom: 5,
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

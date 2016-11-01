@@ -41,7 +41,7 @@ export default class History extends Component {
     this.setState({refreshing: false});
   }
   componentWillMount() {
-    if (this.props.requests.length === 0) {
+    if (this.props.userHistory === null) {
       const userID = this.props.user.id
       console.log("userID", userID);
       fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)

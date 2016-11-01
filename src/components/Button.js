@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
   },
   buttonText: {
-    flex: 1,
+    // flex: 1,
     alignSelf: 'center',
     fontSize: 15,
     fontWeight: 'bold',

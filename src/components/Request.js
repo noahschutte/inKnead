@@ -21,26 +21,26 @@ export default class Request extends Component {
     if (this.props.activeDonation) {
       activeDonation =
       <View style={styles.instructionsContainer}>
-      <TouchableOpacity
-      onPress={this.handleInstructions.bind(this)}
-      >
-      <Text style={styles.instructions}>
-      You have an active donation. Click here to view the donation instructions. You will be eligible to donate again 30 minutes after you've completed your active donation.
-      </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.handleInstructions.bind(this)}
+          >
+          <Text style={styles.instructions}>
+            You have an active donation. Click here to view the donation instructions. You will be eligible to donate again 30 minutes after you've completed your active donation.
+          </Text>
+        </TouchableOpacity>
       </View>
     }
     let requestText;
     if (request.pizzas > 1) {
       requestText =
-      <Text style={styles.request}>
-      {request.pizzas} pizzas from {request.vendor}
-      </Text>
+        <Text style={styles.request}>
+          {request.pizzas} pizzas from {request.vendor}
+        </Text>
     } else {
       requestText =
-      <Text style={styles.request}>
-      {request.pizzas} pizza from {request.vendor}
-      </Text>
+        <Text style={styles.request}>
+          {request.pizzas} pizza from {request.vendor}
+        </Text>
     }
     let timeAgo;
     let displayTime;
