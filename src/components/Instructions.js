@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    flex: 1,
+    flex: 9,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',

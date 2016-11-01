@@ -3,7 +3,7 @@ import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Landing from './Landing';
 import Request from './Request';
 
-export default class Requests extends Component {
+export default class History extends Component {
   constructor(props) {
     super(props)
 

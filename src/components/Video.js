@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, TouchableHighlight, View, Text, StyleSheet } from 'react-native';
 import Video from 'react-native-video';
 
-export default class VideoExample extends Component {
+export default class VideoDisplay extends Component {
   constructor(props) {
     super(props)
 
@@ -24,8 +24,10 @@ export default class VideoExample extends Component {
     let content;
     if (this.props.preview) {
       content = this.props.videoData.path
-    } else if (this.props.userRequest) {
+    } else if (this.props.requestShow) {
       content = this.props.request.video
+    } else if (this.props.userRequest) {
+      content = this.props.selectedRequest.video
     } else {
       content = "http://techslides.com/demos/sample-videos/small.mp4"
     }
@@ -55,15 +57,25 @@ export default class VideoExample extends Component {
           style={styles.playButton}
           />
     }
+    let display;
+    if (this.props.userRequest) {
+      display = videoDisplay
+    } else if (this.props.requestShow) {
+      display =
+        <View style={styles.container}>
+          <TouchableHighlight
+            style={styles.playButtonContainer}
+            onPress={this.playVideo}
+            >
+            {playButton}
+          </TouchableHighlight>
+          {videoDisplay}
+        </View>
+    }
+
     return (
       <View style={styles.container}>
-        <TouchableHighlight
-          style={styles.playButtonContainer}
-          onPress={this.playVideo}
-          >
-            {playButton}
-        </TouchableHighlight>
-        {videoDisplay}
+        {display}
       </View>
     );
 

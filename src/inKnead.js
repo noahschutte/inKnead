@@ -11,6 +11,7 @@ import FBSDK, { AccessToken, LoginButton, GraphRequest, GraphRequestManager } fr
 import GuestView from './components/GuestView';
 import WebViewExample from './components/WebViewExample';
 import HowTo from './components/HowTo';
+import RequestShow from './components/RequestShow';
 
 const ROUTES = {
   main: Main,
@@ -23,6 +24,7 @@ const ROUTES = {
   camera: Camera,
   webViewExample: WebViewExample,
   howTo: HowTo,
+  requestShow: RequestShow,
 };
 
 export default class inknead extends Component {
@@ -34,6 +36,7 @@ export default class inknead extends Component {
       guestDonation: false,
       currentEmail: '',
       requests: [],
+      request: null,
       userActivity: [],
       totalDonatedPizzas: 0,
       url: '',
@@ -44,6 +47,7 @@ export default class inknead extends Component {
     this.onUserChange = this.onUserChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
     this.collectRequests = this.collectRequests.bind(this);
+    this.collectRequest = this.collectRequest.bind(this);
     this.collectUserActivity = this.collectUserActivity.bind(this);
     this.sumDonatedPizzas = this.sumDonatedPizzas.bind(this);
     this.renderScene = this.renderScene.bind(this);
@@ -114,6 +118,9 @@ export default class inknead extends Component {
   collectRequests(requests) {
     this.setState({requests})
   }
+  collectRequest(request) {
+    this.setState({request})
+  }
   collectUserActivity(userActivity) {
     this.setState({userActivity})
   }
@@ -134,7 +141,7 @@ export default class inknead extends Component {
   }
   renderScene(route, navigator) {
     const Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} onGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectUserActivity={this.collectUserActivity} userActivity={this.state.userActivity} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
+    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} onGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserActivity={this.collectUserActivity} userActivity={this.state.userActivity} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
   }
   render() {
     const sceneConfig = (renderScene) => {

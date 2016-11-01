@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import VideoExample from './Video';
+import Video from './Video';
 
 export default class Landing extends Component {
   render() {
@@ -25,7 +25,7 @@ export default class Landing extends Component {
           </Text>
         </View>
 
-        <VideoExample {...this.props} />
+        <Video {...this.props} />
 
         {noRequests}
 
