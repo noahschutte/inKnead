@@ -161,36 +161,34 @@ export default class NewRequest extends Component {
       videoDisplay =
         <Video preview {...this.props} />
     }
+    let recordButtonDisplay;
+    if (this.props.videoData) {
+      recordButtonDisplay = 'Re-Record'
+    } else {
+      recordButtonDisplay = 'Record'
+    }
     let display;
     if (this.props.user === null) {
       display = <GuestView {...this.props} />
     } else {
       display =
         <View style={styles.wrapper}>
-
-          <View style={styles.formTitle}>
-            <Text style={styles.title}>
-              Submit your pizza request here:
-            </Text>
+          <View style={styles.videoContainer}>
+            {videoDisplay}
           </View>
+          <View style={styles.formContainer}>
 
-          <View>
-            <Text style={styles.instructions}>
-              Tell us your story.
-            </Text>
-          </View>
+            <Button
+              text={recordButtonDisplay}
+              onPress={this.openVideoRec.bind(this)}
+              />
 
-          <Button
-            text={'Record Video'}
-            onPress={this.openVideoRec.bind(this)}
-            />
+            <View style={styles.banner}>
+              <Text style={styles.bannerText}>
+                # OF PIZZAS
+              </Text>
+            </View>
 
-          {videoDisplay}
-
-          <View style={styles.choices}>
-            <Text style={styles.instructions}>
-              How many pizzas do you need?
-            </Text>
             <SegmentedControls
               tint={'#ce0000'}
               options={ pizzas }
@@ -198,9 +196,12 @@ export default class NewRequest extends Component {
               selectedOption={ this.state.pizzas }
               />
 
-            <Text style={styles.instructions}>
-              Who delivers to you?
-            </Text>
+            <View style={styles.banner}>
+              <Text style={styles.bannerText}>
+              VENDOR NEAR YOU
+              </Text>
+            </View>
+
             <SegmentedControls
               tint={'#ce0000'}
               fontSize={50}
@@ -208,20 +209,20 @@ export default class NewRequest extends Component {
               onSelection={ this.selectVendor.bind(this) }
               selectedOption={ this.state.vendor }
               />
+
+            <View style={styles.errorContainer}>
+              <Text style={styles.error}>
+                {this.props.newRequestErrorMessage}
+              </Text>
+            </View>
+
+
+            <Button
+              style={styles.submitButton}
+              text={'Submit Request'}
+              onPress={this.onSubmitRequest.bind(this)}
+              />
           </View>
-
-          <View style={styles.errorContainer}>
-            <Text style={styles.error}>
-              {this.props.newRequestErrorMessage}
-            </Text>
-          </View>
-
-
-          <Button
-            style={styles.submitButton}
-            text={'Submit Request'}
-            onPress={this.onSubmitRequest.bind(this)}
-            />
         </View>
     }
 
@@ -244,6 +245,25 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     backgroundColor: 'white',
     // borderWidth: 3,
+  },
+  videoContainer: {
+    flex: 1,
+    borderColor: 'green',
+    borderWidth: 2,
+  },
+  formContainer: {
+    flex: 1,
+    alignItems: 'center',
+    borderColor: 'orange',
+    borderWidth: 2,
+  },
+  banner: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: 'gray',
+  },
+  bannerText: {
+    color: 'white',
   },
   formTitle: {
     marginBottom: 20,

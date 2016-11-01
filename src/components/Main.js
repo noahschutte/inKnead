@@ -14,34 +14,31 @@ export default class Main extends Component {
     super(props)
 
     this.state = {
-      display: 'requests',
       isOpen: false,
       scope: 'Global',
     }
     this.toggleMenu = this.toggleMenu.bind(this);
-    this.changeDisplay = this.changeDisplay.bind(this);
     this.changeScope = this.changeScope.bind(this);
   }
   toggleMenu(isOpen) {
-    this.setState({isOpen})
-  }
-  changeDisplay(display) {
-    this.setState({display})
+    if (this.state.isOpen !== isOpen) {
+      this.setState({isOpen})
+    }
   }
   changeScope(scope) {
-    this.setState({scope})
-    console.log("scope", this.state.scope);
+    if (this.state.scope !== scope) {
+      this.setState({scope})
+    }
   }
 
   render() {
     const menu =
-      <Menu toggleMenu={this.toggleMenu} currentDisplay={this.state.display} changeDisplay={this.changeDisplay} {...this.props} />
+      <Menu toggleMenu={this.toggleMenu} changeScope={this.changeScope} {...this.props} />
 
     let display;
     if (this.state.scope === 'Global') {
       display = <Requests currentScope={this.state.scope} {...this.props} />
     } else if (this.state.scope === 'Private') {
-      console.log("Main.state.display", this.state.display);
       display = <History currentScope={this.state.scope} {...this.props} />
     }
     return (
@@ -50,7 +47,7 @@ export default class Main extends Component {
         isOpen={this.state.isOpen}
         {...this.props} >
         <View style={styles.container}>
-          <Nav toggleMenu={this.toggleMenu} isOpen={this.state.isOpen} currentDisplay={this.state.display} changeDisplay={this.changeDisplay} currentScope={this.state.scope} changeScope={this.changeScope} {...this.props} />
+          <Nav toggleMenu={this.toggleMenu} isOpen={this.state.isOpen} currentScope={this.state.scope} changeScope={this.changeScope} {...this.props} />
 
           {display}
         </View>

@@ -39,7 +39,7 @@ export default class Requests extends Component {
     this.setState({refreshing: false});
   }
   componentWillMount() {
-    if (this.props.requests.length === 0) {
+    if (this.props.requests === null) {
       fetch('http://192.168.0.101.xip.io:3000/requests')
       .then((response) => response.json())
       .then((responseJson) => {

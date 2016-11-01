@@ -95,13 +95,6 @@ export default class RequestShow extends Component {
             />
         </TouchableOpacity>
     } else {
-      // showDonateButton =
-      //   <TouchableOpacity onPress={this.showRequest.bind(this, request)} >
-      //     <Image
-      //       style={styles.donateButton}
-      //       source={require('../../assets/donate.png')}
-      //       />
-      //   </TouchableOpacity>
       showDonateButton =
       <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
         <Image
