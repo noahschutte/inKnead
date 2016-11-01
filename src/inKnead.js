@@ -37,10 +37,11 @@ export default class inknead extends Component {
       currentEmail: '',
       requests: [],
       request: null,
-      userActivity: [],
+      userHistory: [],
       totalDonatedPizzas: 0,
       url: '',
       activeDonation: null,
+      anonEmail: '',
       videoData: null,
       newRequestErrorMessage: '',
     }
@@ -48,12 +49,13 @@ export default class inknead extends Component {
     this.onEmailChange = this.onEmailChange.bind(this);
     this.collectRequests = this.collectRequests.bind(this);
     this.collectRequest = this.collectRequest.bind(this);
-    this.collectUserActivity = this.collectUserActivity.bind(this);
+    this.collectUserHistory = this.collectUserHistory.bind(this);
     this.sumDonatedPizzas = this.sumDonatedPizzas.bind(this);
     this.renderScene = this.renderScene.bind(this);
     this.handleGuestDonation = this.handleGuestDonation.bind(this);
     this.handleWelcomeUrl = this.handleWelcomeUrl.bind(this);
     this.handleActiveDonation = this.handleActiveDonation.bind(this);
+    this.collectAnonEmail = this.collectAnonEmail.bind(this);
     this.handleVideoData = this.handleVideoData.bind(this);
     this.handleNewRequestErrorMessage = this.handleNewRequestErrorMessage.bind(this);
   }
@@ -72,6 +74,7 @@ export default class inknead extends Component {
       this.onUserChange(responseJson.user)
       this.onEmailChange(responseJson.email)
       this.handleActiveDonation(responseJson.activeDonation)
+      this.collectAnonEmail(responseJson.anonEmail)
     })
     .catch((error) => {
       console.error(error);
@@ -121,8 +124,8 @@ export default class inknead extends Component {
   collectRequest(request) {
     this.setState({request})
   }
-  collectUserActivity(userActivity) {
-    this.setState({userActivity})
+  collectUserHistory(userHistory) {
+    this.setState({userHistory})
   }
   sumDonatedPizzas(totalDonatedPizzas) {
     this.setState({totalDonatedPizzas})
@@ -133,6 +136,9 @@ export default class inknead extends Component {
   handleActiveDonation(activeDonation) {
     this.setState({activeDonation})
   }
+  collectAnonEmail(anonEmail) {
+    this.setState({anonEmail})
+  }
   handleVideoData(videoData) {
     this.setState({videoData})
   }
@@ -141,7 +147,7 @@ export default class inknead extends Component {
   }
   renderScene(route, navigator) {
     const Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} onGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserActivity={this.collectUserActivity} userActivity={this.state.userActivity} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
+    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} onGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserHistory={this.collectUserHistory} userHistory={this.state.userHistory} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
   }
   render() {
     const sceneConfig = (renderScene) => {
