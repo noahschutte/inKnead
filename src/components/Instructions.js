@@ -8,35 +8,34 @@ export default class Instructions extends Component {
     super(props)
 
     this.state = {
-      email: ' ',
       vendor: this.props.activeDonation.vendor,
       copied: false,
       content: '',
-      errorMessage: 'No Error.',
+      errorMessage: '',
     };
   }
-  componentWillMount() {
-    const userID = this.props.activeDonation.creator_id
-    fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
-        this.setState({email: responseJson.email})
-        this.setState({errorMessage: ' '})
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
+  // componentWillMount() {
+  //   const userID = this.props.activeDonation.creator_id
+    // fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
+    // .then((response) => response.json())
+    // .then((responseJson) => {
+    //   if (responseJson.errorMessage) {
+    //     this.setState({errorMessage: responseJson.errorMessage})
+    //   } else {
+    //     this.setState({email: responseJson.email})
+    //     this.setState({errorMessage: ' '})
+    //   }
+    // })
+    // .catch((error) => {
+    //   console.error(error);
+    // });
+  // }
   handleVendorSite = (vendorURL) => {
     Linking.openURL(vendorURL)
   }
   _setClipboardContent = async () => {
     this.setState({copied: true})
-    Clipboard.setString(this.state.email);
+    Clipboard.setString(this.props.anonEmail);
     try {
       const content = await Clipboard.getString();
       this.setState({content});
@@ -59,6 +58,7 @@ export default class Instructions extends Component {
     } else {
       status = "You have not copied the email."
     }
+    console.log("this.props.anonEmail");
     return (
       <View style={styles.container}>
 
@@ -72,7 +72,7 @@ export default class Instructions extends Component {
             Step 1: Tap the email below to copy it
           </Text>
           <Text onPress={this._setClipboardContent}>
-            {this.state.email}
+            {this.props.anonEmail}
           </Text>
           <Text style={styles.instructions}>
             Status:

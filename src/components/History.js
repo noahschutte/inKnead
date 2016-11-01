@@ -16,9 +16,11 @@ export default class History extends Component {
     }
   }
   _onRefresh() {
+    const userID = this.props.user.id
+    console.log("userID", userID);
     // this.setState({loading: !this.state.loading})
     this.setState({refreshing: true});
-    fetch('http://192.168.0.101.xip.io:3000/requests')
+    fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -26,7 +28,7 @@ export default class History extends Component {
       if (responseJson.errorMessage) {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
-        this.props.collectRequests(responseJson.requests)
+        this.props.collectUserHistory(responseJson.userHistory)
         this.setState({errorMessage: "Requests recieved."})
         // this.setState({loading: !this.state.loading})
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -40,7 +42,9 @@ export default class History extends Component {
   }
   componentWillMount() {
     if (this.props.requests.length === 0) {
-      fetch('http://192.168.0.101.xip.io:3000/requests')
+      const userID = this.props.user.id
+      console.log("userID", userID);
+      fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
       .then((response) => response.json())
       .then((responseJson) => {
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -48,7 +52,7 @@ export default class History extends Component {
         if (responseJson.errorMessage) {
           this.setState({errorMessage: responseJson.errorMessage})
         } else {
-          this.props.collectRequests(responseJson.requests)
+          this.props.collectUserHistory(responseJson.userHistory)
           this.setState({errorMessage: "Requests recieved."})
           this.setState({loading: !this.state.loading})
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -63,11 +67,11 @@ export default class History extends Component {
     }
   }
   _renderRow(rowData) {
-    return <Request selectedRequest={this.props.requests[rowData]} {...this.props} />
+    return <Request selectedRequest={this.props.userHistory[rowData]} {...this.props} />
   }
   _genRows() {
-    if (this.props.requests) {
-      let requestsLength = this.props.requests.length
+    if (this.props.userHistory) {
+      let requestsLength = this.props.userHistory.length
       let result = [];
       for (let i = 0; i < requestsLength; i += 1) {
         result.push(i)
