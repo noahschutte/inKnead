@@ -28,6 +28,7 @@ export default class Main extends Component {
   changeScope(scope) {
     if (this.state.scope !== scope) {
       this.setState({scope})
+      this.setState({isOpen: false})
     }
   }
 

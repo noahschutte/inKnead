@@ -17,10 +17,9 @@ export default class History extends Component {
   }
   _onRefresh() {
     const userID = this.props.user.id
-    console.log("userID", userID);
     // this.setState({loading: !this.state.loading})
     this.setState({refreshing: true});
-    fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
+    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -43,14 +42,14 @@ export default class History extends Component {
   componentWillMount() {
     if (this.props.userHistory === null) {
       const userID = this.props.user.id
-      console.log("userID", userID);
-      fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
+      fetch(`https://in-knead.herokuapp.com/users/${userID}`)
       .then((response) => response.json())
       .then((responseJson) => {
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
         this.props.handleWelcomeUrl(responseJson.url)
-        if (responseJson.errorMessage) {
+        if (responseJson.errorMessage === "No current requests.") {
           this.setState({errorMessage: responseJson.errorMessage})
+          this.setState({loading: !this.state.loading})
         } else {
           this.props.collectUserHistory(responseJson.userHistory)
           this.setState({errorMessage: "Requests recieved."})
@@ -67,7 +66,9 @@ export default class History extends Component {
     }
   }
   _renderRow(rowData) {
-    return <Request selectedRequest={this.props.userHistory[rowData]} {...this.props} />
+    if (this.props.userHistory) {
+      return <Request selectedRequest={this.props.userHistory[rowData]} {...this.props} />
+    }
   }
   _genRows() {
     if (this.props.userHistory) {
@@ -100,20 +101,25 @@ export default class History extends Component {
     if (this.state.loading) {
       display =
           <Text>Loading...</Text>
+    } else if (!this.props.userHistory) {
+      display =
+        <Text>
+          No Activity Recorded.
+        </Text>
     } else {
       display =
-          <ListView
-            style={styles.listViewContainer}
-            dataSource={this.state.dataSource}
-            renderRow={this._renderRow.bind(this)}
-            enableEmptySections={true}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh.bind(this)}
-                />
-            }
-            />
+        <ListView
+          style={styles.listViewContainer}
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow.bind(this)}
+          enableEmptySections={true}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
+              />
+          }
+          />
     }
     // this._renderRow.bind(this, 0)
     // (rowData) => <Text>{rowData}</Text>

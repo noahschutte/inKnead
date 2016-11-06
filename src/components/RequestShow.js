@@ -38,7 +38,7 @@ export default class RequestShow extends Component {
   }
   onConfirmPress(request) {
     const userID = this.props.user.id;
-    fetch(`http://192.168.0.101.xip.io:3000/requests/${request.id}`, {
+    fetch(`https://in-knead.herokuapp.com/requests/${request.id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -52,8 +52,6 @@ export default class RequestShow extends Component {
       if (responseJson.errorMessage) {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
-        console.log("responseJson", responseJson);
-        console.log("this.props.collectAnonEmail", this.props.collectAnonEmail);
         this.props.collectRequests(responseJson.requests)
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
         this.props.collectActiveDonation(request)
