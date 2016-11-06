@@ -60,7 +60,7 @@ export default class inknead extends Component {
     this.handleNewRequestErrorMessage = this.handleNewRequestErrorMessage.bind(this);
   }
   createSession(userInfo) {
-    fetch('http://192.168.0.101.xip.io:3000/users', {
+    fetch('https://in-knead.herokuapp.com/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -71,6 +71,7 @@ export default class inknead extends Component {
     .then((response) => {
       return response.json()})
     .then((responseJson) => {
+      console.log("responseJson", responseJson);
       this.onUserChange(responseJson.user)
       this.onEmailChange(responseJson.email)
       this.handleActiveDonation(responseJson.activeDonation)

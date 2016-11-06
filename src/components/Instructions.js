@@ -16,7 +16,7 @@ export default class Instructions extends Component {
   }
   // componentWillMount() {
   //   const userID = this.props.activeDonation.creator_id
-    // fetch(`http://192.168.0.101.xip.io:3000/users/${userID}`)
+    // fetch(`https://in-knead.herokuapp.com/users/${userID}`)
     // .then((response) => response.json())
     // .then((responseJson) => {
     //   if (responseJson.errorMessage) {
@@ -58,7 +58,6 @@ export default class Instructions extends Component {
     } else {
       status = "You have not copied the email."
     }
-    console.log("this.props.anonEmail");
     return (
       <View style={styles.container}>
 
