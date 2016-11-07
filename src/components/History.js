@@ -17,19 +17,17 @@ export default class History extends Component {
   }
   _onRefresh() {
     const userID = this.props.user.id
-    // this.setState({loading: !this.state.loading})
     this.setState({refreshing: true});
-    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
+    fetch(`http://192.168.0.102:3000/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage) {
+      if (responseJson.errorMessage === "No current requests.") {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectUserHistory(responseJson.userHistory)
         this.setState({errorMessage: "Requests recieved."})
-        // this.setState({loading: !this.state.loading})
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
       }
@@ -42,18 +40,16 @@ export default class History extends Component {
   componentWillMount() {
     if (this.props.userHistory === null) {
       const userID = this.props.user.id
-      fetch(`https://in-knead.herokuapp.com/users/${userID}`)
+      fetch(`http://192.168.0.102:3000/users/${userID}`)
       .then((response) => response.json())
       .then((responseJson) => {
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
         this.props.handleWelcomeUrl(responseJson.url)
         if (responseJson.errorMessage === "No current requests.") {
           this.setState({errorMessage: responseJson.errorMessage})
-          this.setState({loading: !this.state.loading})
         } else {
           this.props.collectUserHistory(responseJson.userHistory)
           this.setState({errorMessage: "Requests recieved."})
-          this.setState({loading: !this.state.loading})
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
           this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
         }
@@ -61,9 +57,8 @@ export default class History extends Component {
       .catch((error) => {
         console.error(error);
       });
-    } else {
-      this.setState({loading: !this.state.loading})
     }
+    this.setState({loading: false})
   }
   _renderRow(rowData) {
     if (this.props.userHistory) {

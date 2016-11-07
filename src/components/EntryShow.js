@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import { AlertIOS, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { AlertIOS, View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import Nav from './Nav';
 import Video from './Video';
 
-export default class Request extends Component {
+export default class EntryShow extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      errorMessage: '',
+    }
+  }
   handleInstructions() {
     this.props.navigator.push({name: 'instructions'})
   }
-  showRequest() {
-    this.props.collectRequest(this.props.selectedRequest)
-    this.props.navigator.push({name: 'requestShow'})
+  showAnonHistory() {
+    this.props.selectAnon(this.props.request.creator_id)
+    this.props.navigator.push({name: 'anonHistory'})
   }
-
   render() {
-    let hasDonor;
-    let showDonateButton;
-    let request = this.props.selectedRequest;
+    let request = this.props.request;
     let activeDonation;
 
     if (this.props.activeDonation) {
@@ -30,18 +35,6 @@ export default class Request extends Component {
       </View>
     }
 
-    let requestText;
-    if (request.pizzas > 1) {
-      requestText =
-        <Text style={styles.request}>
-          {request.pizzas} pizzas from {request.vendor}
-        </Text>
-    } else {
-      requestText =
-        <Text style={styles.request}>
-          {request.pizzas} pizza from {request.vendor}
-        </Text>
-    }
     let timeAgo;
     let displayTime;
     if (request.minutes === 1) {
@@ -57,26 +50,42 @@ export default class Request extends Component {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hours ago`
     }
-
+    console.log("EntryShow Component");
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.showRequest.bind(this)} style={styles.wrapper}>
-          <View style={styles.videoContainer}>
-            <Video userRequest {...this.props} />
-          </View>
-          <View style={styles.infoContainer}>
-            <View style={styles.header}>
-              <Text style={styles.anon}>
-                Anon
-              </Text>
-              {requestText}
+        <Nav backButton {...this.props} />
+        <View style={styles.wrapper}>
+          <Video requestShow {...this.props} />
+          <View style={styles.content}>
+            <View style={styles.videoFooter}>
               <Text style={styles.dateTime}>
                 {displayTime}
               </Text>
             </View>
-            {hasDonor}
+            <View style={styles.banner}>
+              <Text style={styles.bannerText}>
+                REQUESTED
+              </Text>
+            </View>
+            <Text style={{textAlign: 'center'}}>
+              (Image Placeholder)
+            </Text>
+            <View style={styles.banner}>
+              <Text style={styles.bannerText}>
+                VENDOR
+              </Text>
+            </View>
+            <Text style={{textAlign: 'center'}}>
+              (Image Placeholder)
+            </Text>
+            <View style={styles.errorMessageContainer}>
+              <Text style={styles.errorMessage}>
+                {this.state.errorMessage}
+              </Text>
+            </View>
+            {activeDonation}
           </View>
-        </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -87,23 +96,32 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
+    flex: 9,
+  },
+  content: {
     flex: 1,
+    borderColor: 'green',
+    borderWidth: 2,
+  },
+  videoFooter: {
     flexDirection: 'row',
-    borderColor: 'yellow',
-    borderWidth: 3,
+    justifyContent: 'flex-start',
+    borderColor: 'purple',
+    borderWidth: 2,
   },
-  videoContainer: {
-    flex: 1,
+  banner: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: 'gray',
   },
-  infoContainer: {
-    flex: 1,
+  bannerText: {
+    color: 'white',
   },
   header: {
     justifyContent: 'center',
     // borderWidth: 2,
   },
-  anon: {
-    flex: 1,
+  firstName: {
     textAlign: 'center',
     color: '#ce0000',
     fontSize: 25,
@@ -111,7 +129,6 @@ const styles = StyleSheet.create({
     // borderWidth: 3,
   },
   dateTime: {
-    flex: 1,
     textAlign: 'center',
     fontSize: 15,
     fontWeight: 'bold',
@@ -122,6 +139,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // borderWidth: 3,
     borderColor: 'green',
+  },
+  donationButtonContainer: {
+    alignItems: 'center',
+    borderColor: 'red',
+    borderWidth: 2,
   },
   donateButton: {
     width: 200,
@@ -146,16 +168,21 @@ const styles = StyleSheet.create({
     // marginTop: 15,
     // borderRadius: 5,
     borderColor: 'green',
-    // backgroundColor: 'green',
+    backgroundColor: 'green',
   },
   instructions: {
     // flex: 1,
-    // textAlign: 'center',
+    textAlign: 'center',
     fontWeight: 'bold',
     color: 'white',
     // padding: 5,
   },
+  errorMessageContainer: {
+    borderColor: 'blue',
+    borderWidth: 3,
+  },
   errorMessage: {
+    textAlign: 'center',
     color: 'red',
     fontWeight: 'bold',
   },
