@@ -18,7 +18,7 @@ export default class Login extends Component {
       this.props.onUserChange(responseJson.user)
       this.props.onEmailChange(responseJson.email)
       if (this.props.guestDonation) {
-        this.props.onGuestDonation(false)
+        this.props.handleGuestDonation(false)
         this.props.navigator.pop();
       }
     })
@@ -31,9 +31,13 @@ export default class Login extends Component {
       alert("Logout failed with error: " + result.error);
     } else {
       this.props.onUserChange(null)
-      this.props.onEmailChange('')
-      this.props.onChangeNewRequestErrorMesssage('')
+      this.props.collectActiveDonation(null)
+      this.props.collectAnonEmail(null)
+      this.props.onEmailChange(null)
+      this.props.onChangeNewRequestErrorMesssage(null)
       this.props.onChangeVideoData(null)
+      this.props.onEmailChange(null)
+      this.props.collectUserHistory(null)
     }
   }
   handleLoginFinished = (error, result) => {

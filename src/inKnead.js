@@ -36,20 +36,21 @@ export default class inknead extends Component {
     super(props)
 
     this.state = {
-      user: null,
-      anonID: null,
+      activeDonation: null,
+      anonEmail: null,
       anonHistory: null,
+      anonID: null,
+      currentEmail: null,
+      entry: null,
       guestDonation: false,
-      currentEmail: '',
+      newRequestErrorMessage: null,
       requests: null,
       request: null,
-      userHistory: null,
       totalDonatedPizzas: 0,
-      url: '',
-      activeDonation: null,
-      anonEmail: '',
+      url: null,
+      user: null,
+      userHistory: null,
       videoData: null,
-      newRequestErrorMessage: '',
     }
     this.selectAnon = this.selectAnon.bind(this);
     this.collectAnonHistory = this.collectAnonHistory.bind(this);
@@ -57,6 +58,7 @@ export default class inknead extends Component {
     this.onEmailChange = this.onEmailChange.bind(this);
     this.collectRequests = this.collectRequests.bind(this);
     this.collectRequest = this.collectRequest.bind(this);
+    this.collectEntry = this.collectEntry.bind(this);
     this.collectUserHistory = this.collectUserHistory.bind(this);
     this.sumDonatedPizzas = this.sumDonatedPizzas.bind(this);
     this.renderScene = this.renderScene.bind(this);
@@ -138,6 +140,9 @@ export default class inknead extends Component {
   collectRequest(request) {
     this.setState({request})
   }
+  collectEntry(entry) {
+    this.setState({entry})
+  }
   collectUserHistory(userHistory) {
     this.setState({userHistory})
   }
@@ -161,7 +166,7 @@ export default class inknead extends Component {
   }
   renderScene(route, navigator) {
     const Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonHistory={this.state.anonHistory} collectAnonHistory={this.collectAnonHistory} GuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserHistory={this.collectUserHistory} userHistory={this.state.userHistory} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
+    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonHistory={this.state.anonHistory} collectAnonHistory={this.collectAnonHistory} entry={this.state.entry} collectEntry={this.collectEntry} handleGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserHistory={this.collectUserHistory} userHistory={this.state.userHistory} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
   }
   render() {
     const sceneConfig = (renderScene) => {
@@ -175,6 +180,7 @@ export default class inknead extends Component {
       //   return Navigator.SceneConfigs.FloatFromRight
       // }
     }
+    console.log("in knead entry", this.state.entry);
     return (
       <Navigator
       initialRoute={{name: 'main'}}

@@ -13,7 +13,7 @@ export default class RequestShow extends Component {
   }
   onDonatePress(request) {
     if (this.props.user === null) {
-      this.props.onGuestDonation(true)
+      this.props.handleGuestDonation(true)
       this.props.navigator.push({name: 'profile'})
       // this.props.changeDisplay('profile')
     } else if (this.props.user.id === this.props.request.creator_id) {
@@ -130,9 +130,15 @@ export default class RequestShow extends Component {
     } else if (Math.round(request.minutes/60) === 1) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hour ago`
-    } else {
+    } else if (Math.round(request.minutes/60) < 24) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hours ago`
+    } else if (Math.round(request.minutes/1440) === 1) {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} day ago`
+    } else {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} days ago`
     }
 
     return (

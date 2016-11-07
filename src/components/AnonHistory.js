@@ -37,7 +37,6 @@ export default class AnonHistory extends Component {
   }
   componentWillMount() {
     const anonID = this.props.anonID
-    console.log("anonID", anonID);
     fetch(`http://192.168.0.102:3000/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
   },
   listViewContainer: {
     flex: 1,
-    borderColor: 'red',
+    borderColor: 'blue',
     borderWidth: 3,
   },
   // wrapper: {

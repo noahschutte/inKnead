@@ -12,23 +12,7 @@ export default class Request extends Component {
   }
 
   render() {
-    let hasDonor;
-    let showDonateButton;
     let request = this.props.selectedRequest;
-    let activeDonation;
-
-    if (this.props.activeDonation) {
-      activeDonation =
-      <View style={styles.instructionsContainer}>
-        <TouchableOpacity
-          onPress={this.handleInstructions.bind(this)}
-          >
-          <Text style={styles.instructions}>
-            You have an active donation. Click here to view the donation instructions. You will be eligible to donate again 30 minutes after you've completed your active donation.
-          </Text>
-        </TouchableOpacity>
-      </View>
-    }
 
     let requestText;
     if (request.pizzas > 1) {
@@ -53,9 +37,15 @@ export default class Request extends Component {
     } else if (Math.round(request.minutes/60) === 1) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hour ago`
-    } else {
+    } else if (Math.round(request.minutes/60) < 24) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hours ago`
+    } else if (Math.round(request.minutes/1440) === 1) {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} day ago`
+    } else {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} days ago`
     }
 
     return (
@@ -74,7 +64,6 @@ export default class Request extends Component {
                 {displayTime}
               </Text>
             </View>
-            {hasDonor}
           </View>
         </TouchableOpacity>
       </View>
