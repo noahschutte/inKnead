@@ -4,19 +4,8 @@ import Nav from './Nav';
 import Video from './Video';
 
 export default class EntryShow extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      errorMessage: '',
-    }
-  }
   handleInstructions() {
     this.props.navigator.push({name: 'instructions'})
-  }
-  showAnonHistory() {
-    this.props.selectAnon(this.props.request.creator_id)
-    this.props.navigator.push({name: 'anonHistory'})
   }
   render() {
     let request = this.props.request;
@@ -46,16 +35,22 @@ export default class EntryShow extends Component {
     } else if (Math.round(request.minutes/60) === 1) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hour ago`
-    } else {
+    } else if (Math.round(request.minutes/60) < 24) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hours ago`
+    } else if (Math.round(request.minutes/1440) === 1) {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} day ago`
+    } else {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} days ago`
     }
-    console.log("EntryShow Component");
+
     return (
       <View style={styles.container}>
         <Nav backButton {...this.props} />
         <View style={styles.wrapper}>
-          <Video requestShow {...this.props} />
+          <Video entryShow {...this.props} />
           <View style={styles.content}>
             <View style={styles.videoFooter}>
               <Text style={styles.dateTime}>
@@ -78,11 +73,6 @@ export default class EntryShow extends Component {
             <Text style={{textAlign: 'center'}}>
               (Image Placeholder)
             </Text>
-            <View style={styles.errorMessageContainer}>
-              <Text style={styles.errorMessage}>
-                {this.state.errorMessage}
-              </Text>
-            </View>
             {activeDonation}
           </View>
         </View>

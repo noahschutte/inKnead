@@ -6,34 +6,20 @@ export default class Entry extends Component {
   handleInstructions() {
     this.props.navigator.push({name: 'instructions'})
   }
-  showRequest() {
-    this.props.collectRequest(this.props.selectedEntry)
+  showEntry() {
+    const entry = this.props.selectedEntry
+    this.props.collectEntry(entry)
     this.props.navigator.push({name: 'entryShow'})
   }
 
   render() {
-    let hasDonor;
-    let showDonateButton;
     let request = this.props.selectedEntry;
-    let activeDonation;
-
-    if (this.props.activeDonation) {
-      activeDonation =
-      <View style={styles.instructionsContainer}>
-        <TouchableOpacity
-          onPress={this.handleInstructions.bind(this)}
-          >
-          <Text style={styles.instructions}>
-            You have an active donation. Click here to view the donation instructions. You will be eligible to donate again 30 minutes after you've completed your active donation.
-          </Text>
-        </TouchableOpacity>
-      </View>
-    }
 
     let action;
-    if (request.creator_id === this.props.user.id) {
+    // if the user is the same as the request's creator
+    if (request.creator_id === this.props.anonID) {
       action = "requested"
-    } else if (request.donor_id === this.props.user.id) {
+    } else if (request.donor_id === this.props.anonID) {
       action = "donated"
     }
 
@@ -49,6 +35,7 @@ export default class Entry extends Component {
           {request.pizzas} pizza from {request.vendor}
         </Text>
     }
+
     let timeAgo;
     let displayTime;
     if (request.minutes === 1) {
@@ -60,28 +47,33 @@ export default class Entry extends Component {
     } else if (Math.round(request.minutes/60) === 1) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hour ago`
-    } else {
+    } else if (Math.round(request.minutes/60) < 24) {
       timeAgo = Math.round(request.minutes/60)
       displayTime = `${timeAgo} hours ago`
+    } else if (Math.round(request.minutes/1440) === 1) {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} day ago`
+    } else {
+      timeAgo = Math.round(request.minutes/1440)
+      displayTime = `${timeAgo} days ago`
     }
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.showRequest.bind(this)} style={styles.wrapper}>
+        <TouchableOpacity onPress={this.showEntry.bind(this)} style={styles.wrapper}>
           <View style={styles.videoContainer}>
-            <Video userRequest selectedEntry={request} {...this.props} />
+            <Video anonEntry {...this.props} />
           </View>
           <View style={styles.infoContainer}>
             <View style={styles.header}>
               <Text style={styles.anon}>
                 Anon {action}
               </Text>
-              {requestText}
+                {requestText}
               <Text style={styles.dateTime}>
                 {displayTime}
               </Text>
             </View>
-            {hasDonor}
           </View>
         </TouchableOpacity>
       </View>

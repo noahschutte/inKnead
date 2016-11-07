@@ -16,7 +16,6 @@ export default class Requests extends Component {
     }
   }
   _onRefresh() {
-    // this.setState({loading: !this.state.loading})
     this.setState({refreshing: true});
     fetch('http://192.168.0.102:3000/requests')
     .then((response) => response.json())
@@ -28,7 +27,6 @@ export default class Requests extends Component {
       } else {
         this.props.collectRequests(responseJson.requests)
         this.setState({errorMessage: "Requests recieved."})
-        // this.setState({loading: !this.state.loading})
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
       }
@@ -50,16 +48,16 @@ export default class Requests extends Component {
         } else {
           this.props.collectRequests(responseJson.requests)
           this.setState({errorMessage: "Requests recieved."})
-          this.setState({loading: !this.state.loading})
           const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
           this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
         }
+        this.setState({loading: false})
       })
       .catch((error) => {
         console.error(error);
       });
     } else {
-      this.setState({loading: !this.state.loading})
+      this.setState({loading: false})
     }
   }
   _renderRow(rowData) {

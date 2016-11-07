@@ -6,7 +6,7 @@ export default class Activity extends Component {
   render() {
     const scope = [
       "Global",
-      "Private",
+      "History",
     ]
     return (
       <View style={styles.container}>

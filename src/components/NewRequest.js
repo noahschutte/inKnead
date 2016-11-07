@@ -158,7 +158,6 @@ export default class NewRequest extends Component {
     ];
     let videoDisplay;
     if (this.props.videoData) {
-      console.log("hit");
       videoDisplay =
         <Video preview {...this.props} />
     }

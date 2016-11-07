@@ -8,6 +8,7 @@ import HowTo from './HowTo';
 import Menu from './Menu';
 import SideMenu from 'react-native-side-menu';
 import History from './History';
+import GuestView from './GuestView';
 
 export default class Main extends Component {
   constructor(props) {
@@ -39,7 +40,9 @@ export default class Main extends Component {
     let display;
     if (this.state.scope === 'Global') {
       display = <Requests currentScope={this.state.scope} {...this.props} />
-    } else if (this.state.scope === 'Private') {
+    } else if (this.state.scope === 'History' && !this.props.user) {
+      display = <GuestView {...this.props} />
+    } else if (this.state.scope === 'History') {
       display = <History currentScope={this.state.scope} {...this.props} />
     }
     return (

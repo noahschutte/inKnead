@@ -7,7 +7,7 @@ export default class Menu extends Component {
     this.props.toggleMenu(false)
   }
   onHistoryButtonPress() {
-    this.props.changeScope('Private')
+    this.props.changeScope('History')
     this.props.toggleMenu(false)
   }
   onHowToButtonPress() {

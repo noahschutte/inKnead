@@ -23,18 +23,30 @@ export default class VideoDisplay extends Component {
   render() {
     let content;
     if (this.props.preview) {
-      console.log("this.props.preview is true");
+      console.log("preview in Video");
       content = this.props.videoData.path
-      console.log("videoData.path", content);
-    } else if (this.props.selectedEntry) {
+    } else if (this.props.anonEntry) {
+      console.log("anonEntry in Video");
+      console.log("anonEntry", this.props.selectedEntry);
       content = this.props.selectedEntry.video
-    } else if (this.props.requestShow) {
-      content = this.props.request.video
+    } else if (this.props.entryShow) {
+      console.log("entryShow in Video");
+      content = this.props.entry.video
+    } else if (this.props.selectedEntry) {
+      console.log("selectedEntry in Video");
+      // console.log("props", this.props);
+      // console.log("entry", this.props.entry);
+      // console.log("selectedEntry", this.props.selectedEntry);
+      content = this.props.selectedEntry.video
     } else if (this.props.userRequest) {
+      console.log("userRequest in Video");
+
       content = this.props.selectedRequest.video
-    } else {
-      content = "http://techslides.com/demos/sample-videos/small.mp4"
+    } else if (this.props.requestShow) {
+      console.log("requestShow in Video");
+      content = this.props.request.video
     }
+
     const videoDisplay = <Video
       source={{ uri: content }}
       paused={this.state.paused}
@@ -62,7 +74,7 @@ export default class VideoDisplay extends Component {
           />
     }
     let display;
-    if (this.props.userRequest) {
+    if (this.props.userRequest || this.props.anonEntry) {
       display = videoDisplay
     } else if (this.props.preview) {
       display =
@@ -75,7 +87,7 @@ export default class VideoDisplay extends Component {
           </TouchableHighlight>
           {videoDisplay}
         </View>
-    } else if (this.props.requestShow) {
+    } else if (this.props.requestShow || this.props.entryShow) {
       display =
         <View style={styles.container}>
           <TouchableHighlight
@@ -87,7 +99,7 @@ export default class VideoDisplay extends Component {
           {videoDisplay}
         </View>
     }
-
+    console.log("content", content);
     return (
       <View style={styles.container}>
         {display}
