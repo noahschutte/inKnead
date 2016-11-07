@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { AlertIOS, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Video from './Video';
 
-export default class Request extends Component {
+export default class Entry extends Component {
   handleInstructions() {
     this.props.navigator.push({name: 'instructions'})
   }
   showRequest() {
-    this.props.collectRequest(this.props.selectedRequest)
-    this.props.navigator.push({name: 'requestShow'})
+    this.props.collectRequest(this.props.selectedEntry)
+    this.props.navigator.push({name: 'entryShow'})
   }
 
   render() {
     let hasDonor;
     let showDonateButton;
-    let request = this.props.selectedRequest;
+    let request = this.props.selectedEntry;
     let activeDonation;
 
     if (this.props.activeDonation) {
@@ -28,6 +28,13 @@ export default class Request extends Component {
           </Text>
         </TouchableOpacity>
       </View>
+    }
+
+    let action;
+    if (request.creator_id === this.props.user.id) {
+      action = "requested"
+    } else if (request.donor_id === this.props.user.id) {
+      action = "donated"
     }
 
     let requestText;
@@ -62,12 +69,12 @@ export default class Request extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this.showRequest.bind(this)} style={styles.wrapper}>
           <View style={styles.videoContainer}>
-            <Video userRequest {...this.props} />
+            <Video userRequest selectedEntry={request} {...this.props} />
           </View>
           <View style={styles.infoContainer}>
             <View style={styles.header}>
               <Text style={styles.anon}>
-                Anon
+                Anon {action}
               </Text>
               {requestText}
               <Text style={styles.dateTime}>

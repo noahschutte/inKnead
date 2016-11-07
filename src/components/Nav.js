@@ -13,7 +13,7 @@ export default class Nav extends Component {
   }
   render() {
     let leftButton;
-    let activity;
+    let center;
     let rightButton;
 
     if (this.props.backButton) {
@@ -21,12 +21,16 @@ export default class Nav extends Component {
     } else if (this.props.navigator.state.routeStack[0].name === 'main') {
       leftButton = <MenuButton {...this.props} />
       rightButton = <NewRequestButton {...this.props} />
-      activity = <Activity currentScope={this.props.currentScope} changeScope={this.changeScope} {...this.props} />
+      center = <Activity currentScope={this.props.currentScope} changeScope={this.changeScope} {...this.props} />
     }
 
-    if (this.props.currentScope === 'global') {
-
-    }
+    // if (this.props.anonHistory) {
+    //   console.log("this.props.anonHistory");
+    //   center =
+    //     <Text style={styles.anonHistory} >
+    //       Anon History
+    //     </Text>
+    // }
 
     return (
       <View style={styles.container}>
@@ -34,7 +38,7 @@ export default class Nav extends Component {
           {leftButton}
         </View>
         <View style={styles.centerBox}>
-          {activity}
+          {center}
         </View>
         <View style={styles.rightBox}>
           {rightButton}
@@ -59,13 +63,19 @@ const styles = StyleSheet.create({
   },
   centerBox: {
     flex: 3,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderColor: 'purple',
     // borderWidth: 2,
   },
   rightBox: {
     flex: 1,
     // borderWidth: 3,
+  },
+  anonHistory: {
+    fontWeight: 'bold',
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 });

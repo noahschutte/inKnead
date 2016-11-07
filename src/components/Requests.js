@@ -18,13 +18,12 @@ export default class Requests extends Component {
   _onRefresh() {
     // this.setState({loading: !this.state.loading})
     this.setState({refreshing: true});
-    fetch('https://in-knead.herokuapp.com/requests')
+    fetch('http://192.168.0.102:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
       if (responseJson.errorMessage) {
-        console.log("responseJson", responseJson);
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectRequests(responseJson.requests)
@@ -41,7 +40,7 @@ export default class Requests extends Component {
   }
   componentWillMount() {
     if (this.props.requests === null) {
-      fetch('https://in-knead.herokuapp.com/requests')
+      fetch('http://192.168.0.102:3000/requests')
       .then((response) => response.json())
       .then((responseJson) => {
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)

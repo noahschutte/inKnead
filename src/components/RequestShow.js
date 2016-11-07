@@ -16,7 +16,7 @@ export default class RequestShow extends Component {
       this.props.onGuestDonation(true)
       this.props.navigator.push({name: 'profile'})
       // this.props.changeDisplay('profile')
-    } else if (this.props.user.id === request.creator_id) {
+    } else if (this.props.user.id === this.props.request.creator_id) {
       this.setState({errorMessage: 'Really, you want to donate to yourself?'})
     } else if (this.props.activeDonation) {
       this.setState({errorMessage: 'You have recently made a donation.'})
@@ -38,7 +38,7 @@ export default class RequestShow extends Component {
   }
   onConfirmPress(request) {
     const userID = this.props.user.id;
-    fetch(`https://in-knead.herokuapp.com/requests/${request.id}`, {
+    fetch(`http://192.168.0.102:3000/requests/${request.id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -66,6 +66,10 @@ export default class RequestShow extends Component {
   }
   handleInstructions() {
     this.props.navigator.push({name: 'instructions'})
+  }
+  showAnonHistory() {
+    this.props.selectAnon(this.props.request.creator_id)
+    this.props.navigator.push({name: 'anonHistory'})
   }
   render() {
     let hasDonor;
@@ -141,6 +145,11 @@ export default class RequestShow extends Component {
               <Text style={styles.dateTime}>
                 {displayTime}
               </Text>
+              <TouchableOpacity onPress={this.showAnonHistory.bind(this)} >
+                <Text style={styles.history}>
+                  View User History
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.banner}>
               <Text style={styles.bannerText}>

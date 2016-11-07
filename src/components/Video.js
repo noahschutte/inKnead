@@ -26,6 +26,8 @@ export default class VideoDisplay extends Component {
       console.log("this.props.preview is true");
       content = this.props.videoData.path
       console.log("videoData.path", content);
+    } else if (this.props.selectedEntry) {
+      content = this.props.selectedEntry.video
     } else if (this.props.requestShow) {
       content = this.props.request.video
     } else if (this.props.userRequest) {
