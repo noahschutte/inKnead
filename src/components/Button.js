@@ -20,16 +20,15 @@ export default class Button extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    borderWidth: 1,
     borderRadius: 5,
     padding: 5,
-    borderColor: 'black',
-    backgroundColor: 'gray',
+    backgroundColor: '#ce0000',
   },
   buttonText: {
     // flex: 1,
     alignSelf: 'center',
     fontSize: 15,
     fontWeight: 'bold',
+    color: 'white'
   }
 });

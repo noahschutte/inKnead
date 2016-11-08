@@ -178,10 +178,14 @@ export default class NewRequest extends Component {
           </View>
           <View style={styles.formContainer}>
 
-            <Button
-              text={recordButtonDisplay}
-              onPress={this.openVideoRec.bind(this)}
-              />
+            <View>
+              
+              <Button
+                color='#ce0000'
+                text={recordButtonDisplay}
+                onPress={this.openVideoRec.bind(this)}
+                />
+            </View>
 
             <View style={styles.banner}>
               <Text style={styles.bannerText}>
@@ -189,27 +193,28 @@ export default class NewRequest extends Component {
               </Text>
             </View>
 
-            <SegmentedControls
-              tint={'#ce0000'}
-              options={ pizzas }
-              onSelection={ this.selectPizzas.bind(this) }
-              selectedOption={ this.state.pizzas }
-              />
-
+            <View style={styles.pizza}>
+              <SegmentedControls
+                tint={'#ce0000'}
+                options={ pizzas }
+                onSelection={ this.selectPizzas.bind(this) }
+                selectedOption={ this.state.pizzas }
+                />
+            </View>
             <View style={styles.banner}>
               <Text style={styles.bannerText}>
               VENDOR NEAR YOU
               </Text>
             </View>
-
-            <SegmentedControls
-              tint={'#ce0000'}
-              fontSize={50}
-              options={ vendors }
-              onSelection={ this.selectVendor.bind(this) }
-              selectedOption={ this.state.vendor }
-              />
-
+            <View style={styles.controls}>
+              <SegmentedControls
+                tint={'#ce0000'}
+                fontSize={50}
+                options={ vendors }
+                onSelection={ this.selectVendor.bind(this) }
+                selectedOption={ this.state.vendor }
+                />
+            </View>
             <View style={styles.errorContainer}>
               <Text style={styles.error}>
                 {this.props.newRequestErrorMessage}
@@ -218,7 +223,7 @@ export default class NewRequest extends Component {
 
 
             <Button
-              style={styles.submitButton}
+              color='#ce0000'
               text={'Submit Request'}
               onPress={this.onSubmitRequest.bind(this)}
               />
@@ -247,20 +252,23 @@ const styles = StyleSheet.create({
     // borderWidth: 3,
   },
   videoContainer: {
-    flex: 1,
+    flex: 2,
     borderColor: 'green',
     borderWidth: 2,
   },
   formContainer: {
-    flex: 1,
+    flex: 3,
     alignItems: 'center',
-    borderColor: 'orange',
-    borderWidth: 2,
+    justifyContent: 'space-between',
+    paddingBottom: 50,
+    paddingTop: 20
   },
   banner: {
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: '#424242',
+    alignSelf: 'stretch',
+    padding: 5
   },
   bannerText: {
     color: 'white',
@@ -271,9 +279,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
   },
-  choices: {
+  pizza: {
     width: 250,
-    alignItems: 'center',
+  },
+  controls: {
+    width: 300
   },
   instructions: {
     fontSize: 15,
@@ -287,9 +297,6 @@ const styles = StyleSheet.create({
   },
   vendor: {
 
-  },
-  submitButton: {
-    backgroundColor: 'gray',
   },
   errorContainer: {
     marginTop: 5,
