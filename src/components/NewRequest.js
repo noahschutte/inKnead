@@ -91,7 +91,11 @@ export default class NewRequest extends Component {
               // throw new Error("Failed to upload image to S3");
               // DELETE NEW REQUEST FROM DB
               const userID = this.props.user.id
+<<<<<<< 54d0166906c6b3ab25f790f645b12ad539234c6b
               fetch(`https://in-knead.herokuapp.com/requests/1`, {
+=======
+              fetch(`http://192.168.1.13:3000/requests/1`, {
+>>>>>>> change IP address to localhost of FJ's PC.
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'
