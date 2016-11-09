@@ -70,7 +70,7 @@ export default class inknead extends Component {
     this.handleNewRequestErrorMessage = this.handleNewRequestErrorMessage.bind(this);
   }
   createSession(userInfo) {
-    fetch('http://192.168.0.102:3000/users', {
+    fetch('https://in-knead.herokuapp.com/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -180,7 +180,6 @@ export default class inknead extends Component {
       //   return Navigator.SceneConfigs.FloatFromRight
       // }
     }
-    console.log("in knead entry", this.state.entry);
     return (
       <Navigator
       initialRoute={{name: 'main'}}

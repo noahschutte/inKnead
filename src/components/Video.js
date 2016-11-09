@@ -23,27 +23,16 @@ export default class VideoDisplay extends Component {
   render() {
     let content;
     if (this.props.preview) {
-      console.log("preview in Video");
       content = this.props.videoData.path
     } else if (this.props.anonEntry) {
-      console.log("anonEntry in Video");
-      console.log("anonEntry", this.props.selectedEntry);
       content = this.props.selectedEntry.video
     } else if (this.props.entryShow) {
-      console.log("entryShow in Video");
       content = this.props.entry.video
     } else if (this.props.selectedEntry) {
-      console.log("selectedEntry in Video");
-      // console.log("props", this.props);
-      // console.log("entry", this.props.entry);
-      // console.log("selectedEntry", this.props.selectedEntry);
       content = this.props.selectedEntry.video
     } else if (this.props.userRequest) {
-      console.log("userRequest in Video");
-
       content = this.props.selectedRequest.video
     } else if (this.props.requestShow) {
-      console.log("requestShow in Video");
       content = this.props.request.video
     }
 
@@ -99,7 +88,6 @@ export default class VideoDisplay extends Component {
           {videoDisplay}
         </View>
     }
-    console.log("content", content);
     return (
       <View style={styles.container}>
         {display}

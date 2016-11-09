@@ -22,9 +22,7 @@ export default class Main extends Component {
     this.changeScope = this.changeScope.bind(this);
   }
   toggleMenu(isOpen) {
-    if (this.state.isOpen !== isOpen) {
-      this.setState({isOpen})
-    }
+    this.setState({isOpen})
   }
   changeScope(scope) {
     if (this.state.scope !== scope) {
