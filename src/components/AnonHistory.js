@@ -18,7 +18,7 @@ export default class AnonHistory extends Component {
   _onRefresh() {
     const anonID = this.props.anonID
     this.setState({refreshing: true});
-    fetch(`http://192.168.0.102:3000/anon/${anonID}`)
+    fetch(`https://in-knead.herokuapp.com/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage === "No activity.") {
@@ -37,7 +37,7 @@ export default class AnonHistory extends Component {
   }
   componentWillMount() {
     const anonID = this.props.anonID
-    fetch(`http://192.168.0.102:3000/anon/${anonID}`)
+    fetch(`https://in-knead.herokuapp.com/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage === "No activity.") {

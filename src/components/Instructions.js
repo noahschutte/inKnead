@@ -16,7 +16,7 @@ export default class Instructions extends Component {
   }
   // componentWillMount() {
   //   const userID = this.props.activeDonation.creator_id
-    // fetch(`http://192.168.0.102:3000/users/${userID}`)
+    // fetch(`https://in-knead.herokuapp.com/users/${userID}`)
     // .then((response) => response.json())
     // .then((responseJson) => {
     //   if (responseJson.errorMessage) {
