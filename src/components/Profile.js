@@ -52,36 +52,46 @@ export default class Profile extends Component {
       display =
         <View style={styles.wrapper}>
 
+          <View style={styles.profileContainer}>
+            <Image 
+              source={require('../../assets/profile.png')}
+              style={styles.image}
+              />
+          </View>
           <View style={styles.instructionsContainer}>
             <Text style={styles.instructions}>
-              Make sure your email is updated below. If you make a request, a donor will send a gift card to the email address that is listed below.
+              Make sure your email is updated below.{"\n"}If you make a request, a donor will send{"\n"}a gift card to the email address{"\n"}that is listed below.
             </Text>
           </View>
 
-          <View style={styles.currentEmail}>
-            <Text style={styles.title}>
-              Current Email:
-            </Text>
+          <View style={styles.emailContainer}>
+            <View style={styles.currentEmail}>
+              <Text style={styles.title}>
+                Current Email:
+              </Text>
 
-            <Text style={styles.email}>
-              {this.props.currentEmail}
-            </Text>
-          </View>
+              <View style={styles.currentEmailContainer}>
+                <Text style={styles.email}>
+                  {this.props.currentEmail}
+                </Text>
+              </View>
+            </View>
 
-          <View style={styles.updateEmail}>
-            <Text style={styles.title}>
-              Update Email:
-            </Text>
+            <View style={styles.updateEmail}>
+              <Text style={styles.title}>
+                Update Email:
+              </Text>
 
-            <TextInput
-              onChangeText={this.onEmailChange}
-              maxLength = {254}
-              autoCorrect={false}
-              autoCapitalize = "none"
-              value={this.state.updatedEmail}
-              style={styles.input}
-              />
+              <TextInput
+                onChangeText={this.onEmailChange}
+                maxLength = {254}
+                autoCorrect={false}
+                autoCapitalize = "none"
+                value={this.state.updatedEmail}
+                style={styles.input}
+                />
 
+            </View>
           </View>
 
           <View style={styles.errorContainer}>
@@ -123,17 +133,36 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 9,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    // justifyContent: 'space-around',
     backgroundColor: 'white',
-    borderColor: 'green',
-    borderWidth: 3,
+    // justifyContent: 'space-around',
+    // borderColor: 'green',
+    // borderWidth: 3,
+  },
+  profileContainer: {
+    flex: 3,
+    paddingTop: 10,
+    // alignItems: 'center',
+    // justifyContent: 'center'
   },
   instructionsContainer: {
+    flex: 1,
     // width: 250,
+  },
+  emailContainer: {
+    flex: 2,
+  },
+  image: {
+    height: 200,
+    width: 200,
+    borderRadius: 200/2,
   },
   instructions: {
     textAlign: 'center',
+    fontFamily: 'Gillsans',
+    fontSize: 20,
+    fontStyle: 'italic'
   },
   input: {
     fontSize: 15,
@@ -147,30 +176,41 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
   },
+  currentEmailContainer: {
+    // alignItems: 'stretch',
+    // backgroundColor: 'white'
+  },
   currentEmail: {
     marginTop: 30,
     marginBottom: 30,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   updateEmail: {
   },
   title: {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 15,
+    fontFamily: 'Gillsans',
+    fontSize: 20,
   },
   updatedEmailButtonContainer: {
     marginBottom: 50,
+    width: 100,
+    // alignItems: 'center',
+    // justifyContent: 'center'
   },
   updatedEmailButton: {
-    // height: 50,
+    
   },
   email: {
     textAlign: 'center',
     marginTop: 5,
+    fontFamily: 'Gillsans',
+    fontSize: 20,
   },
   errorContainer: {
-    height: 40,
+    // height: 40,
+    flex: 1
   },
   error: {
     textAlign: 'center',
@@ -180,6 +220,7 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    flex: 1,
+    // justifyContent: 'center',
   },
 });
