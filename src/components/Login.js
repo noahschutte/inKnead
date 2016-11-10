@@ -17,6 +17,8 @@ export default class Login extends Component {
     .then((responseJson) => {
       this.props.onUserChange(responseJson.user)
       this.props.onEmailChange(responseJson.email)
+      this.props.collectActiveDonation(responseJson.activeDonation)
+      this.props.collectAnonEmail(responseJson.anonEmail)
       if (this.props.guestDonation) {
         this.props.handleGuestDonation(false)
         this.props.navigator.pop();
