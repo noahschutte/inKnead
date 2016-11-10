@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
+import { View, TouchableHighlight, Text, StyleSheet, Image } from 'react-native';
 
 export default class Menu extends Component {
   onMainButtonPress() {
@@ -25,6 +25,10 @@ export default class Menu extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image 
+          source={require('../../assets/profile.png')}
+          style={styles.image}
+          />
         <TouchableHighlight onPress={this.onMainButtonPress.bind(this)}
         style={styles.button}>
           <Text style={styles.instructions}>
@@ -64,20 +68,24 @@ export default class Menu extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray',
-    justifyContent: 'center',
+    backgroundColor: '#424242',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    borderColor: 'yellow',
-    borderWidth: 3,
+    paddingTop: 100,
+    paddingBottom: 100
   },
   button: {
     alignSelf: 'stretch',
-    borderColor: 'black',
-    borderWidth: 2,
   },
   instructions: {
     textAlign: 'center',
-    fontWeight: 'bold',
     fontSize: 20,
+    color: 'white',
+    fontFamily: 'Gillsans'
+  },
+  image: {
+    height: 100,
+    width: 100,
+    borderRadius: 100/2,
   }
 })
