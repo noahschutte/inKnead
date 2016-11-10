@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Camera from 'react-native-camera';
 
 export default class Example extends React.Component {
