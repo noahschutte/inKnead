@@ -49,8 +49,9 @@
       "scale" : "1x"
     },
     {
-      "idiom" : "iphone",
       "size" : "57x57",
+      "idiom" : "iphone",
+      "filename" : "iTunesArtwork@2x-114x114.png",
       "scale" : "2x"
     },
     {
