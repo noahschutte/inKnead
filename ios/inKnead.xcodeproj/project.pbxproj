@@ -22,14 +22,14 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		46A80026D7834C8ABB0B505C /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5468ECF9CCAC4D2BBA413897 /* libRCTFBSDK.a */; };
+		6AB1DD421DD3FCF800142FBF /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A8A1A141DC1325D005DF284 /* libRCTCamera.a */; };
+		6AB1DD431DD3FD0600142FBF /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A8A19DE1DC12EB2005DF284 /* libRCTFBSDK.a */; };
+		6AB1DD441DD3FD1200142FBF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A8A1A451DC132B2005DF284 /* libRCTVideo.a */; };
 		6ACCFACC1DC3C5FA008B470F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACCFAC81DC3C5FA008B470F /* Bolts.framework */; };
 		6ACCFACD1DC3C5FB008B470F /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACCFAC91DC3C5FA008B470F /* FBSDKCoreKit.framework */; };
 		6ACCFACE1DC3C5FB008B470F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACCFACA1DC3C5FA008B470F /* FBSDKLoginKit.framework */; };
 		6ACCFACF1DC3C5FB008B470F /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACCFACB1DC3C5FA008B470F /* FBSDKShareKit.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		98E706AED3494511A5C2AA5F /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B6E6729905047ECAF078781 /* libRCTVideo.a */; };
-		D32B39E5E102454BACB5A9E4 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 687D46AB631F4610BB72A773 /* libRCTCamera.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,14 +204,11 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = inKnead/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1C99C740EAE7417CAE964FD8 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
-		5468ECF9CCAC4D2BBA413897 /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
-		687D46AB631F4610BB72A773 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 		6ACCFAC81DC3C5FA008B470F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../Documents/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		6ACCFAC91DC3C5FA008B470F /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		6ACCFACA1DC3C5FA008B470F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		6ACCFACB1DC3C5FA008B470F /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		6ACCFAD01DC3C79C008B470F /* inKnead.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = inKnead.entitlements; path = inKnead/inKnead.entitlements; sourceTree = "<group>"; };
-		6B6E6729905047ECAF078781 /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		976F7D5166204AE591F9EBE0 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
@@ -230,6 +227,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AB1DD441DD3FD1200142FBF /* libRCTVideo.a in Frameworks */,
+				6AB1DD431DD3FD0600142FBF /* libRCTFBSDK.a in Frameworks */,
+				6AB1DD421DD3FCF800142FBF /* libRCTCamera.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				6ACCFACF1DC3C5FB008B470F /* FBSDKShareKit.framework in Frameworks */,
@@ -242,9 +242,6 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				6ACCFACD1DC3C5FB008B470F /* FBSDKCoreKit.framework in Frameworks */,
-				46A80026D7834C8ABB0B505C /* libRCTFBSDK.a in Frameworks */,
-				D32B39E5E102454BACB5A9E4 /* libRCTCamera.a in Frameworks */,
-				98E706AED3494511A5C2AA5F /* libRCTVideo.a in Frameworks */,
 				6ACCFACE1DC3C5FB008B470F /* FBSDKLoginKit.framework in Frameworks */,
 				6ACCFACC1DC3C5FA008B470F /* Bolts.framework in Frameworks */,
 			);

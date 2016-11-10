@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
-import ViewPager from 'react-native-viewpager';
+import ViewPager from 'rn-viewpager';
 
 const deviceWidth = Dimensions.get('window').width;
 
