@@ -11,6 +11,9 @@ export default class Activity extends Component {
     return (
       <View style={styles.container}>
         <SegmentedControls
+          containerBorderTint={'white'}
+          containerBorderWidth={1}
+          containerBorderRadius={5}
           tint={'#ce0000'}
           options={ scope }
           onSelection={ this.props.changeScope.bind(this) }
@@ -27,7 +30,5 @@ const styles = StyleSheet.create({
     // flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
-    borderColor: 'purple',
-  },
+  }
 })

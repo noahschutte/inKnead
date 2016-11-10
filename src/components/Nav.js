@@ -53,19 +53,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ce0000',
     flexDirection: 'row',
-    borderColor: 'blue',
-    borderWidth: 3,
+    // borderColor: 'blue',
+    // borderWidth: 3,
   },
   leftBox: {
     flex: 1,
-    borderColor: 'yellow',
+    // borderColor: 'yellow',
     // borderWidth: 3,
   },
   centerBox: {
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: 'purple',
+    // borderColor: 'purple',
     // borderWidth: 2,
   },
   rightBox: {
