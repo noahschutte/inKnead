@@ -30,12 +30,12 @@ export default class Swiper extends Component {
       <View style={styles.container}>
         <IndicatorViewPager
           style={{flex:1}}
-          indicator={this._renderTabIndicator()}
+          indicator={this._renderDotIndicator()}
           >
           <View style={styles.steps}>
             <Text style={styles.text}>How It Works{"\n"}(Step 1)</Text>
-            <Image 
-              style={styles.donate} 
+            <Image
+              style={styles.donate}
               source={require('../../assets/donate.png')}
             />
             <Text style={styles.textBottom}>watch a video request,{"\n"}or make it your own</Text>
@@ -89,7 +89,7 @@ export default class Swiper extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderColor: 'orange',
+    // borderColor: 'orange',
     // borderWidth: 3,
   },
   steps: {
