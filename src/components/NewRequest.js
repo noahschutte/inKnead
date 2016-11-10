@@ -16,6 +16,8 @@ export default class NewRequest extends Component {
       pizzas: '',
       vendor: '',
       videoKey: '',
+      uploading: false,
+      progress: null,
     };
     this.onPizzasChange = this.onPizzasChange.bind(this);
     this.onVendorChange = this.onVendorChange.bind(this);
@@ -26,6 +28,21 @@ export default class NewRequest extends Component {
   onVendorChange(vendor) {
     this.setState({vendor})
   }
+  // uploadFile(file, signedRequest) {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open('PUT', signedRequest);
+  //   xhr.onreadystatechange = function() {
+  //     if (xhr.readyState === 4) {
+  //       if(xhr.status === 200) {
+  //         console.log("success");
+  //       } else {
+  //         console.log("failure");
+  //       }
+  //       this.setState({uploading: false})
+  //     }
+  //   };
+  //   xhr.send(file);
+  // };
   onSubmitRequest() {
     const userID = this.props.user.id
     const first_name = this.props.user.first_name
@@ -53,8 +70,6 @@ export default class NewRequest extends Component {
         vendor,
       } = this.state;
 
-      let options = {};
-
       fetch('https://in-knead.herokuapp.com/requests', {
         headers: {
           'Accept': 'application/json',
@@ -72,54 +87,58 @@ export default class NewRequest extends Component {
       .then((response) => {
         return response.json()})
       .then((responseJson) => {
+        console.log("responseJson", responseJson);
         if (responseJson.errorMessage) {
           this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
         } else {
-          options = {
-            keyPrefix: "uploads/",
-            bucket: responseJson.signedRequest.bucket_name,
-            region: responseJson.signedRequest.bucket_region,
-            accessKey: responseJson.signedRequest.credentials.access_key_id,
-            secretKey: responseJson.signedRequest.credentials.secret_access_key,
-            successActionStatus: responseJson.signedRequest.fields.success_action_status,
-          }
+          this.setState({uploading: true})
           this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
           this.props.collectRequests(responseJson.requests)
-          RNS3.put(file, options)
-          .then(response => {
-            if (response.status !== 201) {
-              // throw new Error("Failed to upload image to S3");
-              // DELETE NEW REQUEST FROM DB
-              const userID = this.props.user.id
-              fetch(`https://in-knead.herokuapp.com/requests/1`, {
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                method: 'DELETE',
-                body: JSON.stringify({videoKey})
-              })
-              .then((response) => {
-                return response.json()
-              })
-              .then((responseJson) => {
-                if (responseJson.requests) {
-                  this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-                  this.props.collectRequests(responseJson.requests)
-                  this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
-                } else {
-                  this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
-                }
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-            } else {
-              this.props.onChangeVideoData(null)
-              this.props.navigator.resetTo({name: 'main'});
+          console.log("start fetch with signedRequest");
+          const url = responseJson.signedRequest
+          // this.uploadFile.bind(this, file, url)
+          const xhr = new XMLHttpRequest();
+          const that = this;
+          xhr.open('PUT', url);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+              if(xhr.status === 200) {
+                console.log("success");
+                that.props.onChangeVideoData(null)
+                that.props.navigator.resetTo({name: 'main'});
+
+              } else {
+                console.log("failure");
+                const userID = that.props.user.id
+                fetch(`https://in-knead.herokuapp.com/requests/1`, {
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  method: 'DELETE',
+                  body: JSON.stringify({videoKey})
+                })
+                .then((response) => {
+                  return response.json()
+                })
+                .then((responseJson) => {
+                  if (responseJson.requests) {
+                    that.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+                    that.props.collectRequests(responseJson.requests)
+                    that.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+                  } else {
+                    that.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+                  }
+                  that.setState({uploading: false})
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+                that.setState({uploading: false})
+              }
             }
-          })
-          .progress((e) => console.log(e.loaded / e.total))
+          };
+          xhr.send(file);
         }
       })
       .catch((error) => {
@@ -127,6 +146,42 @@ export default class NewRequest extends Component {
       });
     }
   }
+
+  // RNS3.put(file, options)
+  // .then(response => {
+  //   if (response.status !== 201) {
+  //     const userID = this.props.user.id
+  //     fetch(`https://in-knead.herokuapp.com/requests/1`, {
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       method: 'DELETE',
+  //       body: JSON.stringify({videoKey})
+  //     })
+  //     .then((response) => {
+  //       return response.json()
+  //     })
+  //     .then((responseJson) => {
+  //       if (responseJson.requests) {
+  //         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+  //         this.props.collectRequests(responseJson.requests)
+  //         this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+  //       } else {
+  //         this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+  //       }
+  //       this.setState({uploading: false})
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //   } else {
+  //     this.props.onChangeVideoData(null)
+  //     this.props.navigator.resetTo({name: 'main'});
+  //   }
+  // })
+  // .progress((e) => this.setState({progress: (e.loaded / e.total)}))
+
 
   openVideoRec() {
     Camera.checkDeviceAuthorizationStatus()
@@ -168,30 +223,45 @@ export default class NewRequest extends Component {
       recordButtonDisplay = 'Record'
     }
     let display;
-    if (this.props.user === null) {
-      display = <GuestView {...this.props} />
+    if (this.state.uploading) {
+      display =
+        <View style={styles.container}>
+          <Text>
+            Please wait while your request video is being uploaded
+          </Text>
+          <Text>
+            {this.state.progress}
+          </Text>
+        </View>
+    } else if (this.props.user === null) {
+      display =
+        <View style={styles.container}>
+          <Nav backButton {...this.props} />
+          <GuestView {...this.props} />
+        </View>
     } else {
       display =
-        <View style={styles.wrapper}>
-          <View style={styles.videoContainer}>
-            {videoDisplay}
-          </View>
-          <View style={styles.formContainer}>
-
-            <View>
-              
-              <Button
-                color='#ce0000'
-                text={recordButtonDisplay}
-                onPress={this.openVideoRec.bind(this)}
-                />
+        <View style={styles.container}>
+          <Nav backButton {...this.props} />
+          <View style={styles.wrapper}>
+            <View style={styles.videoContainer}>
+              {videoDisplay}
             </View>
+            <View style={styles.formContainer}>
 
-            <View style={styles.banner}>
-              <Text style={styles.bannerText}>
-                # OF PIZZAS
-              </Text>
-            </View>
+              <View>
+                <Button
+                  color='#ce0000'
+                  text={recordButtonDisplay}
+                  onPress={this.openVideoRec.bind(this)}
+                  />
+              </View>
+
+              <View style={styles.banner}>
+                <Text style={styles.bannerText}>
+                  # OF PIZZAS
+                </Text>
+              </View>
 
             <View style={styles.pizza}>
               <SegmentedControls
@@ -207,6 +277,13 @@ export default class NewRequest extends Component {
               </Text>
             </View>
             <View style={styles.controls}>
+
+              <View style={styles.banner}>
+                <Text style={styles.bannerText}>
+                VENDOR NEAR YOU
+                </Text>
+              </View>
+
               <SegmentedControls
                 tint={'#ce0000'}
                 fontSize={50}
@@ -214,6 +291,7 @@ export default class NewRequest extends Component {
                 onSelection={ this.selectVendor.bind(this) }
                 selectedOption={ this.state.vendor }
                 />
+
             </View>
             <View style={styles.errorContainer}>
               <Text style={styles.error}>
@@ -227,13 +305,26 @@ export default class NewRequest extends Component {
               text={'Submit Request'}
               onPress={this.onSubmitRequest.bind(this)}
               />
+
+              <View style={styles.errorContainer}>
+                <Text style={styles.error}>
+                  {this.props.newRequestErrorMessage}
+                </Text>
+              </View>
+
+
+              <Button
+                style={styles.submitButton}
+                text={'Submit Request'}
+                onPress={this.onSubmitRequest.bind(this)}
+                />
+            </View>
           </View>
         </View>
     }
-
+    console.log("progress", this.state.progress);
     return (
       <View style={styles.container}>
-        <Nav backButton {...this.props} />
         {display}
       </View>
     );
