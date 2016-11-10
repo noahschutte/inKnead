@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
 import Button from './Button';
 import { SegmentedControls } from 'react-native-radio-buttons';
 import Nav from './Nav';
@@ -215,6 +215,16 @@ export default class NewRequest extends Component {
     if (this.props.videoData) {
       videoDisplay =
         <Video preview {...this.props} />
+    } 
+    else {
+      videoDisplay =
+        <TouchableHighlight 
+          onPress={this.openVideoRec.bind(this)}>
+            <Image
+              source={require('../../assets/playButton.png')}
+              style={styles.playButton}
+            />
+        </TouchableHighlight>
     }
     let recordButtonDisplay;
     if (this.props.videoData) {
@@ -243,81 +253,57 @@ export default class NewRequest extends Component {
       display =
         <View style={styles.container}>
           <Nav backButton {...this.props} />
-          <View style={styles.wrapper}>
-            <View style={styles.videoContainer}>
-              {videoDisplay}
-            </View>
-            <View style={styles.formContainer}>
+            <View style={styles.wrapper}>
 
-              <View>
+              <View style={styles.videoContainer}>
+                {videoDisplay}
+              </View>
+
+              <View style={styles.formContainer}>
+
+                <View style={styles.banner}>
+                  <Text style={styles.bannerText}>
+                    # OF PIZZAS
+                  </Text>
+                </View>
+
+                <View style={styles.pizza}>
+                  <SegmentedControls
+                    tint={'#ce0000'}
+                    options={ pizzas }
+                    onSelection={ this.selectPizzas.bind(this) }
+                    selectedOption={ this.state.pizzas }
+                    />
+                </View>
+
+                <View style={styles.banner}>
+                  <Text style={styles.bannerText}>
+                  VENDOR NEAR YOU
+                  </Text>
+                </View>
+
+                <View style={styles.controls}>
+                  <SegmentedControls
+                    tint={'#ce0000'}
+                    fontSize={50}
+                    options={ vendors }
+                    onSelection={ this.selectVendor.bind(this) }
+                    selectedOption={ this.state.vendor }
+                    />
+                </View>
+
+                <View style={styles.errorContainer}>
+                  <Text style={styles.error}>
+                    {this.props.newRequestErrorMessage}
+                  </Text>
+                </View>
+
                 <Button
                   color='#ce0000'
-                  text={recordButtonDisplay}
-                  onPress={this.openVideoRec.bind(this)}
+                  text={'Submit Request'}
+                  onPress={this.onSubmitRequest.bind(this)}
                   />
-              </View>
 
-              <View style={styles.banner}>
-                <Text style={styles.bannerText}>
-                  # OF PIZZAS
-                </Text>
-              </View>
-
-            <View style={styles.pizza}>
-              <SegmentedControls
-                tint={'#ce0000'}
-                options={ pizzas }
-                onSelection={ this.selectPizzas.bind(this) }
-                selectedOption={ this.state.pizzas }
-                />
-            </View>
-            <View style={styles.banner}>
-              <Text style={styles.bannerText}>
-              VENDOR NEAR YOU
-              </Text>
-            </View>
-            <View style={styles.controls}>
-
-              <View style={styles.banner}>
-                <Text style={styles.bannerText}>
-                VENDOR NEAR YOU
-                </Text>
-              </View>
-
-              <SegmentedControls
-                tint={'#ce0000'}
-                fontSize={50}
-                options={ vendors }
-                onSelection={ this.selectVendor.bind(this) }
-                selectedOption={ this.state.vendor }
-                />
-
-            </View>
-            <View style={styles.errorContainer}>
-              <Text style={styles.error}>
-                {this.props.newRequestErrorMessage}
-              </Text>
-            </View>
-
-
-            <Button
-              color='#ce0000'
-              text={'Submit Request'}
-              onPress={this.onSubmitRequest.bind(this)}
-              />
-
-              <View style={styles.errorContainer}>
-                <Text style={styles.error}>
-                  {this.props.newRequestErrorMessage}
-                </Text>
-              </View>
-
-
-              <Button
-                style={styles.submitButton}
-                text={'Submit Request'}
-                onPress={this.onSubmitRequest.bind(this)}
-                />
             </View>
           </View>
         </View>
@@ -344,8 +330,11 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     flex: 2,
-    borderColor: 'green',
-    borderWidth: 2,
+    backgroundColor: '#BDBDBD',
+    alignItems: 'center',
+    justifyContent: 'center'
+    // borderColor: 'green',
+    // borderWidth: 2,
   },
   formContainer: {
     flex: 3,
@@ -397,5 +386,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#ce0000',
+  },
+  playButton: {
+    width: 50,
+    height: 50,
+    // top: 100,
+    // left: 100,
   },
 });
