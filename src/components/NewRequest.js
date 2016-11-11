@@ -215,8 +215,7 @@ export default class NewRequest extends Component {
     if (this.props.videoData) {
       videoDisplay =
         <Video preview {...this.props} />
-    }
-    else {
+    } else {
       videoDisplay =
         <TouchableHighlight
           onPress={this.openVideoRec.bind(this)}>
