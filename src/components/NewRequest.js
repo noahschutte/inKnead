@@ -215,10 +215,10 @@ export default class NewRequest extends Component {
     if (this.props.videoData) {
       videoDisplay =
         <Video preview {...this.props} />
-    } 
+    }
     else {
       videoDisplay =
-        <TouchableHighlight 
+        <TouchableHighlight
           onPress={this.openVideoRec.bind(this)}>
             <Image
               source={require('../../assets/playButton.png')}
@@ -308,7 +308,7 @@ export default class NewRequest extends Component {
           </View>
         </View>
     }
-    console.log("progress", this.state.progress);
+    // console.log("progress", this.state.progress);
     return (
       <View style={styles.container}>
         {display}
