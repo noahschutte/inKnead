@@ -15,16 +15,42 @@ export default class Request extends Component {
     let request = this.props.selectedRequest;
 
     let requestText;
-    if (request.pizzas > 1) {
+    if (request.pizzas === 1) {
       requestText =
-        <Text style={styles.request}>
-          {request.pizzas} pizzas from {request.vendor}
-        </Text>
+      <View style={styles.pizzas}>
+        <Image 
+          style={styles.pizzaImage}
+          source={require('../../assets/playButton.png')} 
+          />
+      </View>
+    } else if (request.pizzas === 2) {
+       requestText =
+        <View style={styles.pizzas}>
+          <Image 
+            style={styles.pizzaImage}
+            source={require('../../assets/playButton.png')} 
+            />
+          <Image 
+            style={styles.pizzaImage}
+            source={require('../../assets/playButton.png')} 
+            />
+        </View>
     } else {
       requestText =
-        <Text style={styles.request}>
-          {request.pizzas} pizza from {request.vendor}
-        </Text>
+        <View style={styles.pizzas}>
+          <Image 
+            style={styles.pizzaImage}
+            source={require('../../assets/playButton.png')} 
+            />
+          <Image 
+            style={styles.pizzaImage}
+            source={require('../../assets/playButton.png')} 
+            />
+          <Image 
+            style={styles.pizzaImage}
+            source={require('../../assets/playButton.png')} 
+            />
+        </View>
     }
     let timeAgo;
     let displayTime;
@@ -56,14 +82,16 @@ export default class Request extends Component {
           </View>
           <View style={styles.infoContainer}>
             <View style={styles.header}>
-              <Text style={styles.anon}>
-                Anon
-              </Text>
+              <View style={styles.date}>
+                <Text style={styles.dateTime}>
+                  {displayTime}
+                </Text>
+              </View>
               {requestText}
-              <Text style={styles.dateTime}>
-                {displayTime}
-              </Text>
             </View>
+          </View>
+          <View>
+
           </View>
         </TouchableOpacity>
       </View>
@@ -74,18 +102,26 @@ export default class Request extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 2,
+    // marginBottom: 2
   },
   wrapper: {
     flex: 1,
     flexDirection: 'row',
-    borderColor: 'yellow',
-    borderWidth: 3,
+    borderBottomColor: '#BDBDBD',
+    borderTopColor: '#BDBDBD',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    // borderColor: 'yellow',
+    // borderWidth: 3,
   },
   videoContainer: {
     flex: 1,
+    margin: 5,
   },
   infoContainer: {
     flex: 1,
+    margin: 5,
   },
   header: {
     justifyContent: 'center',
@@ -99,10 +135,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // borderWidth: 3,
   },
+  date: {
+    alignItems: 'flex-end'
+  },
   dateTime: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: 10,
     fontWeight: 'bold',
   },
   request: {
@@ -110,7 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     // borderWidth: 3,
-    borderColor: 'green',
+    // borderColor: 'green',
   },
   donateButton: {
     width: 200,
@@ -131,10 +170,10 @@ const styles = StyleSheet.create({
   instructionsContainer: {
     // zIndex: 1,
     // flex: 1,
-    borderWidth: 1,
+    // borderWidth: 1,
     // marginTop: 15,
     // borderRadius: 5,
-    borderColor: 'green',
+    // borderColor: 'green',
     // backgroundColor: 'green',
   },
   instructions: {
@@ -148,4 +187,13 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
   },
+  pizzaImage: {
+    height: 50,
+    width: 50,
+  },
+  pizzas: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    
+  }
 })
