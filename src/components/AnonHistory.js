@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
   },
   listViewContainer: {
     flex: 1,
-    borderColor: 'blue',
-    borderWidth: 3,
+    // borderColor: 'blue',
+    // borderWidth: 3,
   },
   // wrapper: {
   //   marginTop: 50,

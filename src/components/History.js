@@ -132,19 +132,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 9,
     backgroundColor: 'white',
-    borderWidth: 3,
-    borderColor: 'green',
+    // borderWidth: 3,
+    // borderColor: 'green',
   },
   listViewContainer: {
     flex: 1,
-    borderColor: 'red',
-    borderWidth: 3,
+    // borderColor: 'red',
+    // borderWidth: 3,
   },
   wrapper: {
     marginTop: 50,
     // flex: 1,
     // borderWidth: 3,
-    borderColor: 'red',
+    // borderColor: 'red',
   },
   text: {
     flex: 1,
