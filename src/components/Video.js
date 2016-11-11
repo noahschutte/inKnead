@@ -104,8 +104,6 @@ const styles = StyleSheet.create({
     // width: 250,
     // alignItems: 'center',
     // justifyContent: 'center',
-    borderColor: 'red',
-    borderWidth: 2,
   },
   video: {
     flex: 1,
@@ -127,8 +125,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1,
-    borderColor: 'orange',
-    borderWidth: 2,
+    // borderColor: 'orange',
+    // borderWidth: 2,
   },
   playButton: {
     width: 50,

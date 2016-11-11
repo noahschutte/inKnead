@@ -144,45 +144,71 @@ export default class RequestShow extends Component {
     return (
       <View style={styles.container}>
         <Nav backButton {...this.props} />
+
         <View style={styles.wrapper}>
-          <Video requestShow {...this.props} />
+
+          <View style={styles.videoContainer}>
+            <Video requestShow {...this.props} />
+          </View>
+
           <View style={styles.content}>
+
             <View style={styles.videoFooter}>
               <Text style={styles.dateTime}>
                 {displayTime}
               </Text>
               <TouchableOpacity onPress={this.showAnonHistory.bind(this)} >
                 <Text style={styles.history}>
-                  View User History
+                  User History
                 </Text>
               </TouchableOpacity>
+              <View>
+                <Text>
+                  (3 Dots)
+                </Text>
+              </View>
             </View>
+
             <View style={styles.banner}>
               <Text style={styles.bannerText}>
                 REQUESTED
               </Text>
             </View>
-            <Text style={{textAlign: 'center'}}>
-              (Image Placeholder)
-            </Text>
+
+            <View style={styles.pizzaPlaceholder}>
+              <Text style={{textAlign: 'center'}}>
+                (Image Placeholder)
+              </Text>
+            </View>
+
             <View style={styles.banner}>
               <Text style={styles.bannerText}>
                 VENDOR
               </Text>
             </View>
-            <Text style={{textAlign: 'center'}}>
-              (Image Placeholder)
-            </Text>
-            <View style={styles.donationButtonContainer}>
-              {hasDonor}
-              {showDonateButton}
-            </View>
-            <View style={styles.errorMessageContainer}>
-              <Text style={styles.errorMessage}>
-                {this.state.errorMessage}
+
+            <View style={styles.logoPlaceholder}>
+              <Text style={{textAlign: 'center'}}>
+                (Image Placeholder)
               </Text>
             </View>
-            {activeDonation}
+
+            {hasDonor}
+            <View style={styles.bottomHalf}>
+              <View style={styles.donationButtonContainer}>
+                {showDonateButton}
+              </View>
+
+              <View style={styles.errorMessageContainer}>
+                <Text style={styles.errorMessage}>
+                  {this.state.errorMessage}
+                </Text>
+              </View>
+
+              <View>
+                {activeDonation}
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -196,25 +222,45 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 9,
+    backgroundColor: 'white',
+  },
+  videoContainer: {
+    flex: 2,
+    // alignItems: 'center',
+    // justifyContent: 'center'
+    // borderColor: 'green',
+    // borderWidth: 2,
   },
   content: {
-    flex: 1,
-    borderColor: 'green',
-    borderWidth: 2,
+    flex: 3,
+    // borderColor: 'green',
+    // borderWidth: 2,
   },
   videoFooter: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    borderColor: 'purple',
-    borderWidth: 2,
+    justifyContent: 'space-between',
+    // borderColor: 'purple',
+    // borderWidth: 2,
+    padding: 5,
+  },
+  history: {
+    textDecorationLine: 'underline',
+    fontWeight: 'bold'
   },
   banner: {
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: '#424242',
+    alignSelf: 'stretch',
+    padding: 5
   },
   bannerText: {
     color: 'white',
+  },
+  bottomHalf: {
+    padding: 20,
+    // borderWidth: 3,
+    // borderColor: 'black',
   },
   header: {
     justifyContent: 'center',
@@ -229,7 +275,7 @@ const styles = StyleSheet.create({
   },
   dateTime: {
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: 10,
     fontWeight: 'bold',
   },
   request: {
@@ -237,12 +283,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     // borderWidth: 3,
-    borderColor: 'green',
+    // borderColor: 'green',
   },
   donationButtonContainer: {
     alignItems: 'center',
-    borderColor: 'red',
-    borderWidth: 2,
+    // borderColor: 'red',
+    // borderWidth: 2,
+    paddingTop: 10,
   },
   donateButton: {
     width: 200,
@@ -266,6 +313,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     // marginTop: 15,
     // borderRadius: 5,
+    paddingTop: 10,
     borderColor: 'green',
     backgroundColor: 'green',
   },
@@ -277,12 +325,22 @@ const styles = StyleSheet.create({
     // padding: 5,
   },
   errorMessageContainer: {
-    borderColor: 'blue',
-    borderWidth: 3,
+    // borderColor: 'blue',
+    // borderWidth: 3,
+    marginTop: 20,
+    // marginTop: 10,
   },
   errorMessage: {
     textAlign: 'center',
     color: 'red',
     fontWeight: 'bold',
+  },
+  pizzaPlaceholder: {
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  logoPlaceholder: {
+    paddingTop: 5,
+    paddingBottom: 5,
   },
 })
