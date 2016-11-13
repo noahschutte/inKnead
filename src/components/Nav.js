@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { StatusBar, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import ProfileButton from './ProfileButton';
 import NewRequestButton from './NewRequestButton';
 import BackButton from './BackButton';
@@ -31,9 +31,12 @@ export default class Nav extends Component {
     //       Anon History
     //     </Text>
     // }
-
+    const statusBarHidden = false
     return (
       <View style={styles.container}>
+        <StatusBar
+          hidden={statusBarHidden}
+          />
         <View style={styles.leftBox}>
           {leftButton}
         </View>
@@ -53,6 +56,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ce0000',
     flexDirection: 'row',
+    paddingTop: 10,
+    // marginTop: 16,
     // borderColor: 'blue',
     // borderWidth: 3,
   },
