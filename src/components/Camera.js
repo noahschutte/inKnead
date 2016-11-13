@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Dimensions, StatusBar, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Camera from 'react-native-camera';
 
 export default class Example extends React.Component {
@@ -119,8 +119,10 @@ export default class Example extends React.Component {
     this.props.navigator.pop();
   }
   render() {
+    const statusBarHidden = true
+
     let showRecordButton;
-    if (!this.state.isRecording)
+    if (!this.state.isRecording) {
       showRecordButton =
         <TouchableOpacity
           style={styles.captureButton}
@@ -130,7 +132,7 @@ export default class Example extends React.Component {
             source={require('../../assets/ic_videocam_36pt.png')}
           />
         </TouchableOpacity>;
-    else
+    } else {
       showRecordButton =
         <TouchableOpacity
           style={styles.captureButton}
@@ -140,8 +142,12 @@ export default class Example extends React.Component {
             source={require('../../assets/ic_stop_36pt.png')}
             />
         </TouchableOpacity>
+    }
     return (
       <View style={styles.container}>
+        <StatusBar
+          hidden={statusBarHidden}
+          />
         <Camera
           captureAudio={true}
           ref={(cam) => {
@@ -152,9 +158,10 @@ export default class Example extends React.Component {
           captureTarget={this.state.camera.captureTarget}
           type={this.state.camera.type}
           flashMode={this.state.camera.FlashMode}
-          defaultTouchToFocus={true}
+          defaultTouchToFocus
           mirrorImage={true}
-        />
+          />
+
         <View style={[styles.overlay, styles.topOverlay]}>
           <TouchableOpacity
             style={styles.typeButton}
@@ -198,6 +205,8 @@ const styles = StyleSheet.create({
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
     alignItems: 'center',
   },
   overlay: {

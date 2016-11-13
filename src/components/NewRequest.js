@@ -217,13 +217,18 @@ export default class NewRequest extends Component {
         <Video preview {...this.props} />
     } else {
       videoDisplay =
-        <TouchableHighlight
-          onPress={this.openVideoRec.bind(this)}>
-            <Image
-              source={require('../../assets/playButton.png')}
-              style={styles.playButton}
-            />
-        </TouchableHighlight>
+        <Button
+          color='#ce0000'
+          text={'Record'}
+          onPress={this.openVideoRec.bind(this)}
+          />
+        // <TouchableHighlight
+        //   onPress={this.openVideoRec.bind(this)}>
+        //     <Image
+        //       source={require('../../assets/playButton.png')}
+        //       style={styles.playButton}
+        //     />
+        // </TouchableHighlight>
     }
     let recordButtonDisplay;
     if (this.props.videoData) {
