@@ -7,9 +7,8 @@ export default class GuestView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.wrapper}>
           <View style={styles.top}>
-            <Image style={styles.image} source={require('../../assets/donate.png')} />
+            <Image style={styles.image} source={require('../../assets/pizza-icon/pizza-icon.png')} />
             <Text style={styles.title}>
               in knead
             </Text>
@@ -27,7 +26,6 @@ export default class GuestView extends Component {
               {...this.props}
               />
           </View>
-        </View>
       </View>
     )
   }
@@ -40,30 +38,33 @@ const styles=StyleSheet.create({
     backgroundColor: '#ce0000',
   },
   top: {
-    flex: 2,
-    alignItems: 'center'
+    flex: 3,
+    alignItems: 'center',
   },
   bottom: {
     flex: 1,
     alignItems: 'center',
   },
   image: {
-    height: 100,
-    width: 200
+    height: 205,
+    width: 200,
+    borderRadius: 100/2,
   },
   wrapper: {
     flex: 1,
     marginTop: 100,
     justifyContent: 'flex-start',
-    // borderWidth: 2,
   },
   title: {
     marginVertical: 20,
-    fontSize: 45,
-    color: 'white'
+    fontSize: 55,
+    color: 'white',
+    fontFamily: 'Gillsans'
   },
   text: {
     marginBottom: 30,
-    color: 'white'
+    fontSize: 16,
+    color: 'white',
+    fontFamily: 'Gillsans',
   },
 })
