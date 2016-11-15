@@ -65,18 +65,7 @@ export default class VideoDisplay extends Component {
     let display;
     if (this.props.userRequest || this.props.anonEntry) {
       display = videoDisplay
-    } else if (this.props.preview) {
-      display =
-        <View style={styles.container}>
-          <TouchableHighlight
-            style={styles.playButtonContainer}
-            onPress={this.playVideo}
-            >
-            {playButton}
-          </TouchableHighlight>
-          {videoDisplay}
-        </View>
-    } else if (this.props.requestShow || this.props.entryShow) {
+    } else if (this.props.preview || this.props.requestShow || this.props.entryShow) {
       display =
         <View style={styles.container}>
           <TouchableHighlight
@@ -100,17 +89,27 @@ export default class VideoDisplay extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    zIndex: 1,
     // height: 250,
     // width: 250,
     // alignItems: 'center',
     // justifyContent: 'center',
+    // borderColor: 'purple',
+    // borderWidth: 2,
   },
   video: {
     flex: 1,
-    height: null,
-    width: null,
+    // top: 0,
+    // bottom: 0,
+    // left: 0,
+    // right: 0,
+    // height: null,
+    // width: null,
     // resizeMode: 'contain',
     // position: 'absolute',
+    zIndex: 2,
+    // borderColor: 'blue',
+    // borderWidth: 2
   },
   image: {
     // height: 250,
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 1,
+    zIndex: 3,
     // borderColor: 'orange',
     // borderWidth: 2,
   },

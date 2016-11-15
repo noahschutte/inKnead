@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
-import Button from './Button';
 import { SegmentedControls } from 'react-native-radio-buttons';
-import Nav from './Nav';
-import GuestView from './GuestView';
-import Video from './Video';
-import { RNS3 } from 'react-native-aws3';
+import Button from './Button';
 import Camera from 'react-native-camera';
+import GuestView from './GuestView';
+import Nav from './Nav';
+import Video from './Video';
 
 export default class NewRequest extends Component {
   constructor(props) {
@@ -28,21 +27,7 @@ export default class NewRequest extends Component {
   onVendorChange(vendor) {
     this.setState({vendor})
   }
-  // uploadFile(file, signedRequest) {
-  //   const xhr = new XMLHttpRequest();
-  //   xhr.open('PUT', signedRequest);
-  //   xhr.onreadystatechange = function() {
-  //     if (xhr.readyState === 4) {
-  //       if(xhr.status === 200) {
-  //         console.log("success");
-  //       } else {
-  //         console.log("failure");
-  //       }
-  //       this.setState({uploading: false})
-  //     }
-  //   };
-  //   xhr.send(file);
-  // };
+
   onSubmitRequest() {
     const userID = this.props.user.id
     const first_name = this.props.user.first_name
@@ -147,42 +132,6 @@ export default class NewRequest extends Component {
     }
   }
 
-  // RNS3.put(file, options)
-  // .then(response => {
-  //   if (response.status !== 201) {
-  //     const userID = this.props.user.id
-  //     fetch(`https://in-knead.herokuapp.com/requests/1`, {
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       method: 'DELETE',
-  //       body: JSON.stringify({videoKey})
-  //     })
-  //     .then((response) => {
-  //       return response.json()
-  //     })
-  //     .then((responseJson) => {
-  //       if (responseJson.requests) {
-  //         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-  //         this.props.collectRequests(responseJson.requests)
-  //         this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
-  //       } else {
-  //         this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
-  //       }
-  //       this.setState({uploading: false})
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  //   } else {
-  //     this.props.onChangeVideoData(null)
-  //     this.props.navigator.resetTo({name: 'main'});
-  //   }
-  // })
-  // .progress((e) => this.setState({progress: (e.loaded / e.total)}))
-
-
   openVideoRec() {
     Camera.checkDeviceAuthorizationStatus()
     .then((response) => {
@@ -215,37 +164,27 @@ export default class NewRequest extends Component {
     if (this.props.videoData) {
       videoDisplay =
         <Video preview {...this.props} />
-    } else {
-      videoDisplay =
-        <Button
-          color='#ce0000'
-          text={'Record'}
-          onPress={this.openVideoRec.bind(this)}
-          />
-        // <TouchableHighlight
-        //   onPress={this.openVideoRec.bind(this)}>
-        //     <Image
-        //       source={require('../../assets/playButton.png')}
-        //       style={styles.playButton}
-        //     />
-        // </TouchableHighlight>
     }
-    let recordButtonDisplay;
+
+    let recordButtonText;
     if (this.props.videoData) {
-      recordButtonDisplay = 'Re-Record'
+      recordButtonText = 'Rerecord'
     } else {
-      recordButtonDisplay = 'Record'
+      recordButtonText = 'Record'
     }
+
     let display;
     if (this.state.uploading) {
       display =
         <View style={styles.container}>
-          <Text>
-            Please wait while your request video is being uploaded
-          </Text>
-          <Text>
-            {this.state.progress}
-          </Text>
+          <View style={styles.upload}>
+            <Text>
+              Your video is being uploaded.
+            </Text>
+            <Text>
+              This may take up to a minute.
+            </Text>
+          </View>
         </View>
     } else if (this.props.user === null) {
       display =
@@ -257,62 +196,68 @@ export default class NewRequest extends Component {
       display =
         <View style={styles.container}>
           <Nav backButton {...this.props} />
-            <View style={styles.wrapper}>
+          <View style={styles.wrapper}>
 
-              <View style={styles.videoContainer}>
-                {videoDisplay}
-              </View>
+            <View style={styles.videoContainer}>
+              {videoDisplay}
+            </View>
 
-              <View style={styles.formContainer}>
-
-                <View style={styles.banner}>
-                  <Text style={styles.bannerText}>
-                    # OF PIZZAS
-                  </Text>
-                </View>
-
-                <View style={styles.pizza}>
-                  <SegmentedControls
-                    tint={'#ce0000'}
-                    options={ pizzas }
-                    onSelection={ this.selectPizzas.bind(this) }
-                    selectedOption={ this.state.pizzas }
-                    />
-                </View>
-
-                <View style={styles.banner}>
-                  <Text style={styles.bannerText}>
-                  VENDOR NEAR YOU
-                  </Text>
-                </View>
-
-                <View style={styles.controls}>
-                  <SegmentedControls
-                    tint={'#ce0000'}
-                    fontSize={50}
-                    options={ vendors }
-                    onSelection={ this.selectVendor.bind(this) }
-                    selectedOption={ this.state.vendor }
-                    />
-                </View>
-
-                <View style={styles.errorContainer}>
-                  <Text style={styles.error}>
-                    {this.props.newRequestErrorMessage}
-                  </Text>
-                </View>
-
+            <View style={styles.formContainer}>
+              <View style={styles.videoFooter}>
                 <Button
                   color='#ce0000'
-                  text={'Submit Request'}
-                  onPress={this.onSubmitRequest.bind(this)}
+                  text={recordButtonText}
+                  onPress={this.openVideoRec.bind(this)}
                   />
+              </View>
+
+              <View style={styles.banner}>
+                <Text style={styles.bannerText}>
+                  # OF PIZZAS
+                </Text>
+              </View>
+
+              <View style={styles.pizza}>
+                <SegmentedControls
+                  tint={'#ce0000'}
+                  options={ pizzas }
+                  onSelection={ this.selectPizzas.bind(this) }
+                  selectedOption={ this.state.pizzas }
+                  />
+              </View>
+
+              <View style={styles.banner}>
+                <Text style={styles.bannerText}>
+                VENDOR NEAR YOU
+                </Text>
+              </View>
+
+              <View style={styles.controls}>
+                <SegmentedControls
+                  tint={'#ce0000'}
+                  fontSize={50}
+                  options={ vendors }
+                  onSelection={ this.selectVendor.bind(this) }
+                  selectedOption={ this.state.vendor }
+                  />
+              </View>
+
+              <View style={styles.errorContainer}>
+                <Text style={styles.error}>
+                  {this.props.newRequestErrorMessage}
+                </Text>
+              </View>
+
+              <Button
+                color='#ce0000'
+                text={'Submit Request'}
+                onPress={this.onSubmitRequest.bind(this)}
+                />
 
             </View>
           </View>
         </View>
     }
-    // console.log("progress", this.state.progress);
     return (
       <View style={styles.container}>
         {display}
@@ -332,11 +277,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     // borderWidth: 3,
   },
+  upload: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   videoContainer: {
     flex: 2,
     backgroundColor: '#BDBDBD',
-    alignItems: 'center',
-    justifyContent: 'center'
+    // alignItems: 'center',
+    // justifyContent: 'center',
     // borderColor: 'green',
     // borderWidth: 2,
   },
@@ -346,6 +296,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 50,
     paddingTop: 20
+  },
+  videoFooter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // borderColor: 'purple',
+    // borderWidth: 2,
+    padding: 5,
   },
   banner: {
     flexDirection: 'row',
