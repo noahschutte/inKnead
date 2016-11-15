@@ -212,9 +212,9 @@ const styles = StyleSheet.create({
   errorContainer: {
     // height: 40,
     flex: 1,
-    borderColor: 'blue',
-    borderWidth: 2,
-    justifyContent: 'center',
+    // borderColor: 'blue',
+    // borderWidth: 2,
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   error: {
