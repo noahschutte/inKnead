@@ -53,7 +53,7 @@ export default class Profile extends Component {
         <View style={styles.wrapper}>
 
           <View style={styles.profileContainer}>
-            <Image 
+            <Image
               source={require('../../assets/profile.png')}
               style={styles.image}
               />
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     // borderWidth: 3,
   },
   profileContainer: {
-    flex: 3,
+    flex: 1,
     paddingTop: 10,
     // alignItems: 'center',
     // justifyContent: 'center'
@@ -151,12 +151,12 @@ const styles = StyleSheet.create({
     // width: 250,
   },
   emailContainer: {
-    flex: 2,
+    flex: 1,
   },
   image: {
-    height: 200,
-    width: 200,
-    borderRadius: 200/2,
+    height: 50,
+    width: 50,
+    borderRadius: 50/2,
   },
   instructions: {
     textAlign: 'center',
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   currentEmailContainer: {
+    flex: 1,
     // alignItems: 'stretch',
     // backgroundColor: 'white'
   },
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center'
   },
   updatedEmailButton: {
-    
+
   },
   email: {
     textAlign: 'center',
@@ -210,7 +211,11 @@ const styles = StyleSheet.create({
   },
   errorContainer: {
     // height: 40,
-    flex: 1
+    flex: 1,
+    borderColor: 'blue',
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   error: {
     textAlign: 'center',
@@ -219,8 +224,8 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   loginContainer: {
-    flexDirection: 'row',
     flex: 1,
+    flexDirection: 'row',
     // justifyContent: 'center',
   },
 });

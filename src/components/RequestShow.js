@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AlertIOS, View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
 import Video from './Video';
+import Button from './Button';
 
 export default class RequestShow extends Component {
   constructor(props) {
@@ -109,13 +110,11 @@ export default class RequestShow extends Component {
     if (this.props.activeDonation) {
       activeDonation =
       <View style={styles.instructionsContainer}>
-        <TouchableOpacity
+        <Button
+          text="Complete your recent donation now."
+          backgroundColor='green'
           onPress={this.handleInstructions.bind(this)}
-          >
-          <Text style={styles.instructions}>
-            You have an active donation. Click here to view the donation instructions. You will be eligible to donate again 30 minutes after you've completed your active donation.
-          </Text>
-        </TouchableOpacity>
+          />
       </View>
     }
 
@@ -205,7 +204,7 @@ export default class RequestShow extends Component {
                 </Text>
               </View>
 
-              <View>
+              <View >
                 {activeDonation}
               </View>
             </View>
@@ -310,12 +309,14 @@ const styles = StyleSheet.create({
   instructionsContainer: {
     // zIndex: 1,
     // flex: 1,
-    borderWidth: 1,
+    // borderWidth: 1,
     // marginTop: 15,
     // borderRadius: 5,
     paddingTop: 10,
-    borderColor: 'green',
-    backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderColor: 'green',
+    // backgroundColor: 'green',
   },
   instructions: {
     // flex: 1,
