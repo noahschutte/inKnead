@@ -18,7 +18,7 @@ export default class AnonHistory extends Component {
   _onRefresh() {
     const anonID = this.props.anonID
     this.setState({refreshing: true});
-    fetch(`https://in-knead.herokuapp.com/anon/${anonID}`)
+    fetch(`http://192.168.0.101:3000/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage === "No activity.") {
@@ -37,7 +37,7 @@ export default class AnonHistory extends Component {
   }
   componentWillMount() {
     const anonID = this.props.anonID
-    fetch(`https://in-knead.herokuapp.com/anon/${anonID}`)
+    fetch(`http://192.168.0.101:3000/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage === "No activity.") {
@@ -116,20 +116,5 @@ const styles = StyleSheet.create({
   },
   listViewContainer: {
     flex: 1,
-    // borderColor: 'blue',
-    // borderWidth: 3,
-  },
-  // wrapper: {
-  //   marginTop: 50,
-    // flex: 1,
-    // borderWidth: 3,
-    // borderColor: 'red',
-  // },
-  text: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 100,
   },
 })

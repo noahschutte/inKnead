@@ -39,7 +39,7 @@ export default class RequestShow extends Component {
   }
   onConfirmPress(request) {
     const userID = this.props.user.id;
-    fetch(`https://in-knead.herokuapp.com/requests/${request.id}`, {
+    fetch(`http://192.168.0.101:3000/requests/${request.id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -225,21 +225,13 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     flex: 2,
-    // alignItems: 'center',
-    // justifyContent: 'center'
-    // borderColor: 'green',
-    // borderWidth: 2,
   },
   content: {
     flex: 3,
-    // borderColor: 'green',
-    // borderWidth: 2,
   },
   videoFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // borderColor: 'purple',
-    // borderWidth: 2,
     padding: 5,
   },
   history: {
@@ -258,36 +250,14 @@ const styles = StyleSheet.create({
   },
   bottomHalf: {
     padding: 20,
-    // borderWidth: 3,
-    // borderColor: 'black',
-  },
-  header: {
-    justifyContent: 'center',
-    // borderWidth: 2,
-  },
-  firstName: {
-    textAlign: 'center',
-    color: '#ce0000',
-    fontSize: 25,
-    fontWeight: 'bold',
-    // borderWidth: 3,
   },
   dateTime: {
     textAlign: 'center',
     fontSize: 10,
     fontWeight: 'bold',
   },
-  request: {
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    // borderWidth: 3,
-    // borderColor: 'green',
-  },
   donationButtonContainer: {
     alignItems: 'center',
-    // borderColor: 'red',
-    // borderWidth: 2,
     paddingTop: 10,
   },
   donateButton: {
@@ -307,29 +277,12 @@ const styles = StyleSheet.create({
     left: 100,
   },
   instructionsContainer: {
-    // zIndex: 1,
-    // flex: 1,
-    // borderWidth: 1,
-    // marginTop: 15,
-    // borderRadius: 5,
     paddingTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    // borderColor: 'green',
-    // backgroundColor: 'green',
-  },
-  instructions: {
-    // flex: 1,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: 'white',
-    // padding: 5,
   },
   errorMessageContainer: {
-    // borderColor: 'blue',
-    // borderWidth: 3,
     marginTop: 20,
-    // marginTop: 10,
   },
   errorMessage: {
     textAlign: 'center',

@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderWidth: 2,
   },
   backButton: {
     height: 40,

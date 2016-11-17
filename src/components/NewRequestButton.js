@@ -3,7 +3,6 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 export default class NewRequestButton extends Component {
   onNewRequestPress() {
-    // this.props.changeDisplay('newRequest')
     this.props.navigator.push({name: 'newRequest'})
   }
   render() {
@@ -25,7 +24,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    // borderWidth: 3,
   },
   newRequestButton: {
     height: 40,

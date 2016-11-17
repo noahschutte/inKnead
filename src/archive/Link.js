@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { Linking, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 export default class Link extends Component {

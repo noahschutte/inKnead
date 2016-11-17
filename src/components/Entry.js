@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AlertIOS, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Video from './Video';
 
 export default class Entry extends Component {
@@ -88,8 +88,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     flexDirection: 'row',
-    borderColor: 'yellow',
-    borderWidth: 3,
   },
   videoContainer: {
     flex: 1,
@@ -99,7 +97,6 @@ const styles = StyleSheet.create({
   },
   header: {
     justifyContent: 'center',
-    // borderWidth: 2,
   },
   anon: {
     flex: 1,
@@ -107,7 +104,6 @@ const styles = StyleSheet.create({
     color: '#ce0000',
     fontSize: 25,
     fontWeight: 'bold',
-    // borderWidth: 3,
   },
   dateTime: {
     flex: 1,
@@ -118,44 +114,6 @@ const styles = StyleSheet.create({
   request: {
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 'bold',
-    // borderWidth: 3,
-    borderColor: 'green',
-  },
-  donateButton: {
-    width: 200,
-    height: 100,
-  },
-  disabledDonateButton: {
-    width: 200,
-    height: 100,
-    opacity: .3,
-  },
-  received: {
-    position: 'absolute',
-    zIndex: 1,
-    width: 150,
-    height: 150,
-    left: 100,
-  },
-  instructionsContainer: {
-    // zIndex: 1,
-    // flex: 1,
-    borderWidth: 1,
-    // marginTop: 15,
-    // borderRadius: 5,
-    borderColor: 'green',
-    // backgroundColor: 'green',
-  },
-  instructions: {
-    // flex: 1,
-    // textAlign: 'center',
-    fontWeight: 'bold',
-    color: 'white',
-    // padding: 5,
-  },
-  errorMessage: {
-    color: 'red',
     fontWeight: 'bold',
   },
 })

@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { AlertIOS, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Video from './Video';
 
 export default class Request extends Component {
-  handleInstructions() {
-    this.props.navigator.push({name: 'instructions'})
-  }
   showRequest() {
     this.props.collectRequest(this.props.selectedRequest)
     this.props.navigator.push({name: 'requestShow'})
@@ -18,37 +15,37 @@ export default class Request extends Component {
     if (request.pizzas === 1) {
       requestText =
       <View style={styles.pizzas}>
-        <Image 
+        <Image
           style={styles.pizzaImage}
-          source={require('../../assets/playButton.png')} 
+          source={require('../../assets/playButton.png')}
           />
       </View>
     } else if (request.pizzas === 2) {
        requestText =
         <View style={styles.pizzas}>
-          <Image 
+          <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')} 
+            source={require('../../assets/playButton.png')}
             />
-          <Image 
+          <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')} 
+            source={require('../../assets/playButton.png')}
             />
         </View>
     } else {
       requestText =
         <View style={styles.pizzas}>
-          <Image 
+          <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')} 
+            source={require('../../assets/playButton.png')}
             />
-          <Image 
+          <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')} 
+            source={require('../../assets/playButton.png')}
             />
-          <Image 
+          <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')} 
+            source={require('../../assets/playButton.png')}
             />
         </View>
     }
@@ -103,7 +100,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 2,
-    // marginBottom: 2
   },
   wrapper: {
     flex: 1,
@@ -112,8 +108,6 @@ const styles = StyleSheet.create({
     borderTopColor: '#BDBDBD',
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    // borderColor: 'yellow',
-    // borderWidth: 3,
   },
   videoContainer: {
     flex: 1,
@@ -125,15 +119,6 @@ const styles = StyleSheet.create({
   },
   header: {
     justifyContent: 'center',
-    // borderWidth: 2,
-  },
-  anon: {
-    flex: 1,
-    textAlign: 'center',
-    color: '#ce0000',
-    fontSize: 25,
-    fontWeight: 'bold',
-    // borderWidth: 3,
   },
   date: {
     alignItems: 'flex-end'
@@ -144,49 +129,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
   },
-  request: {
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    // borderWidth: 3,
-    // borderColor: 'green',
-  },
-  donateButton: {
-    width: 200,
-    height: 100,
-  },
-  disabledDonateButton: {
-    width: 200,
-    height: 100,
-    opacity: .3,
-  },
-  received: {
-    position: 'absolute',
-    zIndex: 1,
-    width: 150,
-    height: 150,
-    left: 100,
-  },
-  instructionsContainer: {
-    // zIndex: 1,
-    // flex: 1,
-    // borderWidth: 1,
-    // marginTop: 15,
-    // borderRadius: 5,
-    // borderColor: 'green',
-    // backgroundColor: 'green',
-  },
-  instructions: {
-    // flex: 1,
-    // textAlign: 'center',
-    fontWeight: 'bold',
-    color: 'white',
-    // padding: 5,
-  },
-  errorMessage: {
-    color: 'red',
-    fontWeight: 'bold',
-  },
   pizzaImage: {
     height: 50,
     width: 50,
@@ -194,6 +136,5 @@ const styles = StyleSheet.create({
   pizzas: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    
-  }
+  },
 })

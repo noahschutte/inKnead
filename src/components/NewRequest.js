@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
 import Button from './Button';
 import Camera from 'react-native-camera';
@@ -30,7 +30,6 @@ export default class NewRequest extends Component {
 
   onSubmitRequest() {
     const userID = this.props.user.id
-    const first_name = this.props.user.first_name
     if (!this.props.videoData) {
       this.props.onChangeNewRequestErrorMesssage('Please record a video.')
     } else if (this.state.pizzas.length < 1) {
@@ -55,7 +54,7 @@ export default class NewRequest extends Component {
         vendor,
       } = this.state;
 
-      fetch('https://in-knead.herokuapp.com/requests', {
+      fetch('http://192.168.0.101:3000/requests', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -63,7 +62,6 @@ export default class NewRequest extends Component {
         method: 'POST',
         body: JSON.stringify({
           userID,
-          first_name,
           pizzas,
           vendor,
           videoKey
@@ -81,7 +79,6 @@ export default class NewRequest extends Component {
           this.props.collectRequests(responseJson.requests)
           console.log("start fetch with signedRequest");
           const url = responseJson.signedRequest
-          // this.uploadFile.bind(this, file, url)
           const xhr = new XMLHttpRequest();
           const that = this;
           xhr.open('PUT', url);
@@ -95,7 +92,7 @@ export default class NewRequest extends Component {
               } else {
                 console.log("failure");
                 const userID = that.props.user.id
-                fetch(`https://in-knead.herokuapp.com/requests/1`, {
+                fetch(`http://192.168.0.101:3000/requests/1`, {
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -272,10 +269,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 9,
-    // alignItems: 'center',
-    // justifyContent: 'center',
     backgroundColor: 'white',
-    // borderWidth: 3,
   },
   upload: {
     flex: 1,
@@ -285,10 +279,6 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 2,
     backgroundColor: '#BDBDBD',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // borderColor: 'green',
-    // borderWidth: 2,
   },
   formContainer: {
     flex: 3,
@@ -301,8 +291,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    // borderColor: 'purple',
-    // borderWidth: 2,
     padding: 5,
   },
   banner: {
@@ -315,30 +303,11 @@ const styles = StyleSheet.create({
   bannerText: {
     color: 'white',
   },
-  formTitle: {
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 20,
-  },
   pizza: {
     width: 250,
   },
   controls: {
     width: 300
-  },
-  instructions: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    paddingBottom: 5,
-    paddingTop: 15,
-  },
-  pizzas: {
-    tintColor: 'red',
-    fontWeight: 'bold',
-  },
-  vendor: {
-
   },
   errorContainer: {
     marginTop: 5,
@@ -348,11 +317,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#ce0000',
-  },
-  playButton: {
-    width: 50,
-    height: 50,
-    // top: 100,
-    // left: 100,
   },
 });

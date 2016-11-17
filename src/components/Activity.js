@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
 export default class Activity extends Component {
@@ -27,7 +27,6 @@ export default class Activity extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   }
