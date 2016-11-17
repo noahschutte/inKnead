@@ -10,6 +10,10 @@ export default class Menu extends Component {
     this.props.changeScope('History')
     this.props.toggleMenu(false)
   }
+  onNotificationsPress() {
+    this.props.navigator.push({name: 'notifications'})
+    this.props.toggleMenu(false)
+  }
   onHowToButtonPress() {
     this.props.navigator.push({name: 'howTo'})
     this.props.toggleMenu(false)
@@ -18,21 +22,17 @@ export default class Menu extends Component {
     this.props.navigator.push({name: 'profile'})
     this.props.toggleMenu(false)
   }
-  onNewRequestButtonPress() {
-    this.props.navigator.push({name: 'newRequest'})
-    this.props.toggleMenu(false)
-  }
   render() {
     return (
       <View style={styles.container}>
-        <Image 
+        <Image
           source={require('../../assets/profile.png')}
           style={styles.image}
           />
         <TouchableHighlight onPress={this.onMainButtonPress.bind(this)}
         style={styles.button}>
           <Text style={styles.instructions}>
-            Main
+            Global
           </Text>
         </TouchableHighlight>
 
@@ -40,6 +40,13 @@ export default class Menu extends Component {
         style={styles.button}>
           <Text style={styles.instructions}>
             History
+          </Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight onPress={this.onNotificationsPress.bind(this)}
+        style={styles.button}>
+          <Text style={styles.instructions}>
+            Notifications
           </Text>
         </TouchableHighlight>
 
@@ -54,12 +61,6 @@ export default class Menu extends Component {
             Profile
           </Text>
         </TouchableHighlight>
-
-        <TouchableHighlight onPress={this.onNewRequestButtonPress.bind(this)} style={styles.button}>
-          <Text style={styles.instructions}>
-            Create Request
-          </Text>
-        </TouchableHighlight>
       </View>
     )
   }
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingTop: 100,
-    paddingBottom: 100
+    paddingBottom: 100,
   },
   button: {
     alignSelf: 'stretch',
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     color: 'white',
-    fontFamily: 'Gillsans'
+    fontFamily: 'Gillsans',
   },
   image: {
     height: 100,

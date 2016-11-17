@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, TouchableHighlight, View, Text, StyleSheet } from 'react-native';
+import { Image, TouchableHighlight, View, StyleSheet } from 'react-native';
 import Video from 'react-native-video';
 
 export default class VideoDisplay extends Component {
@@ -90,30 +90,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     zIndex: 1,
-    // height: 250,
-    // width: 250,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // borderColor: 'purple',
-    // borderWidth: 2,
   },
   video: {
     flex: 1,
-    // top: 0,
-    // bottom: 0,
-    // left: 0,
-    // right: 0,
-    // height: null,
-    // width: null,
-    // resizeMode: 'contain',
-    // position: 'absolute',
     zIndex: 2,
-    // borderColor: 'blue',
-    // borderWidth: 2
-  },
-  image: {
-    // height: 250,
-    // width: 250,
   },
   playButtonContainer: {
     position: 'absolute',
@@ -124,20 +104,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 3,
-    // borderColor: 'orange',
-    // borderWidth: 2,
   },
   playButton: {
     width: 50,
     height: 50,
-    // top: 100,
-    // left: 100,
-  },
-  fullscreen: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
   },
 });

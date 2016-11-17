@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Clipboard, Linking, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
-import Link from './Link';
 
 export default class Instructions extends Component {
   constructor(props) {
@@ -14,22 +13,6 @@ export default class Instructions extends Component {
       errorMessage: '',
     };
   }
-  // componentWillMount() {
-  //   const userID = this.props.activeDonation.creator_id
-    // fetch(`https://in-knead.herokuapp.com/users/${userID}`)
-    // .then((response) => response.json())
-    // .then((responseJson) => {
-    //   if (responseJson.errorMessage) {
-    //     this.setState({errorMessage: responseJson.errorMessage})
-    //   } else {
-    //     this.setState({email: responseJson.email})
-    //     this.setState({errorMessage: ' '})
-    //   }
-    // })
-    // .catch((error) => {
-    //   console.error(error);
-    // });
-  // }
   handleVendorSite = (vendorURL) => {
     Linking.openURL(vendorURL)
   }
@@ -113,7 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     marginHorizontal: 30,
-    // borderWidth: 3,
   },
   header: {
     fontSize: 20,

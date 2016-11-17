@@ -1,33 +1,33 @@
 import React, { Component } from 'react';
 import { Navigator } from 'react-native';
-import Profile from './components/Profile';
-import Requests from './components/Requests';
-import Request from './components/Request';
-import NewRequest from './components/NewRequest';
-import Camera from './components/Camera';
-import Main from './components/Main';
-import Instructions from './components/Instructions';
-import FBSDK, { AccessToken, LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import GuestView from './components/GuestView';
-import WebViewExample from './components/WebViewExample';
-import HowTo from './components/HowTo';
-import RequestShow from './components/RequestShow';
+import FBSDK, { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AnonHistory from './components/AnonHistory';
-import EntryShow from './components/EntryShow'
+import Camera from './components/Camera';
+import EntryShow from './components/EntryShow';
+import GuestView from './components/GuestView';
+import HowTo from './components/HowTo';
+import Instructions from './components/Instructions';
+import Main from './components/Main';
+import NewRequest from './components/NewRequest';
+import Notifications from './components/Notifications';
+import Profile from './components/Profile';
+import Request from './components/Request';
+import Requests from './components/Requests';
+import RequestShow from './components/RequestShow';
 
 const ROUTES = {
-  main: Main,
   anonHistory: AnonHistory,
+  camera: Camera,
   entryShow: EntryShow,
   guestView: GuestView,
-  instructions: Instructions,
-  profile: Profile,
-  requests: Requests,
-  request: Request,
-  newRequest: NewRequest,
-  camera: Camera,
-  webViewExample: WebViewExample,
   howTo: HowTo,
+  instructions: Instructions,
+  main: Main,
+  newRequest: NewRequest,
+  notifications: Notifications,
+  profile: Profile,
+  request: Request,
+  requests: Requests,
   requestShow: RequestShow,
 };
 
@@ -70,7 +70,7 @@ export default class inknead extends Component {
     this.handleNewRequestErrorMessage = this.handleNewRequestErrorMessage.bind(this);
   }
   createSession(userInfo) {
-    fetch('https://in-knead.herokuapp.com/users', {
+    fetch('http://192.168.0.101:3000/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

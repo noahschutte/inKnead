@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    // borderWidth: 3,
   },
   menuButton: {
     height: 30,

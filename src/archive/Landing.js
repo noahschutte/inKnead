@@ -39,12 +39,8 @@ const styles = StyleSheet.create({
     height: 500,
     padding: 22,
     alignItems: 'center',
-    // borderWidth: 3,
-    // borderColor: 'blue',
   },
   header: {
-    // borderColor: 'green',
-    // borderWidth: 2,
   },
   title: {
     textAlign: 'center',
@@ -56,10 +52,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   noRequestsContainer: {
-    borderWidth: 1,
     marginTop: 15,
     borderRadius: 5,
-    borderColor: 'green',
     backgroundColor: 'green',
   },
   noRequests: {
@@ -67,6 +61,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     padding: 5,
-    // borderWidth: 3,
   },
 })

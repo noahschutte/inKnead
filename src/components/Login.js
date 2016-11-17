@@ -4,7 +4,7 @@ import FBSDK, { AccessToken, LoginButton, GraphRequest, GraphRequestManager } fr
 
 export default class Login extends Component {
   createSession(userInfo) {
-    fetch('https://in-knead.herokuapp.com/users', {
+    fetch('http://192.168.0.101:3000/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

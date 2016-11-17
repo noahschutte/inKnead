@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet } from 'react-native';
 import Button from './Button';
 import LoginContainer from './LoginContainer';
 import Nav from './Nav';
@@ -21,7 +21,7 @@ export default class Profile extends Component {
   onUpdateEmailPress() {
     const userID = this.props.user.id
     const { updatedEmail } = this.state;
-    fetch(`https://in-knead.herokuapp.com/users/${userID}`, {
+    fetch(`http://192.168.0.101:3000/users/${userID}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -129,29 +129,21 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // borderWidth: 3,
   },
   wrapper: {
     flex: 9,
     alignItems: 'center',
-    // justifyContent: 'space-around',
     backgroundColor: 'white',
-    // justifyContent: 'space-around',
-    // borderColor: 'green',
-    // borderWidth: 3,
   },
   profileContainer: {
-    flex: 1,
-    paddingTop: 10,
-    // alignItems: 'center',
-    // justifyContent: 'center'
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   instructionsContainer: {
-    flex: 1,
-    // width: 250,
+    height: 100,
   },
   emailContainer: {
-    flex: 1,
   },
   image: {
     height: 50,
@@ -162,7 +154,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Gillsans',
     fontSize: 20,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   input: {
     fontSize: 15,
@@ -175,16 +167,14 @@ const styles = StyleSheet.create({
     width: 250,
     alignSelf: 'center',
     textAlign: 'center',
+    borderWidth: 1,
+    borderColor: 'black',
   },
   currentEmailContainer: {
-    flex: 1,
-    // alignItems: 'stretch',
-    // backgroundColor: 'white'
   },
   currentEmail: {
-    marginTop: 30,
-    marginBottom: 30,
-    // alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
   },
   updateEmail: {
   },
@@ -195,13 +185,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   updatedEmailButtonContainer: {
-    marginBottom: 50,
     width: 100,
-    // alignItems: 'center',
-    // justifyContent: 'center'
   },
   updatedEmailButton: {
-
   },
   email: {
     textAlign: 'center',
@@ -210,22 +196,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   errorContainer: {
-    // height: 40,
-    flex: 1,
-    // borderColor: 'blue',
-    // borderWidth: 2,
-    justifyContent: 'flex-end',
+    height: 40,
+    borderColor: 'blue',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   error: {
     textAlign: 'center',
     color: '#ce0000',
     fontWeight: 'bold',
-    paddingBottom: 5,
   },
   loginContainer: {
-    flex: 1,
     flexDirection: 'row',
-    // justifyContent: 'center',
+    marginTop: 20,
   },
 });

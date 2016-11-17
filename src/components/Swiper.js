@@ -56,41 +56,9 @@ export default class Swiper extends Component {
   }
 }
 
-{/* <IndicatorViewPager
-  style={{flex: 1}}
-  indicator={this._renderDotIndicator()}
-  >
-  <View style={{backgroundColor:'cadetblue'}}>
-    <Text>page one</Text>
-  </View>
-  <View style={{backgroundColor:'cornflowerblue'}}>
-    <Text>page two</Text>
-  </View>
-  <View style={{backgroundColor:'#1AA094'}}>
-    <Text>page three</Text>
-  </View>
-</IndicatorViewPager>
-
-<IndicatorViewPager
-  style={{flex:1}}
-  indicator={this._renderTitleIndicator()}
-  >
-  <View style={{backgroundColor:'cadetblue'}}>
-      <Text>page one</Text>
-  </View>
-  <View style={{backgroundColor:'cornflowerblue'}}>
-      <Text>page two</Text>
-  </View>
-  <View style={{backgroundColor:'#1AA094'}}>
-      <Text>page three</Text>
-  </View>
-</IndicatorViewPager> */}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // borderColor: 'orange',
-    // borderWidth: 3,
   },
   steps: {
     backgroundColor:'white',

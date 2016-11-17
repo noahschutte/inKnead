@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
-import Landing from './Landing';
 import Request from './Request';
 
 export default class Requests extends Component {
@@ -8,6 +7,7 @@ export default class Requests extends Component {
     super(props)
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
     this.state = {
       refreshing: false,
       loading: true,
@@ -17,7 +17,7 @@ export default class Requests extends Component {
   }
   _onRefresh() {
     this.setState({refreshing: true});
-    fetch('https://in-knead.herokuapp.com/requests')
+    fetch('http://192.168.0.101:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -38,7 +38,7 @@ export default class Requests extends Component {
   }
   componentWillMount() {
     if (this.props.requests === null) {
-      fetch('https://in-knead.herokuapp.com/requests')
+      fetch('http://192.168.0.101:3000/requests')
       .then((response) => response.json())
       .then((responseJson) => {
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -76,20 +76,6 @@ export default class Requests extends Component {
     }
   }
   render() {
-    // if (this.state.errorMessage === "No current requests.") {
-    //   display =
-    //     <Landing noRequests key={"welcome"} {...this.props} />
-    // } else if (this.state.errorMessage === "Requests recieved.") {
-    //   display =
-    //       {this.props.requests.map((request, i) => {
-    //         return (
-    //           <Request key={i} request={request} {...this.props} />
-    //         )
-    //       })}
-    //     display.props.children.unshift(showWelcomePage);
-    //   <Landing noRequests key={"welcome"} {...this.props} />
-    // }
-
     let display;
     if (this.state.loading) {
       display =
@@ -109,8 +95,6 @@ export default class Requests extends Component {
             }
             />
     }
-    // this._renderRow.bind(this, 0)
-    // (rowData) => <Text>{rowData}</Text>
     return (
       <View style={styles.container}>
         {display}
@@ -123,27 +107,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 9,
     backgroundColor: 'white',
-    // borderWidth: 3,
-    // borderColor: 'green',
   },
   listViewContainer: {
     flex: 1,
-    // borderColor: 'red',
-    // borderWidth: 3,
-    // marginTop: 2,
-    // marginBottom: 2,
-  },
-  wrapper: {
-    marginTop: 50,
-    // flex: 1,
-    // borderWidth: 3,
-    // borderColor: 'red',
-  },
-  text: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 100,
   },
 });

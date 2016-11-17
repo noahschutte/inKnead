@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { StatusBar, View, StyleSheet } from 'react-native';
 import ProfileButton from './ProfileButton';
 import NewRequestButton from './NewRequestButton';
 import BackButton from './BackButton';
@@ -24,13 +24,6 @@ export default class Nav extends Component {
       center = <Activity currentScope={this.props.currentScope} changeScope={this.changeScope} {...this.props} />
     }
 
-    // if (this.props.anonHistory) {
-    //   console.log("this.props.anonHistory");
-    //   center =
-    //     <Text style={styles.anonHistory} >
-    //       Anon History
-    //     </Text>
-    // }
     const statusBarHidden = false
     return (
       <View style={styles.container}>
@@ -57,30 +50,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#ce0000',
     flexDirection: 'row',
     paddingTop: 10,
-    // marginTop: 16,
-    // borderColor: 'blue',
-    // borderWidth: 3,
   },
   leftBox: {
     flex: 1,
-    // borderColor: 'yellow',
-    // borderWidth: 3,
   },
   centerBox: {
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    // borderColor: 'purple',
-    // borderWidth: 2,
   },
   rightBox: {
     flex: 1,
-    // borderWidth: 3,
-  },
-  anonHistory: {
-    fontWeight: 'bold',
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
 });
