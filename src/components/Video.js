@@ -23,7 +23,11 @@ export default class VideoDisplay extends Component {
   render() {
     let content;
     if (this.props.preview) {
+      console.log("video preview props", this.props.videoData.path);
       content = this.props.videoData.path
+    } else if (this.props.thankYou) {
+      console.log("video thankYou props", this.props.thankYouData.path);
+      content = this.props.thankYouData.path
     } else if (this.props.anonEntry) {
       content = this.props.selectedEntry.video
     } else if (this.props.entryShow) {
@@ -65,7 +69,7 @@ export default class VideoDisplay extends Component {
     let display;
     if (this.props.userRequest || this.props.anonEntry) {
       display = videoDisplay
-    } else if (this.props.preview || this.props.requestShow || this.props.entryShow) {
+    } else if (this.props.preview || this.props.requestShow || this.props.entryShow || this.props.thankYouData) {
       display =
         <View style={styles.container}>
           <TouchableHighlight

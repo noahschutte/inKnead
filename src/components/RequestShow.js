@@ -39,7 +39,7 @@ export default class RequestShow extends Component {
   }
   onConfirmPress(request) {
     const userID = this.props.user.id;
-    fetch(`http://192.168.0.101:3000/requests/${request.id}`, {
+    fetch(`https://in-knead.herokuapp.com/requests/${request.id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
