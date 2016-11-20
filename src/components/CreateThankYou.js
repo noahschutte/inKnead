@@ -7,7 +7,7 @@ import GuestView from './GuestView';
 import Nav from './Nav';
 import Video from './Video';
 
-export default class NewRequest extends Component {
+export default class ThankYou extends Component {
   constructor(props) {
     super(props)
 
@@ -30,12 +30,8 @@ export default class NewRequest extends Component {
 
   onSubmitRequest() {
     const userID = this.props.user.id
-    if (!this.props.videoData) {
+    if (!this.props.thankYouData) {
       this.props.onChangeNewRequestErrorMesssage('Please record a video.')
-    } else if (this.state.pizzas.length < 1) {
-      this.props.onChangeNewRequestErrorMesssage('Please select how many pizzas you need.')
-    } else if (this.state.vendor.length < 5) {
-      this.props.onChangeNewRequestErrorMesssage('Please choose your preferred pizza place.')
     } else {
       this.props.onChangeNewRequestErrorMesssage(' ')
 
@@ -44,7 +40,7 @@ export default class NewRequest extends Component {
       let videoKey = `${fbUserId}`+`${dateTime}`
 
       let file = {
-        uri: this.props.videoData.path,
+        uri: this.props.thankYouData.path,
         name: videoKey,
         type: "video/quicktime"
       }
@@ -54,7 +50,7 @@ export default class NewRequest extends Component {
         vendor,
       } = this.state;
 
-      fetch('https://in-knead.herokuapp.com/requests', {
+      fetch('https://in-knead.herokuapp.com/thank_you', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -72,7 +68,8 @@ export default class NewRequest extends Component {
       .then((responseJson) => {
         console.log("responseJson", responseJson);
         if (responseJson.errorMessage) {
-          this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+          console.log(responseJson.errorMessage);
+          // this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
         } else {
           this.setState({uploading: true})
           this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -86,7 +83,7 @@ export default class NewRequest extends Component {
             if (xhr.readyState === 4) {
               if(xhr.status === 200) {
                 console.log("success");
-                that.props.onChangeVideoData(null)
+                that.props.onChangeThankYouData(null)
                 that.props.navigator.resetTo({name: 'main'});
 
               } else {
@@ -134,7 +131,7 @@ export default class NewRequest extends Component {
     .then((response) => {
       if (response) {
         this.props.onChangeNewRequestErrorMesssage("")
-        this.props.navigator.push({name: 'camera'});
+        this.props.navigator.push({name: 'thankYouCamera'});
       } else {
         this.props.onChangeNewRequestErrorMesssage("Go to Settings and allow 'in knead' to access the Camera and Microphone.")
       }
@@ -158,13 +155,14 @@ export default class NewRequest extends Component {
       "Pizza Hut",
     ];
     let videoDisplay;
-    if (this.props.videoData) {
+    if (this.props.thankYouData) {
+      console.log("thankYouData", this.props.thankYouData);
       videoDisplay =
-        <Video preview {...this.props} />
+        <Video thankYou {...this.props} />
     }
 
     let recordButtonText;
-    if (this.props.videoData) {
+    if (this.props.thankYouData) {
       recordButtonText = 'Rerecord'
     } else {
       recordButtonText = 'Record'

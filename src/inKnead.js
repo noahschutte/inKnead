@@ -3,6 +3,7 @@ import { Navigator } from 'react-native';
 import FBSDK, { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AnonHistory from './components/AnonHistory';
 import Camera from './components/Camera';
+import CreateThankYou from './components/CreateThankYou';
 import EntryShow from './components/EntryShow';
 import GuestView from './components/GuestView';
 import HowTo from './components/HowTo';
@@ -14,10 +15,12 @@ import Profile from './components/Profile';
 import Request from './components/Request';
 import Requests from './components/Requests';
 import RequestShow from './components/RequestShow';
+import ThankYouCamera from './components/ThankYouCamera';
 
 const ROUTES = {
   anonHistory: AnonHistory,
   camera: Camera,
+  createThankYou: CreateThankYou,
   entryShow: EntryShow,
   guestView: GuestView,
   howTo: HowTo,
@@ -29,6 +32,7 @@ const ROUTES = {
   request: Request,
   requests: Requests,
   requestShow: RequestShow,
+  thankYouCamera: ThankYouCamera,
 };
 
 export default class inknead extends Component {
@@ -51,6 +55,7 @@ export default class inknead extends Component {
       user: null,
       userHistory: null,
       videoData: null,
+      thankYouData: null,
     }
     this.selectAnon = this.selectAnon.bind(this);
     this.collectAnonHistory = this.collectAnonHistory.bind(this);
@@ -66,11 +71,12 @@ export default class inknead extends Component {
     this.handleWelcomeUrl = this.handleWelcomeUrl.bind(this);
     this.handleActiveDonation = this.handleActiveDonation.bind(this);
     this.collectAnonEmail = this.collectAnonEmail.bind(this);
+    this.handleThankYouData = this.handleThankYouData.bind(this);
     this.handleVideoData = this.handleVideoData.bind(this);
     this.handleNewRequestErrorMessage = this.handleNewRequestErrorMessage.bind(this);
   }
   createSession(userInfo) {
-    fetch('http://192.168.0.101:3000/users', {
+    fetch('https://in-knead.herokuapp.com/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -161,12 +167,15 @@ export default class inknead extends Component {
   handleVideoData(videoData) {
     this.setState({videoData})
   }
+  handleThankYouData(thankYouData) {
+    this.setState({thankYouData})
+  }
   handleNewRequestErrorMessage(newRequestErrorMessage) {
     this.setState({newRequestErrorMessage})
   }
   renderScene(route, navigator) {
     const Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonHistory={this.state.anonHistory} collectAnonHistory={this.collectAnonHistory} entry={this.state.entry} collectEntry={this.collectEntry} handleGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserHistory={this.collectUserHistory} userHistory={this.state.userHistory} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
+    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonHistory={this.state.anonHistory} collectAnonHistory={this.collectAnonHistory} entry={this.state.entry} collectEntry={this.collectEntry} handleGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserHistory={this.collectUserHistory} userHistory={this.state.userHistory} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} thankYouData={this.state.thankYouData} onChangeThankYouData={this.handleThankYouData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
   }
   render() {
     const sceneConfig = (renderScene) => {
