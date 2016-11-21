@@ -9,14 +9,18 @@ export default class RequestShow extends Component {
     super(props)
 
     this.state = {
+      paused: true,
       errorMessage: '',
-    }
+    };
+    this.requestShowToggle = this.requestShowToggle.bind(this)
+  }
+  requestShowToggle(toggle) {
+    this.setState({paused: toggle})
   }
   onDonatePress(request) {
     if (this.props.user === null) {
       this.props.handleGuestDonation(true)
       this.props.navigator.push({name: 'profile'})
-      // this.props.changeDisplay('profile')
     } else if (this.props.user.id === this.props.request.creator_id) {
       this.setState({errorMessage: 'Really, you want to donate to yourself?'})
     } else if (this.props.activeDonation) {
@@ -66,9 +70,11 @@ export default class RequestShow extends Component {
     });
   }
   handleInstructions() {
+    this.setState({paused: true})
     this.props.navigator.push({name: 'instructions'})
   }
   showAnonHistory() {
+    this.setState({paused: true})
     this.props.selectAnon(this.props.request.creator_id)
     this.props.navigator.push({name: 'anonHistory'})
   }
@@ -147,7 +153,7 @@ export default class RequestShow extends Component {
         <View style={styles.wrapper}>
 
           <View style={styles.videoContainer}>
-            <Video requestShow {...this.props} />
+            <Video requestShow requestShowPaused={this.state.paused} requestShowToggle={this.requestShowToggle} {...this.props} />
           </View>
 
           <View style={styles.content}>
@@ -261,13 +267,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   donateButton: {
-    width: 200,
-    height: 100,
+    borderRadius: 25,
+    width: 150,
+    height: 75,
   },
   disabledDonateButton: {
-    width: 200,
-    height: 100,
-    opacity: .3,
+    borderRadius: 25,
+    width: 150,
+    height: 75,
   },
   received: {
     position: 'absolute',

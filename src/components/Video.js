@@ -14,19 +14,29 @@ export default class VideoDisplay extends Component {
   }
 
   playVideo() {
-    this.setState({paused: !this.state.paused});
+    if (this.props.requestShow) {
+      this.props.requestShowToggle(!this.props.requestShowPaused)
+    } else if (this.props.newRequestShow) {
+      this.props.newRequestShowToggle(!this.props.newRequestShowPaused)
+    } else {
+      this.setState({paused: !this.state.paused});
+    }
   }
   onEnd() {
-    this.setState({paused: true});
+    if (this.props.requestShow) {
+      this.props.requestShowToggle(true)
+    } else if (this.props.newRequestShow) {
+      this.props.newRequestShowToggle(true)
+    } else {
+      this.setState({paused: true});
+    }
   }
 
   render() {
     let content;
     if (this.props.preview) {
-      console.log("video preview props", this.props.videoData.path);
       content = this.props.videoData.path
     } else if (this.props.thankYou) {
-      console.log("video thankYou props", this.props.thankYouData.path);
       content = this.props.thankYouData.path
     } else if (this.props.anonEntry) {
       content = this.props.selectedEntry.video
@@ -40,21 +50,32 @@ export default class VideoDisplay extends Component {
       content = this.props.request.video
     }
 
-    const videoDisplay = <Video
-      source={{ uri: content }}
-      paused={this.state.paused}
-      rate={1.0}
-      volume={1}
-      muted={false}
-      playInBackground={true}
-      playWhenInactive={true}
-      resizeMode={'contain'}
-      onEnd={this.onEnd}
-      repeat={true}
-      style={styles.video}
-      />;
+    let originPaused;
+    if (this.props.requestShow) {
+      originPaused = this.props.requestShowPaused
+    } else if (this.props.newRequestShow) {
+      originPaused = this.props.newRequestShowPaused
+    } else {
+      originPaused = this.state.paused
+    }
+
+    const videoDisplay =
+      <Video
+        source={{ uri: content }}
+        paused={originPaused}
+        rate={1.0}
+        volume={1}
+        muted={false}
+        playInBackground={true}
+        playWhenInactive={true}
+        resizeMode={'contain'}
+        onEnd={this.onEnd}
+        repeat={true}
+        style={styles.video}
+        />;
+
     let playButton;
-    if (this.state.paused) {
+    if (this.props.requestShowPaused || this.state.paused && !this.props.requestShow) {
       playButton =
         <Image
           source={require('../../assets/playButton.png')}

@@ -48,14 +48,15 @@ export default class inknead extends Component {
       entry: null,
       guestDonation: false,
       newRequestErrorMessage: null,
+      recentSuccessfulRequest: null,
       requests: null,
       request: null,
       totalDonatedPizzas: 0,
+      thankYouData: null,
       url: null,
       user: null,
       userHistory: null,
       videoData: null,
-      thankYouData: null,
     }
     this.selectAnon = this.selectAnon.bind(this);
     this.collectAnonHistory = this.collectAnonHistory.bind(this);
@@ -74,6 +75,7 @@ export default class inknead extends Component {
     this.handleThankYouData = this.handleThankYouData.bind(this);
     this.handleVideoData = this.handleVideoData.bind(this);
     this.handleNewRequestErrorMessage = this.handleNewRequestErrorMessage.bind(this);
+    this.handleRecentSuccessfulRequest = this.handleRecentSuccessfulRequest.bind(this);
   }
   createSession(userInfo) {
     fetch('https://in-knead.herokuapp.com/users', {
@@ -91,6 +93,7 @@ export default class inknead extends Component {
       this.onEmailChange(responseJson.email)
       this.handleActiveDonation(responseJson.activeDonation)
       this.collectAnonEmail(responseJson.anonEmail)
+      this.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
     })
     .catch((error) => {
       console.error(error);
@@ -173,9 +176,12 @@ export default class inknead extends Component {
   handleNewRequestErrorMessage(newRequestErrorMessage) {
     this.setState({newRequestErrorMessage})
   }
+  handleRecentSuccessfulRequest(recentSuccessfulRequest) {
+    this.setState({recentSuccessfulRequest})
+  }
   renderScene(route, navigator) {
     const Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonHistory={this.state.anonHistory} collectAnonHistory={this.collectAnonHistory} entry={this.state.entry} collectEntry={this.collectEntry} handleGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserHistory={this.collectUserHistory} userHistory={this.state.userHistory} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} thankYouData={this.state.thankYouData} onChangeThankYouData={this.handleThankYouData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} />;
+    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonHistory={this.state.anonHistory} collectAnonHistory={this.collectAnonHistory} entry={this.state.entry} collectEntry={this.collectEntry} handleGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onEmailChange={this.onEmailChange} currentEmail={this.state.currentEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectRequest={this.collectRequest} request={this.state.request} collectUserHistory={this.collectUserHistory} userHistory={this.state.userHistory} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} thankYouData={this.state.thankYouData} onChangeThankYouData={this.handleThankYouData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} recentSuccessfulRequest={this.state.recentSuccessfulRequest} handleRecentSuccessfulRequest={this.handleRecentSuccessfulRequest} />;
   }
   render() {
     const sceneConfig = (renderScene) => {

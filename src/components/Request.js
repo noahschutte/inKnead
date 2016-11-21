@@ -4,48 +4,78 @@ import Video from './Video';
 
 export default class Request extends Component {
   showRequest() {
-    this.props.collectRequest(this.props.selectedRequest)
-    this.props.navigator.push({name: 'requestShow'})
+    if (this.props.anonActivity) {
+      const entry = this.props.selectedRequest
+      this.props.collectEntry(entry)
+      this.props.navigator.push({name: 'entryShow'})
+    } else {
+      this.props.collectRequest(this.props.selectedRequest)
+      this.props.navigator.push({name: 'requestShow'})
+    }
   }
 
   render() {
-    let request = this.props.selectedRequest;
+    let request;
+    if (this.props.selectedRequest) {
+      request = this.props.selectedRequest;
+    } else if (this.props.selectedEntry) {
+      request = this.props.selectedEntry
+    }
 
     let requestText;
+    if (this.props.anonActivity && request.donor_id === this.props.anonID) {
+      requestText = <Text>Donated </Text>
+    } else if (this.props.anonActivity && request.donor_id !== null) {
+      requestText = <Text>Received </Text>
+    } else if (this.props.anonActivity && request.creator_id === this.props.anonID) {
+      requestText = <Text>Requested </Text>
+    } else if (this.props.history && request.donor_id === this.props.user.id) {
+      requestText = <Text>You Donated </Text>
+    } else if (this.props.history && request.creator_id === this.props.user.id && request.donor_id === null) {
+      requestText = <Text>You Requested </Text>
+    } else if (this.props.history && request.creator_id === this.props.user.id && request.donor_id !== null) {
+      requestText = <Text>You Received </Text>
+    } else if (request.donor_id) {
+      requestText = <Text>Received </Text>
+    } else {
+      requestText = <Text>Request for </Text>
+    }
+
+    let requestPizzas;
     if (request.pizzas === 1) {
-      requestText =
+      requestPizzas =
       <View style={styles.pizzas}>
         <Image
           style={styles.pizzaImage}
-          source={require('../../assets/playButton.png')}
+          source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
           />
       </View>
     } else if (request.pizzas === 2) {
-       requestText =
+       requestPizzas =
         <View style={styles.pizzas}>
           <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')}
+            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
             />
           <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')}
+            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
             />
         </View>
     } else {
-      requestText =
+      requestPizzas =
         <View style={styles.pizzas}>
           <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')}
+            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
             />
           <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')}
+            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
             />
           <Image
             style={styles.pizzaImage}
-            source={require('../../assets/playButton.png')}
+            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
             />
         </View>
     }
@@ -78,17 +108,15 @@ export default class Request extends Component {
             <Video userRequest {...this.props} />
           </View>
           <View style={styles.infoContainer}>
-            <View style={styles.header}>
-              <View style={styles.date}>
-                <Text style={styles.dateTime}>
-                  {displayTime}
-                </Text>
-              </View>
-              {requestText}
+            <View style={styles.date}>
+              <Text style={styles.dateTime}>
+                {displayTime}
+              </Text>
             </View>
-          </View>
-          <View>
-
+            <View style={styles.content}>
+              {requestText}
+              {requestPizzas}
+            </View>
           </View>
         </TouchableOpacity>
       </View>
@@ -117,11 +145,8 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 5,
   },
-  header: {
-    justifyContent: 'center',
-  },
   date: {
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   dateTime: {
     flex: 1,
@@ -129,9 +154,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
   },
+  content: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   pizzaImage: {
-    height: 50,
-    width: 50,
+    height: 20,
+    width: 20,
   },
   pizzas: {
     flexDirection: 'row',

@@ -63,9 +63,7 @@ export default class History extends Component {
     }
   }
   _renderRow(rowData) {
-    if (this.props.userHistory) {
-      return <Request selectedRequest={this.props.userHistory[rowData]} {...this.props} />
-    }
+    return <Request history selectedRequest={this.props.userHistory[rowData]} {...this.props} />
   }
   _genRows() {
     if (this.props.userHistory) {

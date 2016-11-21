@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
 import Entry from './Entry';
+import Request from './Request';
 
 export default class AnonHistory extends Component {
   constructor(props) {
@@ -55,9 +56,7 @@ export default class AnonHistory extends Component {
     this.setState({loading: false})
   }
   _renderRow(rowData) {
-    if (this.props.anonHistory) {
-      return <Entry selectedEntry={this.props.anonHistory[rowData]} {...this.props} />
-    }
+    return <Request anonActivity selectedRequest={this.props.anonHistory[rowData]} {...this.props} />
   }
   _genRows() {
     if (this.props.anonHistory) {
