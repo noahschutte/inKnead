@@ -117,6 +117,7 @@ export default class Profile extends Component {
           </View>
         </View>
     }
+    console.log("this.props", this.props);
     return (
       <View style={styles.container}>
         <Nav backButton {...this.props} />

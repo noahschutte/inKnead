@@ -19,6 +19,7 @@ export default class Login extends Component {
       this.props.onEmailChange(responseJson.email)
       this.props.collectActiveDonation(responseJson.activeDonation)
       this.props.collectAnonEmail(responseJson.anonEmail)
+      this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
       if (this.props.guestDonation) {
         this.props.handleGuestDonation(false)
         this.props.navigator.pop();
@@ -40,6 +41,7 @@ export default class Login extends Component {
       this.props.onChangeVideoData(null)
       this.props.onEmailChange(null)
       this.props.collectUserHistory(null)
+      this.props.handleRecentSuccessfulRequest(null)
     }
   }
   handleLoginFinished = (error, result) => {

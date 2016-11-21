@@ -17,9 +17,14 @@ export default class NewRequest extends Component {
       videoKey: '',
       uploading: false,
       progress: null,
+      paused: true,
     };
+    this.newRequestShowToggle = this.newRequestShowToggle.bind(this);
     this.onPizzasChange = this.onPizzasChange.bind(this);
     this.onVendorChange = this.onVendorChange.bind(this);
+  }
+  newRequestShowToggle(toggle) {
+    this.setState({paused: toggle})
   }
   onPizzasChange(pizzas) {
     this.setState({pizzas})
@@ -29,6 +34,7 @@ export default class NewRequest extends Component {
   }
 
   onSubmitRequest() {
+    this.setState({paused: true})
     const userID = this.props.user.id
     if (!this.props.videoData) {
       this.props.onChangeNewRequestErrorMesssage('Please record a video.')
@@ -130,6 +136,7 @@ export default class NewRequest extends Component {
   }
 
   openVideoRec() {
+    this.setState({paused: true})
     Camera.checkDeviceAuthorizationStatus()
     .then((response) => {
       if (response) {
@@ -160,7 +167,7 @@ export default class NewRequest extends Component {
     let videoDisplay;
     if (this.props.videoData) {
       videoDisplay =
-        <Video preview {...this.props} />
+        <Video preview newRequestShow newRequestShowPaused={this.state.paused} newRequestShowToggle={this.newRequestShowToggle} {...this.props} />
     }
 
     let recordButtonText;

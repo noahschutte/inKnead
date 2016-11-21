@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
 import Notification from './Notification';
+import GuestView from './GuestView';
 
 export default class Notifications extends Component {
   render() {
@@ -11,14 +12,14 @@ export default class Notifications extends Component {
     }
 
     let receivedDonationDisplay;
-    // notify the user their request has been donated to
-    if (true) {
+    if (this.props.recentSuccessfulRequest) {
       receivedDonationDisplay = <Notification receivedDonationDisplay {...this.props} />
     }
-
-    return (
-      <View style={styles.container}>
-        <Nav backButton {...this.props} />
+    let display;
+    if (this.props.user === null) {
+      display = <GuestView {...this.props} />
+    } else {
+      display =
         <View style={styles.wrapper}>
           <View style={styles.half}>
             {activeDonationDisplay}
@@ -27,6 +28,11 @@ export default class Notifications extends Component {
             {receivedDonationDisplay}
           </View>
         </View>
+    }
+    return (
+      <View style={styles.container}>
+        <Nav backButton {...this.props} />
+        {display}
       </View>
     )
   }
