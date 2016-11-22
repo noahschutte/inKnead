@@ -5,6 +5,17 @@ import Notification from './Notification';
 import GuestView from './GuestView';
 
 export default class Notifications extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      refresh: false,
+    };
+    this.refreshNotifications = this.refreshNotifications.bind(this);
+  }
+  refreshNotifications(toggle) {
+    this.setState({refresh: toggle})
+  }
   render() {
     let activeDonationDisplay;
     if (this.props.activeDonation) {
@@ -12,9 +23,17 @@ export default class Notifications extends Component {
     }
 
     let receivedDonationDisplay;
-    if (this.props.recentSuccessfulRequest) {
-      receivedDonationDisplay = <Notification receivedDonationDisplay {...this.props} />
+    if (this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 1 && this.props.recentThankYou && this.props.recentThankYou.request_id === this.props.recentSuccessfulRequest.id) {
+      // leave receivedDonationDisplay as undefined
+    } else if (this.props.recentSuccessfulRequest) {
+      receivedDonationDisplay = <Notification receivedDonationDisplay refreshNotifications={this.refreshNotifications} {...this.props} />
     }
+
+    let noNotificationsDisplay;
+    if (activeDonationDisplay === undefined && receivedDonationDisplay === undefined) {
+      noNotificationsDisplay = <Text>No current notifications.</Text>
+    }
+
     let display;
     if (this.props.user === null) {
       display = <GuestView {...this.props} />
@@ -23,6 +42,7 @@ export default class Notifications extends Component {
         <View style={styles.wrapper}>
           <View style={styles.half}>
             {activeDonationDisplay}
+            {noNotificationsDisplay}
           </View>
           <View style={styles.half}>
             {receivedDonationDisplay}

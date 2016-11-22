@@ -6,19 +6,18 @@ export default class History extends Component {
   constructor(props) {
     super(props)
 
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
     this.state = {
+      userHistory: [],
       refreshing: false,
       loading: true,
-      dataSource: ds.cloneWithRows(this._genRows({})),
+      dataSource: null,
       errorMessage: ' ',
     }
   }
   _onRefresh() {
-    const userID = this.props.user.id
     this.setState({refreshing: true});
-    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
+    const userID = this.props.user.id
+    fetch(`http://192.168.0.101:3000/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -26,67 +25,73 @@ export default class History extends Component {
       if (responseJson.errorMessage === "No current requests.") {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
-        this.props.collectUserHistory(responseJson.userHistory)
+        this.props.collectUserRequests(responseJson.userRequests)
+        this.props.collectUserThankYous(responseJson.userThankYous)
         this.setState({errorMessage: "Requests recieved."})
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
       }
+    })
+    .then((arbitrary) => {
+      this.setState({userHistory: []})
+      this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
+      this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
+    })
+    .then((arbitrary) => {
+      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
+    })
+    .then((arbitrary) => {
+      this.setState({refreshing: false});
     })
     .catch((error) => {
       console.error(error);
     });
-    this.setState({refreshing: false});
   }
   componentWillMount() {
-    if (this.props.userHistory === null) {
-      const userID = this.props.user.id
-      fetch(`https://in-knead.herokuapp.com/users/${userID}`)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-        this.props.handleWelcomeUrl(responseJson.url)
-        if (responseJson.errorMessage === "No current requests.") {
-          this.setState({errorMessage: responseJson.errorMessage})
-        } else {
-          this.props.collectUserHistory(responseJson.userHistory)
-          this.setState({errorMessage: "Requests recieved."})
-          const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
-        }
-        this.setState({loading: false})
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    } else {
+    const userID = this.props.user.id
+    fetch(`http://192.168.0.101:3000/users/${userID}`)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+      this.props.handleWelcomeUrl(responseJson.url)
+      if (responseJson.errorMessage === "No current requests.") {
+        this.setState({errorMessage: responseJson.errorMessage})
+      } else {
+        this.props.collectUserRequests(responseJson.userRequests)
+        this.props.collectUserThankYous(responseJson.userThankYous)
+      }
+    })
+    .then((arbitrary) => {
+      this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
+      this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
+    })
+    .then((arbitrary) => {
+      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
+    })
+    .then((arbitrary) => {
       this.setState({loading: false})
-    }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
   _renderRow(rowData) {
-    return <Request history selectedRequest={this.props.userHistory[rowData]} {...this.props} />
+    return <Request history selectedRequest={this.state.userHistory[rowData]} {...this.props} />
   }
   _genRows() {
-    if (this.props.userHistory) {
-      let requestsLength = this.props.userHistory.length
-      let result = [];
-      for (let i = 0; i < requestsLength; i += 1) {
-        result.push(i)
-      }
-      return result
-    } else {
-      return [0]
+    let userHistoryLength = this.state.userHistory.length
+    let result = [];
+    for (let i = 0; i < userHistoryLength; i += 1) {
+      result.push(i)
     }
+    return result
   }
   render() {
     let display;
-    if (this.state.loading) {
-      display =
-          <Text>Loading...</Text>
-    } else if (!this.props.userHistory) {
-      display =
-        <Text>
-          No Activity Recorded.
-        </Text>
+    if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
+      display = <Text>Loading...</Text>
+    } else if (this.state.userHistory.length === 0) {
+      display = <Text>No Activity Recorded.</Text>
     } else {
       display =
         <ListView
@@ -117,12 +122,5 @@ const styles = StyleSheet.create({
   },
   listViewContainer: {
     flex: 1,
-  },
-  text: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 100,
   },
 });

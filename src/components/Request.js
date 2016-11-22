@@ -23,7 +23,9 @@ export default class Request extends Component {
     }
 
     let requestText;
-    if (this.props.anonActivity && request.donor_id === this.props.anonID) {
+    if (request.received === undefined) {
+      requestText = <Text>Thanks for </Text>
+    } else if (this.props.anonActivity && request.donor_id === this.props.anonID) {
       requestText = <Text>Donated </Text>
     } else if (this.props.anonActivity && request.donor_id !== null) {
       requestText = <Text>Received </Text>

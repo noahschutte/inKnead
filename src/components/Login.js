@@ -4,7 +4,7 @@ import FBSDK, { AccessToken, LoginButton, GraphRequest, GraphRequestManager } fr
 
 export default class Login extends Component {
   createSession(userInfo) {
-    fetch('https://in-knead.herokuapp.com/users', {
+    fetch('http://192.168.0.101:3000/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -20,6 +20,7 @@ export default class Login extends Component {
       this.props.collectActiveDonation(responseJson.activeDonation)
       this.props.collectAnonEmail(responseJson.anonEmail)
       this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
+      this.props.handleRecentThankYou(responseJson.recentThankYou)
       if (this.props.guestDonation) {
         this.props.handleGuestDonation(false)
         this.props.navigator.pop();
@@ -40,7 +41,8 @@ export default class Login extends Component {
       this.props.onChangeNewRequestErrorMesssage(null)
       this.props.onChangeVideoData(null)
       this.props.onEmailChange(null)
-      this.props.collectUserHistory(null)
+      this.props.collectUserRequests(null)
+      this.props.collectUserThankYous(null)
       this.props.handleRecentSuccessfulRequest(null)
     }
   }

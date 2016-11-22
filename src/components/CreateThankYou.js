@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { SegmentedControls } from 'react-native-radio-buttons';
 import Button from './Button';
 import Camera from 'react-native-camera';
 import GuestView from './GuestView';
@@ -12,28 +11,25 @@ export default class ThankYou extends Component {
     super(props)
 
     this.state = {
-      pizzas: '',
-      vendor: '',
+      pizzas: this.props.recentSuccessfulRequest.pizzas,
+      vendor: this.props.recentSuccessfulRequest.vendor,
       videoKey: '',
       uploading: false,
       progress: null,
+      paused: true,
     };
-    this.onPizzasChange = this.onPizzasChange.bind(this);
-    this.onVendorChange = this.onVendorChange.bind(this);
+    this.createThankYouShowToggle = this.createThankYouShowToggle.bind(this);
   }
-  onPizzasChange(pizzas) {
-    this.setState({pizzas})
+  createThankYouShowToggle(toggle) {
+    this.setState({paused: toggle})
   }
-  onVendorChange(vendor) {
-    this.setState({vendor})
-  }
-
   onSubmitRequest() {
+    this.setState({paused: true})
     const userID = this.props.user.id
     if (!this.props.thankYouData) {
-      this.props.onChangeNewRequestErrorMesssage('Please record a video.')
+      this.props.handleCreateThankYouErrorMessage('Please record a video.')
     } else {
-      this.props.onChangeNewRequestErrorMesssage(' ')
+      this.props.handleCreateThankYouErrorMessage(' ')
 
       let dateTime = Date.now()
       let fbUserId = this.props.user.fb_userID
@@ -50,7 +46,7 @@ export default class ThankYou extends Component {
         vendor,
       } = this.state;
 
-      fetch('https://in-knead.herokuapp.com/thank_you', {
+      fetch('http://192.168.0.101:3000/thank_you', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -69,7 +65,7 @@ export default class ThankYou extends Component {
         console.log("responseJson", responseJson);
         if (responseJson.errorMessage) {
           console.log(responseJson.errorMessage);
-          // this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+          this.props.handleCreateThankYouErrorMessage(responseJson.errorMessage)
         } else {
           this.setState({uploading: true})
           this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -84,12 +80,12 @@ export default class ThankYou extends Component {
               if(xhr.status === 200) {
                 console.log("success");
                 that.props.onChangeThankYouData(null)
+                that.props.handleRecentThankYou(responseJson.recentThankYou)
                 that.props.navigator.resetTo({name: 'main'});
-
               } else {
                 console.log("failure");
                 const userID = that.props.user.id
-                fetch(`https://in-knead.herokuapp.com/requests/1`, {
+                fetch(`http://192.168.0.101:3000/thank_you/1`, {
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -98,15 +94,14 @@ export default class ThankYou extends Component {
                   body: JSON.stringify({videoKey})
                 })
                 .then((response) => {
-                  return response.json()
-                })
+                  return response.json()})
                 .then((responseJson) => {
                   if (responseJson.requests) {
                     that.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
                     that.props.collectRequests(responseJson.requests)
-                    that.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+                    that.props.handleCreateThankYouErrorMessage(responseJson.errorMessage)
                   } else {
-                    that.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
+                    that.props.handleCreateThankYouErrorMessage(responseJson.errorMessage)
                   }
                   that.setState({uploading: false})
                 })
@@ -127,38 +122,25 @@ export default class ThankYou extends Component {
   }
 
   openVideoRec() {
+    this.setState({paused: true})
     Camera.checkDeviceAuthorizationStatus()
     .then((response) => {
       if (response) {
-        this.props.onChangeNewRequestErrorMesssage("")
+        this.props.handleCreateThankYouErrorMessage("")
         this.props.navigator.push({name: 'thankYouCamera'});
       } else {
-        this.props.onChangeNewRequestErrorMesssage("Go to Settings and allow 'in knead' to access the Camera and Microphone.")
+        this.props.handleCreateThankYouErrorMessage("Go to Settings and allow 'in knead' to access the Camera and Microphone.")
       }
     })
   }
-  selectPizzas(pizzas){
-    this.setState({pizzas});
-  }
-  selectVendor(vendor){
-    this.setState({vendor});
-  }
   render() {
-    const pizzas= [
-      1,
-      2,
-      3,
-    ];
-    const vendors= [
-      "Papa Johns",
-      "Dominos",
-      "Pizza Hut",
-    ];
+    console.log("recentSuccessfulRequest", this.props.recentSuccessfulRequest);
+
     let videoDisplay;
     if (this.props.thankYouData) {
       console.log("thankYouData", this.props.thankYouData);
       videoDisplay =
-        <Video thankYou {...this.props} />
+        <Video thankYou createThankYouShow createThankYouShowPaused={this.state.paused} createThankYouShowToggle={this.createThankYouShowToggle} {...this.props} />
     }
 
     let recordButtonText;
@@ -208,44 +190,33 @@ export default class ThankYou extends Component {
 
               <View style={styles.banner}>
                 <Text style={styles.bannerText}>
-                  # OF PIZZAS
+                  Thank you for
                 </Text>
               </View>
 
               <View style={styles.pizza}>
-                <SegmentedControls
-                  tint={'#ce0000'}
-                  options={ pizzas }
-                  onSelection={ this.selectPizzas.bind(this) }
-                  selectedOption={ this.state.pizzas }
-                  />
+                <Text>{this.props.recentSuccessfulRequest.pizzas} pizzas</Text>
               </View>
 
               <View style={styles.banner}>
                 <Text style={styles.bannerText}>
-                VENDOR NEAR YOU
+                from
                 </Text>
               </View>
 
               <View style={styles.controls}>
-                <SegmentedControls
-                  tint={'#ce0000'}
-                  fontSize={50}
-                  options={ vendors }
-                  onSelection={ this.selectVendor.bind(this) }
-                  selectedOption={ this.state.vendor }
-                  />
+                <Text>{this.props.recentSuccessfulRequest.vendor}</Text>
               </View>
 
               <View style={styles.errorContainer}>
                 <Text style={styles.error}>
-                  {this.props.newRequestErrorMessage}
+                  {this.props.createThankYouErrorMessage}
                 </Text>
               </View>
 
               <Button
                 color='#ce0000'
-                text={'Submit Request'}
+                text={'Send Your Gratitude'}
                 onPress={this.onSubmitRequest.bind(this)}
                 />
 
@@ -303,9 +274,13 @@ const styles = StyleSheet.create({
   },
   pizza: {
     width: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   controls: {
-    width: 300
+    width: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   errorContainer: {
     marginTop: 5,

@@ -21,7 +21,7 @@ export default class Profile extends Component {
   onUpdateEmailPress() {
     const userID = this.props.user.id
     const { updatedEmail } = this.state;
-    fetch(`https://in-knead.herokuapp.com/users/${userID}`, {
+    fetch(`http://192.168.0.101:3000/users/${userID}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

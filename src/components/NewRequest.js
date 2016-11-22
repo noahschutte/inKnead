@@ -60,7 +60,7 @@ export default class NewRequest extends Component {
         vendor,
       } = this.state;
 
-      fetch('https://in-knead.herokuapp.com/requests', {
+      fetch('http://192.168.0.101:3000/requests', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -94,11 +94,10 @@ export default class NewRequest extends Component {
                 console.log("success");
                 that.props.onChangeVideoData(null)
                 that.props.navigator.resetTo({name: 'main'});
-
               } else {
                 console.log("failure");
                 const userID = that.props.user.id
-                fetch(`https://in-knead.herokuapp.com/requests/1`, {
+                fetch(`http://192.168.0.101:3000/requests/1`, {
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -107,8 +106,7 @@ export default class NewRequest extends Component {
                   body: JSON.stringify({videoKey})
                 })
                 .then((response) => {
-                  return response.json()
-                })
+                  return response.json()})
                 .then((responseJson) => {
                   if (responseJson.requests) {
                     that.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)

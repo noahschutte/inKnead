@@ -18,6 +18,8 @@ export default class VideoDisplay extends Component {
       this.props.requestShowToggle(!this.props.requestShowPaused)
     } else if (this.props.newRequestShow) {
       this.props.newRequestShowToggle(!this.props.newRequestShowPaused)
+    } else if (this.props.createThankYouShow) {
+      this.props.createThankYouShowToggle(!this.props.createThankYouShowPaused)
     } else {
       this.setState({paused: !this.state.paused});
     }
@@ -27,6 +29,8 @@ export default class VideoDisplay extends Component {
       this.props.requestShowToggle(true)
     } else if (this.props.newRequestShow) {
       this.props.newRequestShowToggle(true)
+    } else if (this.props.createThankYouShow) {
+      this.props.createThankYouShowToggle(true)
     } else {
       this.setState({paused: true});
     }
@@ -55,6 +59,8 @@ export default class VideoDisplay extends Component {
       originPaused = this.props.requestShowPaused
     } else if (this.props.newRequestShow) {
       originPaused = this.props.newRequestShowPaused
+    } else if (this.props.createThankYouShow) {
+      originPaused = this.props.createThankYouShowPaused
     } else {
       originPaused = this.state.paused
     }
