@@ -49,31 +49,54 @@ export default class EntryShow extends Component {
     return (
       <View style={styles.container}>
         <Nav backButton {...this.props} />
+
         <View style={styles.wrapper}>
-          <Video entryShow {...this.props} />
+
+          <View style={styles.videoContainer}>
+            <Video entryShow {...this.props} />
+          </View>
+
           <View style={styles.content}>
+
             <View style={styles.videoFooter}>
               <Text style={styles.dateTime}>
                 {displayTime}
               </Text>
+
+              <View>
+                <Text>
+                  (3 Dots)
+                </Text>
+              </View>
             </View>
+
             <View style={styles.banner}>
               <Text style={styles.bannerText}>
                 REQUESTED
               </Text>
             </View>
-            <Text style={{textAlign: 'center'}}>
-              (Image Placeholder)
-            </Text>
+
+            <View style={styles.pizzaPlaceholder}>
+              <Text style={{textAlign: 'center'}}>
+                (Image Placeholder)
+              </Text>
+            </View>
+
             <View style={styles.banner}>
               <Text style={styles.bannerText}>
                 VENDOR
               </Text>
             </View>
-            <Text style={{textAlign: 'center'}}>
-              (Image Placeholder)
-            </Text>
-            {activeDonation}
+
+            <View style={styles.logoPlaceholder}>
+              <Text style={{textAlign: 'center'}}>
+                (Image Placeholder)
+              </Text>
+            </View>
+
+            <View style={styles.bottomHalf}>
+              {activeDonation}
+            </View>
           </View>
         </View>
       </View>
@@ -87,29 +110,81 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 9,
+    backgroundColor: 'white',
+  },
+  videoContainer: {
+    flex: 2,
   },
   content: {
-    flex: 1,
+    flex: 3,
   },
   videoFooter: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    padding: 5,
+  },
+  history: {
+    textDecorationLine: 'underline',
+    fontWeight: 'bold'
   },
   banner: {
     flexDirection: 'row',
     justifyContent: 'center',
+    backgroundColor: '#424242',
+    alignSelf: 'stretch',
+    padding: 5
   },
   bannerText: {
     color: 'white',
   },
+  bottomHalf: {
+    padding: 20,
+  },
   dateTime: {
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: 10,
     fontWeight: 'bold',
+  },
+  donationButtonContainer: {
+    alignItems: 'center',
+    paddingTop: 10,
+  },
+  donateButton: {
+    borderRadius: 25,
+    width: 150,
+    height: 75,
+  },
+  disabledDonateButton: {
+    borderRadius: 25,
+    width: 150,
+    height: 75,
+  },
+  received: {
+    position: 'absolute',
+    zIndex: 1,
+    width: 150,
+    height: 150,
+    left: 100,
   },
   instructionsContainer: {
     paddingTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  errorMessageContainer: {
+    marginTop: 20,
+  },
+  errorMessage: {
+    textAlign: 'center',
+    color: 'red',
+    fontWeight: 'bold',
+  },
+  pizzaPlaceholder: {
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  logoPlaceholder: {
+    paddingTop: 5,
+    paddingBottom: 5,
   },
 })

@@ -3,26 +3,14 @@ import { Alert, View, Text, StyleSheet } from 'react-native';
 import Button from './Button';
 
 export default class Notification extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      refresh: false,
-    };
-    this.refreshPage = this.refreshPage.bind(this);
-  }
   handleInstructions() {
     this.props.navigator.push({name: 'instructions'})
-  }
-  refreshPage() {
-    this.setState({refresh: true})
   }
   confirmDonationReceived() {
     let userID = this.props.user.id;
     let receivedDonation = true;
     let recentSuccessfulRequestID = this.props.recentSuccessfulRequest.id
-    const that = this
-    fetch(`https://in-knead.herokuapp.com/requests/${recentSuccessfulRequestID}`, {
+    fetch(`http://192.168.0.101:3000/requests/${recentSuccessfulRequestID}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -36,9 +24,8 @@ export default class Notification extends Component {
     .then((response) => {
       return response.json()})
     .then((responseJson) => {
-      console.log("response", responseJson);
       this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
-      that.setState({refresh: true})
+      this.props.refreshNotifications(true)
     })
     .catch((error) => {
       console.error(error);
@@ -58,8 +45,6 @@ export default class Notification extends Component {
   }
 
   render() {
-    console.log("refresh", this.state.refresh);
-    console.log("recentSuccessfulRequest", this.props.recentSuccessfulRequest);
     let display;
     if (this.props.activeDonationDisplay) {
       display =
@@ -73,37 +58,49 @@ export default class Notification extends Component {
     } else if (this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 0) {
       display =
         <View style={styles.wrapper}>
-          <Text>
-            Please go check your email now.
-          </Text>
-          <Text>
-            Did you receive your donation by email yet?
-          </Text>
-          <Button
-            text="Yes!"
-            backgroundColor="green"
-            onPress={this.confirmDonationReceived.bind(this)}
-            />
-          <Button
-            text="Not yet..."
-            backgroundColor="green"
-            onPress={this.denyDonationReceived.bind(this)}
-            />
+          <View style={styles.prompt}>
+            <Text>
+              Please go check your email now.
+            </Text>
+            <Text>
+              Did you receive your donation by email yet?
+            </Text>
+          </View>
+          <View style={styles.options}>
+            <View style={styles.half}>
+              <Button
+                text="Not yet..."
+                backgroundColor="green"
+                onPress={this.denyDonationReceived.bind(this)}
+                />
+            </View>
+            <View style={styles.half}>
+              <Button
+                text="Yes!"
+                backgroundColor="green"
+                onPress={this.confirmDonationReceived.bind(this)}
+                />
+            </View>
+          </View>
         </View>
-    } else if (this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 1) {
+    } else if (this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 1 && this.props.recentThankYou === null || this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 1 && this.props.recentThankYou && this.props.recentThankYou.request_id != this.props.recentSuccessfulRequest.id) {
       display =
         <View style={styles.wrapper}>
-          <Text>
-            Awesome Sauce!
-          </Text>
-          <Text>
-            Are you ready to send a "Thank you" video now?
-          </Text>
-          <Button
+          <View style={styles.prompt}>
+            <Text>
+              Awesome Sauce!
+            </Text>
+            <Text>
+              Are you ready to send a "Thank you" video now?
+            </Text>
+          </View>
+          <View style={styles.options}>
+            <Button
             text="Heck Yeah!"
             backgroundColor="green"
             onPress={this.onCreateThankYouPress.bind(this)}
             />
+          </View>
         </View>
     }
 
@@ -118,12 +115,26 @@ export default class Notification extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   wrapper: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  prompt: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  options: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  half: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 })

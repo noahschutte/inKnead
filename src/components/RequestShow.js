@@ -43,7 +43,7 @@ export default class RequestShow extends Component {
   }
   onConfirmPress(request) {
     const userID = this.props.user.id;
-    fetch(`https://in-knead.herokuapp.com/requests/${request.id}`, {
+    fetch(`http://192.168.0.101:3000/requests/${request.id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -146,6 +146,16 @@ export default class RequestShow extends Component {
       displayTime = `${timeAgo} days ago`
     }
 
+    let userHistoryDisplay;
+    if ( !this.props.user || this.props.user && request.creator_id != this.props.user.id) {
+      userHistoryDisplay =
+        <TouchableOpacity onPress={this.showAnonHistory.bind(this)} >
+          <Text style={styles.history}>
+            User History
+          </Text>
+        </TouchableOpacity>
+    }
+
     return (
       <View style={styles.container}>
         <Nav backButton {...this.props} />
@@ -162,11 +172,7 @@ export default class RequestShow extends Component {
               <Text style={styles.dateTime}>
                 {displayTime}
               </Text>
-              <TouchableOpacity onPress={this.showAnonHistory.bind(this)} >
-                <Text style={styles.history}>
-                  User History
-                </Text>
-              </TouchableOpacity>
+              {userHistoryDisplay}
               <View>
                 <Text>
                   (3 Dots)
