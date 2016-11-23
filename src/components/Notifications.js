@@ -18,25 +18,27 @@ export default class Notifications extends Component {
     this.setState({refresh: toggle})
   }
   componentWillMount() {
-    const userID = this.props.user.id
-    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-      this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage === "No current requests.") {
-      } else {
-        this.props.collectUserRequests(responseJson.userRequests)
-        this.props.collectUserThankYous(responseJson.userThankYous)
-        this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
-      }
-    })
-    .then((arbitrary) => {
-      this.refreshNotifications(true)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    if (this.props.user) {
+      const userID = this.props.user.id
+      fetch(`https://in-knead.herokuapp.com/users/${userID}`)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+        this.props.handleWelcomeUrl(responseJson.url)
+        if (responseJson.errorMessage === "No current requests.") {
+        } else {
+          this.props.collectUserRequests(responseJson.userRequests)
+          this.props.collectUserThankYous(responseJson.userThankYous)
+          this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
+        }
+      })
+      .then((arbitrary) => {
+        this.refreshNotifications(true)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
   }
   render() {
     let activeDonationDisplay;

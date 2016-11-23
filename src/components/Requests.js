@@ -30,10 +30,10 @@ export default class Requests extends Component {
     })
     .then((arbitrary) => {
       this.setState({activity: []})
-      if (this.props.userRequests) {
+      if (this.props.requests) {
         this.setState({activity: this.state.activity.concat(this.props.requests)})
       }
-      if (this.props.userRequests) {
+      if (this.props.thankYous) {
         this.setState({activity: this.state.activity.concat(this.props.thankYous)})
       }
     })

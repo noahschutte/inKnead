@@ -50,37 +50,39 @@ export default class History extends Component {
     });
   }
   componentWillMount() {
-    const userID = this.props.user.id
-    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-      this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
-        this.props.collectUserRequests(responseJson.userRequests)
-        this.props.collectUserThankYous(responseJson.userThankYous)
-      }
-    })
-    .then((arbitrary) => {
-      if (this.props.userRequests) {
-        this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
-      }
-      if (this.props.userThankYous) {
-        this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
-      }
-    })
-    .then((arbitrary) => {
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
-    })
-    .then((arbitrary) => {
-      this.setState({loading: false})
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    if (this.props.user) {
+      const userID = this.props.user.id
+      fetch(`https://in-knead.herokuapp.com/users/${userID}`)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+        this.props.handleWelcomeUrl(responseJson.url)
+        if (responseJson.errorMessage) {
+          this.setState({errorMessage: responseJson.errorMessage})
+        } else {
+          this.props.collectUserRequests(responseJson.userRequests)
+          this.props.collectUserThankYous(responseJson.userThankYous)
+        }
+      })
+      .then((arbitrary) => {
+        if (this.props.userRequests) {
+          this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
+        }
+        if (this.props.userThankYous) {
+          this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
+        }
+      })
+      .then((arbitrary) => {
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
+      })
+      .then((arbitrary) => {
+        this.setState({loading: false})
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
   }
   _renderRow(rowData) {
     this.state.userHistory.sort(function(a, b) {
