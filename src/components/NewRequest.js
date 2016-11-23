@@ -60,7 +60,7 @@ export default class NewRequest extends Component {
         vendor,
       } = this.state;
 
-      fetch('https://in-knead.herokuapp.com/requests', {
+      fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ export default class NewRequest extends Component {
               } else {
                 console.log("failure");
                 const userID = that.props.user.id
-                fetch(`https://in-knead.herokuapp.com/requests/1`, {
+                fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/1`, {
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
