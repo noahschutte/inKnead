@@ -18,21 +18,24 @@ export default class AnonHistory extends Component {
   _onRefresh() {
     this.setState({refreshing: true});
     const anonID = this.props.anonID
-    fetch(`http://192.168.0.101:3000/anon/${anonID}`)
+    fetch(`https://in-knead.herokuapp.com/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
-      if (responseJson.errorMessage === "No activity.") {
+      if (responseJson.errorMessage) {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectAnonRequests(responseJson.anonRequests)
         this.props.collectAnonThankYous(responseJson.anonThankYous)
-        this.setState({errorMessage: "History received."})
       }
     })
     .then((arbitrary) => {
       this.setState({anonHistory: []})
-      this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonRequests)})
-      this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonThankYous)})
+      if (this.props.anonRequests) {
+        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonRequests)})
+      }
+      if (this.props.anonThankYous) {
+        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonThankYous)})
+      }
     })
     .then((arbitrary) => {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -47,20 +50,23 @@ export default class AnonHistory extends Component {
   }
   componentWillMount() {
     const anonID = this.props.anonID
-    fetch(`http://192.168.0.101:3000/anon/${anonID}`)
+    fetch(`https://in-knead.herokuapp.com/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
-      if (responseJson.errorMessage === "No activity.") {
+      if (responseJson.errorMessage) {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectAnonRequests(responseJson.anonRequests)
         this.props.collectAnonThankYous(responseJson.anonThankYous)
-        this.setState({errorMessage: "History received."})
       }
     })
     .then((arbitrary) => {
-      this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonRequests)})
-      this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonThankYous)})
+      if (this.props.anonRequests) {
+        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonRequests)})
+      }
+      if (this.props.anonThankYous) {
+        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonThankYous)})
+      }
     })
     .then((arbitrary) => {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -74,6 +80,9 @@ export default class AnonHistory extends Component {
     });
   }
   _renderRow(rowData) {
+    this.state.anonHistory.sort(function(a, b) {
+      return parseFloat(a.seconds) - parseFloat(b.seconds);
+    });
     return <Request anonActivity selectedRequest={this.state.anonHistory[rowData]} {...this.props} />
   }
   _genRows() {

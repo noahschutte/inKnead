@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
 import Notification from './Notification';
 import GuestView from './GuestView';
+import Button from './Button';
 
 export default class Notifications extends Component {
   constructor(props) {
@@ -15,6 +16,27 @@ export default class Notifications extends Component {
   }
   refreshNotifications(toggle) {
     this.setState({refresh: toggle})
+  }
+  componentWillMount() {
+    const userID = this.props.user.id
+    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+      this.props.handleWelcomeUrl(responseJson.url)
+      if (responseJson.errorMessage === "No current requests.") {
+      } else {
+        this.props.collectUserRequests(responseJson.userRequests)
+        this.props.collectUserThankYous(responseJson.userThankYous)
+        this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
+      }
+    })
+    .then((arbitrary) => {
+      this.refreshNotifications(true)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
   render() {
     let activeDonationDisplay;
@@ -65,7 +87,12 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 9,
   },
-  half: {
+  refreshWrapper: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  half: {
+    flex: 4,
   }
 })

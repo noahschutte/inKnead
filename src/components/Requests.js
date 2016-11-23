@@ -16,7 +16,7 @@ export default class Requests extends Component {
   }
   _onRefresh() {
     this.setState({refreshing: true});
-    fetch('http://192.168.0.101:3000/requests')
+    fetch('https://in-knead.herokuapp.com/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -26,13 +26,16 @@ export default class Requests extends Component {
       } else {
         this.props.collectRequests(responseJson.requests)
         this.props.collectThankYous(responseJson.thankYous)
-        this.setState({errorMessage: "Requests recieved."})
       }
     })
     .then((arbitrary) => {
       this.setState({activity: []})
-      this.setState({activity: this.state.activity.concat(this.props.requests)})
-      this.setState({activity: this.state.activity.concat(this.props.thankYous)})
+      if (this.props.userRequests) {
+        this.setState({activity: this.state.activity.concat(this.props.requests)})
+      }
+      if (this.props.userRequests) {
+        this.setState({activity: this.state.activity.concat(this.props.thankYous)})
+      }
     })
     .then((arbitrary) => {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -46,7 +49,7 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('http://192.168.0.101:3000/requests')
+    fetch('https://in-knead.herokuapp.com/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -56,12 +59,15 @@ export default class Requests extends Component {
       } else {
         this.props.collectRequests(responseJson.requests)
         this.props.collectThankYous(responseJson.thankYous)
-        this.setState({errorMessage: "Requests recieved."})
       }
     })
     .then((arbitrary) => {
-      this.setState({activity: this.state.activity.concat(this.props.requests)})
-      this.setState({activity: this.state.activity.concat(this.props.thankYous)})
+      if (this.props.requests) {
+        this.setState({activity: this.state.activity.concat(this.props.requests)})
+      }
+      if (this.props.thankYous) {
+        this.setState({activity: this.state.activity.concat(this.props.thankYous)})
+      }
     })
     .then((arbitrary) => {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -75,6 +81,9 @@ export default class Requests extends Component {
     });
   }
   _renderRow(rowData) {
+    this.state.activity.sort(function(a, b) {
+      return parseFloat(a.seconds) - parseFloat(b.seconds);
+    });
     return <Request selectedRequest={this.state.activity[rowData]} {...this.props} />
   }
   _genRows() {
