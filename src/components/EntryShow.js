@@ -9,7 +9,6 @@ export default class EntryShow extends Component {
     this.props.navigator.push({name: 'instructions'})
   }
   render() {
-    console.log("entry", this.props.entry);
     let entry = this.props.entry;
     let activeDonation;
 
@@ -26,23 +25,24 @@ export default class EntryShow extends Component {
 
     let timeAgo;
     let displayTime;
-    if (entry.minutes === 1) {
-      timeAgo = entry.minutes
+    const minutes = Math.round(entry.seconds / 60)
+    if (minutes === 1) {
+      timeAgo = minutes
       displayTime = `${timeAgo} minute ago`
-    } else if (entry.minutes < 60) {
-      timeAgo = entry.minutes
+    } else if (minutes < 60) {
+      timeAgo = minutes
       displayTime = `${timeAgo} minutes ago`
-    } else if (Math.round(entry.minutes/60) === 1) {
-      timeAgo = Math.round(entry.minutes/60)
+    } else if (Math.round(minutes/60) === 1) {
+      timeAgo = Math.round(minutes/60)
       displayTime = `${timeAgo} hour ago`
-    } else if (Math.round(entry.minutes/60) < 24) {
-      timeAgo = Math.round(entry.minutes/60)
+    } else if (Math.round(minutes/60) < 24) {
+      timeAgo = Math.round(minutes/60)
       displayTime = `${timeAgo} hours ago`
-    } else if (Math.round(entry.minutes/1440) === 1) {
-      timeAgo = Math.round(entry.minutes/1440)
+    } else if (Math.round(minutes/1440) === 1) {
+      timeAgo = Math.round(minutes/1440)
       displayTime = `${timeAgo} day ago`
     } else {
-      timeAgo = Math.round(entry.minutes/1440)
+      timeAgo = Math.round(minutes/1440)
       displayTime = `${timeAgo} days ago`
     }
 

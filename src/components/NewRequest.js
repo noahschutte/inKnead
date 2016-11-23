@@ -60,7 +60,7 @@ export default class NewRequest extends Component {
         vendor,
       } = this.state;
 
-      fetch('http://192.168.0.101:3000/requests', {
+      fetch('https://in-knead.herokuapp.com/requests', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ export default class NewRequest extends Component {
               } else {
                 console.log("failure");
                 const userID = that.props.user.id
-                fetch(`http://192.168.0.101:3000/requests/1`, {
+                fetch(`https://in-knead.herokuapp.com/requests/1`, {
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

@@ -17,23 +17,26 @@ export default class History extends Component {
   _onRefresh() {
     this.setState({refreshing: true});
     const userID = this.props.user.id
-    fetch(`http://192.168.0.101:3000/users/${userID}`)
+    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage === "No current requests.") {
+      if (responseJson.errorMessage) {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectUserRequests(responseJson.userRequests)
         this.props.collectUserThankYous(responseJson.userThankYous)
-        this.setState({errorMessage: "Requests recieved."})
       }
     })
     .then((arbitrary) => {
       this.setState({userHistory: []})
-      this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
-      this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
+      if (this.props.userRequests) {
+        this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
+      }
+      if (this.props.userThankYous) {
+        this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
+      }
     })
     .then((arbitrary) => {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -48,12 +51,12 @@ export default class History extends Component {
   }
   componentWillMount() {
     const userID = this.props.user.id
-    fetch(`http://192.168.0.101:3000/users/${userID}`)
+    fetch(`https://in-knead.herokuapp.com/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage === "No current requests.") {
+      if (responseJson.errorMessage) {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectUserRequests(responseJson.userRequests)
@@ -61,8 +64,12 @@ export default class History extends Component {
       }
     })
     .then((arbitrary) => {
-      this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
-      this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
+      if (this.props.userRequests) {
+        this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
+      }
+      if (this.props.userThankYous) {
+        this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
+      }
     })
     .then((arbitrary) => {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -76,6 +83,9 @@ export default class History extends Component {
     });
   }
   _renderRow(rowData) {
+    this.state.userHistory.sort(function(a, b) {
+      return parseFloat(a.seconds) - parseFloat(b.seconds);
+    });
     return <Request history selectedRequest={this.state.userHistory[rowData]} {...this.props} />
   }
   _genRows() {

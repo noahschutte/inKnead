@@ -81,25 +81,27 @@ export default class Request extends Component {
             />
         </View>
     }
+
     let timeAgo;
     let displayTime;
-    if (request.minutes === 1) {
-      timeAgo = request.minutes
+    const minutes = Math.round(request.seconds / 60)
+    if (minutes === 1) {
+      timeAgo = minutes
       displayTime = `${timeAgo} minute ago`
-    } else if (request.minutes < 60) {
-      timeAgo = request.minutes
+    } else if (minutes < 60) {
+      timeAgo = minutes
       displayTime = `${timeAgo} minutes ago`
-    } else if (Math.round(request.minutes/60) === 1) {
-      timeAgo = Math.round(request.minutes/60)
+    } else if (Math.round(minutes/60) === 1) {
+      timeAgo = Math.round(minutes/60)
       displayTime = `${timeAgo} hour ago`
-    } else if (Math.round(request.minutes/60) < 24) {
-      timeAgo = Math.round(request.minutes/60)
+    } else if (Math.round(minutes/60) < 24) {
+      timeAgo = Math.round(minutes/60)
       displayTime = `${timeAgo} hours ago`
-    } else if (Math.round(request.minutes/1440) === 1) {
-      timeAgo = Math.round(request.minutes/1440)
+    } else if (Math.round(minutes/1440) === 1) {
+      timeAgo = Math.round(minutes/1440)
       displayTime = `${timeAgo} day ago`
     } else {
-      timeAgo = Math.round(request.minutes/1440)
+      timeAgo = Math.round(minutes/1440)
       displayTime = `${timeAgo} days ago`
     }
 
