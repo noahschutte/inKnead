@@ -88,7 +88,7 @@ export default class inknead extends Component {
     this.handleRecentThankYou = this.handleRecentThankYou.bind(this);
   }
   createSession(userInfo) {
-    fetch('https://in-knead.herokuapp.com/users', {
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

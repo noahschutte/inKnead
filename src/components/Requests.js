@@ -16,7 +16,7 @@ export default class Requests extends Component {
   }
   _onRefresh() {
     this.setState({refreshing: true});
-    fetch('https://in-knead.herokuapp.com/requests')
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -49,7 +49,7 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('https://in-knead.herokuapp.com/requests')
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
