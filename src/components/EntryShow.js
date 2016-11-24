@@ -5,7 +5,20 @@ import Video from './Video';
 import Button from './Button';
 
 export default class EntryShow extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      paused: true,
+      errorMessage: '',
+    };
+    this.entryShowToggle = this.entryShowToggle.bind(this)
+  }
+  entryShowToggle(toggle) {
+    this.setState({paused: toggle})
+  }
   handleInstructions() {
+    this.setState({paused: true})
     this.props.navigator.push({name: 'instructions'})
   }
   render() {
@@ -53,7 +66,7 @@ export default class EntryShow extends Component {
         <View style={styles.wrapper}>
 
           <View style={styles.videoContainer}>
-            <Video entryShow {...this.props} />
+            <Video entryShow entryShowPaused={this.state.paused} entryShowToggle={this.entryShowToggle} {...this.props} />
           </View>
 
           <View style={styles.content}>

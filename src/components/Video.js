@@ -16,6 +16,8 @@ export default class VideoDisplay extends Component {
   playVideo() {
     if (this.props.requestShow) {
       this.props.requestShowToggle(!this.props.requestShowPaused)
+    } else if (this.props.entryShow) {
+      this.props.entryShowToggle(!this.props.entryShowPaused)
     } else if (this.props.newRequestShow) {
       this.props.newRequestShowToggle(!this.props.newRequestShowPaused)
     } else if (this.props.createThankYouShow) {
@@ -27,6 +29,8 @@ export default class VideoDisplay extends Component {
   onEnd() {
     if (this.props.requestShow) {
       this.props.requestShowToggle(true)
+    } else if (this.props.entryShow) {
+      this.props.requestShowToggle(true)
     } else if (this.props.newRequestShow) {
       this.props.newRequestShowToggle(true)
     } else if (this.props.createThankYouShow) {
@@ -37,13 +41,39 @@ export default class VideoDisplay extends Component {
   }
 
   render() {
+    let originPaused;
+    if (this.props.requestShow) {
+      originPaused = this.props.requestShowPaused
+    } else if (this.props.entryShow) {
+      originPaused = this.props.entryShowPaused
+    } else if (this.props.newRequestShow) {
+      originPaused = this.props.newRequestShowPaused
+    } else if (this.props.createThankYouShow) {
+      originPaused = this.props.createThankYouShowPaused
+    } else {
+      originPaused = this.state.paused
+    }
+
+
+    let playButton;
+    if (this.props.requestShowPaused || this.props.entryShowPaused || this.props.newRequestShowPaused || this.props.createThankYouShowPaused) {
+      playButton =
+        <Image
+          source={require('../../assets/playButton.png')}
+          style={styles.playButton}
+          />
+    } else {
+      playButton =
+        <Image
+          style={styles.playButton}
+          />
+    }
+
     let content;
-    if (this.props.preview) {
+    if (this.props.previewNewRequest) {
       content = this.props.videoData.path
     } else if (this.props.thankYou) {
       content = this.props.thankYouData.path
-    } else if (this.props.anonEntry) {
-      content = this.props.selectedEntry.video
     } else if (this.props.entryShow) {
       content = this.props.entry.video
     } else if (this.props.selectedEntry) {
@@ -52,17 +82,6 @@ export default class VideoDisplay extends Component {
       content = this.props.selectedRequest.video
     } else if (this.props.requestShow) {
       content = this.props.request.video
-    }
-
-    let originPaused;
-    if (this.props.requestShow) {
-      originPaused = this.props.requestShowPaused
-    } else if (this.props.newRequestShow) {
-      originPaused = this.props.newRequestShowPaused
-    } else if (this.props.createThankYouShow) {
-      originPaused = this.props.createThankYouShowPaused
-    } else {
-      originPaused = this.state.paused
     }
 
     const videoDisplay =
@@ -80,23 +99,10 @@ export default class VideoDisplay extends Component {
         style={styles.video}
         />;
 
-    let playButton;
-    if (this.props.requestShowPaused || this.state.paused && !this.props.requestShow) {
-      playButton =
-        <Image
-          source={require('../../assets/playButton.png')}
-          style={styles.playButton}
-          />
-    } else {
-      playButton =
-        <Image
-          style={styles.playButton}
-          />
-    }
     let display;
-    if (this.props.userRequest || this.props.anonEntry) {
+    if (this.props.userRequest) {
       display = videoDisplay
-    } else if (this.props.preview || this.props.requestShow || this.props.entryShow || this.props.thankYouData) {
+    } else {
       display =
         <View style={styles.container}>
           <TouchableHighlight
@@ -108,6 +114,7 @@ export default class VideoDisplay extends Component {
           {videoDisplay}
         </View>
     }
+
     return (
       <View style={styles.container}>
         {display}

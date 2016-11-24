@@ -143,6 +143,28 @@ export default class Example extends React.Component {
             />
         </TouchableOpacity>
     }
+    let typeDisplay;
+    let flashDisplay;
+    if (!this.state.isRecording) {
+      typeDisplay =
+        <TouchableOpacity
+          style={styles.typeButton}
+          onPress={this.switchType}
+          >
+          <Image
+            source={this.typeIcon}
+            />
+        </TouchableOpacity>;
+      flashDisplay =
+        <TouchableOpacity
+          style={styles.flashButton}
+          onPress={this.switchFlash}
+          >
+          <Image
+            source={this.flashIcon}
+            />
+        </TouchableOpacity>
+    }
     return (
       <View style={styles.container}>
         <StatusBar
@@ -171,22 +193,7 @@ export default class Example extends React.Component {
               source={require('../../assets/left_caret.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.typeButton}
-            onPress={this.switchType}
-          >
-            <Image
-              source={this.typeIcon}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.flashButton}
-            onPress={this.switchFlash}
-          >
-            <Image
-              source={this.flashIcon}
-            />
-          </TouchableOpacity>
+          {typeDisplay}
         </View>
 
         <View style={[styles.overlay, styles.bottomOverlay]}>

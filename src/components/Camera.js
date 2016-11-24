@@ -194,7 +194,6 @@ export default class Example extends React.Component {
               />
           </TouchableOpacity>
           {typeDisplay}
-          {flashDisplay}
         </View>
 
         <View style={[styles.overlay, styles.bottomOverlay]}>

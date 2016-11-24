@@ -64,7 +64,6 @@ export default class ThankYou extends Component {
       .then((responseJson) => {
         console.log("responseJson", responseJson);
         if (responseJson.errorMessage) {
-          console.log(responseJson.errorMessage);
           this.props.handleCreateThankYouErrorMessage(responseJson.errorMessage)
         } else {
           this.setState({uploading: true})
@@ -134,11 +133,8 @@ export default class ThankYou extends Component {
     })
   }
   render() {
-    console.log("recentSuccessfulRequest", this.props.recentSuccessfulRequest);
-
     let videoDisplay;
     if (this.props.thankYouData) {
-      console.log("thankYouData", this.props.thankYouData);
       videoDisplay =
         <Video thankYou createThankYouShow createThankYouShowPaused={this.state.paused} createThankYouShowToggle={this.createThankYouShowToggle} {...this.props} />
     }
