@@ -125,12 +125,24 @@ android {
     }
 }
 
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    compile project(':react-native-video')
-    compile project(':react-native-camera')
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':ReactAndroid')
+    compile(project(':react-native-video')) {
+      exclude group: 'com.facebook.react', module: 'react-native'
+    }
+    compile(project(':react-native-camera')) {
+      exclude group: 'com.facebook.react', module: 'react-native'
+    }
     compile project(':react-native-fbsdk')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
+    compile 'com.facebook.android:facebook-android-sdk:3.21.1)'
     compile "com.facebook.react:react-native:+"  // From node_modules
 }
 
