@@ -165,7 +165,7 @@ export default class NewRequest extends Component {
     let videoDisplay;
     if (this.props.videoData) {
       videoDisplay =
-        <Video preview newRequestShow newRequestShowPaused={this.state.paused} newRequestShowToggle={this.newRequestShowToggle} {...this.props} />
+        <Video previewNewRequest newRequestShow newRequestShowPaused={this.state.paused} newRequestShowToggle={this.newRequestShowToggle} {...this.props} />
     }
 
     let recordButtonText;
