@@ -10,13 +10,41 @@ export default class Profile extends Component {
     super(props)
 
     this.state = {
+      verify: null,
       updatedEmail: '',
       errorMessage: ' '
     };
-    this.onEmailChange = this.onEmailChange.bind(this);
+    this.onCurrentEmailChange = this.onCurrentEmailChange.bind(this);
   }
-  onEmailChange(updatedEmail) {
+  onCurrentEmailChange(updatedEmail) {
     this.setState({updatedEmail})
+  }
+  verifyEmail() {
+    const userID = this.props.user.id
+    const updatedEmail = this.props.user.signup_email;
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'PATCH',
+      body: JSON.stringify({updatedEmail})
+    })
+    .then((response) => {
+      return response.json()})
+    .then((responseJson) => {
+      if (responseJson.currentEmail) {
+        this.props.onUserChange(responseJson.user)
+        this.props.onCurrentEmailChange(responseJson.currentEmail)
+        this.setState({updatedEmail: ''})
+        this.setState({errorMessage: responseJson.errorMessage})
+      } else {
+        this.setState({errorMessage: responseJson.errorMessage})
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
   onUpdateEmailPress() {
     const userID = this.props.user.id
@@ -32,8 +60,9 @@ export default class Profile extends Component {
     .then((response) => {
       return response.json()})
     .then((responseJson) => {
-      if (responseJson.email) {
-        this.props.onEmailChange(responseJson.email)
+      if (responseJson.currentEmail) {
+        this.props.onUserChange(responseJson.user)
+        this.props.onCurrentEmailChange(responseJson.currentEmail)
         this.setState({updatedEmail: ''})
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
@@ -45,19 +74,25 @@ export default class Profile extends Component {
     });
   }
   render() {
-    let display;
-    if (this.props.user === null) {
-      display = <GuestView {...this.props} />
-    } else {
-      display =
-        <View style={styles.wrapper}>
+    console.log("user", this.props.user);
 
-          <View style={styles.profileContainer}>
-            <Image
-              source={require('../../assets/profile.png')}
-              style={styles.image}
-              />
+    let emailDisplay
+    if (this.props.user && this.props.user.current_email === null) {
+      emailDisplay =
+        <View style={styles.profileContainer}>
+          <View style={styles.updateEmailDisplay}>
+            <Text>Your facebook account was tied to: {this.props.user.signupEmail}</Text>
+            <Text>Would you like to verify this email or enter a different one?</Text>
+            <Button
+              text={'Verify'}
+              onPress={this.verifyEmail.bind(this)}
+              style={styles.updatedEmailButton}
+              {...this.props} />
           </View>
+        </View>
+    } else {
+      emailDisplay =
+        <View style={styles.profileContainer}>
           <View style={styles.instructionsContainer}>
             <Text style={styles.instructions}>
               Make sure your email is updated below.{"\n"}If you make a request, a donor will send{"\n"}a gift card to the email address{"\n"}that is listed below.
@@ -83,7 +118,7 @@ export default class Profile extends Component {
               </Text>
 
               <TextInput
-                onChangeText={this.onEmailChange}
+                onChangeText={this.onCurrentEmailChange}
                 maxLength = {254}
                 autoCorrect={false}
                 autoCapitalize = "none"
@@ -107,13 +142,27 @@ export default class Profile extends Component {
               onPress={this.onUpdateEmailPress.bind(this)}
               />
           </View>
+        </View>
+    }
 
-          <View style={styles.loginContainer}>
-            <LoginContainer
-            onUserChange={this.props.onUserChange}
-            navigator={this.props.navigator}
-            {...this.props}
-            />
+    let display;
+    if (!this.props.user) {
+      display = <GuestView {...this.props} />
+    } else {
+      display =
+        <View style={styles.wrapper}>
+          <View style={styles.half}>
+            {emailDisplay}
+          </View>
+
+          <View style={styles.half}>
+            <View style={styles.loginContainer}>
+              <LoginContainer
+              onUserChange={this.props.onUserChange}
+              navigator={this.props.navigator}
+              {...this.props}
+              />
+            </View>
           </View>
         </View>
     }
@@ -135,8 +184,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
+  updateEmailDisplay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   profileContainer: {
-    height: 60,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -207,7 +261,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   loginContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
-    marginTop: 20,
+  },
+  half: {
+    flex: 1,
   },
 });
