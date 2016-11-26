@@ -3,13 +3,13 @@ import { View, TouchableHighlight, Text, StyleSheet, Image } from 'react-native'
 
 export default class Menu extends Component {
   onMainButtonPress() {
-    this.props.changeScope('Global')
+    this.props.changeScope('Requests')
     this.props.toggleMenu(false)
   }
-  onHistoryButtonPress() {
-    this.props.changeScope('History')
-    this.props.toggleMenu(false)
-  }
+  // onHistoryButtonPress() {
+  //   this.props.changeScope('History')
+  //   this.props.toggleMenu(false)
+  // }
   onNotificationsPress() {
     this.props.navigator.push({name: 'notifications'})
     this.props.toggleMenu(false)
@@ -25,21 +25,16 @@ export default class Menu extends Component {
   render() {
     return (
       <View style={styles.container}>
+
         <Image
           source={require('../../assets/profile.png')}
           style={styles.image}
           />
+
         <TouchableHighlight onPress={this.onMainButtonPress.bind(this)}
         style={styles.button}>
           <Text style={styles.instructions}>
-            Global
-          </Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight onPress={this.onHistoryButtonPress.bind(this)}
-        style={styles.button}>
-          <Text style={styles.instructions}>
-            History
+            Requests
           </Text>
         </TouchableHighlight>
 
@@ -61,10 +56,18 @@ export default class Menu extends Component {
             Profile
           </Text>
         </TouchableHighlight>
+
       </View>
     )
   }
 }
+
+{/* <TouchableHighlight onPress={this.onHistoryButtonPress.bind(this)}
+style={styles.button}>
+  <Text style={styles.instructions}>
+    History
+  </Text>
+</TouchableHighlight> */}
 
 const styles = StyleSheet.create({
   container: {

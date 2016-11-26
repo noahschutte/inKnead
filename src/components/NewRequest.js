@@ -18,6 +18,8 @@ export default class NewRequest extends Component {
       uploading: false,
       progress: null,
       paused: true,
+      uploadPercentage: 0,
+      uploadStatus: '',
     };
     this.newRequestShowToggle = this.newRequestShowToggle.bind(this);
     this.onPizzasChange = this.onPizzasChange.bind(this);
@@ -31,6 +33,31 @@ export default class NewRequest extends Component {
   }
   onVendorChange(vendor) {
     this.setState({vendor})
+  }
+
+  uploadProgress(evt) {
+    if (evt.lengthComputable) {
+      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+      console.log("percentComplete", percentComplete);
+      this.setState({uploadPercentage: percentComplete})
+    }
+  }
+
+  uploadComplete(evt) {
+    /* This event is raised when the server send back a response */
+    this.setState({uploadStatus: 'Done!'})
+    this.setState({uploadPercentage: 101})
+    // alert("Done - " + evt.target.responseText );
+  }
+
+  uploadFailed(evt) {
+    console.log("Error:", evt);
+    // alert("There was an error attempting to upload the file." + evt);
+  }
+
+  uploadCanceled(evt) {
+    console.log("Error:", evt);
+    alert("The upload has been canceled by the user or the browser dropped the connection.");
   }
 
   onSubmitRequest() {
@@ -76,16 +103,19 @@ export default class NewRequest extends Component {
       .then((response) => {
         return response.json()})
       .then((responseJson) => {
-        console.log("responseJson", responseJson);
         if (responseJson.errorMessage) {
           this.props.onChangeNewRequestErrorMesssage(responseJson.errorMessage)
         } else {
           this.setState({uploading: true})
+          this.setState({uploadStatus: 'Sending your video from your phone to our server.'})
           this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
           this.props.collectRequests(responseJson.requests)
-          console.log("start fetch with signedRequest");
           const url = responseJson.signedRequest
           const xhr = new XMLHttpRequest();
+          xhr.upload.addEventListener("progress", this.uploadProgress.bind(this), false);
+          xhr.addEventListener("load", this.uploadComplete.bind(this), false);
+          xhr.addEventListener("error", this.uploadFailed.bind(this), false);
+          xhr.addEventListener("abort", this.uploadCanceled.bind(this), false);
           const that = this;
           xhr.open('PUT', url);
           xhr.onreadystatechange = function() {
@@ -186,6 +216,8 @@ export default class NewRequest extends Component {
             <Text>
               This may take up to a minute.
             </Text>
+            <Text>{this.state.uploadStatus}</Text>
+            <Text>{this.state.uploadPercentage} %</Text>
           </View>
         </View>
     } else if (this.props.user === null) {

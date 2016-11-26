@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import Video from './Video';
 
 export default class Request extends Component {
   showRequest() {
@@ -105,11 +104,18 @@ export default class Request extends Component {
       displayTime = `${timeAgo} days ago`
     }
 
+    const content = this.props.selectedRequest.thumbnail
+    const thumbnail =
+      <Image
+        style={styles.thumbnail}
+        source={{ uri: content}}
+        />
+
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.showRequest.bind(this)} style={styles.wrapper}>
-          <View style={styles.videoContainer}>
-            <Video userRequest {...this.props} />
+          <View style={styles.imageContainer}>
+            {thumbnail}
           </View>
           <View style={styles.infoContainer}>
             <View style={styles.date}>
@@ -141,9 +147,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopWidth: 1,
   },
-  videoContainer: {
+  imageContainer: {
     flex: 1,
-    margin: 5,
+    margin: 2,
+  },
+  thumbnail: {
+    resizeMode: 'contain',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   infoContainer: {
     flex: 1,
