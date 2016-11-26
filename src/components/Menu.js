@@ -3,7 +3,7 @@ import { View, TouchableHighlight, Text, StyleSheet, Image } from 'react-native'
 
 export default class Menu extends Component {
   onMainButtonPress() {
-    this.props.changeScope('Requests')
+    // this.props.changeScope('Requests')
     this.props.toggleMenu(false)
   }
   // onHistoryButtonPress() {

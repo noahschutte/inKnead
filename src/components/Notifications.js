@@ -54,8 +54,17 @@ export default class Notifications extends Component {
     }
 
     let noNotificationsDisplay;
-    if (activeDonationDisplay === undefined && receivedDonationDisplay === undefined) {
+    if (activeDonationDisplay === undefined && receivedDonationDisplay === undefined && this.props.user.currentEmail) {
       noNotificationsDisplay = <Text>No current notifications.</Text>
+    }
+
+    let updateEmailDisplay;
+    if (!this.props.user.currentEmail) {
+      updateEmailDisplay =
+        <View style={styles.currentEmailContainer}>
+          <Text>You should really verify your email.</Text>
+          <Text>Go to your profile page.</Text>
+        </View>
     }
 
     let display;
@@ -64,11 +73,14 @@ export default class Notifications extends Component {
     } else {
       display =
         <View style={styles.wrapper}>
-          <View style={styles.half}>
-            {activeDonationDisplay}
+          <View style={styles.portion}>
             {noNotificationsDisplay}
+            {updateEmailDisplay}
           </View>
-          <View style={styles.half}>
+          <View style={styles.portion}>
+            {activeDonationDisplay}
+          </View>
+          <View style={styles.portion}>
             {receivedDonationDisplay}
           </View>
         </View>
@@ -89,12 +101,19 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 9,
   },
+  currentEmailContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   refreshWrapper: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  half: {
+  portion: {
     flex: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })

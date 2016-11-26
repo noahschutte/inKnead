@@ -226,9 +226,18 @@ export default class NewRequest extends Component {
           <Nav backButton {...this.props} />
           <GuestView {...this.props} />
         </View>
-    } else {
+    } else if (!this.props.user.currentEmail) {
       display =
         <View style={styles.container}>
+          <Nav backButton {...this.props} />
+          <View style={styles.updateEmailContainer}>
+            <Text>You've got to verify your email first.</Text>
+            <Text>Head over to your profile page.</Text>
+          </View>
+        </View>
+    } else {
+      display =
+        <View style={styles.wrapper}>
           <Nav backButton {...this.props} />
           <View style={styles.wrapper}>
 
@@ -307,6 +316,11 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 9,
     backgroundColor: 'white',
+  },
+  updateEmailContainer: {
+    flex: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   upload: {
     flex: 1,
