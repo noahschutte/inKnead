@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
 
-export default class Activity extends Component {
+export default class SortRequests extends Component {
   render() {
     const scope = [
       "Requests",
-      "History",
+      "Received",
+      "Thank Yous",
+      "All",
     ]
     return (
       <View style={styles.container}>
@@ -17,8 +19,8 @@ export default class Activity extends Component {
           backTint={'#ce0000'}
           tint={'white'}
           options={ scope }
-          onSelection={ this.props.changeScope.bind(this) }
-          selectedOption={ this.props.currentScope }
+          onSelection={ this.props.changeRequestType.bind(this) }
+          selectedOption={ this.props.requestType }
           />
       </View>
     )
@@ -28,7 +30,10 @@ export default class Activity extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ce0000',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
 })

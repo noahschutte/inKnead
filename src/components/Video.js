@@ -75,13 +75,11 @@ export default class VideoDisplay extends Component {
     } else if (this.props.thankYou) {
       content = this.props.thankYouData.path
     } else if (this.props.entryShow) {
-      content = this.props.entry.video
+      content = this.props.entry.compressed_video
     } else if (this.props.selectedEntry) {
-      content = this.props.selectedEntry.video
-    } else if (this.props.userRequest) {
-      content = this.props.selectedRequest.video
+      content = this.props.selectedEntry.compressed_video
     } else if (this.props.requestShow) {
-      content = this.props.request.video
+      content = this.props.request.compressed_video
     }
 
     const videoDisplay =
@@ -99,11 +97,7 @@ export default class VideoDisplay extends Component {
         style={styles.video}
         />;
 
-    let display;
-    if (this.props.userRequest) {
-      display = videoDisplay
-    } else {
-      display =
+    const display =
         <View style={styles.container}>
           <TouchableHighlight
             style={styles.playButtonContainer}
@@ -113,7 +107,6 @@ export default class VideoDisplay extends Component {
           </TouchableHighlight>
           {videoDisplay}
         </View>
-    }
 
     return (
       <View style={styles.container}>

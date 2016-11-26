@@ -7,13 +7,46 @@ export default class Requests extends Component {
     super(props)
 
     this.state = {
-      activity: [],
       refreshing: false,
       loading: true,
       dataSource: null,
       errorMessage: ' ',
     }
   }
+
+  sortRequests(requestType) {
+    const collection = []
+    if (this.props.requests) {
+      collection.push(...this.props.requests)
+    }
+    if (this.props.thankYous) {
+      collection.push(...this.props.thankYous)
+    }
+
+    let activity;
+    if (requestType === 'Requests') {
+      activity = collection.filter(function(obj) {
+        return obj.donor_id === null;
+      });
+    } else if (requestType === 'Received') {
+      activity = collection.filter(function(obj) {
+        return obj.donor_id != null;
+      });
+    } else if (requestType === 'Thank Yous') {
+      activity = collection.filter(function(obj) {
+        return obj.type === "thankYou";
+      });
+    } else if (requestType === 'All') {
+      activity = collection
+    }
+
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.setState({ dataSource: ds.cloneWithRows(this._genRows(activity.length)) })
+
+    this.setState({loading: false})
+    this.setState({refreshing: false})
+  }
+
   _onRefresh() {
     this.setState({refreshing: true});
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
@@ -29,20 +62,8 @@ export default class Requests extends Component {
       }
     })
     .then((arbitrary) => {
-      this.setState({activity: []})
-      if (this.props.requests) {
-        this.setState({activity: this.state.activity.concat(this.props.requests)})
-      }
-      if (this.props.thankYous) {
-        this.setState({activity: this.state.activity.concat(this.props.thankYous)})
-      }
-    })
-    .then((arbitrary) => {
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
-    })
-    .then((arbitrary) => {
-      this.setState({refreshing: false});
+      this.props.assembleRequests()
+      this.sortRequests(this.props.requestType)
     })
     .catch((error) => {
       console.error(error);
@@ -62,46 +83,90 @@ export default class Requests extends Component {
       }
     })
     .then((arbitrary) => {
-      if (this.props.requests) {
-        this.setState({activity: this.state.activity.concat(this.props.requests)})
-      }
-      if (this.props.thankYous) {
-        this.setState({activity: this.state.activity.concat(this.props.thankYous)})
-      }
-    })
-    .then((arbitrary) => {
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
-    })
-    .then((arbitrary) => {
-      this.setState({loading: false})
+      this.props.assembleRequests()
+      this.sortRequests(this.props.requestType)
     })
     .catch((error) => {
       console.error(error);
     });
   }
-  _renderRow(rowData) {
-    this.state.activity.sort(function(a, b) {
-      return parseFloat(a.seconds) - parseFloat(b.seconds);
-    });
-    return <Request selectedRequest={this.state.activity[rowData]} {...this.props} />
+
+  componentWillReceiveProps(props) {
+    this.setState({loading: true})
+    this.setState({refreshing: true})
+    this.sortRequests(props.requestType)
   }
-  _genRows() {
-    let activityLength = this.state.activity.length
+
+  _renderRow(rowData) {
+    const collection = []
+    if (this.props.requests) {
+      collection.push(...this.props.requests)
+    }
+    if (this.props.thankYous) {
+      collection.push(...this.props.thankYous)
+    }
+
+    let activity;
+    const requestType = this.props.requestType
+    if (requestType === 'Requests') {
+      activity = collection.filter(function(obj) {
+        return obj.donor_id === null;
+      });
+    } else if (requestType === 'Received') {
+      activity = collection.filter(function(obj) {
+        return obj.donor_id != null;
+      });
+    } else if (requestType === 'Thank Yous') {
+      activity = collection.filter(function(obj) {
+        return obj.type === "thankYou";
+      });
+    } else if (requestType === 'All') {
+      activity = collection
+    }
+
+    activity.sort(function(a, b) {
+      return parseFloat(a.seconds) - parseFloat(b.seconds);
+    })
+
+    return <Request selectedRequest={activity[rowData]} {...this.props} />
+  }
+
+  _genRows(length) {
     let result = [];
-    for (let i = 0; i < activityLength; i += 1) {
+    for (let i = 0; i < length; i += 1) {
       result.push(i)
     }
     return result
   }
+
   render() {
+    const requestType = this.props.requestType
+    const collection = this.props.activity
+    let activity;
+    if (requestType === 'Requests') {
+      activity = collection.filter(function(obj) {
+        return obj.donor_id === null;
+      });
+    } else if (requestType === 'Received') {
+      activity = collection.filter(function(obj) {
+        return obj.donor_id !== null;
+      });
+    } else if (requestType === 'Thank Yous') {
+      activity = collection.filter(function(obj) {
+        return obj.type === "thankYou";
+      });
+    } else if (requestType === 'All') {
+      activity = collection
+    }
+
     let display;
     if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
       display = <Text>Loading...</Text>
-    } else if (this.state.activity.length === 0) {
+    } else if (this.props.activity.length === 0) {
       display = <Text>No Activity Recorded.</Text>
     } else {
       display =
+        <View style={styles.listViewWrapper}>
           <ListView
             style={styles.listViewContainer}
             dataSource={this.state.dataSource}
@@ -114,6 +179,7 @@ export default class Requests extends Component {
                 />
             }
             />
+        </View>
     }
     return (
       <View style={styles.container}>
@@ -127,6 +193,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 9,
     backgroundColor: 'white',
+  },
+  listViewWrapper: {
+    flex: 8,
   },
   listViewContainer: {
     flex: 1,

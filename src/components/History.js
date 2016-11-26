@@ -7,13 +7,45 @@ export default class History extends Component {
     super(props)
 
     this.state = {
-      userHistory: [],
       refreshing: false,
       loading: true,
       dataSource: null,
       errorMessage: ' ',
     }
+    this.sortHistory = this.sortHistory.bind(this);
+    this._renderRow = this._renderRow.bind(this);
+    this._genRows = this._genRows.bind(this);
   }
+
+  sortHistory(historyType) {
+    const collection = []
+    if (this.props.userRequests) {
+      collection.push(...this.props.userRequests)
+    }
+    if (this.props.userThankYous) {
+      collection.push(...this.props.userThankYous)
+    }
+
+    let userHistory;
+    if (historyType === 'in knead') {
+      const that = this;
+      userHistory = collection.filter(function(obj) {
+        return obj.creator_id === that.props.user.id;
+      });
+    } else if (historyType === 'doughnated') {
+      const that = this;
+      userHistory = collection.filter(function(obj) {
+        return obj.creator_id != that.props.user.id;
+      });
+    }
+
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.setState({ dataSource: ds.cloneWithRows(this._genRows(userHistory.length)) })
+
+    this.setState({loading: false})
+    this.setState({refreshing: false})
+  }
+
   _onRefresh() {
     this.setState({refreshing: true});
     const userID = this.props.user.id
@@ -30,20 +62,8 @@ export default class History extends Component {
       }
     })
     .then((arbitrary) => {
-      this.setState({userHistory: []})
-      if (this.props.userRequests) {
-        this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
-      }
-      if (this.props.userThankYous) {
-        this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
-      }
-    })
-    .then((arbitrary) => {
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
-    })
-    .then((arbitrary) => {
-      this.setState({refreshing: false});
+      this.props.assembleHistory()
+      this.sortHistory.bind(this, this.props.historyType)
     })
     .catch((error) => {
       console.error(error);
@@ -65,59 +85,97 @@ export default class History extends Component {
         }
       })
       .then((arbitrary) => {
-        if (this.props.userRequests) {
-          this.setState({userHistory: this.state.userHistory.concat(this.props.userRequests)})
-        }
-        if (this.props.userThankYous) {
-          this.setState({userHistory: this.state.userHistory.concat(this.props.userThankYous)})
-        }
-      })
-      .then((arbitrary) => {
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
-      })
-      .then((arbitrary) => {
-        this.setState({loading: false})
+        this.props.assembleHistory()
+        this.sortHistory(this.props.historyType)
       })
       .catch((error) => {
         console.error(error);
       });
     }
   }
+
+  componentWillReceiveProps(props) {
+    this.setState({loading: true})
+    this.setState({refreshing: true})
+
+    this.sortHistory(props.historyType)
+  }
+
   _renderRow(rowData) {
-    this.state.userHistory.sort(function(a, b) {
+    const collection = []
+    if (this.props.userRequests) {
+      collection.push(...this.props.userRequests)
+    }
+    if (this.props.userThankYous) {
+      collection.push(...this.props.userThankYous)
+    }
+
+    let userHistory;
+    const historyType = this.props.historyType
+    if (historyType === 'in knead') {
+      const that = this
+      userHistory = collection.filter(function(obj) {
+        return obj.creator_id === that.props.user.id;
+      });
+    } else if (historyType === 'doughnated') {
+      const that = this;
+      userHistory = collection.filter(function(obj) {
+        return obj.creator_id != that.props.user.id;
+      });
+    }
+
+    userHistory.sort(function(a, b) {
       return parseFloat(a.seconds) - parseFloat(b.seconds);
     });
-    return <Request history selectedRequest={this.state.userHistory[rowData]} {...this.props} />
+
+    return <Request history selectedRequest={userHistory[rowData]} {...this.props} />
   }
-  _genRows() {
-    let userHistoryLength = this.state.userHistory.length
+
+  _genRows(length) {
     let result = [];
-    for (let i = 0; i < userHistoryLength; i += 1) {
+    for (let i = 0; i < length; i += 1) {
       result.push(i)
     }
     return result
   }
+
   render() {
+    const historyType = this.props.requestType
+    const collection = this.props.userHistory
+    let userHistory
+    if (historyType === 'in knead') {
+      userHistory = collection.filter(function(obj) {
+        console.log("user.id", this.props.user.id);
+        console.log("obj creator", obj.creator_id);
+        return obj.creator_id === this.props.user.id;
+      });
+    } else if (historyType === 'doughnated') {
+      userHistory = collection.filter(function(obj) {
+        return obj;
+      });
+    }
+
     let display;
     if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
       display = <Text>Loading...</Text>
-    } else if (this.state.userHistory.length === 0) {
+    } else if (this.props.userHistory.length === 0) {
       display = <Text>No Activity Recorded.</Text>
     } else {
       display =
-        <ListView
+        <View style={styles.listViewWrapper}>
+          <ListView
           style={styles.listViewContainer}
           dataSource={this.state.dataSource}
-          renderRow={this._renderRow.bind(this)}
+          renderRow={this._renderRow}
           enableEmptySections={true}
           refreshControl={
             <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh.bind(this)}
-              />
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+            />
           }
           />
+        </View>
     }
     return (
       <View style={styles.container}>
@@ -131,6 +189,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 9,
     backgroundColor: 'white',
+  },
+  listViewWrapper: {
+    flex: 8,
   },
   listViewContainer: {
     flex: 1,
