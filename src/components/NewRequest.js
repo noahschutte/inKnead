@@ -226,7 +226,7 @@ export default class NewRequest extends Component {
           <Nav backButton {...this.props} />
           <GuestView {...this.props} />
         </View>
-    } else if (!this.props.user.currentEmail) {
+    } else if (!this.props.user.current_email) {
       display =
         <View style={styles.container}>
           <Nav backButton {...this.props} />
