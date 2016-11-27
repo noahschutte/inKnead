@@ -54,12 +54,12 @@ export default class Notifications extends Component {
     }
 
     let noNotificationsDisplay;
-    if (activeDonationDisplay === undefined && receivedDonationDisplay === undefined && this.props.user.current_email) {
+    if (activeDonationDisplay === undefined && receivedDonationDisplay === undefined && this.props.user && this.props.user.current_email) {
       noNotificationsDisplay = <Text>No current notifications.</Text>
     }
 
     let updateEmailDisplay;
-    if (!this.props.user.current_email) {
+    if (this.props.user && !this.props.user.current_email) {
       updateEmailDisplay =
         <View style={styles.currentEmailContainer}>
           <Text>You should really verify your email.</Text>

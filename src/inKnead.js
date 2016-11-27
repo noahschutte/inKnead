@@ -90,7 +90,6 @@ export default class inknead extends Component {
     this.handleRecentThankYou = this.handleRecentThankYou.bind(this);
   }
   createSession(userInfo) {
-    console.log("userInfo", userInfo);
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
       headers: {
         'Accept': 'application/json',
@@ -102,7 +101,6 @@ export default class inknead extends Component {
     .then((response) => {
       return response.json()})
     .then((responseJson) => {
-      console.log("response", responseJson);
       this.onUserChange(responseJson.user)
       this.onCurrentEmailChange(responseJson.currentEmail)
       this.onSignupEmailChange(responseJson.signupEmail)

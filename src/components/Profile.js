@@ -74,8 +74,6 @@ export default class Profile extends Component {
     });
   }
   render() {
-    console.log("user", this.props.user);
-
     let emailDisplay
     if (this.props.user && this.props.user.current_email === null) {
       emailDisplay =
