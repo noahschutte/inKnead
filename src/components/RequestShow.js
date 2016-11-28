@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AlertIOS, View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { Alert, View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
 import Video from './Video';
 import Button from './Button';
@@ -26,7 +26,7 @@ export default class RequestShow extends Component {
     } else if (this.props.activeDonation) {
       this.setState({errorMessage: 'You have recently made a donation.'})
     } else {
-      AlertIOS.alert(
+      Alert.alert(
         `Are you sure you want to donate ${request.pizzas} pizza(s)?`,
         `You will have 30 minutes to send an online gift card. Failure to complete the donation could have you removed from the community.`,
         [
