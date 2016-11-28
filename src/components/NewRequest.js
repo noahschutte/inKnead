@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
 import Button from './Button';
 import Camera from 'react-native-camera';
@@ -165,15 +165,20 @@ export default class NewRequest extends Component {
 
   openVideoRec() {
     this.setState({paused: true})
-    Camera.checkDeviceAuthorizationStatus()
-    .then((response) => {
-      if (response) {
-        this.props.onChangeNewRequestErrorMesssage("")
-        this.props.navigator.push({name: 'camera'});
-      } else {
-        this.props.onChangeNewRequestErrorMesssage("Go to Settings and allow 'in knead' to access the Camera and Microphone.")
-      }
-    })
+    if (Platform.OS === 'ios') {
+      Camera.checkDeviceAuthorizationStatus()
+      .then((response) => {
+        if (response) {
+          this.props.onChangeNewRequestErrorMesssage("")
+          this.props.navigator.push({name: 'camera'});
+        } else {
+          this.props.onChangeNewRequestErrorMesssage("Go to Settings and allow 'in knead' to access the Camera and Microphone.")
+        }
+      })
+    } else if (Platform.OS === 'android') {
+      this.props.onChangeNewRequestErrorMesssage("")
+      this.props.navigator.push({name: 'camera'});
+    }
   }
   selectPizzas(pizzas){
     this.setState({pizzas});
