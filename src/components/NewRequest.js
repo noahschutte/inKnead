@@ -118,6 +118,7 @@ export default class NewRequest extends Component {
           xhr.addEventListener("abort", this.uploadCanceled.bind(this), false);
           const that = this;
           xhr.open('PUT', url);
+          xhr.setRequestHeader('Content-Type', 'application/json'); // Explicitly set request header for android compatibility
           xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
               if(xhr.status === 200) {
