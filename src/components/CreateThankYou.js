@@ -46,7 +46,7 @@ export default class ThankYou extends Component {
         vendor,
       } = this.state;
 
-      fetch('https://d1dpbg9jbgrqy5.cloudfront.net/thank_you', {
+      fetch('http://192.168.0.100:3000/thank_you', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ export default class ThankYou extends Component {
               } else {
                 console.log("failure");
                 const userID = that.props.user.id
-                fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/thank_you/1`, {
+                fetch(`http://192.168.0.100:3000/thank_you/1`, {
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

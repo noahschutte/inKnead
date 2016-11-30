@@ -15,6 +15,8 @@ export default class Requests extends Component {
   }
 
   sortRequests(requestType) {
+    this.setState({loading: true})
+
     const collection = []
     if (this.props.requests) {
       collection.push(...this.props.requests)
@@ -22,6 +24,8 @@ export default class Requests extends Component {
     if (this.props.thankYous) {
       collection.push(...this.props.thankYous)
     }
+
+    // console.log("sort collection", collection);
 
     let activity;
     if (requestType === 'Requests') {
@@ -40,6 +44,11 @@ export default class Requests extends Component {
       activity = collection
     }
 
+    // console.log("sort activity", activity);
+    // console.log("length", activity.length);
+    //
+    // console.log("THIS", this);
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(activity.length)) })
 
@@ -49,7 +58,7 @@ export default class Requests extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true});
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
+    fetch('http://192.168.0.100:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -70,7 +79,7 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
+    fetch('http://192.168.0.100:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -91,7 +100,52 @@ export default class Requests extends Component {
     });
   }
 
+  shouldComponentUpdate() {
+    const collection = []
+    if (this.props.requests) {
+      collection.push(...this.props.requests)
+    }
+    if (this.props.thankYous) {
+      collection.push(...this.props.thankYous)
+    }
+
+    let activity;
+    const requestType = this.props.requestType
+
+    // if (requestType === 'Requests') {
+    //   activity = collection.filter(function(obj) {
+    //     return obj.donor_id === null;
+    //   });
+    // } else if (requestType === 'Received') {
+    //   activity = collection.filter(function(obj) {
+    //     return obj.donor_id != null;
+    //   });
+    // } else if (requestType === 'Thank Yous') {
+    //   activity = collection.filter(function(obj) {
+    //     return obj.type === "thankYou";
+    //   });
+    // } else if (requestType === 'All') {
+    //   activity = collection
+    // }
+
+    activity = collection
+
+    // console.log("activity.length", activity.length);
+    // console.log("props.activity.length", this.props.activity.length);
+
+    if (activity.length === this.props.activity.length) {
+      // console.log("false");
+      this.setState({loading: false})
+      this.setState({refreshing: false})
+      return false
+    } else {
+      // console.log("true");
+      return true
+    }
+  }
+
   componentWillReceiveProps(props) {
+    console.log("props", props.requests);
     this.setState({loading: true})
     this.setState({refreshing: true})
     this.sortRequests(props.requestType)
@@ -128,6 +182,11 @@ export default class Requests extends Component {
       return parseFloat(a.seconds) - parseFloat(b.seconds);
     })
 
+    console.log("activity", activity);
+    console.log("rowData", rowData);
+
+    console.log("request", activity[rowData]);
+
     return <Request selectedRequest={activity[rowData]} {...this.props} />
   }
 
@@ -140,8 +199,23 @@ export default class Requests extends Component {
   }
 
   render() {
+    console.log("REQUEST RENDERED");
+    // console.log("ds", this.state.dataSource);
+
     const requestType = this.props.requestType
-    const collection = this.props.activity
+    console.log("render requestType", requestType);
+
+    const collection = []
+    if (this.props.requests) {
+      collection.push(...this.props.requests)
+    }
+    if (this.props.thankYous) {
+      collection.push(...this.props.thankYous)
+    }
+
+    // console.log("collection", collection);
+    // console.log("requestType", requestType);
+
     let activity;
     if (requestType === 'Requests') {
       activity = collection.filter(function(obj) {
@@ -158,6 +232,9 @@ export default class Requests extends Component {
     } else if (requestType === 'All') {
       activity = collection
     }
+
+    console.log("activity", activity);
+
 
     let display;
     if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
