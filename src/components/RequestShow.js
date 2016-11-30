@@ -43,7 +43,7 @@ export default class RequestShow extends Component {
   }
   onConfirmPress(request) {
     const userID = this.props.user.id;
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${request.id}`, {
+    fetch(`http://192.168.0.100:3000/requests/${request.id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -58,6 +58,7 @@ export default class RequestShow extends Component {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectRequests(responseJson.requests)
+        this.props.collectThankYous(responseJson.thankYous)
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
         this.props.collectActiveDonation(request)
         this.props.collectAnonEmail(responseJson.anonEmail)

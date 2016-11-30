@@ -87,7 +87,7 @@ def enableProguardInReleaseBuilds = false
 android {
     signingConfigs {
         config {
-            keyAlias 'inKnead release apk'
+            keyAlias 'keystores.jks'
             keyPassword 'soapdish'
             storeFile file('/Users/noahschutte/Library/Android/keystores.jks')
             storePassword 'soapdish'
@@ -102,8 +102,8 @@ android {
         applicationId "com.inknead"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
