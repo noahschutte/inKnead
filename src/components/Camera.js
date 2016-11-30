@@ -10,11 +10,14 @@ export default class Example extends React.Component {
 
     this.state = {
       camera: {
-        aspect: Camera.constants.Aspect.fill,
-        captureTarget: Camera.constants.CaptureTarget.temp,
+        aspect: Camera.constants.Aspect.fit,
+        mode: Camera.constants.CaptureMode.video,
+        captureTarget: Camera.constants.CaptureTarget.disk,
         type: Camera.constants.Type.front,
-        orientation: Camera.constants.Orientation.auto,
-        FlashMode: Camera.constants.FlashMode.auto,
+        orientation: Camera.constants.Orientation.portrait,
+        flashMode: Camera.constants.FlashMode.off,
+        torchMode: Camera.constants.TorchMode.off,
+        captureQuality: Camera.constants.CaptureQuality.medium,
       },
       isRecording: false,
     };
@@ -33,6 +36,8 @@ export default class Example extends React.Component {
             } else if (data.duration < 5.0) {
               this.props.onChangeNewRequestErrorMesssage("Video length must be at least 5 seconds.")
             } else {
+              console.log("camera", this.camera);
+              console.log("change video data to:", data.path);
               this.props.onChangeVideoData(data);
             }
           })
@@ -50,6 +55,8 @@ export default class Example extends React.Component {
       });
       this.props.navigator.pop();
     }
+    console.log("this.camera", this.camera);
+    console.log("videoData", this.props.videoData);
   }
   switchType() {
     let newType;
@@ -180,7 +187,8 @@ export default class Example extends React.Component {
           captureTarget={this.state.camera.captureTarget}
           type={this.state.camera.type}
           flashMode={this.state.camera.FlashMode}
-          defaultTouchToFocus
+          defaultTouchToFocusComponent={true}
+          defaultOnFocus={true}
           mirrorImage={true}
           />
 
