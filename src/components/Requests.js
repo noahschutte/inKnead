@@ -13,6 +13,8 @@ export default class Requests extends Component {
   }
 
   sortRequests(requestType) {
+    this.setState({loading: true})
+
     const collection = []
     if (this.props.requests) {
       collection.push(...this.props.requests)
@@ -37,6 +39,7 @@ export default class Requests extends Component {
     } else if (requestType === 'All') {
       activity = collection
     }
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(activity.length)) })
 
@@ -45,7 +48,7 @@ export default class Requests extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true});
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
+    fetch('http://192.168.0.100:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -64,7 +67,7 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
+    fetch('http://192.168.0.100:3000/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -134,6 +137,7 @@ export default class Requests extends Component {
 
   render() {
     const requestType = this.props.requestType
+
     const collection = []
     if (this.props.requests) {
       collection.push(...this.props.requests)

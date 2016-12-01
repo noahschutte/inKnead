@@ -90,7 +90,7 @@ export default class inknead extends Component {
     this.handleRecentThankYou = this.handleRecentThankYou.bind(this);
   }
   createSession(userInfo) {
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
+    fetch('http://192.168.0.100:3000/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

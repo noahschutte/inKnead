@@ -22,7 +22,7 @@ export default class Profile extends Component {
   verifyEmail() {
     const userID = this.props.user.id
     const updatedEmail = this.props.user.signup_email;
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
+    fetch(`http://192.168.0.100:3000/users/${userID}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ export default class Profile extends Component {
   onUpdateEmailPress() {
     const userID = this.props.user.id
     const { updatedEmail } = this.state;
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
+    fetch(`http://192.168.0.100:3000/users/${userID}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
