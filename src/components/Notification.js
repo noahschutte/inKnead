@@ -10,7 +10,7 @@ export default class Notification extends Component {
     let userID = this.props.user.id;
     let receivedDonation = true;
     let recentSuccessfulRequestID = this.props.recentSuccessfulRequest.id
-    fetch(`http://192.168.0.100:3000/requests/${recentSuccessfulRequestID}`, {
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${recentSuccessfulRequestID}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

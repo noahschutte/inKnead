@@ -48,7 +48,7 @@ export default class Requests extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true});
-    fetch('http://192.168.0.100:3000/requests')
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -67,7 +67,7 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('http://192.168.0.100:3000/requests')
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
