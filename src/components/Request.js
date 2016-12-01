@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import globalStyles from './style/InKneadStyle';
+import GlobalStyles from 'InKneadStyle';
 
 export default class Request extends Component {
   showRequest() {
@@ -135,7 +135,7 @@ export default class Request extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles= StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 2,
