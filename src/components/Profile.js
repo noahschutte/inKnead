@@ -19,7 +19,11 @@ export default class Profile extends Component {
   onCurrentEmailChange(updatedEmail) {
     this.setState({updatedEmail})
   }
+  rejectEmail() {
+    this.setState({verify: false})
+  }
   verifyEmail() {
+    this.setState({verify: true})
     const userID = this.props.user.id
     const updatedEmail = this.props.user.signup_email;
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
@@ -75,20 +79,34 @@ export default class Profile extends Component {
   }
   render() {
     let emailDisplay
-    if (this.props.user && this.props.user.current_email === null) {
+    if (this.state.verify === null && this.props.user && this.props.user.signup_email && this.props.user.current_email === null && this.props.user.current_email === null) {
       emailDisplay =
         <View style={styles.profileContainer}>
           <View style={styles.updateEmailDisplay}>
-            <Text>Your facebook account was tied to: {this.props.user.signupEmail}</Text>
-            <Text>Would you like to verify this email or enter a different one?</Text>
-            <Button
-              text={'Verify'}
-              onPress={this.verifyEmail.bind(this)}
-              style={styles.updatedEmailButton}
-              {...this.props} />
+            <View style={styles.textContainer}>
+              <Text>Your facebook account was tied to:</Text>
+              <Text>{this.props.user.signup_email}</Text>
+              <Text>Would you like to verify this email or enter a different one?</Text>
+            </View>
+            <View style={styles.buttons}>
+              <View style={styles.buttonContainer}>
+                <Button
+                  text={'Verify'}
+                  onPress={this.verifyEmail.bind(this)}
+                  style={styles.updatedEmailButton}
+                  {...this.props} />
+              </View>
+              <View style={styles.buttonContainer}>
+                <Button
+                  text={'New Email'}
+                  onPress={this.rejectEmail.bind(this)}
+                  style={styles.updatedEmailButton}
+                  {...this.props} />
+              </View>
+            </View>
           </View>
         </View>
-    } else {
+    } else if (this.props.user) {
       emailDisplay =
         <View style={styles.profileContainer}>
           <View style={styles.instructionsContainer}>
@@ -105,7 +123,7 @@ export default class Profile extends Component {
 
               <View style={styles.currentEmailContainer}>
                 <Text style={styles.email}>
-                  {this.props.currentEmail}
+                  {this.props.user.current_email}
                 </Text>
               </View>
             </View>
@@ -123,7 +141,6 @@ export default class Profile extends Component {
                 value={this.state.updatedEmail}
                 style={styles.input}
                 />
-
             </View>
           </View>
 
@@ -187,6 +204,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttons: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  buttonContainer: {
+    flex: 1,
+    alignSelf: 'center',
+    borderColor: 'blue',
+  },
   profileContainer: {
     flex: 1,
     alignItems: 'center',
@@ -240,6 +271,10 @@ const styles = StyleSheet.create({
     width: 100,
   },
   updatedEmailButton: {
+    // alignSelf: 'center',
+    // justifyContent: 'center',
+    // flex: 1,
+
   },
   email: {
     textAlign: 'center',
