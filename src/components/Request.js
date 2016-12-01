@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import globalStyles from './style/InKneadStyle';
 
 export default class Request extends Component {
   showRequest() {
