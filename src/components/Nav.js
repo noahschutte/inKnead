@@ -11,6 +11,11 @@ export default class Nav extends Component {
   constructor(props) {
     super(props)
   }
+  componentWillReceiveProps(nextProps) {
+    if(this.props.isOpen === nextProps.isOpen && this.props.isOpen) {
+      this.props.toggleMenu(false);
+    }
+  }
   render() {
     let leftButton;
     let center;
