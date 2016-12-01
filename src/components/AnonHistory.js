@@ -18,7 +18,7 @@ export default class AnonHistory extends Component {
   _onRefresh() {
     this.setState({refreshing: true});
     const anonID = this.props.anonID
-    fetch(`http://192.168.0.100:3000/anon/${anonID}`)
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage) {
@@ -50,7 +50,7 @@ export default class AnonHistory extends Component {
   }
   componentWillMount() {
     const anonID = this.props.anonID
-    fetch(`http://192.168.0.100:3000/anon/${anonID}`)
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage) {

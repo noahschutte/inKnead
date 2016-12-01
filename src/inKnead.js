@@ -90,7 +90,7 @@ export default class inknead extends Component {
     this.handleRecentThankYou = this.handleRecentThankYou.bind(this);
   }
   createSession(userInfo) {
-    fetch('http://192.168.0.100:3000/users', {
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -216,16 +216,8 @@ export default class inknead extends Component {
     return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonRequests={this.state.anonRequests} collectAnonRequests={this.collectAnonRequests} anonThankYous={this.state.anonThankYous} collectAnonThankYous={this.collectAnonThankYous} entry={this.state.entry} collectEntry={this.collectEntry} handleGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onCurrentEmailChange={this.onCurrentEmailChange} currentEmail={this.state.currentEmail} onSignupEmailChange={this.onSignupEmailChange} signupEmail={this.state.signupEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectThankYous={this.collectThankYous} thankYous={this.state.thankYous} collectRequest={this.collectRequest} request={this.state.request} collectUserRequests={this.collectUserRequests} userRequests={this.state.userRequests} collectUserThankYous={this.collectUserThankYous} userThankYous={this.state.userThankYous} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} thankYouData={this.state.thankYouData} onChangeThankYouData={this.handleThankYouData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} recentSuccessfulRequest={this.state.recentSuccessfulRequest} handleRecentSuccessfulRequest={this.handleRecentSuccessfulRequest} createThankYouErrorMessage={this.state.createThankYouErrorMessage} handleCreateThankYouErrorMessage={this.handleCreateThankYouErrorMessage} recentThankYou={this.state.recentThankYou} handleRecentThankYou={this.handleRecentThankYou} />;
   }
   render() {
-    const sceneConfig = (renderScene) => {
+    const sceneConfig = () => {
       return Navigator.SceneConfigs.FloatFromRight
-      // if (renderScene.name === 'profile') {
-      //   return Navigator.SceneConfigs.FloatFromLeft
-      // } else if (renderScene.name === 'newRequest'){
-      // } else if (renderScene.name === 'instructions') {
-      //   return Navigator.SceneConfigs.VerticalUpSwipeJump
-      // } else {
-      //   return Navigator.SceneConfigs.FloatFromRight
-      // }
     }
     return (
       <Navigator

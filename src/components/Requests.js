@@ -8,15 +8,11 @@ export default class Requests extends Component {
 
     this.state = {
       refreshing: false,
-      loading: true,
       dataSource: null,
-      errorMessage: ' ',
     }
   }
 
   sortRequests(requestType) {
-    this.setState({loading: true})
-
     const collection = []
     if (this.props.requests) {
       collection.push(...this.props.requests)
@@ -24,8 +20,6 @@ export default class Requests extends Component {
     if (this.props.thankYous) {
       collection.push(...this.props.thankYous)
     }
-
-    // console.log("sort collection", collection);
 
     let activity;
     if (requestType === 'Requests') {
@@ -43,29 +37,20 @@ export default class Requests extends Component {
     } else if (requestType === 'All') {
       activity = collection
     }
-
-    // console.log("sort activity", activity);
-    // console.log("length", activity.length);
-    //
-    // console.log("THIS", this);
-
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(activity.length)) })
 
-    this.setState({loading: false})
     this.setState({refreshing: false})
   }
 
   _onRefresh() {
     this.setState({refreshing: true});
-    fetch('http://192.168.0.100:3000/requests')
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
+      if (!responseJson.errorMessage) {
         this.props.collectRequests(responseJson.requests)
         this.props.collectThankYous(responseJson.thankYous)
       }
@@ -79,14 +64,12 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('http://192.168.0.100:3000/requests')
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
+      if (!responseJson.errorMessage) {
         this.props.collectRequests(responseJson.requests)
         this.props.collectThankYous(responseJson.thankYous)
       }
@@ -100,54 +83,11 @@ export default class Requests extends Component {
     });
   }
 
-  shouldComponentUpdate() {
-    const collection = []
-    if (this.props.requests) {
-      collection.push(...this.props.requests)
-    }
-    if (this.props.thankYous) {
-      collection.push(...this.props.thankYous)
-    }
-
-    let activity;
-    const requestType = this.props.requestType
-
-    // if (requestType === 'Requests') {
-    //   activity = collection.filter(function(obj) {
-    //     return obj.donor_id === null;
-    //   });
-    // } else if (requestType === 'Received') {
-    //   activity = collection.filter(function(obj) {
-    //     return obj.donor_id != null;
-    //   });
-    // } else if (requestType === 'Thank Yous') {
-    //   activity = collection.filter(function(obj) {
-    //     return obj.type === "thankYou";
-    //   });
-    // } else if (requestType === 'All') {
-    //   activity = collection
-    // }
-
-    activity = collection
-
-    // console.log("activity.length", activity.length);
-    // console.log("props.activity.length", this.props.activity.length);
-
-    if (activity.length === this.props.activity.length) {
-      // console.log("false");
-      this.setState({loading: false})
-      this.setState({refreshing: false})
-      return false
-    } else {
-      // console.log("true");
-      return true
-    }
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.requestType && this.props.activeDonation === nextProps.activeDonation);
   }
 
   componentWillReceiveProps(props) {
-    console.log("props", props.requests);
-    this.setState({loading: true})
-    this.setState({refreshing: true})
     this.sortRequests(props.requestType)
   }
 
@@ -181,12 +121,6 @@ export default class Requests extends Component {
     activity.sort(function(a, b) {
       return parseFloat(a.seconds) - parseFloat(b.seconds);
     })
-
-    console.log("activity", activity);
-    console.log("rowData", rowData);
-
-    console.log("request", activity[rowData]);
-
     return <Request selectedRequest={activity[rowData]} {...this.props} />
   }
 
@@ -199,12 +133,7 @@ export default class Requests extends Component {
   }
 
   render() {
-    console.log("REQUEST RENDERED");
-    // console.log("ds", this.state.dataSource);
-
     const requestType = this.props.requestType
-    console.log("render requestType", requestType);
-
     const collection = []
     if (this.props.requests) {
       collection.push(...this.props.requests)
@@ -212,9 +141,6 @@ export default class Requests extends Component {
     if (this.props.thankYous) {
       collection.push(...this.props.thankYous)
     }
-
-    // console.log("collection", collection);
-    // console.log("requestType", requestType);
 
     let activity;
     if (requestType === 'Requests') {
@@ -233,11 +159,8 @@ export default class Requests extends Component {
       activity = collection
     }
 
-    console.log("activity", activity);
-
-
     let display;
-    if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
+    if (this.state.refreshing || this.state.dataSource === null) {
       display = <Text>Loading...</Text>
     } else if (this.props.activity.length === 0) {
       display = <Text>No Activity Recorded.</Text>

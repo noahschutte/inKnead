@@ -36,7 +36,6 @@ export default class Main extends Component {
   changeScope(scope) {
     if (this.state.scope !== scope) {
       this.setState({scope})
-      this.setState({isOpen: false})
     }
   }
 
@@ -81,7 +80,7 @@ export default class Main extends Component {
     let display;
     let sort
     if (this.state.scope === 'Requests') {
-      display = <Requests assembleRequests={this.assembleRequests} activity={this.state.activity} requestType={this.state.requestType} {...this.props} />
+      display = <Requests assembleRequests={this.assembleRequests} activity={this.state.activity} requestType={this.state.requestType} scope={this.state.scope} {...this.props} />
       sort = <SortRequests
         requestType={this.state.requestType}
         changeRequestType={this.changeRequestType}
@@ -90,7 +89,7 @@ export default class Main extends Component {
     } else if (this.state.scope === 'History' && !this.props.user) {
       display = <GuestView {...this.props} />
     } else if (this.state.scope === 'History') {
-      display = <History assembleHistory={this.assembleHistory} userHistory={this.state.userHistory} historyType={this.state.historyType} {...this.props} />
+      display = <History assembleHistory={this.assembleHistory} userHistory={this.state.userHistory} historyType={this.state.historyType} scope={this.state.scope} {...this.props} />
       sort = <SortHistory
         historyType={this.state.historyType}
         changeHistoryType={this.changeHistoryType}

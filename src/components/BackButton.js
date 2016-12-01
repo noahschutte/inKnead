@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet, BackAndroid } from 'react-native';
 
 export default class BackButton extends Component {
-
   componentWillMount() {
     BackAndroid.addEventListener('hardwareBackPress', function() {
       this.props.navigator.pop();
       return true;
     }.bind(this));
   }
-
+  
   onBackPress() {
     this.props.navigator.pop();
   }
+
   render() {
     return (
       <View style={styles.container}>
