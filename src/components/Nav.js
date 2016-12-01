@@ -11,7 +11,7 @@ export default class Nav extends Component {
   constructor(props) {
     super(props)
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if(this.props.isOpen === nextProps.isOpen && this.props.isOpen) {
       this.props.toggleMenu(false);
     }
