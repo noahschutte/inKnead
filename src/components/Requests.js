@@ -8,13 +8,13 @@ export default class Requests extends Component {
 
     this.state = {
       refreshing: false,
-      loading: true,
       dataSource: null,
-      errorMessage: ' ',
     }
   }
 
   sortRequests(requestType) {
+    this.setState({loading: true})
+
     const collection = []
     if (this.props.requests) {
       collection.push(...this.props.requests)
@@ -43,7 +43,6 @@ export default class Requests extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(activity.length)) })
 
-    this.setState({loading: false})
     this.setState({refreshing: false})
   }
 
@@ -54,9 +53,7 @@ export default class Requests extends Component {
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
+      if (!responseJson.errorMessage) {
         this.props.collectRequests(responseJson.requests)
         this.props.collectThankYous(responseJson.thankYous)
       }
@@ -75,9 +72,7 @@ export default class Requests extends Component {
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
+      if (!responseJson.errorMessage) {
         this.props.collectRequests(responseJson.requests)
         this.props.collectThankYous(responseJson.thankYous)
       }
@@ -91,9 +86,11 @@ export default class Requests extends Component {
     });
   }
 
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.requestType && this.props.activeDonation === nextProps.activeDonation);
+  }
+
   componentWillReceiveProps(props) {
-    this.setState({loading: true})
-    this.setState({refreshing: true})
     this.sortRequests(props.requestType)
   }
 
@@ -127,7 +124,6 @@ export default class Requests extends Component {
     activity.sort(function(a, b) {
       return parseFloat(a.seconds) - parseFloat(b.seconds);
     })
-
     return <Request selectedRequest={activity[rowData]} {...this.props} />
   }
 
@@ -141,7 +137,15 @@ export default class Requests extends Component {
 
   render() {
     const requestType = this.props.requestType
-    const collection = this.props.activity
+
+    const collection = []
+    if (this.props.requests) {
+      collection.push(...this.props.requests)
+    }
+    if (this.props.thankYous) {
+      collection.push(...this.props.thankYous)
+    }
+
     let activity;
     if (requestType === 'Requests') {
       activity = collection.filter(function(obj) {
@@ -160,7 +164,7 @@ export default class Requests extends Component {
     }
 
     let display;
-    if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
+    if (this.state.refreshing || this.state.dataSource === null) {
       display = <Text>Loading...</Text>
     } else if (this.props.activity.length === 0) {
       display = <Text>No Activity Recorded.</Text>

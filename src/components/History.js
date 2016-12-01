@@ -8,13 +8,8 @@ export default class History extends Component {
 
     this.state = {
       refreshing: false,
-      loading: true,
       dataSource: null,
-      errorMessage: ' ',
     }
-    this.sortHistory = this.sortHistory.bind(this);
-    this._renderRow = this._renderRow.bind(this);
-    this._genRows = this._genRows.bind(this);
   }
 
   sortHistory(historyType) {
@@ -42,7 +37,6 @@ export default class History extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(userHistory.length)) })
 
-    this.setState({loading: false})
     this.setState({refreshing: false})
   }
 
@@ -54,16 +48,14 @@ export default class History extends Component {
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
-      if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
-      } else {
+      if (!responseJson.errorMessage) {
         this.props.collectUserRequests(responseJson.userRequests)
         this.props.collectUserThankYous(responseJson.userThankYous)
       }
     })
     .then((arbitrary) => {
       this.props.assembleHistory()
-      this.sortHistory.bind(this, this.props.historyType)
+      this.sortHistory(this.props.historyType)
     })
     .catch((error) => {
       console.error(error);
@@ -77,9 +69,7 @@ export default class History extends Component {
       .then((responseJson) => {
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
         this.props.handleWelcomeUrl(responseJson.url)
-        if (responseJson.errorMessage) {
-          this.setState({errorMessage: responseJson.errorMessage})
-        } else {
+        if (!responseJson.errorMessage) {
           this.props.collectUserRequests(responseJson.userRequests)
           this.props.collectUserThankYous(responseJson.userThankYous)
         }
@@ -94,10 +84,11 @@ export default class History extends Component {
     }
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({loading: true})
-    this.setState({refreshing: true})
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.historyType && this.props.activeDonation === nextProps.activeDonation);
+  }
 
+  componentWillReceiveProps(props) {
     this.sortHistory(props.historyType)
   }
 
@@ -140,14 +131,20 @@ export default class History extends Component {
   }
 
   render() {
-    const historyType = this.props.requestType
-    const collection = this.props.userHistory
+    const historyType = this.props.historyType
+    const collection = []
+    if (this.props.userRequests) {
+      collection.push(...this.props.userRequests)
+    }
+    if (this.props.userThankYous) {
+      collection.push(...this.props.userThankYous)
+    }
+
     let userHistory
     if (historyType === 'in knead') {
+      const that = this
       userHistory = collection.filter(function(obj) {
-        console.log("user.id", this.props.user.id);
-        console.log("obj creator", obj.creator_id);
-        return obj.creator_id === this.props.user.id;
+        return obj.creator_id === that.props.user.id;
       });
     } else if (historyType === 'doughnated') {
       userHistory = collection.filter(function(obj) {
@@ -156,7 +153,7 @@ export default class History extends Component {
     }
 
     let display;
-    if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
+    if (this.state.refreshing || this.state.dataSource === null) {
       display = <Text>Loading...</Text>
     } else if (this.props.userHistory.length === 0) {
       display = <Text>No Activity Recorded.</Text>
@@ -166,7 +163,7 @@ export default class History extends Component {
           <ListView
           style={styles.listViewContainer}
           dataSource={this.state.dataSource}
-          renderRow={this._renderRow}
+          renderRow={this._renderRow.bind(this)}
           enableEmptySections={true}
           refreshControl={
             <RefreshControl

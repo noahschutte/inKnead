@@ -30,7 +30,7 @@ export default class VideoDisplay extends Component {
     if (this.props.requestShow) {
       this.props.requestShowToggle(true)
     } else if (this.props.entryShow) {
-      this.props.requestShowToggle(true)
+      this.props.entryShowToggle(true)
     } else if (this.props.newRequestShow) {
       this.props.newRequestShowToggle(true)
     } else if (this.props.createThankYouShow) {

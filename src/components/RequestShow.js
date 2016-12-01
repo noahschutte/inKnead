@@ -42,6 +42,7 @@ export default class RequestShow extends Component {
     }
   }
   onConfirmPress(request) {
+    this.requestShowToggle(true)
     const userID = this.props.user.id;
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${request.id}`, {
       headers: {
@@ -58,6 +59,7 @@ export default class RequestShow extends Component {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
         this.props.collectRequests(responseJson.requests)
+        this.props.collectThankYous(responseJson.thankYous)
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
         this.props.collectActiveDonation(request)
         this.props.collectAnonEmail(responseJson.anonEmail)
