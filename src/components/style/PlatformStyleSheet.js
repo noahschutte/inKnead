@@ -19,4 +19,4 @@ const PlatformStyleSheet= {
   },
 };
 
-export default PlatformStyleSheet
+export default PlatformStyleSheet;
