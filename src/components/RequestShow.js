@@ -58,13 +58,14 @@ export default class RequestShow extends Component {
       if (responseJson.errorMessage) {
         this.setState({errorMessage: responseJson.errorMessage})
       } else {
+        this.setState({errorMessage: ' '})
         this.props.collectRequests(responseJson.requests)
         this.props.collectThankYous(responseJson.thankYous)
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
         this.props.collectActiveDonation(request)
         this.props.collectAnonEmail(responseJson.anonEmail)
-        this.setState({errorMessage: ' '})
         this.props.navigator.push({name: 'instructions'})
+        this.props.collectRequest(responseJson.request)
       }
     })
     .catch((error) => {
