@@ -43,7 +43,7 @@ export default class History extends Component {
   _onRefresh() {
     this.setState({refreshing: true});
     const userID = this.props.user.id
-    fetch(`https://in-knead-jamowelling.c9users.io/users/${userID}`)
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
@@ -64,7 +64,7 @@ export default class History extends Component {
   componentWillMount() {
     if (this.props.user) {
       const userID = this.props.user.id
-      fetch(`https://in-knead-jamowelling.c9users.io/users/${userID}`)
+      fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`)
       .then((response) => response.json())
       .then((responseJson) => {
         this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
