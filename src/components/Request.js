@@ -15,12 +15,16 @@ export default class Request extends Component {
   }
 
   render() {
-    let request;
-    if (this.props.selectedRequest) {
-      request = this.props.selectedRequest;
-    } else if (this.props.selectedEntry) {
-      request = this.props.selectedEntry
+
+    const request = this.props.selectedRequest;
+    let pImageElements = [];
+
+    for (let i = 0; i < request.pizzas; i++) {
+      const pizzaImage = <Image style={GlobalStyles.pizzaImage} source={require("../../assets/pizza-icon-for-requests/whole-pizza.png")} key={i}/>
+      pImageElements.push(pizzaImage);
     }
+
+    const requestPizzas = <View style={GlobalStyles.pizzas}>{pImageElements}</View>;
 
     let requestText;
     if (request.received === undefined) {
@@ -41,45 +45,6 @@ export default class Request extends Component {
       requestText = <Text>Received </Text>
     } else {
       requestText = <Text>Request for </Text>
-    }
-
-    let requestPizzas;
-    if (request.pizzas === 1) {
-      requestPizzas =
-      <View style={styles.pizzas}>
-        <Image
-          style={styles.pizzaImage}
-          source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
-          />
-      </View>
-    } else if (request.pizzas === 2) {
-       requestPizzas =
-        <View style={styles.pizzas}>
-          <Image
-            style={styles.pizzaImage}
-            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
-            />
-          <Image
-            style={styles.pizzaImage}
-            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
-            />
-        </View>
-    } else {
-      requestPizzas =
-        <View style={styles.pizzas}>
-          <Image
-            style={styles.pizzaImage}
-            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
-            />
-          <Image
-            style={styles.pizzaImage}
-            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
-            />
-          <Image
-            style={styles.pizzaImage}
-            source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
-            />
-        </View>
     }
 
     let timeAgo;
@@ -180,9 +145,5 @@ const styles = StyleSheet.create({
   pizzaImage: {
     height: 20,
     width: 20,
-  },
-  pizzas: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
   },
 })
