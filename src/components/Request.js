@@ -141,9 +141,5 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: 'row',
-  },
-  pizzaImage: {
-    height: 20,
-    width: 20,
-  },
+  }
 })
