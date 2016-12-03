@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import TimeAgo from 'TimeAgo';
 import GlobalStyles from 'InKneadStyle';
 
 export default class Request extends Component {
@@ -85,9 +86,7 @@ export default class Request extends Component {
           </View>
           <View style={styles.infoContainer}>
             <View style={styles.date}>
-              <Text style={styles.dateTime}>
-                {displayTime}
-              </Text>
+              <TimeAgo style={styles.dateTime} secondsOld={request.seconds} />
             </View>
             <View style={styles.content}>
               {requestText}
