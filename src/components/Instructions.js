@@ -45,6 +45,14 @@ export default class Instructions extends Component {
         <Text>
           Great! Now paste that email address into the "recipient email" form on the following page and complete your donation!
         </Text>
+        <TouchableOpacity
+          onPress={this.handleVendorSite.bind(this, vendors[this.state.vendor])}
+          style={styles.hyperlinkButton}
+          >
+          <Text style={styles.hyperlink}>
+            {this.state.vendor}
+          </Text>
+        </TouchableOpacity>
         </View>
       )
     }
@@ -79,14 +87,6 @@ export default class Instructions extends Component {
             {status}
           </Text>
           {this.stepTwo()}
-          <TouchableOpacity
-            onPress={this.handleVendorSite.bind(this, vendors[this.state.vendor])}
-            style={styles.hyperlinkButton}
-            >
-            <Text style={styles.hyperlink}>
-              {this.state.vendor}
-            </Text>
-          </TouchableOpacity>
           <Text>
             {this.state.errorMessage}
           </Text>
