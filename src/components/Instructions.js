@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { Clipboard, Linking, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
 
+const vendors = {
+  'Pizza Hut': 'https://pizzahutstore.wgiftcard.com/chrome/pizzahut/',
+  'Dominos': 'https://dominosstore.wgiftcard.com/responsive/personalize_responsive/chooseDesign/dominos_responsive/1',
+  'Papa Johns': 'https://papajohns-m.cashstar.com/buy/?ref=PJ1',
+}
+
 export default class Instructions extends Component {
   constructor(props) {
     super(props)
@@ -13,9 +19,11 @@ export default class Instructions extends Component {
       errorMessage: '',
     };
   }
+
   handleVendorSite = (vendorURL) => {
     Linking.openURL(vendorURL)
   }
+
   _setClipboardContent = async () => {
     this.setState({copied: true})
     Clipboard.setString(this.props.anonEmail);
@@ -26,24 +34,32 @@ export default class Instructions extends Component {
       this.setState({content:e.message});
     }
   };
-  render() {
-    let vendorURL;
-    if (this.state.vendor === "Pizza Hut") {
-      vendorURL = 'https://pizzahutstore.wgiftcard.com/chrome/pizzahut/'
-    } else if (this.state.vendor === "Dominos") {
-      vendorURL = 'https://dominosstore.wgiftcard.com/responsive/personalize_responsive/chooseDesign/dominos_responsive/1'
-    } else if (this.state.vendor === "Papa Johns") {
-      vendorURL = 'https://papajohns-m.cashstar.com/buy/?ref=PJ1'
+
+  stepTwo() {
+    if(this.state.copied) {
+      return(
+        <View>
+        <Text style={styles.instructions}>
+          Step 2:
+        </Text>
+        <Text>
+          Great! Now paste that email address into the "recipient email" form on the following page and complete your donation!
+        </Text>
+        </View>
+      )
     }
+  };
+
+  render() {
     let status;
     if (this.state.copied) {
       status = "Email copied to clipboard!"
     } else {
       status = "You have not copied the email."
     }
+
     return (
       <View style={styles.container}>
-
         <Nav backButton {...this.props} />
 
         <View style={styles.wrapper}>
@@ -62,14 +78,9 @@ export default class Instructions extends Component {
           <Text>
             {status}
           </Text>
-          <Text style={styles.instructions}>
-            Step 2: Tap the link to purchase gift card
-          </Text>
-          <Text>
-            Paste the email address you copied when prompted for the recipient's email address, and complete the gift card purchase.
-          </Text>
+          {this.stepTwo()}
           <TouchableOpacity
-            onPress={this.handleVendorSite.bind(this, vendorURL)}
+            onPress={this.handleVendorSite.bind(this, vendors[this.state.vendor])}
             style={styles.hyperlinkButton}
             >
             <Text style={styles.hyperlink}>

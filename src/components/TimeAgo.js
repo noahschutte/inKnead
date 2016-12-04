@@ -9,7 +9,6 @@ export default class TimeAgo extends Component {
 
   formatDigits() {
     let age = this.props.secondsOld;
-    // console.log(this.props.secondsOld);
     if(age == 1 || age == 60 || age == 3600 || age == 86400 || age == 604800) {
       return 1;
     }
@@ -33,8 +32,6 @@ export default class TimeAgo extends Component {
     let time = this.formatDigits();
     let ago;
 
-    console.log(seconds);
-    // console.log(this.props.secondsOld);
     if(seconds < 60) {
       ago = "seconds";
     }
