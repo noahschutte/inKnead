@@ -3,6 +3,7 @@ import { Alert, View, Image, TouchableOpacity, Text, StyleSheet } from 'react-na
 import Nav from './Nav';
 import Video from './Video';
 import Button from './Button';
+import TimeAgo from 'TimeAgo';
 
 export default class RequestShow extends Component {
   constructor(props) {
@@ -129,29 +130,6 @@ export default class RequestShow extends Component {
       </View>
     }
 
-    let timeAgo;
-    let displayTime;
-    const minutes = Math.round(request.seconds / 60)
-    if (minutes === 1) {
-      timeAgo = minutes
-      displayTime = `${timeAgo} minute ago`
-    } else if (minutes < 60) {
-      timeAgo = minutes
-      displayTime = `${timeAgo} minutes ago`
-    } else if (Math.round(minutes/60) === 1) {
-      timeAgo = Math.round(minutes/60)
-      displayTime = `${timeAgo} hour ago`
-    } else if (Math.round(minutes/60) < 24) {
-      timeAgo = Math.round(minutes/60)
-      displayTime = `${timeAgo} hours ago`
-    } else if (Math.round(minutes/1440) === 1) {
-      timeAgo = Math.round(minutes/1440)
-      displayTime = `${timeAgo} day ago`
-    } else {
-      timeAgo = Math.round(minutes/1440)
-      displayTime = `${timeAgo} days ago`
-    }
-
     let userHistoryDisplay;
     if ( !this.props.user || this.props.user && request.creator_id != this.props.user.id) {
       userHistoryDisplay =
@@ -176,7 +154,7 @@ export default class RequestShow extends Component {
 
             <View style={styles.videoFooter}>
               <Text style={styles.dateTime}>
-                {displayTime}
+                <TimeAgo secondsOld={request.seconds} />
               </Text>
               {userHistoryDisplay}
               <View>

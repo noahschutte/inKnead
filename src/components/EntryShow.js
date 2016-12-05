@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Nav from './Nav';
 import Video from './Video';
 import Button from './Button';
+import TimeAgo from 'TimeAgo';
 
 export default class EntryShow extends Component {
   constructor(props) {
@@ -36,29 +37,6 @@ export default class EntryShow extends Component {
       </View>
     }
 
-    let timeAgo;
-    let displayTime;
-    const minutes = Math.round(entry.seconds / 60)
-    if (minutes === 1) {
-      timeAgo = minutes
-      displayTime = `${timeAgo} minute ago`
-    } else if (minutes < 60) {
-      timeAgo = minutes
-      displayTime = `${timeAgo} minutes ago`
-    } else if (Math.round(minutes/60) === 1) {
-      timeAgo = Math.round(minutes/60)
-      displayTime = `${timeAgo} hour ago`
-    } else if (Math.round(minutes/60) < 24) {
-      timeAgo = Math.round(minutes/60)
-      displayTime = `${timeAgo} hours ago`
-    } else if (Math.round(minutes/1440) === 1) {
-      timeAgo = Math.round(minutes/1440)
-      displayTime = `${timeAgo} day ago`
-    } else {
-      timeAgo = Math.round(minutes/1440)
-      displayTime = `${timeAgo} days ago`
-    }
-
     return (
       <View style={styles.container}>
         <Nav backButton {...this.props} />
@@ -73,7 +51,7 @@ export default class EntryShow extends Component {
 
             <View style={styles.videoFooter}>
               <Text style={styles.dateTime}>
-                {displayTime}
+                <TimeAgo secondsOld={entry.seconds} />
               </Text>
 
               <View>
