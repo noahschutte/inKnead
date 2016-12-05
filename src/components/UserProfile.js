@@ -6,7 +6,6 @@ import GlobalStyles from 'InKneadStyle';
 export default class UserProfile extends Component {
 
   render() {
-
     console.log(this);
 
     return(
@@ -28,7 +27,6 @@ export default class UserProfile extends Component {
       <Text>{this.props.user.signup_email}</Text>
     )
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -37,20 +35,15 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 9,
-    // justifyContent: 'space-around',
-  },
-  profileImage: {
-    // flex: 1,
-    // width: 50,
-    height: 115,
-    marginTop: 50,
-    marginBottom: 35,
-    resizeMode: 'contain',
-    alignSelf: 'center',
   },
   profileContent: {
     flex: 1,
     borderColor: 'yellow',
     borderWidth: 2,
-  }
+  },
+  profileImage: {
+    alignSelf: 'center',
+    borderColor: 'blue',
+    borderWidth: 15,
+  },
 })

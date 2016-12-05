@@ -16,6 +16,7 @@ import Request from './components/Request';
 import Requests from './components/Requests';
 import RequestShow from './components/RequestShow';
 import ThankYouCamera from './components/ThankYouCamera';
+import UserProfile from './components/UserProfile';
 
 const ROUTES = {
   anonHistory: AnonHistory,
@@ -33,6 +34,7 @@ const ROUTES = {
   requests: Requests,
   requestShow: RequestShow,
   thankYouCamera: ThankYouCamera,
+  userProfile: UserProfile,
 };
 
 export default class inknead extends Component {
