@@ -34,8 +34,6 @@ export default class Activity extends Component {
 
   toggleActivity() {
     let scope = this.props.currentScope;
-    console.log(scope);
-    console.log(this.props);
     if (scope === 'Requests') {
       this.props.changeScope('History');
     } else {
@@ -56,15 +54,3 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   }
 })
-
-
-// <SegmentedControls
-//   containerBorderTint={'white'}
-//   containerBorderWidth={1}
-//   containerBorderRadius={5}
-//   backTint={'#ce0000'}
-//   tint={'white'}
-//   options={ scope }
-//   onSelection={ this.props.changeScope.bind(this) }
-//   selectedOption={ this.props.currentScope }
-//   />
