@@ -15,4 +15,10 @@ module.exports = PlatformStyleSheet.create({
       height: 20,
       width: 20,
     },
+    nav: {
+      flex: 1,
+      backgroundColor: '#ce0000',
+      flexDirection: 'row',
+      paddingTop: 10,
+    },
   })
