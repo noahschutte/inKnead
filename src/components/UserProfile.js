@@ -15,6 +15,7 @@ export default class UserProfile extends Component {
           <Image source={require('../../assets/mobile-icons/profileIcon.png')} style={styles.profileImage} />
           <View style={styles.profileContent}>
             {this.profileContent()}
+            <Text>Here is some text </Text>
           </View>
         </View>
       </View>
@@ -42,8 +43,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   profileImage: {
+    flex: 1,
+    width: 50,
+    height: 50,
+    margin: 10,
+    resizeMode: 'stretch',
     alignSelf: 'center',
     borderColor: 'blue',
-    borderWidth: 15,
   },
 })
