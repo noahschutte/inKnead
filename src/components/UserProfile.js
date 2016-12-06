@@ -28,6 +28,7 @@ export default class UserProfile extends Component {
       <Text>{this.props.user.signup_email}</Text>
     )
   }
+
 }
 
 const styles = StyleSheet.create({
