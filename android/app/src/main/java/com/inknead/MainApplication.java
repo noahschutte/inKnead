@@ -1,4 +1,4 @@
-package com.inknead;
+package com.inKnead;
 
 import android.app.Application;
 import android.util.Log;
