@@ -68,7 +68,9 @@ export default class Requests extends Component {
   }
   componentWillMount() {
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
-    .then((response) => response.json())
+    .then((response) => {
+      return response.json()
+    })
     .then((responseJson) => {
       this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
       this.props.handleWelcomeUrl(responseJson.url)
