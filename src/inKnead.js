@@ -102,8 +102,8 @@ export default class inknead extends Component {
       return response.json()})
     .then((responseJson) => {
       this.onUserChange(responseJson.user)
-      this.onCurrentEmailChange(responseJson.currentEmail)
       this.onSignupEmailChange(responseJson.signupEmail)
+      this.onCurrentEmailChange(responseJson.currentEmail)
       this.handleActiveDonation(responseJson.activeDonation)
       this.collectAnonEmail(responseJson.anonEmail)
       this.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
