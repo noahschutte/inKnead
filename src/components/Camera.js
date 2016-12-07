@@ -36,8 +36,6 @@ export default class Example extends React.Component {
             } else if (data.duration < 5.0) {
               this.props.onChangeNewRequestErrorMesssage("Video length must be at least 5 seconds.")
             } else {
-              console.log("camera", this.camera);
-              console.log("change video data to:", data.path);
               this.props.onChangeVideoData(data);
             }
           })
@@ -55,8 +53,6 @@ export default class Example extends React.Component {
       });
       this.props.navigator.pop();
     }
-    console.log("this.camera", this.camera);
-    console.log("videoData", this.props.videoData);
   }
   switchType() {
     let newType;
