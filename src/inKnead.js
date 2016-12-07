@@ -34,7 +34,6 @@ const ROUTES = {
   requests: Requests,
   requestShow: RequestShow,
   thankYouCamera: ThankYouCamera,
-  userProfile: UserProfile,
 };
 
 export default class inknead extends Component {

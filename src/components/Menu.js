@@ -19,7 +19,7 @@ export default class Menu extends Component {
     this.props.toggleMenu(false)
   }
   onProfileButtonPress() {
-    this.props.navigator.push({name: 'userProfile'})
+    this.props.navigator.push({name: 'profile'})
     this.props.toggleMenu(false)
   }
   render() {
