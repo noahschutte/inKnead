@@ -62,14 +62,12 @@ export default class ThankYou extends Component {
       .then((response) => {
         return response.json()})
       .then((responseJson) => {
-        console.log("responseJson", responseJson);
         if (responseJson.errorMessage) {
           this.props.handleCreateThankYouErrorMessage(responseJson.errorMessage)
         } else {
           this.setState({uploading: true})
           this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
           this.props.collectRequests(responseJson.requests)
-          console.log("start fetch with signedRequest");
           const url = responseJson.signedRequest
           const xhr = new XMLHttpRequest();
           const that = this;

@@ -50,7 +50,6 @@ export default class TimeAgo extends Component {
     if(time == 1) {
       let timeAgo = `${time} ${ago}`;
       return timeAgo.substring(0,timeAgo.length-1);
-      console.log(timeAgo.substring(0,timeAgo.length-1));
     }
     return `${time} ${ago}`;
   }
