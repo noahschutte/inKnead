@@ -11,11 +11,16 @@ module.exports = PlatformStyleSheet.create({
       flex: 1,
       backgroundColor: '#bbb',
     },
+    hr: {
+      backgroundColor: 'black',
+      height: 1,
+      borderWidth: 1,
+    },
     bold: {
       fontWeight: 'bold',
     },
     profileImageContainer: {
-      flex: 3.5,
+      flex: 3,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -24,7 +29,7 @@ module.exports = PlatformStyleSheet.create({
       width: 125,
     },
     profileContent: {
-      flex: 5.5,
+      flex: 6,
     },
     profileHeader: {
       fontWeight: 'bold',

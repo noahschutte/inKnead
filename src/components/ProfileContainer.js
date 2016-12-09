@@ -20,7 +20,6 @@ export default class ProfileContainer extends Component {
   }
 
   render() {
-    console.log(this);
     return (
       <Profile2 profileImage={this.state.profileImage} verified={this.state.verify} user={this.props.user} navigator={this.props.navigator}/>
     )
