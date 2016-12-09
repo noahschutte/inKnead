@@ -26,6 +26,10 @@ module.exports = PlatformStyleSheet.create({
     profileContent: {
       flex: 5.5,
     },
+    profileHeader: {
+      fontWeight: 'bold',
+      margin: 10,
+    },
     pizzas: {
       flexDirection: 'row',
       alignItems: 'flex-start',

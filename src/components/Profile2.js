@@ -32,18 +32,18 @@ export default class Profile2 extends Component {
         <View style={{flex: 1}}>
 
           <View style={{alignSelf: 'center', flex: 1}}>
-            <Text style={GlobalStyles.bold}>EMAIL ADDRESS</Text>
+            <Text style={GlobalStyles.profileHeader}>EMAIL ADDRESS</Text>
           </View>
 
-          <View style={styles.emailContainer}>
-            <TouchableOpacity style={{flex: 1, flexDirection: 'row', alignItems: 'center'}} onPress={this.emailPress.bind(this)} activeOpacity={1}>
-              <Text style={styles.emailText}>{this.props.verified}</Text>
-              <Text style={styles.editArrow}>EAP</Text>
+            <TouchableOpacity style={{flex: 2.3}} onPress={this.emailPress.bind(this)} activeOpacity={1}>
+                <View style={styles.emailContainer}>
+                  <Text style={styles.emailText}>{this.props.verified}</Text>
+                  <Image source={require('../../assets/mobile-icons/angleBracketRight.png')} style={styles.editArrow} />
+                </View>
             </TouchableOpacity>
-          </View>
 
           <View style={{alignSelf: 'center', flex: 1}}>
-            <Text style={GlobalStyles.bold}>LINKED ACCOUNTS</Text>
+            <Text style={GlobalStyles.profileHeader}>LINKED ACCOUNTS</Text>
           </View>
 
           <View style={styles.socialContainer}>
@@ -79,26 +79,27 @@ export default class Profile2 extends Component {
 
 const styles = StyleSheet.create({
   emailContainer: {
-    borderRadius: 2,
+    borderRadius: 3,
     backgroundColor: 'white',
-    flex: 3,
+    flex: 1,
+    flexDirection: 'row',
     margin: 5,
+    alignItems: 'center',
   },
   emailText: {
-    borderWidth: 2,
-    borderColor: 'blue',
-    flex: 3,
-    justifyContent: 'center',
+    flex: 4,
+    textAlign: 'right',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
   editArrow: {
-    borderWidth: 2,
-    borderColor: 'black',
     flex: 1,
-    justifyContent: 'center',
-    // resizeMode: 'contain',
-    // height: 10,
+    resizeMode: 'contain',
+    height: 20,
+    width: 20,
   },
   socialContainer: {
+    borderRadius: 3,
     backgroundColor: 'white',
     flex: 6,
     margin: 5,
