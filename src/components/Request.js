@@ -15,6 +15,10 @@ export default class Request extends Component {
     }
   }
 
+  componentWillMount() {
+    console.log("request mounting");
+  }
+
   render() {
 
     const request = this.props.selectedRequest;

@@ -67,25 +67,32 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
-    .then((response) => {
-      return response.json()
-    })
-    .then((responseJson) => {
-      this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-      this.props.handleWelcomeUrl(responseJson.url)
-      if (!responseJson.errorMessage) {
-        this.props.collectRequests(responseJson.requests)
-        this.props.collectThankYous(responseJson.thankYous)
-      }
-    })
-    .then((arbitrary) => {
-      this.props.assembleRequests()
-      this.sortRequests(this.props.requestType)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    if(this.props.requests === null) {
+      fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
+      .then((response) => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+        this.props.handleWelcomeUrl(responseJson.url)
+        if (!responseJson.errorMessage) {
+          this.props.collectRequests(responseJson.requests)
+          this.props.collectThankYous(responseJson.thankYous)
+        }
+      })
+      .then((arbitrary) => {
+        this.props.assembleRequests()
+        this.sortRequests(this.props.requestType)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    } else {
+      this.props.collectRequests(this.props.requests);
+      this.props.collectThankYous(this.props.thankYous);
+      this.props.assembleRequests();
+      this.sortRequests(this.props.requestType);
+    }
   }
 
   shouldComponentUpdate(nextProps) {

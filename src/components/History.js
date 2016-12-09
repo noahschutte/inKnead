@@ -62,7 +62,7 @@ export default class History extends Component {
     });
   }
   componentWillMount() {
-    if (this.props.user) {
+    if (this.props.user && this.props.userRequests === null) {
       const userID = this.props.user.id
       fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`)
       .then((response) => response.json())
@@ -81,6 +81,11 @@ export default class History extends Component {
       .catch((error) => {
         console.error(error);
       });
+    } else if (this.props.user) {
+      this.props.collectUserRequests(this.props.userRequests)
+      this.props.collectUserThankYous(this.props.userThankYous)
+      this.props.assembleHistory()
+      this.sortHistory(this.props.historyType)
     }
   }
 
