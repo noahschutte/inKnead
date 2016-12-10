@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Request from './Request';
+import LoadingPizza from './LoadingPizza';
 
 export default class History extends Component {
   constructor(props) {
@@ -159,7 +160,7 @@ export default class History extends Component {
 
     let display;
     if (this.state.refreshing || this.state.dataSource === null) {
-      display = <Text>Loading...</Text>
+      display = <LoadingPizza/>
     } else if (this.props.userHistory.length === 0) {
       display = <Text>No Activity Recorded.</Text>
     } else {
