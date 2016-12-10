@@ -181,7 +181,6 @@ export default class Requests extends Component {
     } else if (this.state.dataSource._cachedRowCount === 0) {
       display = <Text style={{textAlign: 'center', marginTop: 10}}>Nothing to show right now!</Text>
     } else {
-      console.log(this.state);
       display =
         <View style={styles.listViewWrapper}>
           <ListView
