@@ -175,9 +175,9 @@ export default class Requests extends Component {
 
     let display;
     if (this.state.refreshing || this.state.dataSource === null) {
-      display = <LoadingPizza style={styles.loadingPizza}/>
+      display = <LoadingPizza/>
     } else if (this.props.activity.length === 0) {
-      display = <LoadingPizza style={styles.loadingPizza}/>
+      display = <LoadingPizza/>
     } else {
       display =
         <View style={styles.listViewWrapper}>
