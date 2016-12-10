@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Request from './Request';
+import LoadingPizza from './LoadingPizza';
 
 export default class Requests extends Component {
   constructor(props) {
@@ -174,9 +175,9 @@ export default class Requests extends Component {
 
     let display;
     if (this.state.refreshing || this.state.dataSource === null) {
-      display = <Text>Loading...</Text>
+      display = <LoadingPizza style={styles.loadingPizza}/>
     } else if (this.props.activity.length === 0) {
-      display = <Text>No Activity Recorded.</Text>
+      display = <LoadingPizza style={styles.loadingPizza}/>
     } else {
       display =
         <View style={styles.listViewWrapper}>
@@ -208,9 +209,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   listViewWrapper: {
-    flex: 8,
+    // flex: 8,
   },
   listViewContainer: {
-    flex: 1,
+    // flex: 1,
   },
 });

@@ -12,7 +12,6 @@ export default class ProfileContainer extends Component {
 
     this.state = {
       verify: (this.props.user.current_email),
-      profileImage: require('../../assets/mobile-icons/profileIcon.png'),
       updatedEmail: '',
       errorMessage: '',
     };
@@ -21,7 +20,7 @@ export default class ProfileContainer extends Component {
 
   render() {
     return (
-      <Profile2 profileImage={this.state.profileImage} verified={this.state.verify} user={this.props.user} navigator={this.props.navigator}/>
+      <Profile2 profileImage={require('../../assets/mobile-icons/profileIcon.png')} verified={this.state.verify} user={this.props.user} navigator={this.props.navigator}/>
     )
   }
 
