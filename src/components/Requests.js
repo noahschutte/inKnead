@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Request from './Request';
+import LoadingPizza from './LoadingPizza';
 
 export default class Requests extends Component {
   constructor(props) {
@@ -67,25 +68,32 @@ export default class Requests extends Component {
     });
   }
   componentWillMount() {
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
-    .then((response) => {
-      return response.json()
-    })
-    .then((responseJson) => {
-      this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-      this.props.handleWelcomeUrl(responseJson.url)
-      if (!responseJson.errorMessage) {
-        this.props.collectRequests(responseJson.requests)
-        this.props.collectThankYous(responseJson.thankYous)
-      }
-    })
-    .then((arbitrary) => {
-      this.props.assembleRequests()
-      this.sortRequests(this.props.requestType)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    if(this.props.requests === null) {
+      fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests')
+      .then((response) => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
+        this.props.handleWelcomeUrl(responseJson.url)
+        if (!responseJson.errorMessage) {
+          this.props.collectRequests(responseJson.requests)
+          this.props.collectThankYous(responseJson.thankYous)
+        }
+      })
+      .then((arbitrary) => {
+        this.props.assembleRequests()
+        this.sortRequests(this.props.requestType)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    } else {
+      this.props.collectRequests(this.props.requests);
+      this.props.collectThankYous(this.props.thankYous);
+      this.props.assembleRequests();
+      this.sortRequests(this.props.requestType);
+    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -167,9 +175,11 @@ export default class Requests extends Component {
 
     let display;
     if (this.state.refreshing || this.state.dataSource === null) {
-      display = <Text>Loading...</Text>
+      display = <LoadingPizza/>
     } else if (this.props.activity.length === 0) {
-      display = <Text>No Activity Recorded.</Text>
+      display = <Text>No activity recorded</Text>
+    } else if (this.state.dataSource._cachedRowCount === 0) {
+      display = <Text style={{textAlign: 'center', marginTop: 10}}>Nothing to show right now!</Text>
     } else {
       display =
         <View style={styles.listViewWrapper}>
@@ -201,9 +211,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   listViewWrapper: {
-    flex: 8,
+    // flex: 8,
   },
   listViewContainer: {
-    flex: 1,
+    // flex: 1,
   },
 });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Request from './Request';
+import LoadingPizza from './LoadingPizza';
 
 export default class History extends Component {
   constructor(props) {
@@ -62,7 +63,7 @@ export default class History extends Component {
     });
   }
   componentWillMount() {
-    if (this.props.user) {
+    if (this.props.user && this.props.userRequests === null) {
       const userID = this.props.user.id
       fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`)
       .then((response) => response.json())
@@ -81,6 +82,11 @@ export default class History extends Component {
       .catch((error) => {
         console.error(error);
       });
+    } else if (this.props.user) {
+      this.props.collectUserRequests(this.props.userRequests)
+      this.props.collectUserThankYous(this.props.userThankYous)
+      this.props.assembleHistory()
+      this.sortHistory(this.props.historyType)
     }
   }
 
@@ -154,7 +160,7 @@ export default class History extends Component {
 
     let display;
     if (this.state.refreshing || this.state.dataSource === null) {
-      display = <Text>Loading...</Text>
+      display = <LoadingPizza/>
     } else if (this.props.userHistory.length === 0) {
       display = <Text>No Activity Recorded.</Text>
     } else {

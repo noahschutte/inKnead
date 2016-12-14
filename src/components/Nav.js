@@ -6,6 +6,7 @@ import BackButton from './BackButton';
 import Activity from './Activity';
 import MenuButton from './MenuButton';
 import InfoButton from './InfoButton';
+import GlobalStyles from 'InKneadStyle';
 
 export default class Nav extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class Nav extends Component {
 
     const statusBarHidden = false
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.nav}>
         <StatusBar
           hidden={statusBarHidden}
           />
@@ -50,12 +51,6 @@ export default class Nav extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ce0000',
-    flexDirection: 'row',
-    paddingTop: 10,
-  },
   leftBox: {
     flex: 1,
   },

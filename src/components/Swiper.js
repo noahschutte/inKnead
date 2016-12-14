@@ -32,24 +32,34 @@ export default class Swiper extends Component {
           style={{flex:1}}
           indicator={this._renderDotIndicator()}
           >
+
           <View style={styles.steps}>
             <Text style={styles.text}>How It Works{"\n"}(Step 1)</Text>
-            <Image
-              style={styles.donate}
-              source={require('../../assets/donate.png')}
-            />
+            <Image source={require('../../assets/how-to-page/Oval.png')} style={styles.oval} >
+              <Image style={styles.icon} source={require('../../assets/how-to-page/stepOneImage.png')}>
+              </Image>
+            </Image>
             <Text style={styles.textBottom}>watch a video request,{"\n"}or make it your own</Text>
           </View>
+
           <View style={styles.steps}>
             <Text style={styles.text}>How It Works{"\n"}(Step 2)</Text>
-            <Image style={styles.donate} source={require('../../assets/donate.png')}/>
+            <Image source={require('../../assets/how-to-page/Oval.png')} style={styles.oval} >
+              <Image style={styles.icon} source={require('../../assets/how-to-page/stepTwo.png')}/>
+            </Image>
             <Text style={styles.textBottom}>choose what you want{"\n"}to donate, and receive{"\n"}donations</Text>
           </View>
+
           <View style={styles.steps}>
             <Text style={styles.text}>How It Works{"\n"}(Step 3)</Text>
-            <Image style={styles.donate} source={require('../../assets/donate.png')}/>
+            <Image source={require('../../assets/how-to-page/Oval.png')} style={styles.oval} >
+              <Image style={styles.icon} source={require('../../assets/how-to-page/Step3-B.png')}>
+                <Image style={styles.threeA} source={require('../../assets/how-to-page/Step3-A.png')} />
+              </Image>
+            </Image>
             <Text style={styles.textBottom}>send a THANK YOU to{"\n"}the awesome person who{"\n"}just gave you pizza!</Text>
           </View>
+
         </IndicatorViewPager>
       </View>
     )
@@ -61,25 +71,45 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   steps: {
+    flex: 1,
     backgroundColor:'white',
     alignItems: 'center',
-    paddingTop: 60,
-    paddingBottom: 80,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+  },
+  oval: {
+    flex: 3,
+    resizeMode: 'contain',
+    width: 200,
+    height: null,
+    // paddingBottom: 25,
   },
   text: {
     fontSize: 30,
     fontFamily: 'GillSans',
     // need specific font, using this as template
-    textAlign: 'center'
+    textAlign: 'center',
+    flex: 1,
+    paddingTop: 25,
   },
   textBottom: {
     fontSize: 20,
     fontFamily: 'GillSans',
-    textAlign: 'center'
+    textAlign: 'center',
+    alignItems: 'flex-end',
+    flex: 1,
   },
-  donate: {
-    width: 200,
-    height: 100,
+  icon: {
+    width: 120,
+    // height: 100,
+    alignSelf: 'center',
+    flex: 1,
+    resizeMode: 'contain',
+  },
+  threeA: {
+    width: 70,
+    flex: 1,
+    alignSelf: 'center',
+    resizeMode: 'contain',
+    marginBottom: 15,
   }
 })

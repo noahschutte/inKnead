@@ -1,3 +1,7 @@
+/*
+* @providesModule Profile
+*/
+
 import React, { Component } from 'react';
 import { View, Text, TextInput, Image, StyleSheet } from 'react-native';
 import Button from './Button';
@@ -79,7 +83,7 @@ export default class Profile extends Component {
   }
   render() {
     let emailDisplay
-    if (this.state.verify === null && this.props.user && this.props.user.signup_email && this.props.user.current_email === null && this.props.user.current_email === null) {
+    if (this.state.verify === null && this.props.user && this.props.user.signup_email && this.props.user.current_email === null) {
       emailDisplay =
         <View style={styles.profileContainer}>
           <View style={styles.updateEmailDisplay}>

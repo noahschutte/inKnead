@@ -1,7 +1,4 @@
-package com.inKnead;
-
-import android.app.Application;
-import android.util.Log;
+package com.inknead;
 
 import com.facebook.react.ReactApplication;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
@@ -14,6 +11,9 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
+import android.app.Application;
+import android.util.Log;
+import android.view.View;
 import com.facebook.CallbackManager;
 
 import java.util.Arrays;
