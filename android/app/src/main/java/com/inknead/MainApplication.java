@@ -1,4 +1,4 @@
-package com.inknead;
+package com.inKnead;
 
 import com.facebook.react.ReactApplication;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
