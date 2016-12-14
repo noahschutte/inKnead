@@ -1,4 +1,4 @@
-package com.inknead;
+package com.inKnead;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
