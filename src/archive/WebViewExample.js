@@ -3,7 +3,7 @@ import { View, WebView, StyleSheet } from 'react-native';
 
 export default class WebViewExample extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       redirectUri: 'inkneadscheme://response',
@@ -17,12 +17,12 @@ export default class WebViewExample extends Component {
       accessToken: undefined,
       returnState: undefined,
       tokenType: undefined,
-    }
-    this.onLoad = this.onLoad.bind(this)
-    this.onNavigationStateChange = this.onNavigationStateChange.bind(this)
+    };
+    this.onLoad = this.onLoad.bind(this);
+    this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
   }
   componentWillMount() {
-    this.setState({state: this.state.clientId + Date.now()})
+    this.setState({ state: this.state.clientId + Date.now() });
   }
   // 'Accept': 'application/json',
   // 'Content-Type': 'application/json',
@@ -34,32 +34,30 @@ export default class WebViewExample extends Component {
   // 'scope': 'identity',
   // 'User-Agent': `${this.state.cliendId}/0.1 by noahschutte`
   fetchRedditToken() {
-    fetch(`https://oauth.reddit.com/api/v1/me`, {
+    fetch('https://oauth.reddit.com/api/v1/me', {
       headers: {
-        'Authorization': `bearer ${this.state.accessToken}`,
+        Authorization: `bearer ${this.state.accessToken}`,
       },
     })
-    .then((response) => {
-      return response.json()
-    })
+    .then((response) => response.json())
     .then((responseJson) => {
-      console.log("responseJson", responseJson);
+      console.log('responseJson', responseJson);
     })
     .catch((error) => {
       console.error(error);
     });
   }
   fetchRedditRefreshToken() {
-    fetch(`https://www.reddit.com/api/v1/access_token`, {
+    fetch('https://www.reddit.com/api/v1/access_token', {
       headers: {
-        'scope': 'identity',
-        'Authorization': 'bearer' + this.state.accessToken
+        scope: 'identity',
+        Authorization: `bearer${this.state.accessToken}`
       },
       method: 'POST',
       body: `grant_type=refresh_token&refresh_token=${this.state.accessToken}`
     })
     .then((response) => {
-      console.log("response", response);
+      console.log('response', response);
     })
     .catch((error) => {
       console.error(error);
@@ -73,19 +71,19 @@ export default class WebViewExample extends Component {
   };
   onLoad() {
     if (this.state.url.indexOf('#') > -1) {
-      let queryString = this.state.url.split('#')
-      let vars = queryString[1].split('&');
+      const queryString = this.state.url.split('#');
+      const vars = queryString[1].split('&');
       for (let i = 0; i < vars.length; i += 1) {
-        let pair = vars[i].split('=');
+        const pair = vars[i].split('=');
         if (pair[0] === 'access_token') {
-          let accessToken = pair[1]
-          this.setState({accessToken})
+          const accessToken = pair[1];
+          this.setState({ accessToken });
         } else if (pair[0] === 'state') {
-          let returnState = pair[1]
-          this.setState({returnState})
+          const returnState = pair[1];
+          this.setState({ returnState });
         } else if (pair[0] === 'token_type') {
-          let tokenType = pair[1]
-          this.setState({tokenType})
+          const tokenType = pair[1];
+          this.setState({ tokenType });
         }
       }
     }
@@ -93,11 +91,11 @@ export default class WebViewExample extends Component {
 
   render() {
     if (this.state.accessToken && this.state.state === this.state.returnState) {
-      console.log("this.state", this.state);
-      this.fetchRedditToken()
+      console.log('this.state', this.state);
+      this.fetchRedditToken();
     }
 
-    const real = `https://www.reddit.com/api/v1/authorize.compact?client_id=${this.state.clientId}&response_type=${this.state.responseType}&state=${this.state.state}&redirect_uri=${this.state.redirectUri}&scope=${this.state.scope}`
+    const real = `https://www.reddit.com/api/v1/authorize.compact?client_id=${this.state.clientId}&response_type=${this.state.responseType}&state=${this.state.state}&redirect_uri=${this.state.redirectUri}&scope=${this.state.scope}`;
 
     return (
       <View style={styles.container}>
@@ -106,7 +104,7 @@ export default class WebViewExample extends Component {
           onLoad={this.onLoad}
           source={{ uri: real }}
           style={styles.webView}
-          />
+        />
       </View>
     );
   }
@@ -119,4 +117,4 @@ const styles = StyleSheet.create({
   webView: {
     marginTop: 20,
   }
-})
+});

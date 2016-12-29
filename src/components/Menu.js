@@ -4,23 +4,23 @@ import { View, TouchableHighlight, Text, StyleSheet, Image } from 'react-native'
 export default class Menu extends Component {
   onMainButtonPress() {
     // this.props.changeScope('Requests')
-    this.props.toggleMenu(false)
+    this.props.toggleMenu(false);
   }
   // onHistoryButtonPress() {
   //   this.props.changeScope('History')
   //   this.props.toggleMenu(false)
   // }
   onNotificationsPress() {
-    this.props.navigator.push({name: 'notifications'})
-    this.props.toggleMenu(false)
+    this.props.navigator.push({ name: 'notifications' });
+    this.props.toggleMenu(false);
   }
   onHowToButtonPress() {
-    this.props.navigator.push({name: 'howTo'})
-    this.props.toggleMenu(false)
+    this.props.navigator.push({ name: 'howTo' });
+    this.props.toggleMenu(false);
   }
   onProfileButtonPress() {
-    this.props.navigator.push({name: 'profile'})
-    this.props.toggleMenu(false)
+    this.props.navigator.push({ name: 'profile' });
+    this.props.toggleMenu(false);
   }
   render() {
     return (
@@ -29,17 +29,21 @@ export default class Menu extends Component {
         <Image
           source={require('../../assets/profile.png')}
           style={styles.image}
-          />
+        />
 
-        <TouchableHighlight onPress={this.onMainButtonPress.bind(this)}
-        style={styles.button}>
+        <TouchableHighlight
+onPress={this.onMainButtonPress.bind(this)}
+        style={styles.button}
+        >
           <Text style={styles.instructions}>
             Requests
           </Text>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={this.onNotificationsPress.bind(this)}
-        style={styles.button}>
+        <TouchableHighlight
+onPress={this.onNotificationsPress.bind(this)}
+        style={styles.button}
+        >
           <Text style={styles.instructions}>
             Notifications
           </Text>
@@ -58,16 +62,16 @@ export default class Menu extends Component {
         </TouchableHighlight>
 
       </View>
-    )
+    );
   }
 }
 
-{/* <TouchableHighlight onPress={this.onHistoryButtonPress.bind(this)}
+{ /* <TouchableHighlight onPress={this.onHistoryButtonPress.bind(this)}
 style={styles.button}>
   <Text style={styles.instructions}>
     History
   </Text>
-</TouchableHighlight> */}
+</TouchableHighlight> */ }
 
 const styles = StyleSheet.create({
   container: {
@@ -90,6 +94,6 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     width: 100,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
   }
-})
+});

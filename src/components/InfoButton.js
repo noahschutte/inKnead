@@ -9,10 +9,10 @@ export default class InfoButton extends Component {
           <Image
             style={styles.menuButton}
             source={require('../../assets/infoButton.png')}
-            />
+          />
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-})
+});

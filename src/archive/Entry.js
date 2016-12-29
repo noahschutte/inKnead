@@ -4,59 +4,59 @@ import Video from './Video';
 
 export default class Entry extends Component {
   handleInstructions() {
-    this.props.navigator.push({name: 'instructions'})
+    this.props.navigator.push({ name: 'instructions' });
   }
   showEntry() {
-    const entry = this.props.selectedEntry
-    this.props.collectEntry(entry)
-    this.props.navigator.push({name: 'entryShow'})
+    const entry = this.props.selectedEntry;
+    this.props.collectEntry(entry);
+    this.props.navigator.push({ name: 'entryShow' });
   }
 
   render() {
-    let request = this.props.selectedEntry;
+    const request = this.props.selectedEntry;
 
     let action;
     // if the user is the same as the request's creator
     if (request.creator_id === this.props.anonID) {
-      action = "requested"
+      action = 'requested';
     } else if (request.donor_id === this.props.anonID) {
-      action = "donated"
+      action = 'donated';
     }
 
     let requestText;
     if (request.pizzas > 1) {
       requestText =
-        <Text style={styles.request}>
+        (<Text style={styles.request}>
           {request.pizzas} pizzas from {request.vendor}
-        </Text>
+        </Text>);
     } else {
       requestText =
-        <Text style={styles.request}>
+        (<Text style={styles.request}>
           {request.pizzas} pizza from {request.vendor}
-        </Text>
+        </Text>);
     }
 
     let timeAgo;
     let displayTime;
-    const minutes = Math.round(request.seconds / 60)
+    const minutes = Math.round(request.seconds / 60);
     if (minutes === 1) {
-      timeAgo = minutes
-      displayTime = `${timeAgo} minute ago`
+      timeAgo = minutes;
+      displayTime = `${timeAgo} minute ago`;
     } else if (minutes < 60) {
-      timeAgo = minutes
-      displayTime = `${timeAgo} minutes ago`
-    } else if (Math.round(minutes/60) === 1) {
-      timeAgo = Math.round(minutes/60)
-      displayTime = `${timeAgo} hour ago`
-    } else if (Math.round(minutes/60) < 24) {
-      timeAgo = Math.round(minutes/60)
-      displayTime = `${timeAgo} hours ago`
-    } else if (Math.round(minutes/1440) === 1) {
-      timeAgo = Math.round(minutes/1440)
-      displayTime = `${timeAgo} day ago`
+      timeAgo = minutes;
+      displayTime = `${timeAgo} minutes ago`;
+    } else if (Math.round(minutes / 60) === 1) {
+      timeAgo = Math.round(minutes / 60);
+      displayTime = `${timeAgo} hour ago`;
+    } else if (Math.round(minutes / 60) < 24) {
+      timeAgo = Math.round(minutes / 60);
+      displayTime = `${timeAgo} hours ago`;
+    } else if (Math.round(minutes / 1440) === 1) {
+      timeAgo = Math.round(minutes / 1440);
+      displayTime = `${timeAgo} day ago`;
     } else {
-      timeAgo = Math.round(minutes/1440)
-      displayTime = `${timeAgo} days ago`
+      timeAgo = Math.round(minutes / 1440);
+      displayTime = `${timeAgo} days ago`;
     }
     
     return (
@@ -78,7 +78,7 @@ export default class Entry extends Component {
           </View>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-})
+});

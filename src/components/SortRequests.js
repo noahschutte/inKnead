@@ -5,11 +5,11 @@ import { SegmentedControls } from 'react-native-radio-buttons';
 export default class SortRequests extends Component {
   render() {
     const scope = [
-      "Requests",
-      "Received",
-      "Thank Yous",
-      "All",
-    ]
+      'Requests',
+      'Received',
+      'Thank Yous',
+      'All',
+    ];
     return (
       <View style={styles.container}>
         <SegmentedControls
@@ -18,12 +18,12 @@ export default class SortRequests extends Component {
           containerBorderRadius={5}
           backTint={'#ce0000'}
           tint={'white'}
-          options={ scope }
-          onSelection={ this.props.changeRequestType.bind(this) }
-          selectedOption={ this.props.requestType }
-          />
+          options={scope}
+          onSelection={this.props.changeRequestType.bind(this)}
+          selectedOption={this.props.requestType}
+        />
       </View>
-    )
+    );
   }
 }
 
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
   },
-})
+});

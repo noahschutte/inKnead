@@ -6,22 +6,21 @@ import GlobalStyles from 'InKneadStyle';
 export default class Request extends Component {
   showRequest() {
     if (this.props.anonActivity) {
-      const entry = this.props.selectedRequest
-      this.props.collectEntry(entry)
-      this.props.navigator.push({name: 'entryShow'})
+      const entry = this.props.selectedRequest;
+      this.props.collectEntry(entry);
+      this.props.navigator.push({ name: 'entryShow' });
     } else {
-      this.props.collectRequest(this.props.selectedRequest)
-      this.props.navigator.push({name: 'requestShow'})
+      this.props.collectRequest(this.props.selectedRequest);
+      this.props.navigator.push({ name: 'requestShow' });
     }
   }
 
   render() {
-
     const request = this.props.selectedRequest;
-    let pImageElements = [];
+    const pImageElements = [];
 
     for (let i = 0; i < request.pizzas; i++) {
-      const pizzaImage = <Image style={GlobalStyles.pizzaImage} source={require("../../assets/pizza-icon-for-requests/whole-pizza.png")} key={i}/>
+      const pizzaImage = <Image style={GlobalStyles.pizzaImage} source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')} key={i} />;
       pImageElements.push(pizzaImage);
     }
 
@@ -29,31 +28,31 @@ export default class Request extends Component {
 
     let requestText;
     if (request.received === undefined) {
-      requestText = <Text>Thanks for </Text>
+      requestText = <Text>Thanks for </Text>;
     } else if (this.props.anonActivity && request.donor_id === this.props.anonID) {
-      requestText = <Text>Donated </Text>
+      requestText = <Text>Donated </Text>;
     } else if (this.props.anonActivity && request.donor_id !== null) {
-      requestText = <Text>Received </Text>
+      requestText = <Text>Received </Text>;
     } else if (this.props.anonActivity && request.creator_id === this.props.anonID) {
-      requestText = <Text>Requested </Text>
+      requestText = <Text>Requested </Text>;
     } else if (this.props.history && request.donor_id === this.props.user.id) {
-      requestText = <Text>You Donated </Text>
+      requestText = <Text>You Donated </Text>;
     } else if (this.props.history && request.creator_id === this.props.user.id && request.donor_id === null) {
-      requestText = <Text>You Requested </Text>
+      requestText = <Text>You Requested </Text>;
     } else if (this.props.history && request.creator_id === this.props.user.id && request.donor_id !== null) {
-      requestText = <Text>You Received </Text>
+      requestText = <Text>You Received </Text>;
     } else if (request.donor_id) {
-      requestText = <Text>Received </Text>
+      requestText = <Text>Received </Text>;
     } else {
-      requestText = <Text>Request for </Text>
+      requestText = <Text>Request for </Text>;
     }
 
-    const content = this.props.selectedRequest.thumbnail
+    const content = this.props.selectedRequest.thumbnail;
     const thumbnail =
-      <Image
+      (<Image
         style={styles.thumbnail}
-        source={{ uri: content}}
-        />
+        source={{ uri: content }}
+      />);
 
     return (
       <View style={styles.container}>
@@ -72,7 +71,7 @@ export default class Request extends Component {
           </View>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -119,4 +118,4 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flexDirection: 'row',
   }
-})
+});

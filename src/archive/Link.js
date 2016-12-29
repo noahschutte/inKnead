@@ -11,7 +11,7 @@ export default class Link extends Component {
       if (supported) {
         Linking.openURL(this.props.url);
       } else {
-        console.log('Don\'t know how to open URI: ' + this.props.url);
+        console.log(`Don't know how to open URI: ${this.props.url}`);
       }
     });
   };
@@ -19,14 +19,15 @@ export default class Link extends Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={this.handleClick}>
+        onPress={this.handleClick}
+      >
         <View style={styles.button}>
           <Text style={styles.text}>
             Open {this.props.url}
           </Text>
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 

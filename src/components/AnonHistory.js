@@ -5,7 +5,7 @@ import Request from './Request';
 
 export default class AnonHistory extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       anonHistory: [],
@@ -13,106 +13,104 @@ export default class AnonHistory extends Component {
       loading: true,
       dataSource: null,
       errorMessage: ' ',
-    }
+    };
   }
   _onRefresh() {
-    this.setState({refreshing: true});
-    const anonID = this.props.anonID
+    this.setState({ refreshing: true });
+    const anonID = this.props.anonID;
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
+        this.setState({ errorMessage: responseJson.errorMessage });
       } else {
-        this.props.collectAnonRequests(responseJson.anonRequests)
-        this.props.collectAnonThankYous(responseJson.anonThankYous)
+        this.props.collectAnonRequests(responseJson.anonRequests);
+        this.props.collectAnonThankYous(responseJson.anonThankYous);
       }
     })
     .then((arbitrary) => {
-      this.setState({anonHistory: []})
+      this.setState({ anonHistory: [] });
       if (this.props.anonRequests) {
-        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonRequests)})
+        this.setState({ anonHistory: this.state.anonHistory.concat(this.props.anonRequests) });
       }
       if (this.props.anonThankYous) {
-        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonThankYous)})
+        this.setState({ anonHistory: this.state.anonHistory.concat(this.props.anonThankYous) });
       }
     })
     .then((arbitrary) => {
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
+      const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+      this.setState({ dataSource: ds.cloneWithRows(this._genRows({})) });
     })
     .then((arbitrary) => {
-      this.setState({refreshing: false});
+      this.setState({ refreshing: false });
     })
     .catch((error) => {
       console.error(error);
     });
   }
   componentWillMount() {
-    const anonID = this.props.anonID
+    const anonID = this.props.anonID;
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/anon/${anonID}`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
+        this.setState({ errorMessage: responseJson.errorMessage });
       } else {
-        this.props.collectAnonRequests(responseJson.anonRequests)
-        this.props.collectAnonThankYous(responseJson.anonThankYous)
+        this.props.collectAnonRequests(responseJson.anonRequests);
+        this.props.collectAnonThankYous(responseJson.anonThankYous);
       }
     })
     .then((arbitrary) => {
       if (this.props.anonRequests) {
-        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonRequests)})
+        this.setState({ anonHistory: this.state.anonHistory.concat(this.props.anonRequests) });
       }
       if (this.props.anonThankYous) {
-        this.setState({anonHistory: this.state.anonHistory.concat(this.props.anonThankYous)})
+        this.setState({ anonHistory: this.state.anonHistory.concat(this.props.anonThankYous) });
       }
     })
     .then((arbitrary) => {
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.setState({dataSource: ds.cloneWithRows(this._genRows({}))})
+      const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+      this.setState({ dataSource: ds.cloneWithRows(this._genRows({})) });
     })
     .then((arbitrary) => {
-      this.setState({loading: false})
+      this.setState({ loading: false });
     })
     .catch((error) => {
       console.error(error);
     });
   }
   _renderRow(rowData) {
-    this.state.anonHistory.sort(function(a, b) {
-      return parseFloat(a.seconds) - parseFloat(b.seconds);
-    });
-    return <Request anonActivity selectedRequest={this.state.anonHistory[rowData]} {...this.props} />
+    this.state.anonHistory.sort((a, b) => parseFloat(a.seconds) - parseFloat(b.seconds));
+    return <Request anonActivity selectedRequest={this.state.anonHistory[rowData]} {...this.props} />;
   }
   _genRows() {
-    let anonHistoryLength = this.state.anonHistory.length
-    let result = [];
+    const anonHistoryLength = this.state.anonHistory.length;
+    const result = [];
     for (let i = 0; i < anonHistoryLength; i += 1) {
-      result.push(i)
+      result.push(i);
     }
-    return result
+    return result;
   }
   render() {
     let display;
     if (this.state.loading || this.state.refreshing || this.state.dataSource === null) {
-      display = <Text>Loading...</Text>
+      display = <Text>Loading...</Text>;
     } else if (this.state.anonHistory.length === 0) {
-      display = <Text>No Activity Recorded.</Text>
+      display = <Text>No Activity Recorded.</Text>;
     } else {
       display =
-        <ListView
+        (<ListView
           style={styles.listViewContainer}
           dataSource={this.state.dataSource}
           renderRow={this._renderRow.bind(this)}
-          enableEmptySections={true}
+          enableEmptySections
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._onRefresh.bind(this)}
-              />
+            />
           }
-          />
+        />);
     }
     return (
       <View style={styles.container}>
@@ -121,7 +119,7 @@ export default class AnonHistory extends Component {
           {display}
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -135,4 +133,4 @@ const styles = StyleSheet.create({
   listViewContainer: {
     flex: 1,
   },
-})
+});

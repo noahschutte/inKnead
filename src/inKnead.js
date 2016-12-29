@@ -38,7 +38,7 @@ const ROUTES = {
 
 export default class inknead extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       activeDonation: null,
@@ -64,7 +64,7 @@ export default class inknead extends Component {
       userRequests: null,
       userThankYous: null,
       videoData: null,
-    }
+    };
     this.selectAnon = this.selectAnon.bind(this);
     this.collectAnonRequests = this.collectAnonRequests.bind(this);
     this.collectAnonThankYous = this.collectAnonThankYous.bind(this);
@@ -93,22 +93,21 @@ export default class inknead extends Component {
   createSession(userInfo) {
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({userInfo})
+      body: JSON.stringify({ userInfo })
     })
-    .then((response) => {
-      return response.json()})
+    .then((response) => response.json())
     .then((responseJson) => {
-      this.onUserChange(responseJson.user)
-      this.onSignupEmailChange(responseJson.signupEmail)
-      this.onCurrentEmailChange(responseJson.currentEmail)
-      this.handleActiveDonation(responseJson.activeDonation)
-      this.collectAnonEmail(responseJson.anonEmail)
-      this.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
-      this.handleRecentThankYou(responseJson.recentThankYou)
+      this.onUserChange(responseJson.user);
+      this.onSignupEmailChange(responseJson.signupEmail);
+      this.onCurrentEmailChange(responseJson.currentEmail);
+      this.handleActiveDonation(responseJson.activeDonation);
+      this.collectAnonEmail(responseJson.anonEmail);
+      this.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest);
+      this.handleRecentThankYou(responseJson.recentThankYou);
     })
     .catch((error) => {
       console.error(error);
@@ -118,14 +117,14 @@ export default class inknead extends Component {
     AccessToken.getCurrentAccessToken().then(
       (data) => {
         if (data) {
-          const accessToken = data.accessToken
+          const accessToken = data.accessToken;
           const responseInfoCallback = (error, result) => {
             if (error) {
-              alert('Error fetching data: ' + error.toString());
+              alert(`Error fetching data: ${error.toString()}`);
             } else {
-              this.createSession(result)
+              this.createSession(result);
             }
-          }
+          };
           const infoRequest = new GraphRequest(
             '/me',
             {
@@ -138,94 +137,143 @@ export default class inknead extends Component {
             },
             responseInfoCallback
           );
-          new GraphRequestManager().addRequest(infoRequest).start()
+          new GraphRequestManager().addRequest(infoRequest).start();
         }
       }
-    )
+    );
   }
   selectAnon(anonID) {
-    this.setState({anonID})
+    this.setState({ anonID });
   }
   collectAnonRequests(anonRequests) {
-    this.setState({anonRequests})
+    this.setState({ anonRequests });
   }
   collectAnonThankYous(anonThankYous) {
-    this.setState({anonThankYous})
+    this.setState({ anonThankYous });
   }
   onUserChange(user) {
-    this.setState({user})
+    this.setState({ user });
   }
   handleGuestDonation(guestDonation) {
-    this.setState({guestDonation})
+    this.setState({ guestDonation });
   }
   onCurrentEmailChange(currentEmail) {
-    this.setState({currentEmail})
+    this.setState({ currentEmail });
   }
   onSignupEmailChange(signupEmail) {
-    this.setState({signupEmail})
+    this.setState({ signupEmail });
   }
   collectRequests(requests) {
-    this.setState({requests})
+    this.setState({ requests });
   }
   collectThankYous(thankYous) {
-    this.setState({thankYous})
+    this.setState({ thankYous });
   }
   collectRequest(request) {
-    this.setState({request})
+    this.setState({ request });
   }
   collectEntry(entry) {
-    this.setState({entry})
+    this.setState({ entry });
   }
   collectUserRequests(userRequests) {
-    this.setState({userRequests})
+    this.setState({ userRequests });
   }
-  collectUserThankYous(userThankYous){
-    this.setState({userThankYous})
+  collectUserThankYous(userThankYous) {
+    this.setState({ userThankYous });
   }
   sumDonatedPizzas(totalDonatedPizzas) {
-    this.setState({totalDonatedPizzas})
+    this.setState({ totalDonatedPizzas });
   }
   handleWelcomeUrl(url) {
-    this.setState({url})
+    this.setState({ url });
   }
   handleActiveDonation(activeDonation) {
-    this.setState({activeDonation})
+    this.setState({ activeDonation });
   }
   collectAnonEmail(anonEmail) {
-    this.setState({anonEmail})
+    this.setState({ anonEmail });
   }
   handleVideoData(videoData) {
-    this.setState({videoData})
+    this.setState({ videoData });
   }
   handleThankYouData(thankYouData) {
-    this.setState({thankYouData})
+    this.setState({ thankYouData });
   }
   handleNewRequestErrorMessage(newRequestErrorMessage) {
-    this.setState({newRequestErrorMessage})
+    this.setState({ newRequestErrorMessage });
   }
   handleRecentSuccessfulRequest(recentSuccessfulRequest) {
-    this.setState({recentSuccessfulRequest})
+    this.setState({ recentSuccessfulRequest });
   }
   handleCreateThankYouErrorMessage(createThankYouErrorMessage) {
-    this.setState({createThankYouErrorMessage})
+    this.setState({ createThankYouErrorMessage });
   }
   handleRecentThankYou(recentThankYou) {
-    this.setState({recentThankYou})
+    this.setState({ recentThankYou });
   }
   renderScene(route, navigator) {
-    const Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} onUserChange={this.onUserChange} user={this.state.user} selectAnon={this.selectAnon} anonID={this.state.anonID} anonRequests={this.state.anonRequests} collectAnonRequests={this.collectAnonRequests} anonThankYous={this.state.anonThankYous} collectAnonThankYous={this.collectAnonThankYous} entry={this.state.entry} collectEntry={this.collectEntry} handleGuestDonation={this.handleGuestDonation} guestDonation={this.state.guestDonation} onCurrentEmailChange={this.onCurrentEmailChange} currentEmail={this.state.currentEmail} onSignupEmailChange={this.onSignupEmailChange} signupEmail={this.state.signupEmail} collectRequests={this.collectRequests} requests={this.state.requests} collectThankYous={this.collectThankYous} thankYous={this.state.thankYous} collectRequest={this.collectRequest} request={this.state.request} collectUserRequests={this.collectUserRequests} userRequests={this.state.userRequests} collectUserThankYous={this.collectUserThankYous} userThankYous={this.state.userThankYous} sumDonatedPizzas={this.sumDonatedPizzas} totalDonatedPizzas={this.state.totalDonatedPizzas} url={this.state.url} handleWelcomeUrl={this.handleWelcomeUrl} collectActiveDonation={this.handleActiveDonation} activeDonation={this.state.activeDonation} collectAnonEmail={this.collectAnonEmail} anonEmail={this.state.anonEmail} videoData={this.state.videoData} onChangeVideoData={this.handleVideoData} thankYouData={this.state.thankYouData} onChangeThankYouData={this.handleThankYouData} newRequestErrorMessage={this.state.newRequestErrorMessage} onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage} recentSuccessfulRequest={this.state.recentSuccessfulRequest} handleRecentSuccessfulRequest={this.handleRecentSuccessfulRequest} createThankYouErrorMessage={this.state.createThankYouErrorMessage} handleCreateThankYouErrorMessage={this.handleCreateThankYouErrorMessage} recentThankYou={this.state.recentThankYou} handleRecentThankYou={this.handleRecentThankYou} />;
+    const Scene = ROUTES[route.name];
+    return (
+      <Scene
+        route={route}
+        navigator={navigator}
+        onUserChange={this.onUserChange}
+        user={this.state.user}
+        selectAnon={this.selectAnon}
+        anonID={this.state.anonID}
+        anonRequests={this.state.anonRequests}
+        collectAnonRequests={this.collectAnonRequests}
+        anonThankYous={this.state.anonThankYous}
+        collectAnonThankYous={this.collectAnonThankYous}
+        entry={this.state.entry}
+        collectEntry={this.collectEntry}
+        handleGuestDonation={this.handleGuestDonation}
+        guestDonation={this.state.guestDonation}
+        onCurrentEmailChange={this.onCurrentEmailChange}
+        currentEmail={this.state.currentEmail}
+        onSignupEmailChange={this.onSignupEmailChange}
+        signupEmail={this.state.signupEmail}
+        collectRequests={this.collectRequests}
+        requests={this.state.requests}
+        collectThankYous={this.collectThankYous}
+        thankYous={this.state.thankYous}
+        collectRequest={this.collectRequest}
+        request={this.state.request}
+        collectUserRequests={this.collectUserRequests}
+        userRequests={this.state.userRequests}
+        collectUserThankYous={this.collectUserThankYous}
+        userThankYous={this.state.userThankYous}
+        sumDonatedPizzas={this.sumDonatedPizzas}
+        totalDonatedPizzas={this.state.totalDonatedPizzas}
+        url={this.state.url}
+        handleWelcomeUrl={this.handleWelcomeUrl}
+        collectActiveDonation={this.handleActiveDonation}
+        activeDonation={this.state.activeDonation}
+        collectAnonEmail={this.collectAnonEmail}
+        anonEmail={this.state.anonEmail}
+        videoData={this.state.videoData}
+        onChangeVideoData={this.handleVideoData}
+        thankYouData={this.state.thankYouData}
+        onChangeThankYouData={this.handleThankYouData}
+        newRequestErrorMessage={this.state.newRequestErrorMessage}
+        onChangeNewRequestErrorMesssage={this.handleNewRequestErrorMessage}
+        recentSuccessfulRequest={this.state.recentSuccessfulRequest}
+        handleRecentSuccessfulRequest={this.handleRecentSuccessfulRequest}
+        createThankYouErrorMessage={this.state.createThankYouErrorMessage}
+        handleCreateThankYouErrorMessage={this.handleCreateThankYouErrorMessage}
+        recentThankYou={this.state.recentThankYou}
+        handleRecentThankYou={this.handleRecentThankYou}
+      />
+    );
   }
   render() {
-    const sceneConfig = () => {
-      return Navigator.SceneConfigs.FloatFromRight
-    }
+    const sceneConfig = () => Navigator.SceneConfigs.FloatFromRight;
     return (
       <Navigator
-      initialRoute={{name: 'main'}}
+      initialRoute={{ name: 'main' }}
       renderScene={this.renderScene}
       configureScene={sceneConfig}
       />
     );
   }
-};
+}

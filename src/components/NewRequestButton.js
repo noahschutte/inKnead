@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 export default class NewRequestButton extends Component {
   onNewRequestPress() {
-    this.props.navigator.push({name: 'newRequest'})
+    this.props.navigator.push({ name: 'newRequest' });
   }
   render() {
     return (
@@ -12,10 +12,10 @@ export default class NewRequestButton extends Component {
           <Image
             style={styles.newRequestButton}
             source={require('../../assets/add.png')}
-            />
+          />
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
-})
+});

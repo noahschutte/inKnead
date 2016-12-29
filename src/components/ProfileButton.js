@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 export default class ProfileButton extends Component {
   onProfilePress() {
-    this.props.navigator.push({name: 'userProfile'});
+    this.props.navigator.push({ name: 'userProfile' });
   }
   render() {
     return (
@@ -12,10 +12,10 @@ export default class ProfileButton extends Component {
           <Image
             style={styles.profileButton}
             source={require('../../assets/profile.png')}
-            />
+          />
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     height: 40,
     width: 30,
   },
-})
+});

@@ -29,12 +29,12 @@ export default class Example extends React.Component {
   }
   startRecording() {
     if (this.camera) {
-      this.camera.capture({mode: Camera.constants.CaptureMode.video})
+      this.camera.capture({ mode: Camera.constants.CaptureMode.video })
           .then((data) => {
             if (data.duration > 20.0) {
-              this.props.onChangeNewRequestErrorMesssage("Video length must be less than 20 seconds.")
+              this.props.onChangeNewRequestErrorMesssage('Video length must be less than 20 seconds.');
             } else if (data.duration < 5.0) {
-              this.props.onChangeNewRequestErrorMesssage("Video length must be at least 5 seconds.")
+              this.props.onChangeNewRequestErrorMesssage('Video length must be at least 5 seconds.');
             } else {
               this.props.onChangeVideoData(data);
             }
@@ -122,59 +122,59 @@ export default class Example extends React.Component {
     this.props.navigator.pop();
   }
   render() {
-    const statusBarHidden = true
+    const statusBarHidden = true;
 
     let showRecordButton;
     if (!this.state.isRecording) {
       showRecordButton =
-        <TouchableOpacity
+        (<TouchableOpacity
           style={styles.captureButton}
           onPress={this.startRecording}
-          >
+        >
           <Image
             source={require('../../assets/ic_videocam_36pt.png')}
           />
-        </TouchableOpacity>;
+        </TouchableOpacity>);
     } else {
       showRecordButton =
-        <TouchableOpacity
+        (<TouchableOpacity
           style={styles.captureButton}
           onPress={this.stopRecording}
-          >
+        >
           <Image
             source={require('../../assets/ic_stop_36pt.png')}
-            />
-        </TouchableOpacity>
+          />
+        </TouchableOpacity>);
     }
     let typeDisplay;
     let flashDisplay;
     if (!this.state.isRecording) {
       typeDisplay =
-        <TouchableOpacity
+        (<TouchableOpacity
           style={styles.typeButton}
           onPress={this.switchType}
-          >
+        >
           <Image
             source={this.typeIcon}
-            />
-        </TouchableOpacity>;
+          />
+        </TouchableOpacity>);
       flashDisplay =
-        <TouchableOpacity
+        (<TouchableOpacity
           style={styles.flashButton}
           onPress={this.switchFlash}
-          >
+        >
           <Image
             source={this.flashIcon}
-            />
-        </TouchableOpacity>
+          />
+        </TouchableOpacity>);
     }
     return (
       <View style={styles.container}>
         <StatusBar
           hidden={statusBarHidden}
-          />
+        />
         <Camera
-          captureAudio={true}
+          captureAudio
           ref={(cam) => {
             this.camera = cam;
           }}
@@ -183,19 +183,19 @@ export default class Example extends React.Component {
           captureTarget={this.state.camera.captureTarget}
           type={this.state.camera.type}
           flashMode={this.state.camera.FlashMode}
-          defaultTouchToFocusComponent={true}
-          defaultOnFocus={true}
-          mirrorImage={true}
-          />
+          defaultTouchToFocusComponent
+          defaultOnFocus
+          mirrorImage
+        />
 
         <View style={[styles.overlay, styles.topOverlay]}>
           <TouchableOpacity
             style={styles.typeButton}
             onPress={this.cancelRecording.bind(this)}
-            >
+          >
             <Image
               source={require('../../assets/left_caret.png')}
-              />
+            />
           </TouchableOpacity>
           {typeDisplay}
         </View>

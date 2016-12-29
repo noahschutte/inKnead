@@ -4,15 +4,15 @@ import Button from './Button';
 
 export default class Notification extends Component {
   handleInstructions() {
-    this.props.navigator.push({name: 'instructions'})
+    this.props.navigator.push({ name: 'instructions' });
   }
   confirmDonationReceived() {
-    let userID = this.props.user.id;
-    let receivedDonation = true;
-    let recentSuccessfulRequestID = this.props.recentSuccessfulRequest.id
+    const userID = this.props.user.id;
+    const receivedDonation = true;
+    const recentSuccessfulRequestID = this.props.recentSuccessfulRequest.id;
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${recentSuccessfulRequestID}`, {
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'PATCH',
@@ -21,11 +21,10 @@ export default class Notification extends Component {
         receivedDonation
       })
     })
-    .then((response) => {
-      return response.json()})
+    .then((response) => response.json())
     .then((responseJson) => {
-      this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
-      this.props.refreshNotifications(true)
+      this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest);
+      this.props.refreshNotifications(true);
     })
     .catch((error) => {
       console.error(error);
@@ -36,28 +35,28 @@ export default class Notification extends Component {
       'No luck yet?',
       'Check your email again in another 30 minutes.',
       [
-        {text: 'Okay.', onPress: () => console.log('OK Pressed')},
+        { text: 'Okay.', onPress: () => console.log('OK Pressed') },
       ]
-    )
+    );
   }
   onCreateThankYouPress() {
-    this.props.navigator.push({name: 'createThankYou'})
+    this.props.navigator.push({ name: 'createThankYou' });
   }
 
   render() {
     let display;
     if (this.props.activeDonationDisplay) {
       display =
-        <View style={styles.wrapper}>
+        (<View style={styles.wrapper}>
           <Button
             text="Complete your recent donation now."
             backgroundColor="green"
             onPress={this.handleInstructions.bind(this)}
-            />
-        </View>
+          />
+        </View>);
     } else if (this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 0) {
       display =
-        <View style={styles.wrapper}>
+        (<View style={styles.wrapper}>
           <View style={styles.prompt}>
             <Text>
               Please go check your email now.
@@ -72,20 +71,20 @@ export default class Notification extends Component {
                 text="Not yet..."
                 backgroundColor="green"
                 onPress={this.denyDonationReceived.bind(this)}
-                />
+              />
             </View>
             <View style={styles.half}>
               <Button
                 text="Yes!"
                 backgroundColor="green"
                 onPress={this.confirmDonationReceived.bind(this)}
-                />
+              />
             </View>
           </View>
-        </View>
+        </View>);
     } else if (this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 1 && this.props.recentThankYou === null || this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 1 && this.props.recentThankYou && this.props.recentThankYou.request_id != this.props.recentSuccessfulRequest.id) {
       display =
-        <View style={styles.wrapper}>
+        (<View style={styles.wrapper}>
           <View style={styles.prompt}>
             <Text>
               Awesome Sauce!
@@ -101,14 +100,14 @@ export default class Notification extends Component {
             onPress={this.onCreateThankYouPress.bind(this)}
             />
           </View>
-        </View>
+        </View>);
     }
 
     return (
       <View style={styles.container}>
         {display}
       </View>
-    )
+    );
   }
 }
 
@@ -137,4 +136,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-})
+});

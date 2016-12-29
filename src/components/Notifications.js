@@ -7,7 +7,7 @@ import Button from './Button';
 
 export default class Notifications extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       refresh: false,
@@ -15,25 +15,25 @@ export default class Notifications extends Component {
     this.refreshNotifications = this.refreshNotifications.bind(this);
   }
   refreshNotifications(toggle) {
-    this.setState({refresh: toggle})
+    this.setState({ refresh: toggle });
   }
   componentWillMount() {
     if (this.props.user) {
-      const userID = this.props.user.id
+      const userID = this.props.user.id;
       fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`)
       .then((response) => response.json())
       .then((responseJson) => {
-        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-        this.props.handleWelcomeUrl(responseJson.url)
-        if (responseJson.errorMessage === "No current requests.") {
+        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas);
+        this.props.handleWelcomeUrl(responseJson.url);
+        if (responseJson.errorMessage === 'No current requests.') {
         } else {
-          this.props.collectUserRequests(responseJson.userRequests)
-          this.props.collectUserThankYous(responseJson.userThankYous)
-          this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest)
+          this.props.collectUserRequests(responseJson.userRequests);
+          this.props.collectUserThankYous(responseJson.userThankYous);
+          this.props.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest);
         }
       })
       .then((arbitrary) => {
-        this.refreshNotifications(true)
+        this.refreshNotifications(true);
       })
       .catch((error) => {
         console.error(error);
@@ -43,36 +43,36 @@ export default class Notifications extends Component {
   render() {
     let activeDonationDisplay;
     if (this.props.activeDonation) {
-      activeDonationDisplay = <Notification activeDonationDisplay {...this.props} />
+      activeDonationDisplay = <Notification activeDonationDisplay {...this.props} />;
     }
 
     let receivedDonationDisplay;
     if (this.props.recentSuccessfulRequest && this.props.recentSuccessfulRequest.received === 1 && this.props.recentThankYou && this.props.recentThankYou.request_id === this.props.recentSuccessfulRequest.id) {
       // leave receivedDonationDisplay as undefined
     } else if (this.props.recentSuccessfulRequest) {
-      receivedDonationDisplay = <Notification receivedDonationDisplay refreshNotifications={this.refreshNotifications} {...this.props} />
+      receivedDonationDisplay = <Notification receivedDonationDisplay refreshNotifications={this.refreshNotifications} {...this.props} />;
     }
 
     let noNotificationsDisplay;
     if (activeDonationDisplay === undefined && receivedDonationDisplay === undefined && this.props.user && this.props.user.current_email) {
-      noNotificationsDisplay = <Text>No current notifications.</Text>
+      noNotificationsDisplay = <Text>No current notifications.</Text>;
     }
 
     let updateEmailDisplay;
     if (this.props.user && !this.props.user.current_email) {
       updateEmailDisplay =
-        <View style={styles.currentEmailContainer}>
+        (<View style={styles.currentEmailContainer}>
           <Text>You should really verify your email.</Text>
           <Text>Go to your profile page.</Text>
-        </View>
+        </View>);
     }
 
     let display;
     if (this.props.user === null) {
-      display = <GuestView {...this.props} />
+      display = <GuestView {...this.props} />;
     } else {
       display =
-        <View style={styles.wrapper}>
+        (<View style={styles.wrapper}>
           <View style={styles.portion}>
             {noNotificationsDisplay}
             {updateEmailDisplay}
@@ -83,14 +83,14 @@ export default class Notifications extends Component {
           <View style={styles.portion}>
             {receivedDonationDisplay}
           </View>
-        </View>
+        </View>);
     }
     return (
       <View style={styles.container}>
         <Nav backButton {...this.props} />
         {display}
       </View>
-    )
+    );
   }
 }
 
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-})
+});

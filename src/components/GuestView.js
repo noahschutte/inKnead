@@ -23,14 +23,14 @@ export default class GuestView extends Component {
             onUserChange={this.props.onUserChange}
             navigator={this.props.navigator}
             {...this.props}
-            />
+          />
         </View>
       </View>
-    )
+    );
   }
 }
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 9,
     justifyContent: 'center',
@@ -47,7 +47,7 @@ const styles=StyleSheet.create({
   image: {
     height: 205,
     width: 200,
-    borderRadius: 100/2,
+    borderRadius: 100 / 2,
   },
   title: {
     marginVertical: 20,
@@ -61,4 +61,4 @@ const styles=StyleSheet.create({
     color: 'white',
     fontFamily: 'Gillsans',
   },
-})
+});

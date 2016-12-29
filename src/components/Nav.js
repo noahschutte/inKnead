@@ -10,10 +10,10 @@ import GlobalStyles from 'InKneadStyle';
 
 export default class Nav extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
   componentDidUpdate(nextProps) {
-    if(this.props.isOpen === nextProps.isOpen && this.props.isOpen) {
+    if (this.props.isOpen === nextProps.isOpen && this.props.isOpen) {
       this.props.toggleMenu(false);
     }
   }
@@ -23,19 +23,19 @@ export default class Nav extends Component {
     let rightButton;
 
     if (this.props.backButton) {
-      leftButton = <BackButton {...this.props} />
+      leftButton = <BackButton {...this.props} />;
     } else if (this.props.navigator.state.routeStack[0].name === 'main') {
-      leftButton = <MenuButton {...this.props} />
-      rightButton = <NewRequestButton {...this.props} />
-      center = <Activity currentScope={this.props.currentScope} changeScope={this.changeScope} {...this.props} />
+      leftButton = <MenuButton {...this.props} />;
+      rightButton = <NewRequestButton {...this.props} />;
+      center = <Activity currentScope={this.props.currentScope} changeScope={this.changeScope} {...this.props} />;
     }
 
-    const statusBarHidden = false
+    const statusBarHidden = false;
     return (
       <View style={GlobalStyles.nav}>
         <StatusBar
           hidden={statusBarHidden}
-          />
+        />
         <View style={styles.leftBox}>
           {leftButton}
         </View>
@@ -47,7 +47,7 @@ export default class Nav extends Component {
         </View>
       </View>
     );
-  };
+  }
 }
 
 const styles = StyleSheet.create({

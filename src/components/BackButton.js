@@ -3,10 +3,10 @@ import { View, TouchableOpacity, Image, StyleSheet, BackAndroid } from 'react-na
 
 export default class BackButton extends Component {
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function() {
+    BackAndroid.addEventListener('hardwareBackPress', () => {
       this.props.navigator.pop();
       return true;
-    }.bind(this));
+    });
   }
   
   onBackPress() {
@@ -18,14 +18,15 @@ export default class BackButton extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.backButtonContainer}
-          onPress={this.onBackPress.bind(this)}>
+          onPress={this.onBackPress.bind(this)}
+        >
             <Image
               style={styles.backButton}
               source={require('../../assets/backButton.png')}
-              />
+            />
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -39,4 +40,4 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
-})
+});

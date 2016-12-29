@@ -23,26 +23,26 @@ export default class Profile2 extends Component {
         </View>
 
       </View>
-    )
+    );
   }
 
   profileContent() {
-    if(this.props.verified) {
+    if (this.props.verified) {
       return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
 
-          <View style={{alignSelf: 'center', flex: 1}}>
+          <View style={{ alignSelf: 'center', flex: 1 }}>
             <Text style={GlobalStyles.profileHeader}>EMAIL ADDRESS</Text>
           </View>
 
-          <TouchableOpacity style={{flex: 2.3}} onPress={this.emailPress.bind(this)} activeOpacity={1}>
+          <TouchableOpacity style={{ flex: 2.3 }} onPress={this.emailPress.bind(this)} activeOpacity={1}>
               <View style={styles.emailContainer}>
                 <Text style={styles.emailText}>{this.props.verified}</Text>
                 <Image source={require('../../assets/mobile-icons/angleBracketRight.png')} style={styles.editArrow} />
               </View>
           </TouchableOpacity>
 
-          <View style={{alignSelf: 'center', flex: 1}}>
+          <View style={{ alignSelf: 'center', flex: 1 }}>
             <Text style={GlobalStyles.profileHeader}>LINKED ACCOUNTS</Text>
           </View>
 
@@ -53,30 +53,27 @@ export default class Profile2 extends Component {
           </View>
 
         </View>
-      )
+      );
     }
-    if(!this.props.verified) {
+    if (!this.props.verified) {
       return this.unverifiedEmail();
     }
   }
 
   emailPress() {
-    console.log("works");
+    console.log('works');
   }
 
 
   unverifiedEmail() {
-    return(
+    return (
       <View>
         <Text>Your facebook account was tied to: {this.props.user.signup_email}</Text>
         <Text>Is this the best email to reach you at? Or would you like to update? </Text>
       </View>
-    )
+    );
   }
 }
-
-
-
 
 
 const styles = StyleSheet.create({
@@ -121,4 +118,4 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
   }
-})
+});
