@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Navigator, View } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import FBSDK, { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AnonHistory from './components/AnonHistory';
 import Camera from './components/Camera';
@@ -271,9 +272,10 @@ export default class inknead extends Component {
   //   );
 // }
   render() {
-    const sceneConfig = () => Navigator.SceneConfigs.FloatFromRight;
+    const sceneConfig = () => Navigator.SceneConfigs.FloatFromRight
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
-      <Provider store={createStore(reducers)}>
+      <Provider store={store}>
         <Router />
       </Provider>
     );

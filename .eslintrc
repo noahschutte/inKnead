@@ -3,5 +3,6 @@
   "rules": {
     "linebreak-style": ["warn", "windows"],
     "global-require": "warn",
+    "arrow-body-style": 0
     }
 }
