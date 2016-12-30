@@ -3,6 +3,25 @@ import { View, Text, Image } from 'react-native';
 
 class NavBar extends Component {
 
+  renderTitle = () => {
+    const title = this.props.title;
+    const mainButton = require('../../assets/mobile-icons/Views.png');
+
+    switch (title) {
+      case 'Main':
+        return (
+          <Image
+            style={styles.centerButtonStyle}
+            source={mainButton}
+          />
+        );
+      default:
+        return (
+          <Text style={styles.titleStyle}>{title}</Text>
+        );
+    }
+  }
+
   renderLeftButton = () => {
     const leftButton = this.props.leftButton;
     const backButton = require('../../assets/mobile-icons/disclosure-indicator.png');
@@ -52,7 +71,7 @@ class NavBar extends Component {
       <View style={styles.navBarStyle}>
         {/* <Text style={{ flex: 1 }}>Left Button</Text> */}
         {this.renderLeftButton()}
-        <Text style={styles.titleStyle}>Nav Bar</Text>
+        {this.renderTitle()}
         {this.renderRightButton()}
       </View>
     );
@@ -72,6 +91,12 @@ const styles = {
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 4,
+  },
+  centerButtonStyle: {
+    flex: 4,
+    resizeMode: 'contain',
+    height: 50,
+    width: null
   },
   rightButtonStyle: {
     flex: 1,
