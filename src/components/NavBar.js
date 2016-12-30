@@ -1,23 +1,59 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 class NavBar extends Component {
 
-  renderRightButton() {
-    return (
-      <Text>{this.props.rightButton}</Text>
-    );
+  renderLeftButton = () => {
+    const leftButton = this.props.leftButton;
+    const backButton = require('../../assets/mobile-icons/disclosure-indicator.png');
+    const menuButton = require('../../assets/menuButton.png');
+
+    switch (leftButton) {
+      case 'backButton':
+        return (
+          <Image
+            style={styles.leftButtonStyle}
+            source={backButton}
+          />
+        );
+      case 'sideMenu':
+      case 'menuButton':
+        return (
+          <Image
+            style={styles.leftButtonStyle}
+            source={menuButton}
+          />
+        );
+      default:
+        return null;
+    }
+  }
+
+  renderRightButton = () => {
+    const rightButton = this.props.rightButton;
+    const newRequestButton = require('../../assets/add.png');
+
+    switch (rightButton) {
+      case 'newRequest':
+        return (
+          <Image
+            style={styles.rightButtonStyle}
+            source={newRequestButton}
+          />
+        );
+      default:
+        return null;
+    }
   }
 
 
   render() {
     return (
       <View style={styles.navBarStyle}>
-        <Text style={{ flex: 1 }}>Left Button</Text>
+        {/* <Text style={{ flex: 1 }}>Left Button</Text> */}
+        {this.renderLeftButton()}
         <Text style={styles.titleStyle}>Nav Bar</Text>
-        <Text style={{ flex: 1 }}>
-          Right Button
-        </Text>
+        {this.renderRightButton()}
       </View>
     );
   }
@@ -36,6 +72,18 @@ const styles = {
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 4,
+  },
+  rightButtonStyle: {
+    flex: 1,
+    resizeMode: 'contain',
+    height: 42,
+    width: null,
+  },
+  leftButtonStyle: {
+    flex: 1,
+    resizeMode: 'contain',
+    height: 35,
+    width: null,
   }
 };
 
