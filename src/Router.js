@@ -1,11 +1,17 @@
 import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import HowTo from './components/HowTo';
+import MainScene from './components/Scenes/MainScene';
 
 const RouterComponent = () => {
   return (
-    <Router>
-      <Scene key="HowTo" component={HowTo} title="How-To" />
+    <Router
+      hideNavBar
+    >
+      <Scene
+        key="MainScene"
+        component={MainScene}
+      />
     </Router>
   );
 };
