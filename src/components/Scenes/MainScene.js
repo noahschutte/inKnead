@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { getEntries } from '../../actions';
 import NavBar from '../NavBar';
-import LoadingPizza from '../LoadingPizza';
 
 
 class MainScene extends Component {
@@ -12,13 +11,11 @@ class MainScene extends Component {
     this.props.getEntries();
   }
 
+  assembleOptions = () => {
+
+  }
+
   render() {
-    let contents;
-    if (this.props.loading) {
-      contents = <LoadingPizza />;
-    } else {
-      contents = <Text>Main Scene </Text>;
-    }
     return (
       <View style={{ flex: 1 }}>
         <NavBar
@@ -27,7 +24,7 @@ class MainScene extends Component {
           title='Main'
         />
         <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
-          {contents}
+          <Text>Main Scene</Text>
         </View>
       </View>
     );
