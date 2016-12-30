@@ -1,0 +1,7 @@
+{
+  "extends": "rallycoding",
+  "rules": {
+    "linbreak-style": 0,
+    "global-require": 0
+    }
+}
