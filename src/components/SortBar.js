@@ -7,7 +7,12 @@ class SortBar extends Component {
   mapOptionsToButtons = () => {
     return this.props.options.map(option => {
       return (
-        <SortButton key={option}>{option}</SortButton>
+        <SortButton
+          key={option}
+          shown={option === this.props.shown}
+        >
+          {option}
+        </SortButton>
       );
     });
   }

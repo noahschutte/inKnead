@@ -2,11 +2,13 @@ import {
   GET_ENTRIES,
   GET_ENTRIES_SUCCESS,
   GET_USER_ENTRIES,
-  GET_USER_ENTRIES_SUCCESS
+  GET_USER_ENTRIES_SUCCESS,
+  SHOW_ENTRIES,
 } from '../actions/types';
 
 const INITIAL_STATE = {
   scope: 'requests_and_thank_yous',
+  shown: 'Requests',
   loading: true,
   requests: [],
   thankYous: [],
@@ -39,6 +41,11 @@ export default (state = INITIAL_STATE, action) => {
         userRequsts: action.payload.userRequests,
         userThankYous: action.payload.userThankYous,
         loading: false,
+      };
+    case SHOW_ENTRIES:
+      return {
+        ...state,
+        shown: action.payload,
       };
     default:
       return state;

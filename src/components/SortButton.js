@@ -1,12 +1,14 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { sortEntries } from '../actions';
 
 
 const SortButton = (props) => {
   return (
     <TouchableOpacity
       style={styles.sortButtonStyle}
-      onPress={() => console.log('pressed!')}
+      onPress={props.sortEntries(props.children)}
     >
       <Text style={styles.sortButtonText}>
         {props.children}
@@ -30,4 +32,4 @@ const styles = {
   },
 };
 
-export default SortButton;
+export default connect(null, { sortEntries })(SortButton);

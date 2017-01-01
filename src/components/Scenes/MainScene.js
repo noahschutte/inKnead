@@ -55,6 +55,7 @@ class MainScene extends Component {
         />
         <SortBar
           options={this.assembleOptions()}
+          shown={this.props.shown}
         />
         <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
           <Text>Main Scene</Text>
@@ -65,7 +66,12 @@ class MainScene extends Component {
 }
 
 const mapStateToProps = state => {
-  const { requests, thankYous, loading } = state.entries;
+  const {
+    requests,
+    thankYous,
+    shown,
+    loading
+  } = state.entries;
   const {
     userData,
     activeDonation,
@@ -73,6 +79,7 @@ const mapStateToProps = state => {
     recentSuccessfulRequest,
     recentThankYou,
   } = state.user;
+
   return {
     userData,
     activeDonation,
@@ -81,6 +88,7 @@ const mapStateToProps = state => {
     recentThankYou,
     requests,
     thankYous,
+    shown,
     loading,
   };
 };
