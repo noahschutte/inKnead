@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   thankYous: [],
   userRequests: [],
   userThankYous: [],
-}
+};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -20,26 +20,26 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         scope: 'requests_and_thank_yous',
-      }
+      };
     case GET_ENTRIES_SUCCESS:
       return {
         ...state,
         requests: action.payload.requests,
         thankYous: action.payload.thankYous,
         loading: false,
-      }
+      };
     case GET_USER_ENTRIES:
       return {
         ...state,
         scope: 'user_history',
-      }
+      };
     case GET_USER_ENTRIES_SUCCESS:
       return {
         ...state,
         userRequsts: action.payload.userRequests,
         userThankYous: action.payload.userThankYous,
         loading: false,
-      }
+      };
     default:
       return state;
   }
