@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         scope: 'requests_and_thank_yous',
-
+      }
     case GET_ENTRIES_SUCCESS:
       return {
         ...state,
