@@ -1,10 +1,9 @@
 import {
   GET_ENTRIES,
   GET_ENTRIES_SUCCESS,
-  GET_USER_ENTRIES,
-  GET_USER_ENTRIES_SUCCESS,
   CREATE_SESSION_START,
   CREATE_SESSION_SUCCESS,
+  SHOW_ENTRIES,
 } from './types';
 
 export const getEntries = () => {
@@ -22,6 +21,13 @@ export const getEntries = () => {
       dispatch({ type: GET_ENTRIES_SUCCESS, payload: entries });
     });
   };
+};
+
+export const sortEntries = (key) => {
+  return ({
+    type: SHOW_ENTRIES,
+    payload: key,
+  });
 };
 
 export const createSession = (userInfo) => {
