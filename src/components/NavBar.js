@@ -85,6 +85,7 @@ const styles = {
     backgroundColor: '#ce0000',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: 5,
   },
   titleStyle: {
     color: '#fff',

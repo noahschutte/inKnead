@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import SortButton from './SortButton';
 
 class SortBar extends Component {
-  return (
-    <View style={styles.sortBarStyle}>      
-    </View>
-  )
-};
+
+  mapOptionsToButtons = () => {
+    return this.props.options.map(option => {
+      return (
+        <SortButton key={option}>{option}</SortButton>
+      );
+    });
+  }
+
+  render() {
+    return (
+      <View style={styles.sortBarStyle}>
+        {this.mapOptionsToButtons()}
+      </View>
+    );
+  }
+}
 
 const styles = {
   sortBarStyle: {
     flex: 0.5,
     flexDirection: 'row',
-    marginLeft: 10,
-    marginRight: 10,
   }
 };
 

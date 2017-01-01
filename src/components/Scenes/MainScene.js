@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { getEntries, createSession } from '../../actions';
 import NavBar from '../NavBar';
+import SortBar from '../SortBar';
 
 
 class MainScene extends Component {
@@ -40,7 +41,8 @@ class MainScene extends Component {
   }
 
   assembleOptions = () => {
-
+    const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
+    return globalOptions;
   }
 
   render() {
@@ -50,6 +52,9 @@ class MainScene extends Component {
           rightButton='newRequest'
           leftButton='sideMenu'
           title='Main'
+        />
+        <SortBar
+          options={this.assembleOptions()}
         />
         <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
           <Text>Main Scene</Text>
