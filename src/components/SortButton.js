@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 
 const SortButton = (props) => {
   return (
-    <View style={styles.sortButtonStyle}>
+    <TouchableOpacity
+      style={styles.sortButtonStyle}
+      onPress={() => console.log('pressed!')}
+    >
       <Text style={styles.sortButtonText}>
         {props.children}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
