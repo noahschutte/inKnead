@@ -1,14 +1,42 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { getEntries } from '../../actions';
+import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { getEntries, createSession } from '../../actions';
 import NavBar from '../NavBar';
 
 
 class MainScene extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getEntries();
+    AccessToken.getCurrentAccessToken().then(
+      data => {
+        if (data) {
+          const accessToken = data.accessToken;
+          const responseInfoCallback = (error, result) => {
+            if (error) {
+              alert(`Error fetching data: ${error.toSTring()}`);
+            } else {
+              this.props.createSession(result);
+            }
+          };
+          const infoRequest = new GraphRequest(
+            '/me',
+            {
+              accessToken,
+              parameters: {
+                fields: {
+                  string: 'email,name,first_name,middle_name,last_name'
+                }
+              }
+            },
+            responseInfoCallback
+          );
+          new GraphRequestManager().addRequest(infoRequest).start();
+        }
+      }
+    );
   }
 
   assembleOptions = () => {
@@ -32,11 +60,24 @@ class MainScene extends Component {
 }
 
 const mapStateToProps = state => {
+  const { requests, thankYous, loading } = state.entries;
+  const {
+    userData,
+    activeDonation,
+    anonEmail,
+    recentSuccessfulRequest,
+    recentThankYou,
+  } = state.user;
   return {
-    requests: state.entries.requests,
-    thankYous: state.entries.thankYous,
-    loading: state.entries.loading,
+    userData,
+    activeDonation,
+    anonEmail,
+    recentSuccessfulRequest,
+    recentThankYou,
+    requests,
+    thankYous,
+    loading,
   };
 };
 
-export default connect(mapStateToProps, { getEntries })(MainScene);
+export default connect(mapStateToProps, { getEntries, createSession })(MainScene);

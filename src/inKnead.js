@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Navigator, View } from 'react-native';
+import { Navigator } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import FBSDK, { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { createSession } from './actions';
 import AnonHistory from './components/AnonHistory';
 import Camera from './components/Camera';
 import CreateThankYou from './components/CreateThankYou';
@@ -120,14 +121,14 @@ export default class inknead extends Component {
   // }
   // componentDidMount() {
   //   AccessToken.getCurrentAccessToken().then(
-  //     (data) => {
+  //     data => {
   //       if (data) {
   //         const accessToken = data.accessToken;
   //         const responseInfoCallback = (error, result) => {
   //           if (error) {
-  //             alert(`Error fetching data: ${error.toString()}`);
+  //             alert(`Error fetching data: ${error.toSTring()}`);
   //           } else {
-  //             this.createSession(result);
+  //             createSession(result);
   //           }
   //         };
   //         const infoRequest = new GraphRequest(
