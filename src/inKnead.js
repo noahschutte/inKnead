@@ -96,58 +96,7 @@ export default class inknead extends Component {
   //   this.handleRecentSuccessfulRequest = this.handleRecentSuccessfulRequest.bind(this);
   //   this.handleRecentThankYou = this.handleRecentThankYou.bind(this);
   }
-  // createSession(userInfo) {
-  //   fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     method: 'POST',
-  //     body: JSON.stringify({ userInfo })
-  //   })
-  //   .then((response) => response.json())
-  //   .then((responseJson) => {
-  //     this.onUserChange(responseJson.user);
-  //     this.onSignupEmailChange(responseJson.signupEmail);
-  //     this.onCurrentEmailChange(responseJson.currentEmail);
-  //     this.handleActiveDonation(responseJson.activeDonation);
-  //     this.collectAnonEmail(responseJson.anonEmail);
-  //     this.handleRecentSuccessfulRequest(responseJson.recentSuccessfulRequest);
-  //     this.handleRecentThankYou(responseJson.recentThankYou);
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
-  // }
-  // componentDidMount() {
-  //   AccessToken.getCurrentAccessToken().then(
-  //     data => {
-  //       if (data) {
-  //         const accessToken = data.accessToken;
-  //         const responseInfoCallback = (error, result) => {
-  //           if (error) {
-  //             alert(`Error fetching data: ${error.toSTring()}`);
-  //           } else {
-  //             createSession(result);
-  //           }
-  //         };
-  //         const infoRequest = new GraphRequest(
-  //           '/me',
-  //           {
-  //             accessToken,
-  //             parameters: {
-  //               fields: {
-  //                 string: 'email,name,first_name,middle_name,last_name'
-  //               }
-  //             }
-  //           },
-  //           responseInfoCallback
-  //         );
-  //         new GraphRequestManager().addRequest(infoRequest).start();
-  //       }
-  //     }
-  //   );
-  // }
+  
   // selectAnon(anonID) {
   //   this.setState({ anonID });
   // }
