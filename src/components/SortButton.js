@@ -1,17 +1,24 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
-import { sortEntries } from '../actions';
-
 
 const SortButton = (props) => {
+  const { children, onPress, shown } = props;
+  const press = () => onPress(children);
+  const buttonStyle = () => {
+    if (shown) {
+      return styles.shownSortButton;
+    }
+    return styles.sortButtonStyle;
+  };
+
   return (
     <TouchableOpacity
-      style={styles.sortButtonStyle}
-      onPress={props.sortEntries(props.children)}
+      style={buttonStyle()}
+      onPress={press}
+      activeOpacity={0.7}
     >
       <Text style={styles.sortButtonText}>
-        {props.children}
+        {children}
       </Text>
     </TouchableOpacity>
   );
@@ -19,17 +26,28 @@ const SortButton = (props) => {
 
 const styles = {
   sortButtonStyle: {
-    backgroundColor: '#ce0000',
-    paddingTop: 5,
+    backgroundColor: '#fe0000',
     flex: 1,
-    borderLeftWidth: 1,
+    borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
     borderColor: '#fff',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  shownSortButton: {
+    backgroundColor: '#ce0000',
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ce0000',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 1,
   },
   sortButtonText: {
     color: '#fff',
+    fontSize: 14,
+    textAlign: 'center',
   },
 };
 
-export default connect(null, { sortEntries })(SortButton);
+export default SortButton;

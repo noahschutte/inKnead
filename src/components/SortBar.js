@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { sortEntries } from '../actions';
 import SortButton from './SortButton';
 
 class SortBar extends Component {
@@ -9,6 +11,7 @@ class SortBar extends Component {
       return (
         <SortButton
           key={option}
+          onPress={this.props.sortEntries}
           shown={option === this.props.shown}
         >
           {option}
@@ -33,4 +36,4 @@ const styles = {
   }
 };
 
-export default SortBar;
+export default connect(null, { sortEntries })(SortBar);

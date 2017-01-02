@@ -86,6 +86,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 5,
+    elevation: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
   },
   titleStyle: {
     color: '#fff',
