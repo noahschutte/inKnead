@@ -52,6 +52,9 @@ class MainScene extends Component {
           rightButton='newRequest'
           leftButton='sideMenu'
           title='Main'
+          onRightPress={() => console.log('pressed!')}
+          onLeftPress={() => console.log('pressed!')}
+          onTitlePress={() => console.log('pressed!')}
         />
         <SortBar
           options={this.assembleOptions()}
