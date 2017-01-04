@@ -1,7 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback
+} from 'react-native';
 
 class NavBar extends Component {
+
+  assembleContent = () => {
+    const { onRightPress, onLeftPress, onTitlePress } = this.props;
+    return (
+      <View style={styles.navBarStyle}>
+        <TouchableWithoutFeedback onPress={onLeftPress}>
+          {this.renderLeftButton()}
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback onPress={onTitlePress}>
+          {this.renderTitle()}
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback onPress={onRightPress}>
+          {this.renderRightButton()}
+        </TouchableWithoutFeedback>
+      </View>
+    );
+  }
 
   renderTitle = () => {
     const title = this.props.title;
@@ -65,14 +89,10 @@ class NavBar extends Component {
     }
   }
 
-
   render() {
     return (
-      <View style={styles.navBarStyle}>
-        {/* <Text style={{ flex: 1 }}>Left Button</Text> */}
-        {this.renderLeftButton()}
-        {this.renderTitle()}
-        {this.renderRightButton()}
+      <View style={{ flex: 1 }}>
+        {this.assembleContent()}
       </View>
     );
   }
