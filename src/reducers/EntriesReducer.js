@@ -32,10 +32,6 @@ export default (state = INITIAL_STATE, action) => {
         loading: false,
       };
     case GET_USER_ENTRIES:
-      return {
-        ...state,
-        scope: 'user_history',
-      };
     case GET_USER_ENTRIES_SUCCESS:
       return {
         ...state,
@@ -52,7 +48,8 @@ export default (state = INITIAL_STATE, action) => {
     console.log('scope toggled!', action.payload);
       return {
         ...state,
-        scope: action.payload
+        scope: action.payload.scope,
+        shown: action.payload.shown
       };
     default:
       return state;

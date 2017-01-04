@@ -46,7 +46,11 @@ class MainScene extends Component {
 
   assembleOptions = () => {
     const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
-    return globalOptions;
+    const userHistoryOptions = ['Kneaded', 'Doughnated'];
+    if (this.props.scope === 'requests_and_thank_yous') {
+      return globalOptions;
+    }
+    return userHistoryOptions;
   }
 
   render() {
@@ -55,6 +59,7 @@ class MainScene extends Component {
       toggleScope(scope);
     };
 
+    console.log(this.props);
     return (
       <View style={{ flex: 1 }}>
         <NavBar

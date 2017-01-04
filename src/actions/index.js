@@ -35,12 +35,18 @@ export const toggleScope = (currentScope) => {
   if (currentScope === 'requests_and_thank_yous') {
     return ({
       type: TOGGLE_SCOPE,
-      payload: 'user_history'
+      payload: {
+        scope: 'user_history',
+        shown: 'Kneaded'
+      }
     });
   }
   return ({
     type: TOGGLE_SCOPE,
-    payload: 'requests_and_thank_yous'
+    payload: {
+      scope: 'requests_and_thank_yous',
+      shown: 'Requests'
+    }
   });
 };
 
