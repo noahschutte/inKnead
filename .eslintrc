@@ -1,7 +1,7 @@
 {
   "extends": "rallycoding",
   "rules": {
-    "linebreak-style": ["warn", "windows"],
+    "linebreak-style": 0,
     "global-require": "warn",
     "arrow-body-style": 0
     }

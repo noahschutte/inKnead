@@ -4,28 +4,13 @@
 
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import GlobalStyles from 'InKneadStyle';
+import GlobalStyles from './style/InKneadStyle';
 import Nav from './Nav';
 
+const rightBracket = require('../../assets/mobile-icons/angleBracketRight.png');
+const facebookIcon = require('../../assets/mobile-icons/facebook.png');
+
 export default class Profile2 extends Component {
-
-  render() {
-    return (
-      <View style={GlobalStyles.container}>
-        <Nav backButton {...this.props} />
-
-        <View style={GlobalStyles.profileImageContainer}>
-          <Image source={this.props.profileImage} style={GlobalStyles.profileImage} />
-        </View>
-
-        <View style={GlobalStyles.profileContent}>
-          {this.profileContent()}
-        </View>
-
-      </View>
-    );
-  }
-
   profileContent() {
     if (this.props.verified) {
       return (
@@ -35,10 +20,15 @@ export default class Profile2 extends Component {
             <Text style={GlobalStyles.profileHeader}>EMAIL ADDRESS</Text>
           </View>
 
-          <TouchableOpacity style={{ flex: 2.3 }} onPress={this.emailPress.bind(this)} activeOpacity={1}>
+          <TouchableOpacity
+              style={{ flex: 2.3 }}
+              //onPress={this.emailPress.bind(this)}
+              onPress={() => this.emailPress}
+              activeOpacity={1}
+          >
               <View style={styles.emailContainer}>
                 <Text style={styles.emailText}>{this.props.verified}</Text>
-                <Image source={require('../../assets/mobile-icons/angleBracketRight.png')} style={styles.editArrow} />
+                <Image source={rightBracket} style={styles.editArrow} />
               </View>
           </TouchableOpacity>
 
@@ -47,9 +37,9 @@ export default class Profile2 extends Component {
           </View>
 
           <View style={styles.socialContainer}>
-            <Image source={require('../../assets/mobile-icons/facebook.png')} style={styles.socialIcon} />
+            <Image source={facebookIcon} style={styles.socialIcon} />
             <Text style={styles.socialText}>Facebook</Text>
-            <Image source={require('../../assets/mobile-icons/angleBracketRight.png')} style={styles.editArrow} />
+            <Image source={rightBracket} style={styles.editArrow} />
           </View>
 
         </View>
@@ -70,6 +60,23 @@ export default class Profile2 extends Component {
       <View>
         <Text>Your facebook account was tied to: {this.props.user.signup_email}</Text>
         <Text>Is this the best email to reach you at? Or would you like to update? </Text>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={GlobalStyles.container}>
+        <Nav backButton {...this.props} />
+
+        <View style={GlobalStyles.profileImageContainer}>
+          <Image source={this.props.profileImage} style={GlobalStyles.profileImage} />
+        </View>
+
+        <View style={GlobalStyles.profileContent}>
+          {this.profileContent()}
+        </View>
+
       </View>
     );
   }
