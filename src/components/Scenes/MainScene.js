@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { getEntries, createSession } from '../../actions';
+import {
+  getEntries,
+  createSession,
+  toggleScope
+} from '../../actions';
 import NavBar from '../NavBar';
 import SortBar from '../SortBar';
 
@@ -46,6 +50,11 @@ class MainScene extends Component {
   }
 
   render() {
+    const { shown, toggleScope, scope } = this.props;
+    const titlePress = () => {
+      toggleScope(scope);
+    };
+
     return (
       <View style={{ flex: 1 }}>
         <NavBar
@@ -54,11 +63,11 @@ class MainScene extends Component {
           title='Main'
           onRightPress={() => console.log('pressed!')}
           onLeftPress={() => console.log('pressed!')}
-          onTitlePress={() => console.log('pressed!')}
+          onTitlePress={titlePress}
         />
         <SortBar
           options={this.assembleOptions()}
-          shown={this.props.shown}
+          shown={shown}
         />
         <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
           <Text>Main Scene</Text>
@@ -73,7 +82,8 @@ const mapStateToProps = state => {
     requests,
     thankYous,
     shown,
-    loading
+    loading,
+    scope
   } = state.entries;
   const {
     userData,
@@ -93,7 +103,8 @@ const mapStateToProps = state => {
     thankYous,
     shown,
     loading,
+    scope
   };
 };
 
-export default connect(mapStateToProps, { getEntries, createSession })(MainScene);
+export default connect(mapStateToProps, { getEntries, createSession, toggleScope })(MainScene);

@@ -4,6 +4,7 @@ import {
   CREATE_SESSION_START,
   CREATE_SESSION_SUCCESS,
   SHOW_ENTRIES,
+  TOGGLE_SCOPE
 } from './types';
 
 export const getEntries = () => {
@@ -27,6 +28,19 @@ export const sortEntries = (key) => {
   return ({
     type: SHOW_ENTRIES,
     payload: key,
+  });
+};
+
+export const toggleScope = (currentScope) => {
+  if (currentScope === 'requests_and_thank_yous') {
+    return ({
+      type: TOGGLE_SCOPE,
+      payload: 'user_history'
+    });
+  }
+  return ({
+    type: TOGGLE_SCOPE,
+    payload: 'requests_and_thank_yous'
   });
 };
 

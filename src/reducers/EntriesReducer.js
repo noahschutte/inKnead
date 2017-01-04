@@ -4,6 +4,7 @@ import {
   GET_USER_ENTRIES,
   GET_USER_ENTRIES_SUCCESS,
   SHOW_ENTRIES,
+  TOGGLE_SCOPE,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -46,6 +47,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         shown: action.payload,
+      };
+    case TOGGLE_SCOPE:
+    console.log('scope toggled!', action.payload);
+      return {
+        ...state,
+        scope: action.payload
       };
     default:
       return state;
