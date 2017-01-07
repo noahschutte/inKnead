@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ListView } from 'react-native';
+import { View, ListView } from 'react-native';
 import LoadingPizza from './LoadingPizza';
 import Entry from './Entry';
 
@@ -13,8 +13,6 @@ class Entries extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('component will receive props');
-    console.log('length', nextProps.entryRows.length);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(nextProps.entryRows)) });
   }

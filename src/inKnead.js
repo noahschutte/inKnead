@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import FBSDK, { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { createSession } from './actions';
 import AnonHistory from './components/AnonHistory';
 import Camera from './components/Camera';
 import CreateThankYou from './components/CreateThankYou';
@@ -96,7 +95,7 @@ export default class inknead extends Component {
   //   this.handleRecentSuccessfulRequest = this.handleRecentSuccessfulRequest.bind(this);
   //   this.handleRecentThankYou = this.handleRecentThankYou.bind(this);
   }
-  
+
   // selectAnon(anonID) {
   //   this.setState({ anonID });
   // }

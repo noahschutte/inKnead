@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 
@@ -58,24 +58,3 @@ const styles = {
 };
 
 export default Entry;
-
-/*
-
-<View style={styles.container}>
-  <TouchableOpacity onPress={() => console.log('pressed!')} style={styles.wrapper}>
-    <View style={styles.imageContainer}>
-      <Image style={styles.thumbnail} source={{ uri: thumbnail }} />
-    </View>
-    <View style={styles.infoContainer}>
-      <View style={styles.date}>
-        <TimeAgo style={styles.dateTime} secondsOld={seconds} />
-      </View>
-      <View style={styles.content}>
-        <Text>Request Text Placeholder</Text>
-        <Text>{pizzas}</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-</View>
-
-*/

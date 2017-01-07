@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import {
   createSession,
@@ -11,7 +12,6 @@ import {
 import NavBar from '../NavBar';
 import SortBar from '../SortBar';
 import Entries from '../Entries';
-import LoadingPizza from '../LoadingPizza';
 
 
 class MainScene extends Component {
@@ -58,7 +58,6 @@ class MainScene extends Component {
 
   render() {
     const {
-      loading,
       shown,
       toggleScope,
       scope,
@@ -66,10 +65,6 @@ class MainScene extends Component {
       requests,
       thankYous,
     } = this.props;
-
-    const titlePress = () => {
-      toggleScope(scope);
-    };
 
     const entryRows = () => {
       switch (shown) {
@@ -91,10 +86,10 @@ class MainScene extends Component {
         <NavBar
           rightButton='newRequest'
           leftButton='sideMenu'
-          title='Main'
-          onRightPress={() => console.log('pressed!')}
-          onLeftPress={() => console.log('pressed!')}
-          onTitlePress={titlePress}
+          title={scope}
+          onRightPress={() => Actions.EntryCreationScene()}
+          onLeftPress={() => console.log('left button pressed!')}
+          onTitlePress={() => toggleScope(scope)}
         />
         <SortBar
           options={this.assembleOptions()}

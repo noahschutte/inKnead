@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 class EntryCreationScene extends Component {
   render() {
     return (
-      <View />
+      <View >
+        <Text>ENTRY CREATION SCENE</Text>
+      </View>
     );
   }
 }
