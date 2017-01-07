@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 class ProfileScene extends Component {
   render() {
     return (
-      <View />
+      <View>
+        <Text>PROFILE SCENE</Text>
+      </View>
     );
   }
 }

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 class HowToScene extends Component {
   render() {
     return (
-      <View />
+      <View>
+        <Text>HOW TO SCENE</Text>
+      </View>
     );
   }
 }
