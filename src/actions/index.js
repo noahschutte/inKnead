@@ -7,6 +7,8 @@ import {
   TOGGLE_SCOPE
 } from './types';
 
+export * from './NavigationActions';
+
 export const getEntries = () => {
   return (dispatch) => {
     dispatch({ type: GET_ENTRIES });
