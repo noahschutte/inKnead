@@ -3,13 +3,8 @@ import { View, TouchableHighlight, Text, StyleSheet, Image } from 'react-native'
 
 export default class Menu extends Component {
   onMainButtonPress() {
-    // this.props.changeScope('Requests')
     this.props.toggleMenu(false);
   }
-  // onHistoryButtonPress() {
-  //   this.props.changeScope('History')
-  //   this.props.toggleMenu(false)
-  // }
   onNotificationsPress() {
     this.props.navigator.push({ name: 'notifications' });
     this.props.toggleMenu(false);
