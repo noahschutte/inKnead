@@ -5,11 +5,13 @@ import {
   GET_USER_ENTRIES_SUCCESS,
   SHOW_ENTRIES,
   TOGGLE_SCOPE,
+  TOGGLE_SIDE_MENU
 } from '../actions/types';
 
 const INITIAL_STATE = {
   scope: 'requests_and_thank_yous',
   shown: 'Requests',
+  sideMenuOpen: false,
   loading: true,
   requests: [],
   thankYous: [],
@@ -49,6 +51,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         scope: action.payload.scope,
         shown: action.payload.shown
+      };
+    case TOGGLE_SIDE_MENU:
+      return {
+        ...state,
+         sideMenuOpen: action.payload
       };
     default:
       return state;

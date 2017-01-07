@@ -4,7 +4,8 @@ import {
   CREATE_SESSION_START,
   CREATE_SESSION_SUCCESS,
   SHOW_ENTRIES,
-  TOGGLE_SCOPE
+  TOGGLE_SCOPE,
+  TOGGLE_SIDE_MENU
 } from './types';
 
 export const getEntries = () => {
@@ -48,6 +49,19 @@ export const toggleScope = (currentScope) => {
       shown: 'Requests'
     }
   });
+};
+
+export const sideMenuToggle = (isMenuOpen) => {
+  if (isMenuOpen) {
+    return {
+      type: TOGGLE_SIDE_MENU,
+      payload: false
+    };
+  }
+  return {
+    type: TOGGLE_SIDE_MENU,
+    payload: true
+  };
 };
 
 export const createSession = (userInfo) => {
