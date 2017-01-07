@@ -12,6 +12,7 @@ const RouterComponent = () => {
   return (
     <Router hideNavBar >
       <Scene
+        initial
         key="MainScene"
         component={MainScene}
       />

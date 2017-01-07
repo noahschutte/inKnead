@@ -7,8 +7,7 @@ import {
   createSession,
   getEntries,
   sortEntries,
-  toggleScope,
-  navigateTo
+  toggleScope
 } from '../../actions';
 import NavBar from '../NavBar';
 import SortBar from '../SortBar';
@@ -66,12 +65,7 @@ class MainScene extends Component {
       sortEntries,
       requests,
       thankYous,
-      navigateTo
     } = this.props;
-
-    const titlePress = () => {
-      toggleScope(scope);
-    };
 
     const entryRows = () => {
       switch (shown) {
@@ -94,9 +88,9 @@ class MainScene extends Component {
           rightButton='newRequest'
           leftButton='sideMenu'
           title='Main'
-          onRightPress={Actions.EntryCreationScene()}
+          onRightPress={() => Actions.EntryCreationScene()}
           onLeftPress={() => console.log('left button pressed!')}
-          onTitlePress={titlePress}
+          onTitlePress={() => toggleScope(scope)}
         />
         <SortBar
           options={this.assembleOptions()}
@@ -142,4 +136,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getEntries, sortEntries, createSession, toggleScope, navigateTo })(MainScene);
+export default connect(mapStateToProps, { getEntries, sortEntries, createSession, toggleScope })(MainScene);

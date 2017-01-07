@@ -45,7 +45,6 @@ export default (state = INITIAL_STATE, action) => {
         shown: action.payload,
       };
     case TOGGLE_SCOPE:
-    console.log('scope toggled!', action.payload);
       return {
         ...state,
         scope: action.payload.scope,
