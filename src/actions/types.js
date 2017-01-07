@@ -7,5 +7,3 @@ export const TOGGLE_SCOPE = 'toggle_scope';
 
 export const CREATE_SESSION_START = 'create_session_start';
 export const CREATE_SESSION_SUCCESS = 'create_session_success';
-
-export const NAVIGATE_TO = 'navigate_to';
