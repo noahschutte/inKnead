@@ -5,6 +5,7 @@ import {
   Image,
   TouchableWithoutFeedback
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 class NavBar extends Component {
 

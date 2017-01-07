@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import {
   createSession,
   getEntries,
   sortEntries,
-  toggleScope
+  toggleScope,
+  navigateTo
 } from '../../actions';
 import NavBar from '../NavBar';
 import SortBar from '../SortBar';
 import Entries from '../Entries';
-import LoadingPizza from '../LoadingPizza';
 
 
 class MainScene extends Component {
@@ -65,6 +66,7 @@ class MainScene extends Component {
       sortEntries,
       requests,
       thankYous,
+      navigateTo
     } = this.props;
 
     const titlePress = () => {
@@ -92,8 +94,8 @@ class MainScene extends Component {
           rightButton='newRequest'
           leftButton='sideMenu'
           title='Main'
-          onRightPress={() => console.log('pressed!')}
-          onLeftPress={() => console.log('pressed!')}
+          onRightPress={Actions.EntryCreationScene()}
+          onLeftPress={() => console.log('left button pressed!')}
           onTitlePress={titlePress}
         />
         <SortBar
@@ -140,4 +142,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getEntries, sortEntries, createSession, toggleScope })(MainScene);
+export default connect(mapStateToProps, { getEntries, sortEntries, createSession, toggleScope, navigateTo })(MainScene);
