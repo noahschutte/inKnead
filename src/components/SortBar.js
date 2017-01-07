@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { connect } from 'react-redux';
-import { sortEntries } from '../actions';
 import SortButton from './SortButton';
 
 class SortBar extends Component {
 
   mapOptionsToButtons = () => {
-    return this.props.options.map(option => {
+    const { shown, options, onPress } = this.props
+
+    return options.map(option => {
       return (
         <SortButton
           key={option}
-          onPress={this.props.sortEntries}
-          shown={option === this.props.shown}
+          onPress={onPress}
+          shown={option === shown}
         >
           {option}
         </SortButton>
@@ -36,4 +36,4 @@ const styles = {
   }
 };
 
-export default connect(null, { sortEntries })(SortBar);
+export default SortBar;

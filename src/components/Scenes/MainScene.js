@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { getEntries, createSession } from '../../actions';
+import {
+  createSession,
+  getEntries,
+  sortEntries,
+  toggleScope
+} from '../../actions';
 import NavBar from '../NavBar';
 import SortBar from '../SortBar';
+import Entries from '../Entries';
+import LoadingPizza from '../LoadingPizza';
 
 
 class MainScene extends Component {
@@ -42,10 +49,43 @@ class MainScene extends Component {
 
   assembleOptions = () => {
     const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
-    return globalOptions;
+    const userHistoryOptions = ['Kneaded', 'Doughnated'];
+    if (this.props.scope === 'requests_and_thank_yous') {
+      return globalOptions;
+    }
+    return userHistoryOptions;
   }
 
   render() {
+    const {
+      loading,
+      shown,
+      toggleScope,
+      scope,
+      sortEntries,
+      requests,
+      thankYous,
+    } = this.props;
+
+    const titlePress = () => {
+      toggleScope(scope);
+    };
+
+    const entryRows = () => {
+      switch (shown) {
+        case 'All':
+          return [...requests, ...thankYous];
+        case 'Requests':
+          return requests.filter(request => request.donor_id === null);
+        case 'Thanks':
+          return thankYous;
+        case 'Fulfilled':
+          return requests.filter(request => request.donor_id !== null);
+        default:
+          return requests;
+      }
+    };
+
     return (
       <View style={{ flex: 1 }}>
         <NavBar
@@ -54,15 +94,17 @@ class MainScene extends Component {
           title='Main'
           onRightPress={() => console.log('pressed!')}
           onLeftPress={() => console.log('pressed!')}
-          onTitlePress={() => console.log('pressed!')}
+          onTitlePress={titlePress}
         />
         <SortBar
           options={this.assembleOptions()}
-          shown={this.props.shown}
+          shown={shown}
+          onPress={sortEntries}
         />
-        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Main Scene</Text>
-        </View>
+        <Entries
+          shown={shown}
+          entryRows={entryRows()}
+        />
       </View>
     );
   }
@@ -73,7 +115,8 @@ const mapStateToProps = state => {
     requests,
     thankYous,
     shown,
-    loading
+    loading,
+    scope
   } = state.entries;
   const {
     userData,
@@ -93,7 +136,8 @@ const mapStateToProps = state => {
     thankYous,
     shown,
     loading,
+    scope
   };
 };
 
-export default connect(mapStateToProps, { getEntries, createSession })(MainScene);
+export default connect(mapStateToProps, { getEntries, sortEntries, createSession, toggleScope })(MainScene);
