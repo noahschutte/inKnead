@@ -3,12 +3,15 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import {
-  getEntries,
   createSession,
+  getEntries,
+  sortEntries,
   toggleScope
 } from '../../actions';
 import NavBar from '../NavBar';
 import SortBar from '../SortBar';
+import Entries from '../Entries';
+import LoadingPizza from '../LoadingPizza';
 
 
 class MainScene extends Component {
@@ -54,12 +57,35 @@ class MainScene extends Component {
   }
 
   render() {
-    const { shown, toggleScope, scope } = this.props;
+    const {
+      loading,
+      shown,
+      toggleScope,
+      scope,
+      sortEntries,
+      requests,
+      thankYous,
+    } = this.props;
+
     const titlePress = () => {
       toggleScope(scope);
     };
 
-    console.log(this.props);
+    const entryRows = () => {
+      switch (shown) {
+        case 'All':
+          return [...requests, ...thankYous];
+        case 'Requests':
+          return requests.filter(request => request.donor_id === null);
+        case 'Thanks':
+          return thankYous;
+        case 'Fulfilled':
+          return requests.filter(request => request.donor_id !== null);
+        default:
+          return requests;
+      }
+    };
+
     return (
       <View style={{ flex: 1 }}>
         <NavBar
@@ -73,10 +99,12 @@ class MainScene extends Component {
         <SortBar
           options={this.assembleOptions()}
           shown={shown}
+          onPress={sortEntries}
         />
-        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Main Scene</Text>
-        </View>
+        <Entries
+          shown={shown}
+          entryRows={entryRows()}
+        />
       </View>
     );
   }
@@ -112,4 +140,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getEntries, createSession, toggleScope })(MainScene);
+export default connect(mapStateToProps, { getEntries, sortEntries, createSession, toggleScope })(MainScene);
