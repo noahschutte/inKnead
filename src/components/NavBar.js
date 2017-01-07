@@ -5,7 +5,6 @@ import {
   Image,
   TouchableWithoutFeedback
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
 class NavBar extends Component {
 
@@ -30,14 +29,22 @@ class NavBar extends Component {
 
   renderTitle = () => {
     const title = this.props.title;
-    const mainButton = require('../../assets/mobile-icons/Views.png');
-
+    const globalButton = require('../../assets/mobile-icons/Views.png');
+    const historyButton = require('../../assets/mobile-icons/Views-2.png');
+    
     switch (title) {
-      case 'Main':
+      case 'requests_and_thank_yous':
         return (
           <Image
             style={styles.centerButtonStyle}
-            source={mainButton}
+            source={globalButton}
+          />
+        );
+      case 'user_history':
+        return (
+          <Image
+            style={styles.centerButtonStyle}
+            source={historyButton}
           />
         );
       default:

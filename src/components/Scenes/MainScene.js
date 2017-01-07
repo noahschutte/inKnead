@@ -58,7 +58,6 @@ class MainScene extends Component {
 
   render() {
     const {
-      loading,
       shown,
       toggleScope,
       scope,
@@ -87,7 +86,7 @@ class MainScene extends Component {
         <NavBar
           rightButton='newRequest'
           leftButton='sideMenu'
-          title='Main'
+          title={scope}
           onRightPress={() => Actions.EntryCreationScene()}
           onLeftPress={() => console.log('left button pressed!')}
           onTitlePress={() => toggleScope(scope)}
