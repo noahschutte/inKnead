@@ -53,7 +53,7 @@ class MainScene extends Component {
 
   assembleOptions = () => {
     const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
-    const userHistoryOptions = ['Kneaded', 'Doughnated'];
+    const userHistoryOptions = ['Requested', 'Received', 'Donated', 'Gratitude'];
     if (this.props.scope === 'requests_and_thank_yous') {
       return globalOptions;
     }
@@ -68,8 +68,12 @@ class MainScene extends Component {
       sortEntries,
       requests,
       thankYous,
+      userRequests,
+      userThankYous,
+      userFulfilled,
       sideMenuOpen,
-      sideMenuToggle
+      sideMenuToggle,
+      userData
     } = this.props;
 
     const entryRows = () => {
@@ -82,6 +86,14 @@ class MainScene extends Component {
           return thankYous;
         case 'Fulfilled':
           return requests.filter(request => request.donor_id !== null);
+        case 'Requested':
+          return userRequests;
+        case 'Received':
+          return userFulfilled;
+        case 'Donated':
+          return requests.filter(request => (request.donor_id === userData.id));
+        case 'Gratitude':
+          return userThankYous;
         default:
           return requests;
       }
@@ -91,7 +103,6 @@ class MainScene extends Component {
       sideMenuToggle(sideMenuOpen);
     };
     const menu = <ToggleMenu togglePress={togglePress} />;
-    
     return (
       <SideMenu
         disableGestures
@@ -106,7 +117,7 @@ class MainScene extends Component {
             title={scope}
             onRightPress={() => Actions.EntryCreationScene()}
             onLeftPress={togglePress}
-            onTitlePress={() => toggleScope(scope)}
+            onTitlePress={() => toggleScope(scope, userData)}
           />
           <SortBar
             options={this.assembleOptions()}
@@ -127,6 +138,9 @@ const mapStateToProps = state => {
   const {
     requests,
     thankYous,
+    userRequests,
+    userThankYous,
+    userFulfilled,
     shown,
     loading,
     scope,
@@ -148,6 +162,9 @@ const mapStateToProps = state => {
     recentThankYou,
     requests,
     thankYous,
+    userRequests,
+    userThankYous,
+    userFulfilled,
     shown,
     loading,
     scope,
