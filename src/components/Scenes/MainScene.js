@@ -90,9 +90,8 @@ class MainScene extends Component {
     const togglePress = () => {
       sideMenuToggle(sideMenuOpen);
     };
-
-    console.log(sideMenuOpen);
     const menu = <ToggleMenu togglePress={togglePress} />;
+    
     return (
       <SideMenu
         disableGestures
