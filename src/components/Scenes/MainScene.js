@@ -12,7 +12,6 @@ import {
   sideMenuToggle
 } from '../../actions';
 import ToggleMenu from '../ToggleMenu';
-import Menu from '../Menu';
 import NavBar from '../NavBar';
 import SortBar from '../SortBar';
 import Entries from '../Entries';
