@@ -1,13 +1,22 @@
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 
 const Entry = (props) => {
-  const { seconds, pizzas, thumbnail } = props.selectedRequest;
+  const {
+    seconds,
+    pizzas,
+    thumbnail,
+    request_id
+  } = props.selectedRequest;
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => Actions.EntryScene({ entry: props.selectedRequest })}
+      style={styles.container}
+    >
 
       <View style={styles.thumbnailContainer}>
         <Image style={styles.thumbnail} source={{ uri: thumbnail }} />
