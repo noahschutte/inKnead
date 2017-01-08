@@ -25,10 +25,6 @@ class Entries extends Component {
     return result;
   }
 
-  // _renderRow = (rowData) => {
-  //   console.log(this.props.entryRows);
-  // }
-
   render() {
     const { dataSource } = this.state;
     const content = () => {
