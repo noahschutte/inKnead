@@ -40,7 +40,7 @@ export const toggleScope = (currentScope, userData = null) => {
         type: TOGGLE_SCOPE,
         payload: {
           scope: 'user_history',
-          shown: 'Kneaded',
+          shown: 'Requested',
         }
       });
       if (userData) {
