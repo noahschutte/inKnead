@@ -4,6 +4,7 @@
     "linebreak-style": 0,
     "global-require": "warn",
     "arrow-body-style": 0,
-    "no-shadow": "warn"
+    "no-shadow": "warn",
+    "max-len": "warn"
     }
 }
