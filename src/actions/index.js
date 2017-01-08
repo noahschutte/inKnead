@@ -1,6 +1,7 @@
 import {
   GET_ENTRIES,
   GET_ENTRIES_SUCCESS,
+  GET_USER_ENTRIES,
   CREATE_SESSION_START,
   CREATE_SESSION_SUCCESS,
   SHOW_ENTRIES,
@@ -32,15 +33,23 @@ export const sortEntries = (key) => {
   });
 };
 
-export const toggleScope = (currentScope) => {
+export const toggleScope = (currentScope, userData = null) => {
   if (currentScope === 'requests_and_thank_yous') {
-    return ({
-      type: TOGGLE_SCOPE,
-      payload: {
-        scope: 'user_history',
-        shown: 'Kneaded'
+    return (dispatch) => {
+      dispatch({
+        type: TOGGLE_SCOPE,
+        payload: {
+          scope: 'user_history',
+          shown: 'Requested',
+        }
+      });
+      if (userData) {
+        dispatch({
+          type: GET_USER_ENTRIES,
+          payload: userData.id
+        });
       }
-    });
+    };
   }
   return ({
     type: TOGGLE_SCOPE,

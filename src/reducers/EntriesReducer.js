@@ -2,7 +2,6 @@ import {
   GET_ENTRIES,
   GET_ENTRIES_SUCCESS,
   GET_USER_ENTRIES,
-  GET_USER_ENTRIES_SUCCESS,
   SHOW_ENTRIES,
   TOGGLE_SCOPE,
   TOGGLE_SIDE_MENU
@@ -17,6 +16,7 @@ const INITIAL_STATE = {
   thankYous: [],
   userRequests: [],
   userThankYous: [],
+  userFulfilled: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -33,14 +33,28 @@ export default (state = INITIAL_STATE, action) => {
         thankYous: action.payload.thankYous,
         loading: false,
       };
-    case GET_USER_ENTRIES:
-    case GET_USER_ENTRIES_SUCCESS:
+    case GET_USER_ENTRIES: {
+      console.log(state);
+      const userEntries = [
+        ...state.requests.filter(request => request.creator_id === action.payload),
+        ...state.thankYous.filter(thankYou => thankYou.creator_id === action.payload)
+      ];
+      const userRequests =
+      userEntries.filter(entry => (entry.type === 'request' && entry.donor_id === null));
+
+      const userThankYous =
+      userEntries.filter(entry => entry.type === 'thankYou');
+
+      const userFulfilled =
+      userEntries.filter(entry => entry.type === 'request' && entry.donor_id !== null);
+
       return {
         ...state,
-        userRequsts: action.payload.userRequests,
-        userThankYous: action.payload.userThankYous,
-        loading: false,
+        userRequests,
+        userThankYous,
+        userFulfilled,
       };
+    }
     case SHOW_ENTRIES:
       return {
         ...state,

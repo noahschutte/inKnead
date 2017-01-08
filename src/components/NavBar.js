@@ -8,99 +8,113 @@ import {
 
 class NavBar extends Component {
 
-  assembleContent = () => {
-    const { onRightPress, onLeftPress, onTitlePress } = this.props;
-    return (
-      <View style={styles.navBarStyle}>
-        <TouchableWithoutFeedback onPress={onLeftPress}>
-          {this.renderLeftButton()}
-        </TouchableWithoutFeedback>
-
-        <TouchableWithoutFeedback onPress={onTitlePress}>
-          {this.renderTitle()}
-        </TouchableWithoutFeedback>
-
-        <TouchableWithoutFeedback onPress={onRightPress}>
-          {this.renderRightButton()}
-        </TouchableWithoutFeedback>
-      </View>
-    );
-  }
-
   renderTitle = () => {
-    const title = this.props.title;
+    const { title, onTitlePress } = this.props;
     const globalButton = require('../../assets/mobile-icons/Views.png');
     const historyButton = require('../../assets/mobile-icons/Views-2.png');
-    
+    let result;
+
     switch (title) {
       case 'requests_and_thank_yous':
-        return (
+        result = (
           <Image
             style={styles.centerButtonStyle}
             source={globalButton}
           />
         );
+        break;
       case 'user_history':
-        return (
+        result = (
           <Image
             style={styles.centerButtonStyle}
             source={historyButton}
           />
         );
+        break;
+      case null:
+        return null;
       default:
         return (
           <Text style={styles.titleStyle}>{title}</Text>
         );
     }
+    return (
+      <TouchableWithoutFeedback onPress={onTitlePress}>
+        {result}
+      </TouchableWithoutFeedback>
+    );
   }
 
   renderLeftButton = () => {
-    const leftButton = this.props.leftButton;
+    const { leftButton, onLeftPress } = this.props;
     const backButton = require('../../assets/mobile-icons/disclosure-indicator.png');
     const menuButton = require('../../assets/menuButton.png');
+    let result;
 
     switch (leftButton) {
       case 'backButton':
-        return (
+        result = (
           <Image
             style={styles.leftButtonStyle}
             source={backButton}
           />
         );
+        break;
       case 'sideMenu':
       case 'menuButton':
-        return (
+        result = (
           <Image
             style={styles.leftButtonStyle}
             source={menuButton}
           />
         );
+        break;
       default:
         return null;
     }
+    return (
+      <TouchableWithoutFeedback onPress={onLeftPress}>
+        {result}
+      </TouchableWithoutFeedback>
+    );
   }
 
   renderRightButton = () => {
-    const rightButton = this.props.rightButton;
+    const { rightButton, onRightPress } = this.props;
     const newRequestButton = require('../../assets/add.png');
+    let result;
 
     switch (rightButton) {
       case 'newRequest':
-        return (
+        result = (
           <Image
             style={styles.rightButtonStyle}
             source={newRequestButton}
           />
         );
+        break;
       default:
         return null;
     }
+    return (
+      <TouchableWithoutFeedback onPress={onRightPress}>
+        {result}
+      </TouchableWithoutFeedback>
+    );
   }
 
   render() {
+    const content = (
+      <View style={styles.navBarStyle}>
+        {this.renderLeftButton()}
+        {this.renderTitle()}
+        {this.renderRightButton()}
+      </View>
+    );
+
     return (
       <View style={{ flex: 1 }}>
-        {this.assembleContent()}
+        {content}
       </View>
     );
   }
