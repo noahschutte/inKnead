@@ -118,9 +118,8 @@ class Button extends Component {
 
   render() {
     const content = this.assembleButton(this.props);
-    return (
-      <View>{content}</View>
-    );
+    console.log('button this', this);
+    return content;
   }
 }
 
