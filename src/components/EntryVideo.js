@@ -1,99 +1,73 @@
-import React, { Component } from 'react';
-import { Text, Image, View, TouchableHighlight } from 'react-native';
+import React from 'react';
+import { Image, TouchableHighlight, View } from 'react-native';
 import Video from 'react-native-video';
 
-class EntryVideo extends Component {
-  componentWillReceiveProps() {
-    console.log('props received');
-  }
-
-  // playButtonHelper = () => {
-  //   const { paused, togglePlay } = this.props;
-  //   if (this.props.paused) {
-  //     return (
-  //       <View style={styles.buttonContainer}>
-  //         <Button onPress={() => togglePlay(paused)}>
-  //           <Image source={require('../../assets/mobile-icons/playbutton.png')} />
-  //         </Button>
-  //       </View>
-  //     );
-  //   }
-  //   return (
-  //     <TouchableHighlight style={styles.buttonContainer} onPress={() => console.log('here')}>
-  //       <Image source={require('../../assets/mobile-icons/playbutton.png')} />
-  //     </TouchableHighlight>
-  //   );
-  // }
-
-  render() {
-    console.log('rendered, this', this);
-    console.log('rendered, props', this.props);
-    const { source, paused, togglePlay } = this.props;
-    // let playButtonChild;
-    // if (paused) {
-    //   playButtonChild = <Image source={require('../../assets/mobile-icons/playbutton.png')} />;
-    // } else {
-    //   playButtonChild = <Image />;
-    // }
+const EntryVideo = (props) => {
+    const { source, paused, togglePlay } = props;
+    const originPaused = paused;
     let playButton;
-    if (paused) {
+
+    if (originPaused) {
       playButton = (
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require('../../assets/mobile-icons/playbutton.png')}
-          />
+        <Image
+          source={require('../../assets/mobile-icons/playbutton.png')}
+          style={styles.playButton}
+        />
       );
     } else {
       playButton = (
-        <Image style={{ width: 50, height: 50 }} />
+        <Image
+          style={styles.playButton}
+        />
       );
     }
 
-
-    const videoDisplay = (
-      <Video
+    const videoDisplay =
+      (<Video
         source={{ uri: source }}
-        paused={paused}
-        muted={false}
+        paused={originPaused}
+        rate={1.0}
         volume={1}
+        muted={false}
         playInBackground
         playWhenInactive
-        style={{ flex: 1, zIndex: 2 }}
         resizeMode={'contain'}
         onEnd={() => togglePlay(false)}
-      />
-    );
+        style={styles.video}
+      />);
 
-    const display = (
-      <View style={{ flex: 1, zIndex: 1 }}>
-        <TouchableHighlight
-          style={styles.buttonContainer}
-          onPress={() => togglePlay(paused)}
-        >
+    const display =
+        (<View style={styles.wrapper}>
+          <TouchableHighlight
+            style={styles.playButtonContainer}
+            onPress={() => togglePlay(!paused)}
+          >
             {playButton}
-        </TouchableHighlight>
-        {videoDisplay}
-      </View>
-    );
-
+          </TouchableHighlight>
+          {videoDisplay}
+        </View>);
+    console.log('render!');
     return (
       <View style={styles.container}>
         {display}
       </View>
     );
-  }
-}
+  };
 
 const styles = {
   container: {
     flex: 4,
-    zIndex: 1
+    backgroundColor: 'black',
+  },
+  wrapper: {
+    flex: 1,
+    zIndex: 1,
   },
   video: {
-    // borderColor: 'black',
-    // borderWidth: 2,
+    flex: 1,
+    zIndex: 2,
   },
-  buttonContainer: {
+  playButtonContainer: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
@@ -102,8 +76,10 @@ const styles = {
     left: 0,
     right: 0,
     zIndex: 3,
-    // borderColor: 'red',
-    // borderWidth: 3,
+  },
+  playButton: {
+    width: 50,
+    height: 50,
   },
 };
 
