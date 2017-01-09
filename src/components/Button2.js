@@ -67,7 +67,6 @@ class Button extends Component {
         };
       }
     }
-    console.log(styles);
     return styles;
   }
 
