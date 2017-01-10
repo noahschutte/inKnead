@@ -45,12 +45,6 @@ const styles = {
   container: {
     flex: 1,
   },
-  videoContainer: {
-    flex: 4,
-  },
-  detailsContainer: {
-    flex: 5,
-  },
 };
 
 export default EntryScene;
