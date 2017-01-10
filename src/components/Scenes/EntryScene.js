@@ -6,8 +6,8 @@ import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
 
 class EntryScene extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       paused: true,
@@ -19,6 +19,7 @@ class EntryScene extends Component {
   }
 
   render() {
+    const { entry } = this.props;
     return (
       <View style={styles.container}>
         <NavBar
@@ -28,10 +29,12 @@ class EntryScene extends Component {
         <View style={{ flex: 9, backgroundColor: 'white' }}>
           <EntryVideo
             togglePlay={this.togglePlay}
-            source={this.props.entry.compressed_video}
+            source={entry.compressed_video}
             paused={this.state.paused}
           />
-          <EntryDetails />
+          <EntryDetails
+            entryData={entry}
+          />
         </View>
       </View>
     );

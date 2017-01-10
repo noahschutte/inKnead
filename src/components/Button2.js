@@ -60,8 +60,8 @@ class Button extends Component {
           alignSelf: 'stretch',
           backgroundColor: '#fff',
           borderRadius: 5,
-          borderWidth: 1,
-          borderColor: '#007aff',
+          borderWidth: 2,
+          borderColor: '#ce0000',
           marginLeft: 5,
           marginRight: 5
         };
@@ -118,7 +118,6 @@ class Button extends Component {
 
   render() {
     const content = this.assembleButton(this.props);
-    console.log('button this', this);
     return content;
   }
 }
