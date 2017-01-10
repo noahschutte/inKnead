@@ -1,3 +1,5 @@
+/* eslint global-require: off */
+
 export const globalButton = require('../../assets/mobile-icons/Views.png');
 export const historyButton = require('../../assets/mobile-icons/Views-2.png');
 export const backButton = require('../../assets/mobile-icons/disclosure-indicator.png');
