@@ -5,13 +5,18 @@ import {
   Image,
   TouchableWithoutFeedback
 } from 'react-native';
+import {
+  globalButton,
+  historyButton,
+  backButton,
+  menuButton,
+  newRequestButton
+} from '../assets';
 
 class NavBar extends Component {
 
   renderTitle = () => {
     const { title, onTitlePress } = this.props;
-    const globalButton = require('../../assets/mobile-icons/Views.png');
-    const historyButton = require('../../assets/mobile-icons/Views-2.png');
     let result;
 
     switch (title) {
@@ -47,8 +52,6 @@ class NavBar extends Component {
 
   renderLeftButton = () => {
     const { leftButton, onLeftPress } = this.props;
-    const backButton = require('../../assets/mobile-icons/disclosure-indicator.png');
-    const menuButton = require('../../assets/menuButton.png');
     let result;
 
     switch (leftButton) {
@@ -81,7 +84,6 @@ class NavBar extends Component {
 
   renderRightButton = () => {
     const { rightButton, onRightPress } = this.props;
-    const newRequestButton = require('../../assets/new-request-icons/plus-sign.png');
     let result;
 
     switch (rightButton) {

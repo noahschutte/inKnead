@@ -1,21 +1,22 @@
 import React from 'react';
 import { View, Image } from 'react-native';
+import {
+  dominosVendorImage,
+  papasVendorImage,
+  pizzaHutVendorImage
+} from '../assets';
 
 const Vendor = ({ vendor, size }) => {
-  const dominos = require('../../assets/mobile-icons/Dominos.png');
-  const papas = require('../../assets/mobile-icons/Papa.png');
-  const pizzaHut = require('../../assets/mobile-icons/pizzaHut.png');
-
   let vendorImageSource;
   switch (vendor) {
     case 'Dominos':
-      vendorImageSource = dominos;
+      vendorImageSource = dominosVendorImage;
       break;
     case 'Papa Johns':
-      vendorImageSource = papas;
+      vendorImageSource = papasVendorImage;
       break;
     case 'Pizza Hut':
-      vendorImageSource = pizzaHut;
+      vendorImageSource = pizzaHutVendorImage;
       break;
     default:
       break;
