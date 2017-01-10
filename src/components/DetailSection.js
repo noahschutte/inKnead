@@ -12,13 +12,21 @@ const DetailSection = ({ bannerText, children }) => {
       </View>
     );
   }
+  let content;
+  if (typeof children === 'string') {
+    content = (
+      <View style={contentStyle}>
+        <Text style={placeholderStyle}>{children}</Text>
+      </View>
+    );
+  } else {
+    content = (
+      <View style={styles.contentStyle}>
+        {children}
+      </View>
+    );
+  }
 
-  const content = (
-    <View style={contentStyle}>
-      <Text style={placeholderStyle}>{children}</Text>
-    </View>
-  );
-  
   return (
     <View>
       {banner}

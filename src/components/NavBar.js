@@ -55,7 +55,7 @@ class NavBar extends Component {
       case 'backButton':
         result = (
           <Image
-            style={styles.leftButtonStyle}
+            style={[styles.leftButtonStyle, { right: 15 }]}
             source={backButton}
           />
         );
@@ -81,7 +81,7 @@ class NavBar extends Component {
 
   renderRightButton = () => {
     const { rightButton, onRightPress } = this.props;
-    const newRequestButton = require('../../assets/add.png');
+    const newRequestButton = require('../../assets/new-request-icons/plus-sign.png');
     let result;
 
     switch (rightButton) {
@@ -127,7 +127,7 @@ const styles = {
     backgroundColor: '#ce0000',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 5,
+    padding: 5,
     elevation: 1,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -147,7 +147,7 @@ const styles = {
   rightButtonStyle: {
     flex: 1,
     resizeMode: 'contain',
-    height: 42,
+    height: 35,
     width: null,
   },
   leftButtonStyle: {

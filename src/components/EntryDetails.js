@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import DetailSection from './DetailSection';
 import Button from './Button2';
+import RequestPizzas from './RequestPizzas';
+import Vendor from './Vendor';
 
 class EntryDetails extends Component {
   render() {
@@ -10,12 +12,13 @@ class EntryDetails extends Component {
         <DetailSection>
           VIDEO FOOTER
         </DetailSection>
+
         <DetailSection bannerText='REQUESTED'>
-          Image placeholder
+          <RequestPizzas size='large' pizzas={this.props.entryData.pizzas} />
+          <Text style={styles.requestTextStyle}>from</Text>
+          <Vendor size='large' vendor={this.props.entryData.vendor} />
         </DetailSection>
-        <DetailSection bannerText='VENDOR'>
-          Image placeholder
-        </DetailSection>
+
         <View style={styles.buttonWrapper}>
           <Button touchableOpacity>
             <Text style={styles.donateTextStyle}>DONATE!</Text>
@@ -27,6 +30,11 @@ class EntryDetails extends Component {
 }
 
 const styles = {
+  requestTextStyle: {
+    fontWeight: 'bold',
+    padding: 10,
+    alignSelf: 'center',
+  },
   buttonWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
