@@ -97,11 +97,11 @@ class MainScene extends Component {
           return requests;
       }
     };
-
     const togglePress = () => {
       sideMenuToggle(sideMenuOpen);
     };
     const menu = <ToggleMenu togglePress={togglePress} />;
+
     return (
       <SideMenu
         disableGestures
@@ -133,7 +133,7 @@ class MainScene extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ entries, user }) => {
   const {
     requests,
     thankYous,
@@ -144,14 +144,14 @@ const mapStateToProps = state => {
     loading,
     scope,
     sideMenuOpen
-  } = state.entries;
+  } = entries;
   const {
     userData,
     activeDonation,
     anonEmail,
     recentSuccessfulRequest,
     recentThankYou,
-  } = state.user;
+  } = user;
 
   return {
     userData,
