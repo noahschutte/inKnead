@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, TouchableHighlight, View } from 'react-native';
 import Video from 'react-native-video';
+import { playButtonImage } from '../assets';
 
 const EntryVideo = (props) => {
     const { source, paused, togglePlay } = props;
@@ -10,7 +11,7 @@ const EntryVideo = (props) => {
     if (paused) {
       playButton = (
         <Image
-          source={require('../../assets/mobile-icons/playbutton.png')}
+          source={playButtonImage}
           style={styles.playButton}
         />
       );

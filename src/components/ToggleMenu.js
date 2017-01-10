@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { defaultProfileImage } from '../assets';
 import SideMenuButton from './SideMenuButton';
 
 const ToggleMenu = (props) => {
@@ -8,7 +9,7 @@ const ToggleMenu = (props) => {
     <View style={styles.container}>
 
       <Image
-        source={require('../../assets/profile.png')}
+        source={defaultProfileImage}
         style={styles.image}
       />
       <SideMenuButton onPress={props.togglePress}>
