@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
 import DetailSection from './DetailSection';
 
@@ -24,7 +24,7 @@ class EntryCreationForm extends Component {
         <DetailSection bannerText='VENDOR NEAR YOU' />
         <SegmentedControls
           tint={'#ce0000'}
-          options={['Dominos', 'Papa John\'s', 'Pizza Hut']}
+          options={['Dominos', 'Papas Johns', 'Pizza Hut']}
           onSelection={updateSelectedVendor}
           selectedOption={vendor}
         />
