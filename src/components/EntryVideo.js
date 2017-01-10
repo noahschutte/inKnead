@@ -7,7 +7,7 @@ const EntryVideo = (props) => {
     const originPaused = paused;
     let playButton;
 
-    if (originPaused) {
+    if (paused) {
       playButton = (
         <Image
           source={require('../../assets/mobile-icons/playbutton.png')}
@@ -46,7 +46,6 @@ const EntryVideo = (props) => {
           </TouchableHighlight>
           {videoDisplay}
         </View>);
-    console.log('render!');
     return (
       <View style={styles.container}>
         {display}

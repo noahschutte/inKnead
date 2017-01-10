@@ -7,8 +7,9 @@ import {
   SHOW_ENTRIES,
   TOGGLE_SCOPE,
   TOGGLE_SIDE_MENU,
-  TOGGLE_VIDEO_PLAYING
 } from './types';
+
+export * from './EntryCreationActions';
 
 export const getEntries = () => {
   return (dispatch) => {
@@ -71,13 +72,6 @@ export const sideMenuToggle = (isMenuOpen) => {
   return {
     type: TOGGLE_SIDE_MENU,
     payload: true
-  };
-};
-
-export const videoPlayToggle = (pausedStatus) => {
-  return {
-    type: TOGGLE_VIDEO_PLAYING,
-    payload: !pausedStatus,
   };
 };
 

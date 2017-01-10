@@ -9,4 +9,5 @@ export const TOGGLE_SIDE_MENU = 'toggle_side_menu';
 export const CREATE_SESSION_START = 'create_session_start';
 export const CREATE_SESSION_SUCCESS = 'create_session_success';
 
-export const TOGGLE_VIDEO_PLAYING = 'toggle_video_playing';
+export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';
+export const UPDATE_SELECTED_VENDOR = 'update_selected_vendor';

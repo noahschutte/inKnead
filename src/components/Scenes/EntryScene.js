@@ -24,7 +24,7 @@ class EntryScene extends Component {
       <View style={styles.container}>
         <NavBar
           leftButton='backButton'
-          onLeftPress={() => Actions.pop()}
+          onLeftPress={Actions.pop}
         />
         <View style={{ flex: 9, backgroundColor: 'white' }}>
           <EntryVideo
@@ -44,12 +44,6 @@ class EntryScene extends Component {
 const styles = {
   container: {
     flex: 1,
-  },
-  videoContainer: {
-    flex: 4,
-  },
-  detailsContainer: {
-    flex: 5,
   },
 };
 
