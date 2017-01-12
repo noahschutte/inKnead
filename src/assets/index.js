@@ -13,3 +13,4 @@ export const papasVendorImage = require('../../assets/mobile-icons/Papa.png');
 export const pizzaHutVendorImage = require('../../assets/mobile-icons/pizzaHut.png');
 export const wholePizzaImage = require('../../assets/pizza-icon-for-requests/whole-pizza.png');
 export const camcorderImage = require('../../assets/how-to-page/stepOneImage.png');
+export const pizzaOnPlate = require('../../assets/pizza-icon/pizza-icon.png');

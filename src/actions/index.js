@@ -7,6 +7,7 @@ import {
   SHOW_ENTRIES,
   TOGGLE_SCOPE,
   TOGGLE_SIDE_MENU,
+  DIRECT_TO_LOGIN
 } from './types';
 
 export * from './EntryCreationActions';
@@ -37,6 +38,13 @@ export const sortEntries = (key) => {
 
 export const toggleScope = (currentScope, userData = null) => {
   if (currentScope === 'requests_and_thank_yous') {
+    if (!userData) {
+      return (dispatch) => {
+        dispatch({
+          type: DIRECT_TO_LOGIN
+        });
+      };
+    }
     return (dispatch) => {
       dispatch({
         type: TOGGLE_SCOPE,
