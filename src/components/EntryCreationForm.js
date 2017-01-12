@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
+import { wholePizzaImage } from '../assets';
 import DetailSection from './DetailSection';
+import PizzaRadioButton from './PizzaRadioButton';
 
 class EntryCreationForm extends Component {
 
@@ -12,14 +14,23 @@ class EntryCreationForm extends Component {
       updateSelectedVendor,
       vendor
     } = this.props;
+
+    const selectedImage = (
+      <Image source={wholePizzaImage} style={styles.selectedPizzaStyle} />
+    );
+    const unselectedImage = (
+      <Image source={wholePizzaImage} style={styles.unselectedPizzaStyle} />
+    );
+
     return (
       <View style={{ flex: 5 }}>
         <DetailSection bannerText='# OF PIZZAS' />
-        <SegmentedControls
-          tint={'#ce0000'}
+        <PizzaRadioButton
+          selectedImage={selectedImage}
+          unselectedImage={unselectedImage}
           options={[1, 2, 3]}
-          onSelection={updateSelectedPizzas}
           selectedOption={pizzas}
+          onPress={updateSelectedPizzas}
         />
         <DetailSection bannerText='VENDOR NEAR YOU' />
         <SegmentedControls
@@ -33,4 +44,23 @@ class EntryCreationForm extends Component {
   }
 }
 
+const styles = {
+  selectedPizzaStyle: {
+    width: 50,
+    height: 50,
+  },
+  unselectedPizzaStyle: {
+    width: 50,
+    height: 50,
+    opacity: 0.2,
+  },
+};
+
 export default EntryCreationForm;
+
+{ /* <SegmentedControls
+  tint={'#ce0000'}
+  options={[1, 2, 3]}
+  onSelection={updateSelectedPizzas}
+  selectedOption={pizzas}
+/> */ }
