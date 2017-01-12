@@ -7,6 +7,7 @@ import HowToScene from './components/Scenes/HowToScene';
 import NotificationsScene from './components/Scenes/NotificationsScene';
 import ProfileScene from './components/Scenes/ProfileScene';
 import UserHistoryScene from './components/Scenes/UserHistoryScene';
+import GuestUserScene from './components/Scenes/GuestUserScene';
 
 const RouterComponent = () => {
   return (
@@ -39,6 +40,10 @@ const RouterComponent = () => {
       <Scene
         key="UserHistoryScene"
         component={UserHistoryScene}
+      />
+      <Scene
+        key="GuestUserScene"
+        component={GuestUserScene} 
       />
     </Router>
   );
