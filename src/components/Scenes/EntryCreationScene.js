@@ -12,7 +12,6 @@ import EntryCreationForm from '../EntryCreationForm';
 
 class EntryCreationScene extends Component {
   render() {
-    console.log(this.props);
     const {
       pizzas,
       updateSelectedPizzas,
@@ -35,7 +34,6 @@ class EntryCreationScene extends Component {
             updateSelectedVendor={updateSelectedVendor}
             vendor={vendor}
           />
-          <Text>ENTRY CREATION SCENE</Text>
         </View>
       </View>
     );
