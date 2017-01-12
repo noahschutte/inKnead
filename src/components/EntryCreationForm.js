@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
+import { wholePizzaImage } from '../assets';
 import DetailSection from './DetailSection';
+import PizzaRadioButton from './PizzaRadioButton';
+import VendorRadioButton from './VendorRadioButton';
 
 class EntryCreationForm extends Component {
 
@@ -12,25 +15,51 @@ class EntryCreationForm extends Component {
       updateSelectedVendor,
       vendor
     } = this.props;
+
+    const selectedPizzaImage = (
+      <Image source={wholePizzaImage} style={styles.selectedImageStyle} />
+    );
+    const unselectedPizzaImage = (
+      <Image source={wholePizzaImage} style={styles.unselectedImageStyle} />
+    );
+
     return (
       <View style={{ flex: 5 }}>
         <DetailSection bannerText='# OF PIZZAS' />
-        <SegmentedControls
-          tint={'#ce0000'}
+        <PizzaRadioButton
+          selectedImage={selectedPizzaImage}
+          unselectedImage={unselectedPizzaImage}
           options={[1, 2, 3]}
-          onSelection={updateSelectedPizzas}
           selectedOption={pizzas}
+          onPress={updateSelectedPizzas}
         />
         <DetailSection bannerText='VENDOR NEAR YOU' />
-        <SegmentedControls
-          tint={'#ce0000'}
-          options={['Dominos', 'Papas Johns', 'Pizza Hut']}
-          onSelection={updateSelectedVendor}
-          selectedOption={vendor}
+        <VendorRadioButton
+          vendors={['Dominos', 'Papa Johns', 'Pizza Hut']}
+          onPress={updateSelectedVendor}
+          selectedVendor={vendor}
         />
       </View>
     );
   }
 }
+
+const styles = {
+  selectedImageStyle: {
+    marginTop: 2,
+    marginBottom: 2,
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  unselectedImageStyle: {
+    marginTop: 2,
+    marginBottom: 2,
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    opacity: 0.2,
+  },
+};
 
 export default EntryCreationForm;

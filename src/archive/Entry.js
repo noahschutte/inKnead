@@ -58,7 +58,6 @@ export default class Entry extends Component {
       timeAgo = Math.round(minutes / 1440);
       displayTime = `${timeAgo} days ago`;
     }
-    
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.showEntry.bind(this)} style={styles.wrapper}>
