@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {
   updateSelectedPizzas,
   updateSelectedVendor,
 } from '../../actions';
+import { camcorderImage } from '../../assets';
 import NavBar from '../NavBar';
 // import EntryVideo from '../EntryVideo';
 import EntryCreationForm from '../EntryCreationForm';
+import Button from '../Button2';
 
 class EntryCreationScene extends Component {
+  renderVideoContent = () => {
+    if (this.props.videoData) {
+      return <Text>Video Data exists</Text>;
+    }
+    return (
+      <Button>
+        <Image
+          source={camcorderImage}
+          style={{ resizeMode: 'contain', height: 75, width: 75 }}
+        />
+      </Button>
+    );
+  }
+
   render() {
     const {
       pizzas,
@@ -18,6 +34,8 @@ class EntryCreationScene extends Component {
       vendor,
       updateSelectedVendor,
     } = this.props;
+    const videoDisplay = this.renderVideoContent();
+
     return (
       <View style={{ flex: 1 }} >
         <NavBar
@@ -25,8 +43,8 @@ class EntryCreationScene extends Component {
           onLeftPress={Actions.pop}
         />
         <View style={{ flex: 9 }}>
-          <View style={{ flex: 4, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Video placeholder</Text>
+          <View style={{ flex: 3.5, alignItems: 'center', justifyContent: 'center' }}>
+            {videoDisplay}
           </View>
           <EntryCreationForm
             updateSelectedPizzas={updateSelectedPizzas}
