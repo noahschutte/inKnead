@@ -16,7 +16,6 @@ import Request from './components/Request';
 import Requests from './components/Requests';
 import RequestShow from './components/RequestShow';
 import ThankYouCamera from './components/ThankYouCamera';
-import ProfileContainer from 'ProfileContainer';
 
 const ROUTES = {
   anonHistory: AnonHistory,
@@ -29,7 +28,7 @@ const ROUTES = {
   main: Main,
   newRequest: NewRequest,
   notifications: Notifications,
-  profile: ProfileContainer,
+  profile: Profile,
   request: Request,
   requests: Requests,
   requestShow: RequestShow,
