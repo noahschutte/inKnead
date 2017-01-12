@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Image } from 'react-native';
-import { SegmentedControls } from 'react-native-radio-buttons';
 import { wholePizzaImage } from '../assets';
 import DetailSection from './DetailSection';
 import PizzaRadioButton from './PizzaRadioButton';
@@ -15,12 +14,13 @@ class EntryCreationForm extends Component {
       updateSelectedVendor,
       vendor
     } = this.props;
+    const { selectedImageStyle, unselectedImageStyle } = styles;
 
     const selectedPizzaImage = (
-      <Image source={wholePizzaImage} style={styles.selectedImageStyle} />
+      <Image source={wholePizzaImage} style={selectedImageStyle} />
     );
     const unselectedPizzaImage = (
-      <Image source={wholePizzaImage} style={styles.unselectedImageStyle} />
+      <Image source={wholePizzaImage} style={unselectedImageStyle} />
     );
 
     return (

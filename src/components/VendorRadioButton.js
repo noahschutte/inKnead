@@ -7,53 +7,60 @@ import {
 } from '../assets';
 
 class VendorRadioButton extends Component {
+  getStyle = (vendorName) => {
+    if (vendorName === this.props.selectedVendor) {
+      return {
+        margin: 2,
+        width: 50,
+        height: 50,
+        marginRight: 10,
+        resizeMode: 'contain',
+      };
+    }
+    return {
+      margin: 2,
+      width: 50,
+      height: 50,
+      marginRight: 10,
+      resizeMode: 'contain',
+      opacity: 0.2,
+    };
+  }
+  
   assembleImages = () => {
     const dominos = (
       <Image
       name='Dominos'
       source={dominosVendorImage}
-      style={styles.unselectedImageStyle}
+      style={this.getStyle('Dominos')}
       />
     );
     const papas = (
       <Image
         name='Papa Johns'
         source={papasVendorImage}
-        style={styles.unselectedImageStyle}
+        style={this.getStyle('Papa Johns')}
       />
     );
     const pizzaHut = (
       <Image
         name='Pizza Hut'
         source={pizzaHutVendorImage}
-        style={styles.unselectedImageStyle}
+        style={this.getStyle('Pizza Hut')}
       />
     );
-
-    switch (this.props.selectedVendor) {
-      case 'Dominos':
-        dominos.style = styles.selectedImageStyle;
-        break;
-      case 'Papa Johns':
-        papas.style = styles.selectedImageStyle;
-        break;
-      case 'Pizza Hut':
-        pizzaHut.style = styles.selectedImageStyle;
-        break;
-      default:
-        break;
-    }
     return [dominos, papas, pizzaHut];
   }
 
+
   renderContent = () => {
-    const onPress = this.props.onPress;
+    const { onPress } = this.props;
     const images = this.assembleImages();
     return (
       <View style={styles.container}>
         {images.map((image, index) => {
           return (
-            <TouchableWithoutFeedback onPress={() => onPress(image.name)} key={index}>
+            <TouchableWithoutFeedback onPress={() => onPress(image.props.name)} key={index}>
               {image}
             </TouchableWithoutFeedback>
           );
@@ -73,17 +80,6 @@ const styles = {
     alignSelf: 'center',
     marginBottom: 10,
     flexDirection: 'row',
-  },
-  selectedImageStyle: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-  },
-  unselectedImageStyle: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-    opacity: 0.2,
   },
 };
 
