@@ -16,10 +16,10 @@ class PizzaRadioButton extends Component {
   }
   renderContent = () => {
     const onPress = this.props.onPress;
-    const content = this.assembleImages();
+    const images = this.assembleImages();
     return (
       <View style={styles.container}>
-        {content.map((image, index) => {
+        {images.map((image, index) => {
           return (
             <TouchableWithoutFeedback onPress={() => onPress(index + 1)} key={index}>
               {image}

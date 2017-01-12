@@ -4,6 +4,7 @@ import { SegmentedControls } from 'react-native-radio-buttons';
 import { wholePizzaImage } from '../assets';
 import DetailSection from './DetailSection';
 import PizzaRadioButton from './PizzaRadioButton';
+import VendorRadioButton from './VendorRadioButton';
 
 class EntryCreationForm extends Component {
 
@@ -15,29 +16,28 @@ class EntryCreationForm extends Component {
       vendor
     } = this.props;
 
-    const selectedImage = (
-      <Image source={wholePizzaImage} style={styles.selectedPizzaStyle} />
+    const selectedPizzaImage = (
+      <Image source={wholePizzaImage} style={styles.selectedImageStyle} />
     );
-    const unselectedImage = (
-      <Image source={wholePizzaImage} style={styles.unselectedPizzaStyle} />
+    const unselectedPizzaImage = (
+      <Image source={wholePizzaImage} style={styles.unselectedImageStyle} />
     );
 
     return (
       <View style={{ flex: 5 }}>
         <DetailSection bannerText='# OF PIZZAS' />
         <PizzaRadioButton
-          selectedImage={selectedImage}
-          unselectedImage={unselectedImage}
+          selectedImage={selectedPizzaImage}
+          unselectedImage={unselectedPizzaImage}
           options={[1, 2, 3]}
           selectedOption={pizzas}
           onPress={updateSelectedPizzas}
         />
         <DetailSection bannerText='VENDOR NEAR YOU' />
-        <SegmentedControls
-          tint={'#ce0000'}
-          options={['Dominos', 'Papas Johns', 'Pizza Hut']}
-          onSelection={updateSelectedVendor}
-          selectedOption={vendor}
+        <VendorRadioButton
+          vendors={['Dominos', 'Papa Johns', 'Pizza Hut']}
+          onPress={updateSelectedVendor}
+          selectedVendor={vendor}
         />
       </View>
     );
@@ -45,12 +45,16 @@ class EntryCreationForm extends Component {
 }
 
 const styles = {
-  selectedPizzaStyle: {
+  selectedImageStyle: {
+    marginTop: 2,
+    marginBottom: 2,
     width: 50,
     height: 50,
     marginRight: 10,
   },
-  unselectedPizzaStyle: {
+  unselectedImageStyle: {
+    marginTop: 2,
+    marginBottom: 2,
     width: 50,
     height: 50,
     marginRight: 10,
