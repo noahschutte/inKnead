@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { wholePizzaImage } from '../assets';
 import DetailSection from './DetailSection';
 import PizzaRadioButton from './PizzaRadioButton';
 import VendorRadioButton from './VendorRadioButton';
+import Button from './Button2';
 
 class EntryCreationForm extends Component {
 
@@ -39,6 +40,11 @@ class EntryCreationForm extends Component {
           onPress={updateSelectedVendor}
           selectedVendor={vendor}
         />
+        <View style={{ marginLeft: 20, marginRight: 20 }}>
+          <Button touchableOpacity>
+            <Text style={styles.buttonTextStyle}>Submit Request</Text>
+          </Button>
+        </View>
       </View>
     );
   }
@@ -60,6 +66,12 @@ const styles = {
     marginRight: 10,
     opacity: 0.2,
   },
+  buttonTextStyle: {
+    textAlign: 'center',
+    fontSize: 28,
+    color: '#ce0000',
+    padding: 15
+  }
 };
 
 export default EntryCreationForm;
