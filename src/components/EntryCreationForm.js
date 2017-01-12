@@ -48,19 +48,14 @@ const styles = {
   selectedPizzaStyle: {
     width: 50,
     height: 50,
+    marginRight: 10,
   },
   unselectedPizzaStyle: {
     width: 50,
     height: 50,
+    marginRight: 10,
     opacity: 0.2,
   },
 };
 
 export default EntryCreationForm;
-
-{ /* <SegmentedControls
-  tint={'#ce0000'}
-  options={[1, 2, 3]}
-  onSelection={updateSelectedPizzas}
-  selectedOption={pizzas}
-/> */ }

@@ -39,7 +39,6 @@ const styles = {
   container: {
     alignSelf: 'center',
     marginBottom: 10,
-    // flex: 1,
     flexDirection: 'row',
   },
 };
