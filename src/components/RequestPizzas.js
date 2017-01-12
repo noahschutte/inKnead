@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Image } from 'react-native';
+import { wholePizzaImage } from '../assets';
 
 const RequestPizzas = ({ pizzas, size }) => {
   const pizzaImages = [];
@@ -15,7 +16,7 @@ const RequestPizzas = ({ pizzas, size }) => {
     const pizzaImage = (
       <Image
         style={style}
-        source={require('../../assets/pizza-icon-for-requests/whole-pizza.png')}
+        source={wholePizzaImage}
         key={i}
       />
     );
