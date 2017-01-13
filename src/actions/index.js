@@ -2,8 +2,6 @@ import {
   GET_ENTRIES,
   GET_ENTRIES_SUCCESS,
   GET_USER_ENTRIES,
-  CREATE_SESSION_START,
-  CREATE_SESSION_SUCCESS,
   SHOW_ENTRIES,
   TOGGLE_SCOPE,
   TOGGLE_SIDE_MENU,
@@ -11,6 +9,7 @@ import {
 } from './types';
 
 export * from './EntryCreationActions';
+export * from './UserActions';
 
 export const getEntries = () => {
   return (dispatch) => {
@@ -80,24 +79,5 @@ export const sideMenuToggle = (isMenuOpen) => {
   return {
     type: TOGGLE_SIDE_MENU,
     payload: true
-  };
-};
-
-export const createSession = (userInfo) => {
-  return (dispatch) => {
-    dispatch({ type: CREATE_SESSION_START });
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({ userInfo }),
-    })
-    .then((response) => response.json())
-    .then(responseJson => {
-      dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
-    })
-    .catch(error => console.log(error));
   };
 };

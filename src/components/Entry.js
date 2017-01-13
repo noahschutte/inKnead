@@ -39,12 +39,10 @@ const styles = {
   container: {
     flex: 1,
     flexDirection: 'row',
-    marginTop: 2,
+    marginBottom: 3,
     borderBottomColor: '#BDBDBD',
-    borderTopColor: '#BDBDBD',
     borderBottomWidth: 1,
-    borderTopWidth: 1,
-    padding: 3,
+    padding: 5,
   },
   thumbnailContainer: {
     flex: 3,

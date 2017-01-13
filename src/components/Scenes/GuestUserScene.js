@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { pizzaOnPlate } from '../../assets';
 import Button from '../Button2';
 import NavBar from '../NavBar';
-import LoginContainer from '../LoginContainer';
+import ReduxLogin from '../ReduxLogin';
 
 class GuestUserScene extends Component {
   render() {
@@ -36,9 +36,7 @@ class GuestUserScene extends Component {
             Please log in:
           </Text>
           <View>
-            <Button touchableHighlight>
-              Login button placeholder
-            </Button>
+            <ReduxLogin />
           </View>
         </View>
       </View>
