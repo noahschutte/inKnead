@@ -10,23 +10,20 @@ class VendorRadioButton extends Component {
   getStyle = (vendorName) => {
     if (vendorName === this.props.selectedVendor) {
       return {
-        margin: 2,
-        width: 50,
-        height: 50,
-        marginRight: 10,
+        width: 55,
+        height: 55,
         resizeMode: 'contain',
       };
     }
     return {
-      margin: 2,
+      margin: 2.5,
       width: 50,
       height: 50,
-      marginRight: 10,
       resizeMode: 'contain',
       opacity: 0.2,
     };
   }
-  
+
   assembleImages = () => {
     const dominos = (
       <Image
@@ -77,9 +74,10 @@ class VendorRadioButton extends Component {
 
 const styles = {
   container: {
-    alignSelf: 'center',
+    alignSelf: 'stretch',
     marginBottom: 10,
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 };
 
