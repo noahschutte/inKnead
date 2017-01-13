@@ -1,8 +1,8 @@
 import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
-  CREATE_SESSION_START,
-  DIRECT_TO_LOGIN
+  DIRECT_TO_LOGIN,
+  HANDLE_USER_LOGOUT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -27,6 +27,8 @@ export default (state = INITIAL_STATE, action) => {
         recentSuccessfulRequest: action.payload.recentSuccessfulRequest,
         recentThankYou: action.payload.recentThankYou,
       };
+    case HANDLE_USER_LOGOUT:
+      return INITIAL_STATE;
     default:
       return state;
   }
