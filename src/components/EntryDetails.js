@@ -2,21 +2,22 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import DetailSection from './DetailSection';
 import Button from './Button2';
+import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
-class EntryDetails extends Component {
-  render() {
+const EntryDetails = ({ entryData }) => {
+  const { pizzas, vendor, seconds } = entryData;
     return (
       <View style={{ flex: 5 }}>
         <DetailSection>
-          VIDEO FOOTER
+          <TimeAgo secondsOld={seconds} />
         </DetailSection>
 
         <DetailSection bannerText='REQUESTED'>
-          <RequestPizzas size='large' pizzas={this.props.entryData.pizzas} />
+          <RequestPizzas size='large' pizzas={pizzas} />
           <Text style={styles.requestTextStyle}>from</Text>
-          <Vendor size='large' vendor={this.props.entryData.vendor} />
+          <Vendor size='large' vendor={vendor} />
         </DetailSection>
 
         <View style={styles.buttonWrapper}>
@@ -26,8 +27,7 @@ class EntryDetails extends Component {
         </View>
       </View>
     );
-  }
-}
+};
 
 const styles = {
   requestTextStyle: {
