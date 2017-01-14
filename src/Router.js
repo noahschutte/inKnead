@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
+import CameraScene from './components/Scenes/CameraScene';
 import MainScene from './components/Scenes/MainScene';
 import EntryCreationScene from './components/Scenes/EntryCreationScene';
 import EntryScene from './components/Scenes/EntryScene';
@@ -43,7 +44,11 @@ const RouterComponent = () => {
       />
       <Scene
         key="GuestUserScene"
-        component={GuestUserScene} 
+        component={GuestUserScene}
+      />
+      <Scene
+        key="CameraScene"
+        component={CameraScene}
       />
     </Router>
   );
