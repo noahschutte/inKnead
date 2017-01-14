@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const DetailSection = ({ bannerText, children }) => {
+const DetailSection = ({ bannerText, children, style }) => {
   const { bannerStyle, bannerTextStyle, contentStyle, placeholderStyle } = styles;
   let banner;
 
@@ -15,13 +15,13 @@ const DetailSection = ({ bannerText, children }) => {
   let content;
   if (typeof children === 'string') {
     content = (
-      <View style={contentStyle}>
+      <View style={[contentStyle, style]}>
         <Text style={placeholderStyle}>{children}</Text>
       </View>
     );
   } else {
     content = (
-      <View style={styles.contentStyle}>
+      <View style={[contentStyle, style]}>
         {children}
       </View>
     );
