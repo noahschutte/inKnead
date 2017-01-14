@@ -52,18 +52,14 @@ class EntryCreationForm extends Component {
 
 const styles = {
   selectedImageStyle: {
-    marginTop: 2,
-    marginBottom: 2,
     width: 50,
     height: 50,
-    marginRight: 10,
-  },
+    margin: 5,
+    },
   unselectedImageStyle: {
-    marginTop: 2,
-    marginBottom: 2,
+    margin: 5,
     width: 50,
     height: 50,
-    marginRight: 10,
     opacity: 0.2,
   },
   buttonTextStyle: {
