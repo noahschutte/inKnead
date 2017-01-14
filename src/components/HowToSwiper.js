@@ -20,7 +20,7 @@ class HowToSwiper extends Component {
     return <PagerTitleIndicator titles={['Update Email', 'Donate', 'Request']} />;
   }
   _renderDotIndicator() {
-    return <PagerDotIndicator pageCount={3} />;
+    return <PagerDotIndicator dotStyle={{ backgroundColor: '#cecccc' }} selectedDotStyle={{ backgroundColor: '#ce0000' }} pageCount={3} />;
   }
   _renderTabIndicator() {
     const tabs = [{
