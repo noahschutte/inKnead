@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import DetailSection from './DetailSection';
 import Button from './Button2';
@@ -10,8 +10,16 @@ const EntryDetails = ({ entryData }) => {
   const { pizzas, vendor, seconds } = entryData;
     return (
       <View style={{ flex: 5 }}>
-        <DetailSection>
+        <DetailSection style={{ justifyContent: 'space-between' }}>
           <TimeAgo secondsOld={seconds} />
+          <Button
+             touchableOpacity
+             style={{ buttonStyle: styles.userHistoryButton }}
+          >
+            <Text
+              style={styles.userHistoryText}
+            >User History</Text>
+          </Button>
         </DetailSection>
 
         <DetailSection bannerText='REQUESTED'>
@@ -39,6 +47,18 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+  },
+  userHistoryText: {
+    color: 'black',
+    textDecorationLine: 'underline',
+    padding: 0,
+    margin: 0,
+  },
+  userHistoryButton: {
+    borderWidth: 0,
+    margin: 0,
+    padding: 0,
+    borderColor: 'black',
   },
   donateTextStyle: {
     alignSelf: 'center',
