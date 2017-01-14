@@ -29,12 +29,19 @@ class EntryCreationScene extends Component {
     }
   }
 
+  handleVideoButtonPress = () => {
+    if (this.props.videoData) {
+      alert('Review your video, or re-record?');
+    }
+    this.openVideoRec();
+  }
+
   renderVideoContent = () => {
     if (this.props.videoData) {
       return <Text>Video Data exists</Text>;
     }
     return (
-      <Button onPress={this.openVideoRec}>
+      <Button onPress={this.handleVideoButtonPress}>
         <Image
           source={camcorderImage}
           style={{ resizeMode: 'contain', height: 75, width: 75 }}
