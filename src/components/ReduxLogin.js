@@ -55,7 +55,7 @@ class ReduxLogin extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ margin: 10 }}>
         <LoginButton
           readPermissions={['email', 'public_profile']}
           onLogoutFinished={this.handleLogoutFinished}

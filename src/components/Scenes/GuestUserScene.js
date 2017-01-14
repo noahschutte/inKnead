@@ -27,11 +27,11 @@ class GuestUserScene extends Component {
             in knead
           </Text>
           <Text style={text}>
-            "The power of kindness, one pizza at a time"
+            "The power of kindness,{'\n'} one pizza at a time"
           </Text>
         </View>
         <View style={bottom}>
-          <Text style={text}>
+          <Text style={[text, { marginBottom: 0, marginTop: 30 }]}>
             Please log in:
           </Text>
           <View>
@@ -50,20 +50,21 @@ const styles = {
     backgroundColor: '#ce0000',
   },
   top: {
-    flex: 7,
+    flex: 6,
     alignItems: 'center',
   },
   bottom: {
-    flex: 2,
+    flex: 3,
     alignItems: 'center',
   },
   image: {
-    height: 205,
-    width: 200,
+    height: 150,
+    width: 150,
+    marginTop: 25,
     borderRadius: 100 / 2,
   },
   title: {
-    marginVertical: 20,
+    marginBottom: 20,
     fontSize: 55,
     color: 'white',
     fontFamily: 'Gillsans'
