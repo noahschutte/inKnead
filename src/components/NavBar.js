@@ -128,11 +128,10 @@ const styles = {
     flexDirection: 'row',
     backgroundColor: '#ce0000',
     alignItems: 'center',
-    justifyContent: 'center',
     padding: 5,
     elevation: 1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },  // Don't know how this looks, don't work on Android
+    shadowOpacity: 0.1,  // Don't know how this looks, don't work on Android
   },
   titleStyle: {
     color: '#fff',
