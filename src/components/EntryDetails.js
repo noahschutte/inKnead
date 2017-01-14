@@ -1,22 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import DetailSection from './DetailSection';
 import Button from './Button2';
+import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
-class EntryDetails extends Component {
-  render() {
+const EntryDetails = ({ entryData }) => {
+  const { pizzas, vendor, seconds } = entryData;
     return (
       <View style={{ flex: 5 }}>
-        <DetailSection>
-          VIDEO FOOTER
+        <DetailSection style={{ justifyContent: 'space-between' }}>
+          <TimeAgo secondsOld={seconds} />
+          <Button
+             touchableOpacity
+             style={{ buttonStyle: styles.userHistoryButton }}
+          >
+            <Text
+              style={styles.userHistoryText}
+            >User History</Text>
+          </Button>
         </DetailSection>
 
         <DetailSection bannerText='REQUESTED'>
-          <RequestPizzas size='large' pizzas={this.props.entryData.pizzas} />
+          <RequestPizzas size='large' pizzas={pizzas} />
           <Text style={styles.requestTextStyle}>from</Text>
-          <Vendor size='large' vendor={this.props.entryData.vendor} />
+          <Vendor size='large' vendor={vendor} />
         </DetailSection>
 
         <View style={styles.buttonWrapper}>
@@ -26,8 +35,7 @@ class EntryDetails extends Component {
         </View>
       </View>
     );
-  }
-}
+};
 
 const styles = {
   requestTextStyle: {
@@ -39,6 +47,18 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+  },
+  userHistoryText: {
+    color: 'black',
+    textDecorationLine: 'underline',
+    padding: 0,
+    margin: 0,
+  },
+  userHistoryButton: {
+    borderWidth: 0,
+    margin: 0,
+    padding: 0,
+    borderColor: 'black',
   },
   donateTextStyle: {
     alignSelf: 'center',

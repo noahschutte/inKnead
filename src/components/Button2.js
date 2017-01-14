@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   TouchableWithoutFeedback,
-  View,
   Text
 } from 'react-native';
 
@@ -41,50 +40,45 @@ class Button extends Component {
     return result;
   }
 
-  determineStyles = (childType, { textStyle, buttonStyle }) => {
-    const styles = { textStyle, buttonStyle };
-    if (textStyle === undefined) {
-      // Assign textStyle
-      styles.textStyle = {
+  determineStyles = () => {
+    const { style } = this.props;
+    if (style) {
+      return style;
+    }
+    return {
+      textStyle: {
         alignSelf: 'center',
         color: '#007aff',
         fontSize: 16,
         fontWeight: '600',
         paddingTop: 10,
-        paddingBottom: 10
-      };
-    }
-    if (buttonStyle === undefined) {
-      if (childType !== 'Image') {
-        styles.buttonStyle = {
-          alignSelf: 'stretch',
-          backgroundColor: '#fff',
-          borderRadius: 5,
-          borderWidth: 2,
-          borderColor: '#ce0000',
-          marginLeft: 5,
-          marginRight: 5
-        };
-      }
-    }
-    return styles;
+        paddingBottom: 10,
+      },
+      buttonStyle: {
+        alignSelf: 'stretch',
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#ce0000',
+        marginLeft: 5,
+        marginRight: 5,
+      },
+    };
   }
 
   assembleButton = (props) => {
     const {
       children,
       onPress,
-      textStyle,
-      buttonStyle
     } = props;
+    const { textStyle, buttonStyle } = this.determineStyles();
 
     let content;
     const { touchType, childType } = this.determineButtonType(props);
-    const styles = this.determineStyles(childType, { textStyle, buttonStyle });
 
     if (childType === 'Raw Text') {
       content = (
-        <Text style={styles.textStyle}>{children}</Text>
+        <Text style={[styles.textStyle, textStyle]}>{children}</Text>
       );
     } else {
       content = children;
@@ -93,21 +87,21 @@ class Button extends Component {
     switch (touchType) {
       case 'touchableOpacity':
         content = (
-          <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
+          <TouchableOpacity style={[styles.buttonStyle, buttonStyle]} onPress={onPress}>
             {content}
           </TouchableOpacity>
         );
         break;
       case 'touchableHighlight':
         content = (
-          <TouchableHighlight style={styles.buttonStyle} onPress={onPress}>
+          <TouchableHighlight style={[styles.buttonStyle, buttonStyle]} onPress={onPress}>
             {content}
           </TouchableHighlight>
         );
         break;
       default:
         content = (
-          <TouchableWithoutFeedback style={styles.buttonStyle} onPress={onPress}>
+          <TouchableWithoutFeedback style={[styles.buttonStyle, buttonStyle]} onPress={onPress}>
             {content}
           </TouchableWithoutFeedback>
         );
@@ -121,5 +115,25 @@ class Button extends Component {
     return content;
   }
 }
+
+const styles = {
+  textStyle: {
+    alignSelf: 'center',
+    color: '#007aff',
+    fontSize: 16,
+    fontWeight: '600',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  buttonStyle: {
+    alignSelf: 'stretch',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#ce0000',
+    marginLeft: 5,
+    marginRight: 5,
+  },
+};
 
 export default Button;
