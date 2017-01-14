@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { pizzaOnPlate } from '../../assets';
-import Button from '../Button2';
 import NavBar from '../NavBar';
 import ReduxLogin from '../ReduxLogin';
 

@@ -114,7 +114,7 @@ class MainScene extends Component {
             rightButton='newRequest'
             leftButton='sideMenu'
             title={scope}
-            onRightPress={() => Actions.EntryCreationScene()}
+            onRightPress={Actions.EntryCreationScene}
             onLeftPress={togglePress}
             onTitlePress={() => toggleScope(scope, userData)}
           />
