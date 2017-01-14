@@ -20,7 +20,13 @@ class HowToSwiper extends Component {
     return <PagerTitleIndicator titles={['Update Email', 'Donate', 'Request']} />;
   }
   _renderDotIndicator() {
-    return <PagerDotIndicator dotStyle={{ backgroundColor: '#cecccc' }} selectedDotStyle={{ backgroundColor: '#ce0000' }} pageCount={3} />;
+    return (
+      <PagerDotIndicator
+        pageCount={3}
+        dotStyle={{ backgroundColor: '#cecccc' }}
+        selectedDotStyle={{ backgroundColor: '#ce0000' }}
+      />
+    );
   }
   _renderTabIndicator() {
     const tabs = [{
@@ -119,7 +125,6 @@ const styles = {
   },
   icon: {
     width: 120,
-    // height: 100,
     alignSelf: 'center',
     flex: 1,
     resizeMode: 'contain',
@@ -130,7 +135,7 @@ const styles = {
     alignSelf: 'center',
     resizeMode: 'contain',
     marginBottom: 15,
-  }
+  },
 };
 
 export default HowToSwiper;
