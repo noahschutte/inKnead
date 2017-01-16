@@ -100,7 +100,7 @@ class MainScene extends Component {
     const togglePress = () => {
       sideMenuToggle(sideMenuOpen);
     };
-    const menu = <ToggleMenu togglePress={togglePress} />;
+    const menu = <ToggleMenu togglePress={togglePress} userData={userData} />;
 
     return (
       <SideMenu
