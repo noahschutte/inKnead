@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { defaultProfileImage } from '../../assets';
 import NavBar from '../NavBar';
+import ProfileImage from '../ProfileImage';
+import DetailSection from '../DetailSection';
 
 class ProfileScene extends Component {
   render() {
+    console.log(this.props);
+    const { current_email, signup_email } = this.props.user.userData;
+    let email;
+    if (current_email) {
+      email = current_email;
+    } else {
+      email = signup_email;
+    }
     return (
       <View style={{ flex: 1 }}>
         <NavBar
@@ -12,11 +24,23 @@ class ProfileScene extends Component {
           leftButton='backButton'
         />
         <View style={{ flex: 9 }}>
-          <Text>PROFILE SCENE</Text>
+          <ProfileImage image={defaultProfileImage} />
+          <View style={{ flex: 5, borderColor: 'blue', borderWidth: 5 }}>
+            <DetailSection bannerText='Email Address'>
+              <Text>{email}</Text>
+            </DetailSection>
+            <DetailSection bannerText='Linked Accounts'>
+              <Text>Facebook</Text>
+            </DetailSection>
+          </View>
         </View>
       </View>
     );
   }
 }
 
-export default ProfileScene;
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+export default connect(mapStateToProps, {})(ProfileScene);
