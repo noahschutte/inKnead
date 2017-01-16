@@ -24,7 +24,7 @@ const ToggleMenu = (props) => {
         <Text style={styles.textStyle}>How To</Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={() => Actions.ProfileScene()}>
+      <SideMenuButton onPress={props.userData ? () => Actions.ProfileScene() : () => Actions.GuestUserScene()}>
         <Text style={styles.textStyle}>Profile</Text>
       </SideMenuButton>
 
