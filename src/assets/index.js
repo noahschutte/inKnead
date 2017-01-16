@@ -20,3 +20,5 @@ export const stepOneImage = require('../../assets/how-to-page/stepOneImage.png')
 export const stepTwoImage = require('../../assets/how-to-page/stepTwo.png');
 export const stepThreeA = require('../../assets/how-to-page/Step3-B.png');
 export const stepThreeB = require('../../assets/how-to-page/Step3-A.png');
+export const cameraSceneCamcorder = require('../../assets/ic_videocam_36pt.png');
+export const cameraSceneStopImage = require('../../assets/ic_stop_36pt.png');
