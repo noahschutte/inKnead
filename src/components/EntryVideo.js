@@ -1,13 +1,13 @@
 import React from 'react';
-import { Image, TouchableHighlight, View } from 'react-native';
+import { Image, TouchableHighlight, View, Alert } from 'react-native';
 import Video from 'react-native-video';
+import { Actions } from 'react-native-router-flux';
 import { playButtonImage } from '../assets';
 
 const EntryVideo = (props) => {
-    const { source, paused, togglePlay } = props;
+    const { source, paused, togglePlay, rerecordable } = props;
     const originPaused = paused;
     let playButton;
-
     if (paused) {
       playButton = (
         <Image
@@ -21,6 +21,22 @@ const EntryVideo = (props) => {
           style={styles.playButton}
         />
       );
+    }
+    let onButtonPress;
+    if (rerecordable && paused) {
+      onButtonPress = () => {
+        Alert.alert(
+          'Review or Rerecord your video?',
+          null,
+          [
+            { text: 'Review', onPress: () => togglePlay(false) },
+            { text: 'Rerecord', onPress: Actions.CameraScene },
+            { text: 'Cancel', style: 'cancel' }
+          ]
+        );
+      };
+    } else {
+      onButtonPress = () => togglePlay(!paused);
     }
 
     const videoDisplay =
@@ -41,12 +57,13 @@ const EntryVideo = (props) => {
         (<View style={styles.wrapper}>
           <TouchableHighlight
             style={styles.playButtonContainer}
-            onPress={() => togglePlay(!paused)}
+            onPress={onButtonPress}
           >
             {playButton}
           </TouchableHighlight>
           {videoDisplay}
         </View>);
+        console.log(this.props);
     return (
       <View style={styles.container}>
         {display}
@@ -56,7 +73,7 @@ const EntryVideo = (props) => {
 
 const styles = {
   container: {
-    flex: 4,
+    flex: 3.5,
     backgroundColor: 'black',
   },
   wrapper: {
