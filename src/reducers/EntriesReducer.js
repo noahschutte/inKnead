@@ -34,7 +34,6 @@ export default (state = INITIAL_STATE, action) => {
         loading: false,
       };
     case GET_USER_ENTRIES: {
-      console.log(state);
       const userEntries = [
         ...state.requests.filter(request => request.creator_id === action.payload),
         ...state.thankYous.filter(thankYou => thankYou.creator_id === action.payload)
