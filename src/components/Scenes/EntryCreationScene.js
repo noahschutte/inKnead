@@ -9,11 +9,22 @@ import {
 } from '../../actions';
 import { camcorderImage } from '../../assets';
 import NavBar from '../NavBar';
-// import EntryVideo from '../EntryVideo';
+import EntryVideo from '../EntryVideo';
 import EntryCreationForm from '../EntryCreationForm';
 import Button from '../Button2';
 
 class EntryCreationScene extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      paused: true,
+    };
+  }
+  togglePlay = (toggle) => {
+    this.setState({ paused: toggle });
+  }
+
   openVideoRec = () => {
     if (Platform.OS === 'ios') {
       Camera.checkDeviceAuthorizationStatus()
@@ -29,29 +40,30 @@ class EntryCreationScene extends Component {
     }
   }
 
-  handleVideoButtonPress = () => {
-    if (this.props.videoData) {
-      alert('Review your video, or re-record?');
-    }
-    this.openVideoRec();
-  }
-
   renderVideoContent = () => {
     if (this.props.videoData) {
-      return <Text>Video Data exists</Text>;
+      return (
+        <EntryVideo
+          rerecordable
+          togglePlay={this.togglePlay}
+          source={this.props.videoData.path}
+          paused={this.state.paused}
+        />
+      );
     }
     return (
-      <Button onPress={this.handleVideoButtonPress}>
-        <Image
-          source={camcorderImage}
-          style={{ resizeMode: 'contain', height: 75, width: 75 }}
-        />
-      </Button>
+      <View style={styles.videoContainer} >
+        <Button onPress={this.openVideoRec}>
+          <Image
+            source={camcorderImage}
+            style={{ resizeMode: 'contain', height: 75, width: 75 }}
+          />
+        </Button>
+      </View>
     );
   }
 
   render() {
-    console.log(this.props);
     const {
       pizzas,
       updateSelectedPizzas,
@@ -67,9 +79,7 @@ class EntryCreationScene extends Component {
           onLeftPress={Actions.pop}
         />
         <View style={{ flex: 9 }}>
-          <View style={{ flex: 3.5, alignItems: 'center', justifyContent: 'center' }}>
-            {videoDisplay}
-          </View>
+          {videoDisplay}
           <EntryCreationForm
             updateSelectedPizzas={updateSelectedPizzas}
             pizzas={pizzas}
@@ -81,6 +91,15 @@ class EntryCreationScene extends Component {
     );
   }
 }
+
+const styles = {
+  videoContainer: {
+    flex: 3.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+};
 
 const mapStateToProps = ({ newEntry, camera }) => {
   const {

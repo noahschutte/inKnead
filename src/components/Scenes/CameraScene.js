@@ -41,7 +41,7 @@ class CameraScene extends Component {
           handleVideoData(data);
         }
       })
-      .catch(err => console.err(err));
+      .catch(err => console.error(err));
       startRecording();
     }
   }
