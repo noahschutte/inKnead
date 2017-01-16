@@ -39,7 +39,7 @@ const styles = {
   bannerStyle: {
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: '#424242',
+    backgroundColor: '#ce0000',
     alignSelf: 'stretch',
     padding: 5,
   },
