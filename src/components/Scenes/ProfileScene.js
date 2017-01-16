@@ -20,7 +20,7 @@ class ProfileScene extends Component {
       email = signup_email;
     }
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#bfbfbf' }}>
         <NavBar
           onLeftPress={Actions.pop}
           leftButton='backButton'

@@ -94,7 +94,7 @@ class EntryCreationScene extends Component {
 
 const styles = {
   videoContainer: {
-    flex: 3.5,
+    flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',

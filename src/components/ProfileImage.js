@@ -4,7 +4,9 @@ import { View, Image } from 'react-native';
 const ProfileImage = (props) => {
   return (
     <View style={styles.container}>
-      <Image source={props.image} style={styles.profileImageStyle} />
+      <View style={styles.wrapper}>
+        <Image source={props.image} style={styles.profileImageStyle} />
+      </View>
     </View>
   );
 };
@@ -15,8 +17,13 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
+  wrapper: {
+    borderRadius: 100,
+    borderColor: '#9f9f9f',
+    borderWidth: 1,
+  },
   profileImageStyle: {
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     borderRadius: 120,
     width: 120,
     height: 120,
