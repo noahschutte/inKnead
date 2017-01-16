@@ -19,8 +19,6 @@ const styles = {
   },
   wrapper: {
     borderRadius: 100,
-    borderColor: '#9f9f9f',
-    borderWidth: 1,
   },
   profileImageStyle: {
     resizeMode: 'cover',

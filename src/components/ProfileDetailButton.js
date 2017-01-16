@@ -1,12 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 const ProfileDetailButton = props => {
+  let marginImage;
+  if (props.marginImage) {
+    marginImage = <Image source={props.marginImage} style={styles.marginImageStyle} />;
+  }
   return (
     <View style={{ flex: 1, margin: 10 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        {marginImage}
         <Text style={styles.email}>{props.children}</Text>
-        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }} onPress={() => console.log('pressed')}>
+        <TouchableOpacity style={styles.buttonStyle} onPress={() => console.log('pressed')}>
           <Text style={{ fontSize: 22, marginTop: -5 }}> > </Text>
         </TouchableOpacity>
       </View>
@@ -25,7 +30,17 @@ const styles = {
     backgroundColor: '#aaa',
     flex: 1,
     height: 1,
-  }
+  },
+  buttonStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  marginImageStyle: {
+    resizeMode: 'contain',
+    width: 25,
+    height: 25,
+  },
 };
 
 export default ProfileDetailButton;
