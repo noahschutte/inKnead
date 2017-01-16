@@ -4,9 +4,21 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Camera from 'react-native-camera';
 import {
+  startRecording,
+  stopRecording,
+  switchCameraType,
+  changeFlashMode,
+  handleVideoData
+} from '../../actions';
+import {
   leftCaretImage,
   cameraSceneCamcorder,
   cameraSceneStopImage,
+  cameraFrontIcon,
+  cameraBackIcon,
+  cameraFlashOn,
+  cameraFlashOff,
+  cameraFlashAuto,
 } from '../../assets';
 
 
@@ -16,6 +28,88 @@ class CameraScene extends Component {
 
     this.camera = null;
   }
+  beginRecording = () => {
+    const { handleVideoData, startRecording } = this.props;
+    if (this.camera) {
+      this.camera.capture({ mode: Camera.constants.CaptureMode.video })
+      .then(data => {
+        if (data.duration > 20.0) {
+          alert('Video length must be less than 20 seconds.');
+        } else if (data.duration < 5.0) {
+          alert('Video length must be longer than 5 seconds');
+        } else {
+          handleVideoData(data);
+        }
+      })
+      .catch(err => console.err(err));
+      startRecording();
+    }
+  }
+
+  endRecording = () => {
+    if (this.camera) {
+      this.camera.stopCapture();
+      this.props.stopRecording();
+      Actions.pop();
+    }
+  }
+
+  switchType = () => {
+    let newType;
+    const { back, front } = Camera.constants.Type;
+
+    if (this.state.camera.type === back) {
+      newType = front;
+    } else if (this.state.camera.type === front) {
+      newType = back;
+    }
+    this.props.switchCameraType(newType);
+  }
+
+  get typeIcon() {
+    let icon;
+    const { back, front } = Camera.constants.Type;
+
+    if (this.state.camera.type === back) {
+      icon = cameraBackIcon;
+    } else if (this.state.camera.type === front) {
+      icon = cameraFrontIcon;
+    }
+    return icon;
+  }
+
+  switchFlash = () => {
+    let newFlashMode;
+    const { auto, on, off } = Camera.constants.FlashMode;
+
+    if (this.state.camera.FlashMode === auto) {
+      newFlashMode = on;
+    } else if (this.state.camera.FlashMode === on) {
+      newFlashMode = off;
+    } else if (this.state.camera.FlashMode === off) {
+      newFlashMode = auto;
+    }
+    this.props.changeFlashMode(newFlashMode);
+  }
+
+  get flashIcon() {
+    let icon;
+    const { auto, on, off } = Camera.constants.FlashMode;
+
+    if (this.state.camera.FlashMode === auto) {
+      icon = cameraFlashAuto;
+    } else if (this.state.camera.FlashMode === on) {
+      icon = cameraFlashOn;
+    } else if (this.state.camera.FlashMode === off) {
+      icon = cameraFlashOff;
+    }
+    return icon;
+  }
+
+  cancelRecording = () => {
+    Actions.pop();
+  }
+
   render() {
     const {
       aspect,
@@ -30,16 +124,16 @@ class CameraScene extends Component {
       showRecordButton = (
         <TouchableOpacity
           style={styles.captureButton}
-          onPress={() => console.log('record button pressed')}
+          onPress={this.beginRecording}
         >
-          <Image source={cameraSceneCamcorder}/>
+          <Image source={cameraSceneCamcorder} />
         </TouchableOpacity>
       );
     } else {
       showRecordButton = (
         <TouchableOpacity
           style={styles.captureButton}
-          onPress={() => console.log('record button pressed')}
+          onPress={this.endRecording}
         >
           <Image source={cameraSceneStopImage} />
         </TouchableOpacity>
@@ -120,4 +214,10 @@ const styles = {
   },
 };
 
-export default connect(mapStateToProps, {})(CameraScene);
+export default connect(mapStateToProps, {
+  startRecording,
+  stopRecording,
+  switchCameraType,
+  changeFlashMode,
+  handleVideoData
+})(CameraScene);
