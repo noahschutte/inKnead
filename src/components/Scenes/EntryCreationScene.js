@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Platform } from 'react-native';
+import Camera from 'react-native-camera';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -8,22 +9,57 @@ import {
 } from '../../actions';
 import { camcorderImage } from '../../assets';
 import NavBar from '../NavBar';
-// import EntryVideo from '../EntryVideo';
+import EntryVideo from '../EntryVideo';
 import EntryCreationForm from '../EntryCreationForm';
 import Button from '../Button2';
 
 class EntryCreationScene extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      paused: true,
+    };
+  }
+  togglePlay = (toggle) => {
+    this.setState({ paused: toggle });
+  }
+
+  openVideoRec = () => {
+    if (Platform.OS === 'ios') {
+      Camera.checkDeviceAuthorizationStatus()
+      .then(response => {
+        if (response) {
+          Actions.CameraScene();
+        } else {
+          alert('You must allow camera access!');
+        }
+      });
+    } else if (Platform.OS === 'android') {
+      Actions.CameraScene();
+    }
+  }
+
   renderVideoContent = () => {
     if (this.props.videoData) {
-      return <Text>Video Data exists</Text>;
+      return (
+        <EntryVideo
+          rerecordable
+          togglePlay={this.togglePlay}
+          source={this.props.videoData.path}
+          paused={this.state.paused}
+        />
+      );
     }
     return (
-      <Button>
-        <Image
-          source={camcorderImage}
-          style={{ resizeMode: 'contain', height: 75, width: 75 }}
-        />
-      </Button>
+      <View style={styles.videoContainer} >
+        <Button onPress={this.openVideoRec}>
+          <Image
+            source={camcorderImage}
+            style={{ resizeMode: 'contain', height: 75, width: 75 }}
+          />
+        </Button>
+      </View>
     );
   }
 
@@ -43,9 +79,7 @@ class EntryCreationScene extends Component {
           onLeftPress={Actions.pop}
         />
         <View style={{ flex: 9 }}>
-          <View style={{ flex: 3.5, alignItems: 'center', justifyContent: 'center' }}>
-            {videoDisplay}
-          </View>
+          {videoDisplay}
           <EntryCreationForm
             updateSelectedPizzas={updateSelectedPizzas}
             pizzas={pizzas}
@@ -58,7 +92,16 @@ class EntryCreationScene extends Component {
   }
 }
 
-const mapStateToProps = ({ newEntry }) => {
+const styles = {
+  videoContainer: {
+    flex: 3.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+};
+
+const mapStateToProps = ({ newEntry, camera }) => {
   const {
     pizzas,
     vendor,
@@ -69,6 +112,7 @@ const mapStateToProps = ({ newEntry }) => {
     uploadPercentage,
     uploadStatus,
   } = newEntry;
+  const { videoData } = camera;
   return {
     pizzas,
     vendor,
@@ -77,7 +121,8 @@ const mapStateToProps = ({ newEntry }) => {
     progress,
     paused,
     uploadPercentage,
-    uploadStatus
+    uploadStatus,
+    videoData,
   };
 };
 

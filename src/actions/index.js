@@ -10,6 +10,7 @@ import {
 
 export * from './EntryCreationActions';
 export * from './UserActions';
+export * from './CameraActions';
 
 export const getEntries = () => {
   return (dispatch) => {

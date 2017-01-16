@@ -13,3 +13,9 @@ export const HANDLE_USER_LOGOUT = 'handle_user_logout';
 
 export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';
 export const UPDATE_SELECTED_VENDOR = 'update_selected_vendor';
+
+export const START_RECORDING = 'start_recording';
+export const STOP_RECORDING = 'stop_recording';
+export const SWITCH_CAMERA_TYPE = 'switch_camera_type';
+export const CHANGE_FLASH_MODE = 'change_flash_mode';
+export const HANDLE_VIDEO_DATA = 'handle_video_data';
