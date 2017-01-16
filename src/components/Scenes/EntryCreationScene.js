@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Platform } from 'react-native';
+import { View, Image, Platform } from 'react-native';
 import Camera from 'react-native-camera';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -94,7 +94,7 @@ class EntryCreationScene extends Component {
 
 const styles = {
   videoContainer: {
-    flex: 3.5,
+    flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',

@@ -28,7 +28,7 @@ const DetailSection = ({ bannerText, children, style }) => {
   }
 
   return (
-    <View>
+    <View style={{ margin: 3, backgroundColor: 'white', borderRadius: 2 }}>
       {banner}
       {content}
     </View>
@@ -40,6 +40,8 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: '#ce0000',
+    borderTopRightRadius: 2,
+    borderTopLeftRadius: 2,
     alignSelf: 'stretch',
     padding: 5,
   },
