@@ -9,6 +9,7 @@ export const DIRECT_TO_LOGIN = 'direct_to_login';
 
 export const CREATE_SESSION_START = 'create_session_start';
 export const CREATE_SESSION_SUCCESS = 'create_session_success';
+export const USER_VERIFIED = 'user_verified';
 export const HANDLE_USER_LOGOUT = 'handle_user_logout';
 
 export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';

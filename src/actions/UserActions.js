@@ -1,6 +1,7 @@
 import {
   CREATE_SESSION_START,
   CREATE_SESSION_SUCCESS,
+  USER_VERIFIED,
   HANDLE_USER_LOGOUT,
 } from './types';
 
@@ -18,6 +19,9 @@ export const createSession = (userInfo) => {
     .then((response) => response.json())
     .then(responseJson => {
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
+      if (responseJson.user.current_email) {
+        dispatch({ type: USER_VERIFIED, payload: true });
+      }
     })
     .catch(error => console.log(error));
   };
