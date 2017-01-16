@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StatusBar, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Camera from 'react-native-camera';
@@ -70,9 +70,9 @@ class CameraScene extends Component {
     let icon;
     const { back, front } = Camera.constants.Type;
 
-    if (this.state.camera.type === back) {
+    if (this.props.camera.type === back) {
       icon = cameraBackIcon;
-    } else if (this.state.camera.type === front) {
+    } else if (this.props.camera.type === front) {
       icon = cameraFrontIcon;
     }
     return icon;
@@ -96,11 +96,11 @@ class CameraScene extends Component {
     let icon;
     const { auto, on, off } = Camera.constants.FlashMode;
 
-    if (this.state.camera.FlashMode === auto) {
+    if (this.props.camera.flashMode === auto) {
       icon = cameraFlashAuto;
-    } else if (this.state.camera.FlashMode === on) {
+    } else if (this.props.camera.flashMode === on) {
       icon = cameraFlashOn;
-    } else if (this.state.camera.FlashMode === off) {
+    } else if (this.props.camera.flashMode === off) {
       icon = cameraFlashOff;
     }
     return icon;
@@ -139,6 +139,18 @@ class CameraScene extends Component {
         </TouchableOpacity>
       );
     }
+
+    let typeDisplay;
+    if (!isRecording) {
+      typeDisplay = (
+        <TouchableOpacity
+          style={styles.typeButton}
+          onPress={this.switchType}
+        >
+          <Image source={this.typeIcon} />
+        </TouchableOpacity>
+      );
+    }
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <StatusBar hidden />
@@ -163,7 +175,7 @@ class CameraScene extends Component {
           >
             <Image source={leftCaretImage} />
           </TouchableOpacity>
-          {/* typeDisplay */}
+          {typeDisplay}
         </View>
         <View style={[styles.overlay, styles.bottomOverlay]}>
           <View style={styles.buttonSpace}>
@@ -212,6 +224,11 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  captureButton: {
+    padding: 15,
+    backgroundColor: 'white',
+    borderRadius: 40,
+  }
 };
 
 export default connect(mapStateToProps, {

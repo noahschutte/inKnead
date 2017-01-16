@@ -51,6 +51,7 @@ class EntryCreationScene extends Component {
   }
 
   render() {
+    console.log(this.props);
     const {
       pizzas,
       updateSelectedPizzas,
@@ -81,7 +82,7 @@ class EntryCreationScene extends Component {
   }
 }
 
-const mapStateToProps = ({ newEntry }) => {
+const mapStateToProps = ({ newEntry, camera }) => {
   const {
     pizzas,
     vendor,
@@ -92,6 +93,7 @@ const mapStateToProps = ({ newEntry }) => {
     uploadPercentage,
     uploadStatus,
   } = newEntry;
+  const { videoData } = camera;
   return {
     pizzas,
     vendor,
@@ -100,7 +102,8 @@ const mapStateToProps = ({ newEntry }) => {
     progress,
     paused,
     uploadPercentage,
-    uploadStatus
+    uploadStatus,
+    videoData,
   };
 };
 
