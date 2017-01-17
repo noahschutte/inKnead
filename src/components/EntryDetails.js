@@ -6,7 +6,7 @@ import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
-const EntryDetails = ({ entryData }) => {
+const EntryDetails = ({ entryData, navigateToUser }) => {
   const { pizzas, vendor, seconds } = entryData;
     return (
       <View style={{ flex: 5 }}>
@@ -15,10 +15,13 @@ const EntryDetails = ({ entryData }) => {
           <Button
              touchableOpacity
              style={{ buttonStyle: styles.userHistoryButton }}
+             onPress={navigateToUser}
           >
             <Text
               style={styles.userHistoryText}
-            >User History</Text>
+            >
+              User History
+            </Text>
           </Button>
         </DetailSection>
 
