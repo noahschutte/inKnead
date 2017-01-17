@@ -124,7 +124,6 @@ class MainScene extends Component {
             onPress={sortEntries}
           />
           <Entries
-            shown={shown}
             entryRows={entryRows()}
           />
         </View>
