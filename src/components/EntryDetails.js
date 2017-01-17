@@ -7,7 +7,7 @@ import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
 const EntryDetails = ({ entryData, navigateToUser }) => {
-  const { pizzas, vendor, seconds } = entryData;
+  const { pizzas, vendor, seconds, creator_id } = entryData;
     return (
       <View style={{ flex: 5 }}>
         <DetailSection style={{ justifyContent: 'space-between' }}>
@@ -15,7 +15,7 @@ const EntryDetails = ({ entryData, navigateToUser }) => {
           <Button
              touchableOpacity
              style={{ buttonStyle: styles.userHistoryButton }}
-             onPress={navigateToUser}
+             onPress={() => navigateToUser(creator_id)}
           >
             <Text
               style={styles.userHistoryText}
