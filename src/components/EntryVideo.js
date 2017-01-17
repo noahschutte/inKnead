@@ -63,7 +63,6 @@ const EntryVideo = (props) => {
           </TouchableHighlight>
           {videoDisplay}
         </View>);
-        console.log(this.props);
     return (
       <View style={styles.container}>
         {display}
