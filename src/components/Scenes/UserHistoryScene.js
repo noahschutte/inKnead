@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { getUserEntries } from '../../actions';
 import NavBar from '../NavBar';
+import Entries from '../Entries';
 
 class UserHistoryScene extends Component {
+  componentDidMount() {
+    this.props.getUserEntries(userId);
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -12,11 +18,17 @@ class UserHistoryScene extends Component {
           onLeftPress={Actions.pop}
         />
         <View style={{ flex: 9 }}>
-          <Text>USER HISTORY SCENE</Text>
+          <Entries
+            entryRows={entryRows}
+          />
         </View>
       </View>
     );
   }
 }
 
-export default UserHistoryScene;
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(mapStateToProps, { getUserEntries })(UserHistoryScene);

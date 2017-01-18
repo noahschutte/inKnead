@@ -25,6 +25,13 @@ export const getEntries = () => {
   };
 };
 
+export const getUserEntries = (userId) => {
+  return ({
+    type: GET_USER_ENTRIES,
+    payload: userId
+  });
+};
+
 export const sortEntries = (key) => {
   return ({
     type: SHOW_ENTRIES,
