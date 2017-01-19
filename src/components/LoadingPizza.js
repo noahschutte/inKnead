@@ -7,16 +7,11 @@ class LoadingPizza extends Component {
     super(props);
     this.spinValue = new Animated.Value(0);
     this.state = {
-      loading: true,
       text: 'Loading'
     };
   }
   componentDidMount() {
-    this.bundleCallbacks();
-  }
-  bundleCallbacks = () => {
     this.spin();
-    this.loadingText();
   }
   spin = () => {
     this.spinValue.setValue(0);
@@ -27,18 +22,7 @@ class LoadingPizza extends Component {
         duration: 4000,
         easing: Easing.linear,
       }
-    ).start(this.bundleCallbacks);
-  }
-  loadingText = () => {
-    console.log(this.props);
-    setTimeout(() => {
-      let dots = '';
-      for (let i = 0; i < 3; i++) {
-        dots += '.';
-        this.setState({ text: `Loading${dots}` });
-      }
-    }, 500);
-    this.loadingText();
+    ).start(this.spin);
   }
   render() {
     const spin = this.spinValue.interpolate({
@@ -46,17 +30,34 @@ class LoadingPizza extends Component {
       outputRange: ['0deg', '360deg']
     });
     return (
-      <View style={{ flex: 1 }} >
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
           <Animated.Image
-            style={{ flex: 3, transform: [{ rotate: spin }], alignSelf: 'center', margin: 20, height: 75, resizeMode: 'contain' }}
+            style={{
+              flex: 4,
+              transform: [{ rotate: spin }],
+              alignSelf: 'center',
+              margin: 20,
+              height: 100,
+              resizeMode: 'contain'
+            }}
             source={loadingPizzaImage}
           />
-          <Text style={{ flex: 5, textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>
+          <Text style={styles.textStyle}>
             {this.state.text}
           </Text>
       </View>
     );
   }
 }
+
+const styles = {
+  textStyle: {
+    flex: 3,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 36,
+    color: '#ce0000',
+  },
+};
 
 export default LoadingPizza;
