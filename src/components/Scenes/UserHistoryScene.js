@@ -10,7 +10,6 @@ class UserHistoryScene extends Component {
   componentDidMount() {
     const { getUserEntries, userId } = this.props;
     getUserEntries(userId);
-    console.log(this.props);
   }
   render() {
     const { userRequests, userFulfilled, userThankYous } = this.props;
