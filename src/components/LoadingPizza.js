@@ -13,7 +13,7 @@ class LoadingPizza extends Component {
   }
   componentDidMount() {
     this.spin();
-    // this.loadingText();
+    this.loadingText();
   }
   spin = () => {
     this.spinValue.setValue(0);
@@ -26,20 +26,18 @@ class LoadingPizza extends Component {
       }
     ).start(this.spin);
   }
-  // loadingText = () => {
-  //   do {
-  //     this.setState({
-  //       text: 'Loading',
-  //     });
-  //     let dots = '';
-  //     for (let i = 0; i < 3; i++) {
-  //       dots += '.';
-  //       this.setState({
-  //         text: `Loading${dots}`,
-  //       });
-  //     }
-  //   } while (this.state.loading);
-  // }
+  loadingText = () => {
+     for (let c = 0; c < 1000; c++) {
+      this.setState({
+        text: 'Loading',
+      });
+      let dots = '';
+      for (let i = 0; i < 3; i++) {
+        dots += '.';
+        this.setTimeout(this.setState({ text: `Loading${dots}` }), 500);
+      }
+    }
+  }
   render() {
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
