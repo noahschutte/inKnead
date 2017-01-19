@@ -19,8 +19,8 @@ class EntryScene extends Component {
   }
 
   navigateToUser = () => {
-    Actions.UserHistoryScene();
-    // console.log(user);
+    this.setState({ paused: true });
+    Actions.UserHistoryScene({ userId: this.props.entry.creator_id });
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { getUserEntries } from '../../actions';
@@ -8,9 +8,13 @@ import Entries from '../Entries';
 
 class UserHistoryScene extends Component {
   componentDidMount() {
-    this.props.getUserEntries(userId);
+    const { getUserEntries, userId } = this.props;
+    getUserEntries(userId);
+    console.log(this.props);
   }
   render() {
+    const { userRequests, userFulfilled, userThankYous } = this.props;
+    const entryRows = [...userRequests, ...userFulfilled, ...userThankYous];
     return (
       <View style={{ flex: 1 }}>
         <NavBar
@@ -27,8 +31,17 @@ class UserHistoryScene extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return state;
+const mapStateToProps = ({ entries }) => {
+  const {
+    userRequests,
+    userFulfilled,
+    userThankYous
+  } = entries;
+  return {
+    userRequests,
+    userFulfilled,
+    userThankYous
+  };
 };
 
 export default connect(mapStateToProps, { getUserEntries })(UserHistoryScene);
