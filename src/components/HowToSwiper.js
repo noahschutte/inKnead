@@ -124,13 +124,13 @@ const styles = {
     flex: 1,
   },
   icon: {
-    width: 120,
+    width: 100,
     alignSelf: 'center',
     flex: 1,
     resizeMode: 'contain',
   },
   threeB: {
-    width: 70,
+    width: 50,
     flex: 1,
     alignSelf: 'center',
     resizeMode: 'contain',

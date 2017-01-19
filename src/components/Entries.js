@@ -27,11 +27,11 @@ class Entries extends Component {
 
   render() {
     const { dataSource } = this.state;
-    const content = () => {
-      if (dataSource === null) {
-        return <LoadingPizza />;
-      }
-      return (
+    let content;
+    if (dataSource === null) {
+      content = <LoadingPizza />;
+    } else {
+      content = (
         <ListView
           dataSource={dataSource}
           renderRow={
@@ -42,10 +42,10 @@ class Entries extends Component {
           enableEmptySections
         />
       );
-    };
+    }
     return (
       <View style={{ flex: 8 }}>
-        { content() }
+        {content}
       </View>
     );
   }

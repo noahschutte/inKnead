@@ -142,19 +142,19 @@ const styles = {
   centerButtonStyle: {
     flex: 4,
     resizeMode: 'contain',
-    height: 50,
+    height: 40,
     width: null
   },
   rightButtonStyle: {
     flex: 1,
     resizeMode: 'contain',
-    height: 35,
+    height: 30,
     width: null,
   },
   leftButtonStyle: {
     flex: 1,
     resizeMode: 'contain',
-    height: 35,
+    height: 30,
     width: null,
   }
 };

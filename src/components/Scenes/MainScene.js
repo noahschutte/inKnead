@@ -50,6 +50,39 @@ class MainScene extends Component {
     );
   }
 
+  getEntryRows = () => {
+    const {
+      shown,
+      requests,
+      thankYous,
+      userRequests,
+      userFulfilled,
+      userData,
+      userThankYous
+    } = this.props;
+
+    switch (shown) {
+      case 'All':
+        return [...requests, ...thankYous];
+      case 'Requests':
+        return requests.filter(request => request.donor_id === null);
+      case 'Thanks':
+        return thankYous;
+      case 'Fulfilled':
+        return requests.filter(request => request.donor_id !== null);
+      case 'Requested':
+        return userRequests;
+      case 'Received':
+        return userFulfilled;
+      case 'Donated':
+        return requests.filter(request => (request.donor_id === userData.id));
+      case 'Gratitude':
+        return userThankYous;
+      default:
+        return requests;
+    }
+  }
+
   assembleOptions = () => {
     const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
     const userHistoryOptions = ['Requested', 'Received', 'Donated', 'Gratitude'];
@@ -65,42 +98,16 @@ class MainScene extends Component {
       toggleScope,
       scope,
       sortEntries,
-      requests,
-      thankYous,
-      userRequests,
-      userThankYous,
-      userFulfilled,
       sideMenuOpen,
       sideMenuToggle,
       userData
     } = this.props;
 
-    const entryRows = () => {
-      switch (shown) {
-        case 'All':
-          return [...requests, ...thankYous];
-        case 'Requests':
-          return requests.filter(request => request.donor_id === null);
-        case 'Thanks':
-          return thankYous;
-        case 'Fulfilled':
-          return requests.filter(request => request.donor_id !== null);
-        case 'Requested':
-          return userRequests;
-        case 'Received':
-          return userFulfilled;
-        case 'Donated':
-          return requests.filter(request => (request.donor_id === userData.id));
-        case 'Gratitude':
-          return userThankYous;
-        default:
-          return requests;
-      }
-    };
     const togglePress = () => {
       sideMenuToggle(sideMenuOpen);
     };
     const menu = <ToggleMenu togglePress={togglePress} userData={userData} />;
+    const entryRows = this.getEntryRows();
 
     return (
       <SideMenu
@@ -124,8 +131,7 @@ class MainScene extends Component {
             onPress={sortEntries}
           />
           <Entries
-            shown={shown}
-            entryRows={entryRows()}
+            entryRows={entryRows}
           />
         </View>
       </SideMenu>

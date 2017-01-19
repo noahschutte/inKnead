@@ -18,6 +18,11 @@ class EntryScene extends Component {
     this.setState({ paused: toggle });
   }
 
+  navigateToUser = () => {
+    this.setState({ paused: true });
+    Actions.UserHistoryScene({ userId: this.props.entry.creator_id });
+  }
+
   render() {
     const { entry } = this.props;
     return (
@@ -34,6 +39,7 @@ class EntryScene extends Component {
           />
           <EntryDetails
             entryData={entry}
+            navigateToUser={this.navigateToUser}
           />
         </View>
       </View>
