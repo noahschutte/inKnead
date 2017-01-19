@@ -12,6 +12,9 @@ class LoadingPizza extends Component {
     };
   }
   componentDidMount() {
+    this.bundleCallbacks();
+  }
+  bundleCallbacks = () => {
     this.spin();
     this.loadingText();
   }
@@ -24,19 +27,18 @@ class LoadingPizza extends Component {
         duration: 4000,
         easing: Easing.linear,
       }
-    ).start(this.spin);
+    ).start(this.bundleCallbacks);
   }
   loadingText = () => {
-     for (let c = 0; c < 1000; c++) {
-      this.setState({
-        text: 'Loading',
-      });
+    console.log(this.props);
+    setTimeout(() => {
       let dots = '';
       for (let i = 0; i < 3; i++) {
         dots += '.';
-        this.setTimeout(this.setState({ text: `Loading${dots}` }), 500);
+        this.setState({ text: `Loading${dots}` });
       }
-    }
+    }, 500);
+    this.loadingText();
   }
   render() {
     const spin = this.spinValue.interpolate({
@@ -50,7 +52,7 @@ class LoadingPizza extends Component {
             source={loadingPizzaImage}
           />
           <Text style={{ flex: 5, textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>
-            Loading...
+            {this.state.text}
           </Text>
       </View>
     );
