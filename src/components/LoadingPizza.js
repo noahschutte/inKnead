@@ -6,9 +6,14 @@ class LoadingPizza extends Component {
   constructor(props) {
     super(props);
     this.spinValue = new Animated.Value(0);
+    this.state = {
+      loading: true,
+      text: 'Loading'
+    };
   }
   componentDidMount() {
     this.spin();
+    // this.loadingText();
   }
   spin = () => {
     this.spinValue.setValue(0);
@@ -21,6 +26,20 @@ class LoadingPizza extends Component {
       }
     ).start(this.spin);
   }
+  // loadingText = () => {
+  //   do {
+  //     this.setState({
+  //       text: 'Loading',
+  //     });
+  //     let dots = '';
+  //     for (let i = 0; i < 3; i++) {
+  //       dots += '.';
+  //       this.setState({
+  //         text: `Loading${dots}`,
+  //       });
+  //     }
+  //   } while (this.state.loading);
+  // }
   render() {
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
