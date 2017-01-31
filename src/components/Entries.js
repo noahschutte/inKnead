@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ListView } from 'react-native';
-import LoadingPizza from './LoadingPizza';
+import SpinningPizza from './SpinningPizza';
 import Entry from './Entry';
 
 class Entries extends Component {
@@ -29,7 +29,7 @@ class Entries extends Component {
     const { dataSource } = this.state;
     let content;
     if (dataSource === null) {
-      content = <LoadingPizza />;
+      content = <SpinningPizza />;
     } else {
       content = (
         <ListView

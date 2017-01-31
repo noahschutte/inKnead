@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
-import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import {
   createSession,
   getEntries,
@@ -18,37 +17,6 @@ import Entries from '../Entries';
 
 
 class MainScene extends Component {
-
-  componentDidMount() {
-    this.props.getEntries();
-    AccessToken.getCurrentAccessToken().then(
-      data => {
-        if (data) {
-          const accessToken = data.accessToken;
-          const responseInfoCallback = (error, result) => {
-            if (error) {
-              alert(`Error fetching data: ${error.toSTring()}`);
-            } else {
-              this.props.createSession(result);
-            }
-          };
-          const infoRequest = new GraphRequest(
-            '/me',
-            {
-              accessToken,
-              parameters: {
-                fields: {
-                  string: 'email,name,first_name,middle_name,last_name'
-                }
-              }
-            },
-            responseInfoCallback
-          );
-          new GraphRequestManager().addRequest(infoRequest).start();
-        }
-      }
-    );
-  }
 
   getEntryRows = () => {
     const {

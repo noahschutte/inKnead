@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, RefreshControl, Text, StyleSheet } from 'react-native';
 import Request from './Request';
-import LoadingPizza from './LoadingPizza';
+import SpinningPizza from './SpinningPizza';
 
 export default class Requests extends Component {
   constructor(props) {
@@ -153,7 +153,7 @@ export default class Requests extends Component {
 
     let display;
     if (this.state.refreshing || this.state.dataSource === null) {
-      display = <LoadingPizza />;
+      display = <SpinningPizza />;
     } else if (this.props.activity.length === 0) {
       display = <Text>No activity recorded</Text>;
     } else if (this.state.dataSource._cachedRowCount === 0) {
