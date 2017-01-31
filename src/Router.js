@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
+import InitialScene from './components/Scenes/InitialScene';
 import CameraScene from './components/Scenes/CameraScene';
 import MainScene from './components/Scenes/MainScene';
 import EntryCreationScene from './components/Scenes/EntryCreationScene';
@@ -9,12 +10,21 @@ import NotificationsScene from './components/Scenes/NotificationsScene';
 import ProfileScene from './components/Scenes/ProfileScene';
 import UserHistoryScene from './components/Scenes/UserHistoryScene';
 import GuestUserScene from './components/Scenes/GuestUserScene';
+import LoadingScene from './components/Scenes/LoadingScene';
 
 const RouterComponent = () => {
   return (
     <Router hideNavBar >
       <Scene
         initial
+        key="InitialScene"
+        component={InitialScene}
+      />
+      <Scene
+        key="LoadingScene"
+        component={LoadingScene}
+      />
+      <Scene
         key="MainScene"
         component={MainScene}
       />
