@@ -32,6 +32,7 @@ export default (state = INITIAL_STATE, action) => {
       Actions.GuestUserScene();
       return state;
     case CREATE_SESSION_SUCCESS:
+      Actions.MainScene({ type: 'reset' });
       return {
         ...state,
         userData: action.payload.user,

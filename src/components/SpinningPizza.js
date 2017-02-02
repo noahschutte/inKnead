@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Animated, Easing } from 'react-native';
+import { View, Animated, Easing } from 'react-native';
 import { loadingPizzaImage } from '../assets';
 
-class LoadingPizza extends Component {
+class SpinningPizza extends Component {
   constructor(props) {
     super(props);
     this.spinValue = new Animated.Value(0);
-    this.state = {
-      text: 'Loading'
-    };
   }
   componentDidMount() {
     this.spin();
@@ -19,7 +16,7 @@ class LoadingPizza extends Component {
       this.spinValue,
       {
         toValue: 1,
-        duration: 4000,
+        duration: 6500,
         easing: Easing.linear,
       }
     ).start(this.spin);
@@ -42,22 +39,9 @@ class LoadingPizza extends Component {
             }}
             source={loadingPizzaImage}
           />
-          <Text style={styles.textStyle}>
-            {this.state.text}
-          </Text>
       </View>
     );
   }
 }
 
-const styles = {
-  textStyle: {
-    flex: 3,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 36,
-    color: '#ce0000',
-  },
-};
-
-export default LoadingPizza;
+export default SpinningPizza;
