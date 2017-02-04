@@ -1,6 +1,10 @@
 import {
   UPDATE_SELECTED_PIZZAS,
   UPDATE_SELECTED_VENDOR,
+  UPLOAD_BEGIN,
+  UPLOAD_PROGRESS,
+  UPLOAD_COMPLETE,
+  HANDLE_ERRORS,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -8,10 +12,8 @@ const INITIAL_STATE = {
   vendor: '',
   videoKey: '',
   uploading: false,
-  progress: null,
-  paused: true,
   uploadPercentage: 0,
-  uploadStatus: '',
+  errorMessages: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -25,6 +27,26 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         vendor: action.payload
+      };
+    case UPLOAD_BEGIN:
+      return {
+        ...state,
+        uploading: true,
+      };
+    case UPLOAD_PROGRESS:
+      return {
+        ...state,
+        uploadPercentage: action.payload
+      };
+    case UPLOAD_COMPLETE:
+      return {
+        ...state,
+        uploadPercentage: 101,
+      };
+    case HANDLE_ERRORS:
+      return {
+        ...state,
+        errorMessages: action.payload,
       };
     default:
       return state;

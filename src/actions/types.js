@@ -14,6 +14,9 @@ export const HANDLE_USER_LOGOUT = 'handle_user_logout';
 
 export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';
 export const UPDATE_SELECTED_VENDOR = 'update_selected_vendor';
+export const UPLOAD_PROGRESS = 'upload_progress';
+export const UPLOAD_COMPLETE = 'upload_complete';
+export const HANDLE_ERRORS = 'handle_errors';
 
 export const START_RECORDING = 'start_recording';
 export const STOP_RECORDING = 'stop_recording';

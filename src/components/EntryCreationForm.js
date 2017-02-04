@@ -41,7 +41,7 @@ class EntryCreationForm extends Component {
           selectedVendor={vendor}
         />
         <View style={{ marginLeft: 20, marginRight: 20 }}>
-          <Button touchableOpacity>
+          <Button onPress={this.props.handleRequestSubmission} touchableOpacity>
             <Text style={styles.buttonTextStyle}>Submit Request</Text>
           </Button>
         </View>
