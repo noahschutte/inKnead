@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView } from 'react-native';
+import { View, Text, ListView } from 'react-native';
 import SpinningPizza from './SpinningPizza';
 import Entry from './Entry';
 
@@ -13,6 +13,7 @@ class Entries extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('CWP invoked');
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(nextProps.entryRows)) });
   }
@@ -29,7 +30,12 @@ class Entries extends Component {
     const { dataSource } = this.state;
     let content;
     if (dataSource === null) {
-      content = <SpinningPizza />;
+      content = (
+        <View>
+          <SpinningPizza />
+          <Text style={{ textAlign: 'center' }}>Loading...</Text>
+        </View>
+      );
     } else {
       content = (
         <ListView
