@@ -65,6 +65,8 @@ class MainScene extends Component {
       shown,
       toggleScope,
       scope,
+      loading,
+      getEntries,
       sortEntries,
       sideMenuOpen,
       sideMenuToggle,
@@ -100,6 +102,8 @@ class MainScene extends Component {
           />
           <Entries
             entryRows={entryRows}
+            getEntries={getEntries}
+            loading={loading}
           />
         </View>
       </SideMenu>

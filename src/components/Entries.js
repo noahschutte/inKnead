@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ListView } from 'react-native';
+import { View, Text, ListView, RefreshControl } from 'react-native';
 import SpinningPizza from './SpinningPizza';
 import Entry from './Entry';
 
@@ -26,6 +26,10 @@ class Entries extends Component {
     return result;
   }
 
+  _onRefresh = () => {
+    this.props.getEntries();
+  }
+
   render() {
     const { dataSource } = this.state;
     let content;
@@ -39,6 +43,12 @@ class Entries extends Component {
     } else {
       content = (
         <ListView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.loading}
+              onRefresh={this._onRefresh}
+            />
+          }
           dataSource={dataSource}
           renderRow={
             (rowData) => (
