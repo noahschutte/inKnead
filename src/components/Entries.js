@@ -4,13 +4,9 @@ import SpinningPizza from './SpinningPizza';
 import Entry from './Entry';
 
 class Entries extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dataSource: null,
-    };
-  }
+  state = {
+    dataSource: null,
+  };
 
   componentWillReceiveProps(nextProps) {
     console.log('CWP invoked');
