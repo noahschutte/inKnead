@@ -41,7 +41,10 @@ class ProfileScene extends Component {
               </ProfileDetailButton>
             </DetailSection>
             <DetailSection bannerText='Linked Accounts'>
-              <ProfileDetailButton marginImage={facebookImage}>
+              <ProfileDetailButton
+                onPress={() => Actions.GuestUserScene({ logOut: true })}
+                marginImage={facebookImage}
+              >
                 {social}
               </ProfileDetailButton>
             </DetailSection>

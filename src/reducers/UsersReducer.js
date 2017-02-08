@@ -47,6 +47,7 @@ export default (state = INITIAL_STATE, action) => {
         userVerified: action.payload
       };
     case HANDLE_USER_LOGOUT:
+      Actions.MainScene({ type: 'reset' });
       return INITIAL_STATE;
     default:
       return state;

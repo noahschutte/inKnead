@@ -11,7 +11,7 @@ const ProfileDetailButton = props => {
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         {marginImage}
         <Text style={styles.email}>{props.children}</Text>
-        <TouchableOpacity style={styles.buttonStyle} onPress={() => console.log('pressed')}>
+        <TouchableOpacity style={styles.buttonStyle} onPress={props.onPress}>
           <Text style={{ fontSize: 22, marginTop: -5 }}> > </Text>
         </TouchableOpacity>
       </View>
