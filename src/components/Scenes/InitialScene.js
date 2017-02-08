@@ -37,6 +37,8 @@ class InitialScene extends Component {
             responseInfoCallback
           );
           new GraphRequestManager().addRequest(infoRequest).start();
+        } else {
+          Actions.MainScene();
         }
       }
     );
