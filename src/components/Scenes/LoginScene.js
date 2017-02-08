@@ -5,7 +5,7 @@ import { pizzaOnPlate } from '../../assets';
 import NavBar from '../NavBar';
 import ReduxLogin from '../ReduxLogin';
 
-class GuestUserScene extends Component {
+class LoginScene extends Component {
   render() {
     const {
       container,
@@ -15,6 +15,12 @@ class GuestUserScene extends Component {
       title,
       text
     } = styles;
+    let prompt;
+    if (this.props.logOut) {
+      prompt = 'Log out: ';
+    } else {
+      prompt = 'Please log in: ';
+    }
     return (
       <View style={container}>
         <NavBar
@@ -32,10 +38,10 @@ class GuestUserScene extends Component {
         </View>
         <View style={bottom}>
           <Text style={[text, { marginBottom: 0, marginTop: 30 }]}>
-            Please log in:
+            {prompt}
           </Text>
           <View>
-            <ReduxLogin />
+            <ReduxLogin redirect={this.props.redirect} />
           </View>
         </View>
       </View>
@@ -78,4 +84,4 @@ const styles = {
   },
 };
 
-export default GuestUserScene;
+export default LoginScene;

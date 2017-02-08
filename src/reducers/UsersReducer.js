@@ -4,6 +4,7 @@ import {
   DIRECT_TO_LOGIN,
   USER_VERIFIED,
   HANDLE_USER_LOGOUT,
+  REDIRECT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -29,10 +30,18 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case DIRECT_TO_LOGIN:
-      Actions.GuestUserScene();
+      Actions.LoginScene();
       return state;
+    case REDIRECT:
+      switch (action.payload.scene) {
+        case 'EntryScene':
+          Actions.EntryScene({ entry: action.payload.parameter });
+          return state;
+        default:
+          Actions.MainScene();
+          return state;
+      }
     case CREATE_SESSION_SUCCESS:
-      Actions.MainScene({ type: 'reset' });
       return {
         ...state,
         userData: action.payload.user,

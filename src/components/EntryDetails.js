@@ -6,7 +6,7 @@ import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
-const EntryDetails = ({ entryData, navigateToUser }) => {
+const EntryDetails = ({ entryData, navigateToUser, onDonatePress }) => {
   const { pizzas, vendor, seconds, creator_id } = entryData;
     return (
       <View style={{ flex: 5 }}>
@@ -32,7 +32,7 @@ const EntryDetails = ({ entryData, navigateToUser }) => {
         </DetailSection>
 
         <View style={styles.buttonWrapper}>
-          <Button touchableOpacity>
+          <Button touchableOpacity onPress={onDonatePress}>
             <Text style={styles.donateTextStyle}>DONATE!</Text>
           </Button>
         </View>

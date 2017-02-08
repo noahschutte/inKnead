@@ -9,7 +9,6 @@ class Entries extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log('CWP invoked');
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(nextProps.entryRows)) });
   }
