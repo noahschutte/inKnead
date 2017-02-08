@@ -11,6 +11,7 @@ export const CREATE_SESSION_START = 'create_session_start';
 export const CREATE_SESSION_SUCCESS = 'create_session_success';
 export const USER_VERIFIED = 'user_verified';
 export const HANDLE_USER_LOGOUT = 'handle_user_logout';
+export const REDIRECT = 'redirect';
 
 export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';
 export const UPDATE_SELECTED_VENDOR = 'update_selected_vendor';

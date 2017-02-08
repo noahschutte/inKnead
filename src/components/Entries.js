@@ -4,16 +4,11 @@ import SpinningPizza from './SpinningPizza';
 import Entry from './Entry';
 
 class Entries extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dataSource: null,
-    };
-  }
+  state = {
+    dataSource: null,
+  };
 
   componentWillReceiveProps(nextProps) {
-    console.log('CWP invoked');
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(nextProps.entryRows)) });
   }

@@ -12,7 +12,14 @@ class UserHistoryScene extends Component {
     getUserEntries(userId);
   }
   render() {
-    const { userRequests, userFulfilled, userThankYous } = this.props;
+    const {
+      userRequests,
+      userFulfilled,
+      userThankYous,
+      getUserEntries,
+      userId,
+      loading
+    } = this.props;
     const entryRows = [...userRequests, ...userFulfilled, ...userThankYous];
     return (
       <View style={{ flex: 1 }}>
@@ -23,6 +30,8 @@ class UserHistoryScene extends Component {
         <View style={{ flex: 9 }}>
           <Entries
             entryRows={entryRows}
+            getEntries={() => getUserEntries(userId)}
+            loading={loading}
           />
         </View>
       </View>
@@ -34,12 +43,14 @@ const mapStateToProps = ({ entries }) => {
   const {
     userRequests,
     userFulfilled,
-    userThankYous
+    userThankYous,
+    loading
   } = entries;
   return {
     userRequests,
     userFulfilled,
-    userThankYous
+    userThankYous,
+    loading
   };
 };
 

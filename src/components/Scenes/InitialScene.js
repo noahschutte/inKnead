@@ -21,7 +21,7 @@ class InitialScene extends Component {
             if (error) {
               alert(`Error fetching data: ${error.toSTring()}`);
             } else {
-              this.props.createSession(result);
+              this.props.createSession(result, null);
             }
           };
           const infoRequest = new GraphRequest(
@@ -37,6 +37,8 @@ class InitialScene extends Component {
             responseInfoCallback
           );
           new GraphRequestManager().addRequest(infoRequest).start();
+        } else {
+          Actions.MainScene();
         }
       }
     );

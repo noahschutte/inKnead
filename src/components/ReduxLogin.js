@@ -31,7 +31,7 @@ class ReduxLogin extends Component {
               if (error) {
                 alert(`Error fetching data: ${error.toString()}`);
               } else {
-                this.props.createSession(result);
+                this.props.createSession(result, this.props.redirect);
               }
             };
             const infoRequest = new GraphRequest(

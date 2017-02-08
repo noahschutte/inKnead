@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import NavBar from '../NavBar';
 import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
 
 class EntryScene extends Component {
-  constructor() {
-    super();
+  state = {
+    paused: true,
+  };
 
-    this.state = {
-      paused: true,
-    };
-  }
-
-  togglePlay = (toggle) => {
-    this.setState({ paused: toggle });
+  onDonatePress = () => {
+    if (!this.props.userData) {
+      Actions.LoginScene({ redirect: {
+        scene: 'EntryScene',
+        parameter: this.props.entry
+      } });
+    } else {
+      alert('exists');
+    }
   }
 
   navigateToUser = () => {
     this.setState({ paused: true });
     Actions.UserHistoryScene({ userId: this.props.entry.creator_id });
+  }
+
+  togglePlay = (toggle) => {
+    this.setState({ paused: toggle });
   }
 
   render() {
@@ -40,6 +48,7 @@ class EntryScene extends Component {
           <EntryDetails
             entryData={entry}
             navigateToUser={this.navigateToUser}
+            onDonatePress={this.onDonatePress}
           />
         </View>
       </View>
@@ -47,10 +56,14 @@ class EntryScene extends Component {
   }
 }
 
+const mapStateToProps = ({ user }) => {
+  return user;
+};
+
 const styles = {
   container: {
     flex: 1,
   },
 };
 
-export default EntryScene;
+export default connect(mapStateToProps, {})(EntryScene);
