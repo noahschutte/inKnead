@@ -6,13 +6,9 @@ import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
 
 class EntryScene extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      paused: true,
-    };
-  }
+  state = {
+    paused: true,
+  };
 
   togglePlay = (toggle) => {
     this.setState({ paused: toggle });
