@@ -8,16 +8,17 @@ class Entries extends Component {
     dataSource: null,
   };
 
-  componentWillReceiveProps(nextProps) {
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.setState({ dataSource: ds.cloneWithRows(this._genRows(nextProps.entryRows)) });
+  componentWillMount() {
+    this.updateDataSource();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.dataSource !== nextState.dataSource) {
-      return true;
-    }
-    return false;
+  componentWillReceiveProps(nextProps) {
+    this.updateDataSource(nextProps.entryRows);
+  }
+
+  updateDataSource = (array = this.props.entryRows) => {
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.setState({ dataSource: ds.cloneWithRows(this._genRows(array)) });
   }
 
   _genRows(length) {
