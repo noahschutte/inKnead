@@ -1,12 +1,54 @@
+import { Actions } from 'react-native-router-flux';
 import {
   GET_ENTRIES,
   GET_ENTRIES_SUCCESS,
   GET_USER_ENTRIES,
+  UPDATE_ENTRIES,
+  HANDLE_USER_DONATION,
   TOGGLE_SCOPE,
   DIRECT_TO_LOGIN,
   SHOW_ENTRIES,
   TOGGLE_SIDE_MENU,
 } from './types';
+
+export const confirmDonation = (donatorId, entry) => {
+  return dispatch => {
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entry.id}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'PATCH',
+      body: JSON.stringify({ donatorId })
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      if (responseJson.errorMessage) {
+        console.error(responseJson.errorMessage);
+      } else {
+        const { requests, thankYous, anonEmail } = responseJson;
+        dispatch({
+          type: UPDATE_ENTRIES,
+          payload: {
+            requests,
+            thankYous
+          }
+        });
+        dispatch({
+          type: HANDLE_USER_DONATION,
+          payload: {
+            activeDonation: entry,
+            recipientEmail: anonEmail,
+          }
+        });
+      }
+    })
+    .then(() => {
+      Actions.NotificationsScene();
+    })
+    .catch(error => console.error(error));
+  };
+};
 
 export const getEntries = () => {
   return (dispatch) => {
