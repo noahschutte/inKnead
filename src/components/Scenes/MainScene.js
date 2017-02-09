@@ -126,7 +126,7 @@ const mapStateToProps = ({ entries, user }) => {
   const {
     userData,
     activeDonation,
-    anonEmail,
+    recipientEmail,
     recentSuccessfulRequest,
     recentThankYou,
   } = user;
@@ -134,7 +134,7 @@ const mapStateToProps = ({ entries, user }) => {
   return {
     userData,
     activeDonation,
-    anonEmail,
+    recipientEmail,
     recentSuccessfulRequest,
     recentThankYou,
     requests,

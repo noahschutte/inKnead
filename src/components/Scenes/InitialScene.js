@@ -19,7 +19,7 @@ const InitialScene = props => {
           if (error) {
             alert(`Error fetching data: ${error.toSTring()}`);
           } else {
-            props.createSession(result, null);
+            props.createSession(result);
           }
         };
         const infoRequest = new GraphRequest(
@@ -35,11 +35,14 @@ const InitialScene = props => {
           responseInfoCallback
         );
         new GraphRequestManager().addRequest(infoRequest).start();
-      } else {
-        Actions.MainScene();
       }
     }
-  );
+  )
+  .then(() => {
+    setTimeout(() => {
+      Actions.MainScene({ type: 'reset' });
+    }, 2000);
+  });
   return (
     <View style={styles.containerStyle}>
       <SpinningPizza />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import { confirmDonation } from '../../actions';
 import NavBar from '../NavBar';
 import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
@@ -12,6 +13,7 @@ class EntryScene extends Component {
   };
 
   onDonatePress = () => {
+    this.setState({ paused: true });
     const { userData, entry } = this.props;
     // Direct user to log in if not logged in already
     if (!userData) {
@@ -32,11 +34,16 @@ class EntryScene extends Component {
             text: 'Cancel',
           },
           {
-            text: 'Donate'
+            text: 'Donate',
+            onPress: this.confirmDonation
           }
         ]
       );
     }
+  }
+
+  confirmDonation = () => {
+    this.props.confirmDonation(this.props.userData.id, this.props.entry);
   }
 
   navigateToUser = () => {
@@ -83,4 +90,4 @@ const styles = {
   },
 };
 
-export default connect(mapStateToProps, {})(EntryScene);
+export default connect(mapStateToProps, { confirmDonation })(EntryScene);
