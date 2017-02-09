@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import NavBar from '../NavBar';
@@ -12,13 +12,30 @@ class EntryScene extends Component {
   };
 
   onDonatePress = () => {
-    if (!this.props.userData) {
+    const { userData, entry } = this.props;
+    // Direct user to log in if not logged in already
+    if (!userData) {
       Actions.LoginScene({ redirect: {
         scene: 'EntryScene',
-        parameter: this.props.entry
+        parameter: entry
       } });
+    } else if (userData.id === entry.creator_id) {
+      alert('You can\'t donate to yourself!');
+    } else if (this.props.activeDonation) {
+      alert('You must complete your recent donation commitment!');
     } else {
-      alert('exists');
+      Alert.alert(
+        `Are you sure you want to donate ${entry.pizzas} pizza(s)?`,
+        'You will have 30 minutes to send an online gift card',
+        [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Donate'
+          }
+        ]
+      );
     }
   }
 

@@ -24,7 +24,7 @@ export default (state = INITIAL_STATE, action) => {
     case GET_ENTRIES:
       return {
         ...state,
-        scope: 'requests_and_thank_yous',
+        loading: true,
       };
     case GET_ENTRIES_SUCCESS:
       return {

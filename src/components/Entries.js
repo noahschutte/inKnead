@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, RefreshControl } from 'react-native';
+import { View, ListView, RefreshControl } from 'react-native';
 import SpinningPizza from './SpinningPizza';
 import Entry from './Entry';
 
@@ -8,9 +8,17 @@ class Entries extends Component {
     dataSource: null,
   };
 
+  componentWillMount() {
+    this.updateDataSource();
+  }
+
   componentWillReceiveProps(nextProps) {
+    this.updateDataSource(nextProps.entryRows);
+  }
+
+  updateDataSource = (array = this.props.entryRows) => {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.setState({ dataSource: ds.cloneWithRows(this._genRows(nextProps.entryRows)) });
+    this.setState({ dataSource: ds.cloneWithRows(this._genRows(array)) });
   }
 
   _genRows(length) {
@@ -30,9 +38,8 @@ class Entries extends Component {
     let content;
     if (dataSource === null) {
       content = (
-        <View>
+        <View style={{ flex: 1, padding: 50 }}>
           <SpinningPizza />
-          <Text style={{ textAlign: 'center' }}>Loading...</Text>
         </View>
       );
     } else {
