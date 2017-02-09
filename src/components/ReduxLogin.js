@@ -7,10 +7,12 @@ import {
   GraphRequestManager
 } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { userLogout, createSession } from '../actions';
 
 class ReduxLogin extends Component {
   handleLogoutFinished = (error, result) => {
+    Actions.MainScene({ type: 'reset' });
     if (error) {
       alert(`Logout failed with error: ${result.error}`);
     } else {
