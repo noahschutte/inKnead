@@ -1,7 +1,6 @@
 import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
-  DIRECT_TO_LOGIN,
   USER_VERIFIED,
   HANDLE_USER_LOGOUT,
   HANDLE_USER_DONATION,
@@ -30,9 +29,6 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case DIRECT_TO_LOGIN:
-      Actions.LoginScene();
-      return state;
     case REDIRECT:
       switch (action.payload.scene) {
         case 'EntryScene':
