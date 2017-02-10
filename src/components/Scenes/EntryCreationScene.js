@@ -47,7 +47,7 @@ class EntryCreationScene extends Component {
       name: videoKey,
       type: 'video/quicktime'
     };
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
+    fetch('https://in-knead-jamowelling.c9users.io/requests', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ class EntryCreationScene extends Component {
               Actions.MainScene({ type: 'reset' });
             } else {
               console.log('failure');
-              fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests/1', {
+              fetch('https://in-knead-jamowelling.c9users.io/requests/1', {
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json'

@@ -37,6 +37,12 @@ export default (state = INITIAL_STATE, action) => {
         case 'ProfileScene':
           Actions.ProfileScene({ type: 'reset' });
           return state;
+        case 'InstructionsScene':
+          Actions.InstructionsScene({
+            recipientEmail: action.payload.parameter.recipientEmail,
+            entry: action.payload.parameter.entry
+          });
+          return state;
         default:
           Actions.pop();
           return state;

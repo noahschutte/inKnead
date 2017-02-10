@@ -28,6 +28,7 @@ class InstructionsScene extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Text style={{ textAlign: 'center' }}>Instructions Scene</Text>
+        <Text style={{ textAlign: 'center' }}>{this.props.recipientEmail}</Text>
       </View>
     );
   }

@@ -9,7 +9,7 @@ import {
 export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: null }) => {
   return (dispatch) => {
     dispatch({ type: CREATE_SESSION_START });
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
+    fetch('https://in-knead-jamowelling.c9users.io/users', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'

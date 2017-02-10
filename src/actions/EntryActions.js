@@ -8,12 +8,12 @@ import {
   TOGGLE_SCOPE,
   SHOW_ENTRIES,
   TOGGLE_SIDE_MENU,
+  REDIRECT,
 } from './types';
 
 export const confirmDonation = (donatorId, entry) => {
-  alert(donatorId);
   return (dispatch) => {
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entry.id}`, {
+    fetch(`https://in-knead-jamowelling.c9users.io/requests/${entry.id}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -42,10 +42,17 @@ export const confirmDonation = (donatorId, entry) => {
             recipientEmail: anonEmail,
           }
         });
+        dispatch({
+          type: REDIRECT,
+          payload: {
+            scene: 'InstructionsScene',
+            parameter: {
+              recipientEmail: anonEmail,
+              entry,
+            }
+          }
+        });
       }
-    })
-    .then(() => {
-      Actions.NotificationsScene();
     })
     .catch(error => console.error(error));
   };
@@ -54,7 +61,7 @@ export const confirmDonation = (donatorId, entry) => {
 export const getEntries = () => {
   return (dispatch) => {
     dispatch({ type: GET_ENTRIES });
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
+    fetch('https://in-knead-jamowelling.c9users.io/requests', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
