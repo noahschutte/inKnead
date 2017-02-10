@@ -21,9 +21,9 @@ class Entries extends Component {
     this.setState({ dataSource: ds.cloneWithRows(this._genRows(array)) });
   }
 
-  _genRows(length) {
+  _genRows(array) {
     const result = [];
-    for (const index of length) {
+    for (const index of array) {
       result.push(index);
     }
     return result;

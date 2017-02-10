@@ -33,7 +33,10 @@ class MainScene extends Component {
       case 'All':
         return [...requests, ...thankYous];
       case 'Requests':
-        return requests.filter(request => request.donor_id === null);
+        if (requests) {
+          return requests.filter(request => request.donor_id === null);
+        }
+        return [];
       case 'Thanks':
         return thankYous;
       case 'Fulfilled':
@@ -126,7 +129,7 @@ const mapStateToProps = ({ entries, user }) => {
   const {
     userData,
     activeDonation,
-    anonEmail,
+    recipientEmail,
     recentSuccessfulRequest,
     recentThankYou,
   } = user;
@@ -134,7 +137,7 @@ const mapStateToProps = ({ entries, user }) => {
   return {
     userData,
     activeDonation,
-    anonEmail,
+    recipientEmail,
     recentSuccessfulRequest,
     recentThankYou,
     requests,

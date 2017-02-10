@@ -1,4 +1,3 @@
-import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_START,
   CREATE_SESSION_SUCCESS,
@@ -7,7 +6,7 @@ import {
   REDIRECT,
 } from './types';
 
-export const createSession = (userInfo, redirect) => {
+export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: null }) => {
   return (dispatch) => {
     dispatch({ type: CREATE_SESSION_START });
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
@@ -21,14 +20,12 @@ export const createSession = (userInfo, redirect) => {
     .then((response) => response.json())
     .then(responseJson => {
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
-      if (redirect) {
-        dispatch({ type: REDIRECT, payload: redirect });
-      } else {
-        Actions.MainScene({ type: 'reset' });
-      }
       if (responseJson.user.current_email) {
         dispatch({ type: USER_VERIFIED, payload: true });
       }
+    })
+    .then(() => {
+      dispatch({ type: REDIRECT, payload: redirect });
     })
     .catch(error => console.log(error));
   };
