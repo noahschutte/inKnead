@@ -6,26 +6,27 @@ import {
   UPDATE_ENTRIES,
   HANDLE_USER_DONATION,
   TOGGLE_SCOPE,
-  DIRECT_TO_LOGIN,
   SHOW_ENTRIES,
   TOGGLE_SIDE_MENU,
 } from './types';
 
 export const confirmDonation = (donatorId, entry) => {
-  return dispatch => {
+  alert(donatorId);
+  return (dispatch) => {
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entry.id}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'PATCH',
-      body: JSON.stringify({ donatorId })
+      body: JSON.stringify({ userID: donatorId })
     })
     .then(response => response.json())
     .then(responseJson => {
       if (responseJson.errorMessage) {
         console.error(responseJson.errorMessage);
       } else {
+        console.log(responseJson);
         const { requests, thankYous, anonEmail } = responseJson;
         dispatch({
           type: UPDATE_ENTRIES,
@@ -84,11 +85,7 @@ export const sortEntries = (key) => {
 export const toggleScope = (currentScope, userData = null) => {
   if (currentScope === 'requests_and_thank_yous') {
     if (!userData) {
-      return (dispatch) => {
-        dispatch({
-          type: DIRECT_TO_LOGIN
-        });
-      };
+      Actions.LoginScene();
     }
     return (dispatch) => {
       dispatch({

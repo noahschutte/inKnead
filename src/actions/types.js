@@ -6,7 +6,6 @@ export const UPDATE_ENTRIES = 'update_entries';
 export const SHOW_ENTRIES = 'show_entries';
 export const TOGGLE_SCOPE = 'toggle_scope';
 export const TOGGLE_SIDE_MENU = 'toggle_side_menu';
-export const DIRECT_TO_LOGIN = 'direct_to_login';
 
 export const CREATE_SESSION_START = 'create_session_start';
 export const CREATE_SESSION_SUCCESS = 'create_session_success';
