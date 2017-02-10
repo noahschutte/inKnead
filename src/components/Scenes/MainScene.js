@@ -33,7 +33,10 @@ class MainScene extends Component {
       case 'All':
         return [...requests, ...thankYous];
       case 'Requests':
-        return requests.filter(request => request.donor_id === null);
+        if (requests) {
+          return requests.filter(request => request.donor_id === null);
+        }
+        return [];
       case 'Thanks':
         return thankYous;
       case 'Fulfilled':

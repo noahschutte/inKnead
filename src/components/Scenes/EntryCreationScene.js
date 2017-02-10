@@ -92,11 +92,6 @@ class EntryCreationScene extends Component {
                 method: 'DELETE',
                 body: JSON.stringify({ videoKey })
               })
-              .then((response) => response.json())
-              .then((responseJSON) => {
-                console.log(responseJSON);
-                that.setState({ uploading: false });
-              })
               .catch((error) => {
                 console.error(error);
               });
