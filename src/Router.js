@@ -12,6 +12,7 @@ import UserHistoryScene from './components/Scenes/UserHistoryScene';
 import LoginScene from './components/Scenes/LoginScene';
 import LoadingScene from './components/Scenes/LoadingScene';
 import UploadingScene from './components/Scenes/UploadingScene';
+import InstructionsScene from './components/Scenes/InstructionsScene';
 
 const RouterComponent = () => {
   return (
@@ -20,6 +21,10 @@ const RouterComponent = () => {
         initial
         key="InitialScene"
         component={InitialScene}
+      />
+      <Scene
+        key="InstructionsScene"
+        component={InstructionsScene}
       />
       <Scene
         key="LoadingScene"
