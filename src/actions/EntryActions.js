@@ -13,7 +13,7 @@ import {
 
 export const confirmDonation = (donatorId, entry) => {
   return (dispatch) => {
-    fetch(`https://in-knead-jamowelling.c9users.io/requests/${entry.id}`, {
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entry.id}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ export const confirmDonation = (donatorId, entry) => {
 export const getEntries = () => {
   return (dispatch) => {
     dispatch({ type: GET_ENTRIES });
-    fetch('https://in-knead-jamowelling.c9users.io/requests', {
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
