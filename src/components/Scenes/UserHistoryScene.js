@@ -29,6 +29,7 @@ class UserHistoryScene extends Component {
         />
         <View style={{ flex: 9 }}>
           <Entries
+            origin='UserHistoryScene'
             entryRows={entryRows}
             getEntries={() => getUserEntries(userId)}
             loading={loading}

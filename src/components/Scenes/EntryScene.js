@@ -57,6 +57,7 @@ class EntryScene extends Component {
 
   render() {
     const { entry } = this.props;
+    const showUserHistory = (this.props.origin === 'MainScene');
     return (
       <View style={styles.container}>
         <NavBar
@@ -70,6 +71,7 @@ class EntryScene extends Component {
             paused={this.state.paused}
           />
           <EntryDetails
+            showUserHistory={showUserHistory}
             entryData={entry}
             navigateToUser={this.navigateToUser}
             onDonatePress={this.onDonatePress}

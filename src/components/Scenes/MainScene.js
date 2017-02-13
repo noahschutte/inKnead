@@ -104,6 +104,7 @@ class MainScene extends Component {
             onPress={sortEntries}
           />
           <Entries
+            origin='MainScene'
             entryRows={entryRows}
             getEntries={getEntries}
             loading={loading}

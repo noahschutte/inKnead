@@ -6,23 +6,29 @@ import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
-const EntryDetails = ({ entryData, navigateToUser, onDonatePress }) => {
+const EntryDetails = ({ entryData, navigateToUser, onDonatePress, showUserHistory }) => {
   const { pizzas, vendor, seconds, creator_id } = entryData;
+  let userHistoryButton;
+  if (showUserHistory) {
+    userHistoryButton = (
+      <Button
+         touchableOpacity
+         style={{ buttonStyle: styles.userHistoryButton }}
+         onPress={() => navigateToUser(creator_id)}
+      >
+        <Text
+          style={styles.userHistoryText}
+        >
+          User History
+        </Text>
+      </Button>
+    );
+  }
     return (
       <View style={{ flex: 5 }}>
         <DetailSection style={{ justifyContent: 'space-between' }}>
           <TimeAgo secondsOld={seconds} />
-          <Button
-             touchableOpacity
-             style={{ buttonStyle: styles.userHistoryButton }}
-             onPress={() => navigateToUser(creator_id)}
-          >
-            <Text
-              style={styles.userHistoryText}
-            >
-              User History
-            </Text>
-          </Button>
+          {userHistoryButton}
         </DetailSection>
 
         <DetailSection bannerText='REQUESTED'>
