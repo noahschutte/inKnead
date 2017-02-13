@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Clipboard, Linking, TouchableOpacity, View, Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import NavBar from '../NavBar';
+import DetailSection from '../DetailSection';
 
 const vendors = {
   'Pizza Hut': 'https://pizzahutstore.wgiftcard.com/chrome/pizzahut/',
@@ -8,6 +11,12 @@ const vendors = {
 };
 
 class InstructionsScene extends Component {
+
+  state = {
+    copied: false,
+    content: '',
+    errorMessage: '',
+  };
 
   handleVendorSite = vendorURL => {
     Linking.openURL(vendorURL);
@@ -25,13 +34,107 @@ class InstructionsScene extends Component {
   };
 
   render() {
+    const { stepOneStyle, email, stepTwoStyle, hyperlinkButton, hyperlink } = styles;
+    let status;
+    let statusText;
+    let stepTwo;
+    let completed;
+
+    if (this.state.copied) {
+      completed = {
+        textDecorationLine: 'line-through',
+        color: '#bcbcbc',
+      };
+      status = {
+        paddingTop: 15,
+        fontWeight: 'bold',
+        color: 'green',
+      };
+      statusText = 'Copied!';
+      stepTwo = (
+        <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+          <Text style={stepTwoStyle}>Step 2:</Text>
+          <Text style={stepTwoStyle}>
+            Great! Now paste that email address into the "recipient email" form on the following page and complete your donation!</Text>
+          <TouchableOpacity
+            onPress={() => this.handleVendorSite(vendors[this.props.entry.vendor])}
+            style={hyperlinkButton}
+          >
+            <Text style={hyperlink}>
+              {this.props.entry.vendor}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      statusText = 'Not Copied Yet';
+      status = {
+        paddingTop: 15,
+        fontWeight: 'bold',
+        color: 'red',
+      };
+    }
     return (
       <View style={{ flex: 1 }}>
-        <Text style={{ textAlign: 'center' }}>Instructions Scene</Text>
-        <Text style={{ textAlign: 'center' }}>{this.props.recipientEmail}</Text>
+        <NavBar
+          leftButton='backButton'
+          onLeftPress={Actions.pop}
+        />
+        <View style={{ flex: 9 }}>
+          <DetailSection style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Text style={[stepOneStyle, completed]}>Step 1: Tap the email below to copy it</Text>
+            <Text style={[stepOneStyle, email, completed]} onPress={this._setClipboardContent}>
+              {this.props.recipientEmail}
+            </Text>
+            <Text style={status}>Status: {statusText}</Text>
+          </DetailSection>
+          <DetailSection>
+            {stepTwo}
+          </DetailSection>
+        </View>
       </View>
     );
   }
 }
+
+const styles = {
+  stepOneStyle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingBottom: 5,
+    paddingTop: 15,
+    textDecorationLine: 'none',
+    color: 'black',
+  },
+  email: {
+    fontSize: 20,
+    color: 'black',
+    textShadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    textShadowRadius: 4,
+  },
+  stepTwoStyle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  status: {
+    paddingTop: 15,
+    fontWeight: 'bold',
+    color: 'green',
+  },
+  hyperlinkButton: {
+    marginTop: 30,
+    padding: 10,
+    backgroundColor: '#ce0000',
+    marginBottom: 10,
+    borderRadius: 2,
+  },
+  hyperlink: {
+    color: 'white',
+    fontWeight: 'bold',
+  }
+};
 
 export default InstructionsScene;
