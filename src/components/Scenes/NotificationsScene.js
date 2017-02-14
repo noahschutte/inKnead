@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { redirectTo } from '../../actions';
@@ -12,13 +12,14 @@ class NotificationsScene extends Component {
     const { redirectTo } = this.props;
     const content = this.props.notifications.map(notification => {
       return (
-        <Button
-          touchableOpacity
-          key={notification.text}
-          onPress={() => redirectTo(notification.redirect)}
-        >
-          <Text>{notification.text}</Text>
-        </Button>
+        <View key={notification.text} style={{ marginTop: 5 }}>
+          <Button
+            touchableOpacity
+            onPress={() => redirectTo(notification.redirect)}
+          >
+            {notification.text}
+          </Button>
+        </View>
       );
     });
     return (
@@ -28,7 +29,6 @@ class NotificationsScene extends Component {
           onLeftPress={Actions.pop}
         />
         <View style={{ flex: 9 }}>
-          <Text>NOTIFICATIONS SCENE</Text>
           {content}
         </View>
       </View>
