@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import {
   createSession,
-  getEntries
+  getEntries,
+  redirectTo
 } from '../../actions';
 import SpinningPizza from '../SpinningPizza';
 
-const InitialScene = ({ getEntries, createSession }) => {
+const InitialScene = ({ getEntries, createSession, redirectTo }) => {
   getEntries();
   AccessToken.getCurrentAccessToken().then(
     data => {
@@ -34,6 +35,8 @@ const InitialScene = ({ getEntries, createSession }) => {
           responseInfoCallback
         );
         new GraphRequestManager().addRequest(infoRequest).start();
+      } else {
+        redirectTo({ scene: 'MainScene' });
       }
     }
   );
@@ -72,4 +75,5 @@ const styles = {
 export default connect(null, {
   createSession,
   getEntries,
+  redirectTo,
 })(InitialScene);
