@@ -54,15 +54,6 @@ class Button extends Component {
         paddingTop: 10,
         paddingBottom: 10,
       },
-      buttonStyle: {
-        alignSelf: 'stretch',
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        borderWidth: 2,
-        borderColor: '#ce0000',
-        marginLeft: 5,
-        marginRight: 5,
-      },
     };
   }
 
@@ -70,8 +61,9 @@ class Button extends Component {
     const {
       children,
       onPress,
+      buttonStyle
     } = props;
-    const { textStyle, buttonStyle } = this.determineStyles();
+    const { textStyle } = this.determineStyles();
 
     let content;
     const { touchType, childType } = this.determineButtonType(props);

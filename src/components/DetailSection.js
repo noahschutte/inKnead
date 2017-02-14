@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const DetailSection = ({ bannerText, children, style }) => {
-  const { bannerStyle, bannerTextStyle, contentStyle, placeholderStyle } = styles;
+const DetailSection = ({ bannerText, children, style, contentStyle }, props) => {
+  const { bannerStyle, bannerTextStyle, contentStyling, placeholderStyle } = styles;
   let banner;
 
   if (bannerText) {
     banner = (
-      <View style={bannerStyle}>
+      <View style={[bannerStyle, props.bannerStyle]}>
         <Text style={bannerTextStyle}>{bannerText}</Text>
       </View>
     );
@@ -15,20 +15,20 @@ const DetailSection = ({ bannerText, children, style }) => {
   let content;
   if (typeof children === 'string') {
     content = (
-      <View style={[contentStyle, style]}>
+      <View style={[contentStyling, contentStyle]}>
         <Text style={placeholderStyle}>{children}</Text>
       </View>
     );
   } else {
     content = (
-      <View style={[contentStyle, style]}>
+      <View style={[contentStyling, contentStyle]}>
         {children}
       </View>
     );
   }
 
   return (
-    <View style={{ margin: 3, backgroundColor: 'white', borderRadius: 2 }}>
+    <View style={[{ margin: 3, backgroundColor: 'white', borderRadius: 2 }, style]}>
       {banner}
       {content}
     </View>
@@ -48,10 +48,10 @@ const styles = {
   bannerTextStyle: {
     color: '#fff'
   },
-  contentStyle: {
+  contentStyling: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignSelf: 'stretch',
+    // alignSelf: 'stretch',
     padding: 5,
   },
   placeHolderStyle: {
