@@ -1,5 +1,4 @@
 import {
-  CREATE_SESSION_START,
   CREATE_SESSION_SUCCESS,
   USER_VERIFIED,
   HANDLE_USER_LOGOUT,
@@ -8,7 +7,6 @@ import {
 
 export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: null }) => {
   return (dispatch) => {
-    dispatch({ type: CREATE_SESSION_START });
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
       headers: {
         Accept: 'application/json',
