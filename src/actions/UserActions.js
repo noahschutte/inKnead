@@ -1,6 +1,7 @@
 import {
   CREATE_SESSION_SUCCESS,
   USER_VERIFIED,
+  EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
   REDIRECT,
 } from './types';
@@ -20,6 +21,8 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
       if (responseJson.user.current_email) {
         dispatch({ type: USER_VERIFIED, payload: true });
+      } else {
+        dispatch({ type: EMAIL_NOT_VERIFIED, payload: responseJson.user.signupEmail });
       }
     })
     .then(() => {
