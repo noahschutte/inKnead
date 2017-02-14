@@ -3,6 +3,7 @@ import {
   USER_VERIFIED,
   EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
+  UPDATE_EMAIL,
   REDIRECT,
 } from './types';
 
@@ -20,7 +21,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
     .then(responseJson => {
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
       if (responseJson.user.current_email) {
-        dispatch({ type: USER_VERIFIED, payload: true });
+        dispatch({ type: USER_VERIFIED });
       } else {
         dispatch({ type: EMAIL_NOT_VERIFIED, payload: responseJson.user.signupEmail });
       }
@@ -29,6 +30,30 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
       dispatch({ type: REDIRECT, payload: redirect });
     })
     .catch(error => console.log(error));
+  };
+};
+
+export const updateEmail = (updatedEmail, userID) => {
+  return (dispatch) => {
+    dispatch({ type: USER_VERIFIED });
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'PATCH',
+      body: JSON.stringify({ updatedEmail })
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      if (responseJson.currentEmail) {
+        dispatch({ type: UPDATE_EMAIL, payload: responseJson.currentEmail });
+        dispatch({ type: REDIRECT, payload: { scene: 'ProfileScene' }});
+      } else {
+        alert('failed to update email');
+      }
+    })
+    .catch(error => console.err(error));
   };
 };
 

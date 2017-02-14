@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import { updateEmail } from '../../actions';
 import NavBar from '../NavBar';
 import DetailSection from '../DetailSection';
 import Button from '../Button2';
@@ -47,6 +49,7 @@ class EmailVerifyScene extends Component {
             </Button>
             <Button
               touchableOpacity
+              onPress={() => this.props.updateEmail(this.state.newEmailText, this.props.userID)}
               buttonStyle={{ backgroundColor: '#ce0000' }}
             >
               <Text style={styles.buttonStyle}>Save</Text>
@@ -73,4 +76,10 @@ const styles = {
   }
 };
 
-export default EmailVerifyScene;
+const mapStateToProps = ({ user }) => {
+  const currentEmail = user.userData.current_email;
+  const userID = user.userData.id;
+  return { currentEmail, userID };
+};
+
+export default connect(mapStateToProps, { updateEmail })(EmailVerifyScene);

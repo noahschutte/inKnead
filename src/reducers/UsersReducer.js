@@ -3,6 +3,7 @@ import {
   CREATE_SESSION_SUCCESS,
   USER_VERIFIED,
   EMAIL_NOT_VERIFIED,
+  UPDATE_EMAIL,
   HANDLE_USER_LOGOUT,
   HANDLE_USER_DONATION,
   REDIRECT,
@@ -70,7 +71,7 @@ export default (state = INITIAL_STATE, action) => {
     case USER_VERIFIED:
       return {
         ...state,
-        userVerified: action.payload
+        userVerified: true
       };
     case EMAIL_NOT_VERIFIED:
       return {
@@ -86,6 +87,14 @@ export default (state = INITIAL_STATE, action) => {
             },
           },
         ],
+      };
+    case UPDATE_EMAIL:
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          current_email: action.payload,
+        }
       };
     case HANDLE_USER_LOGOUT:
       return INITIAL_STATE;
