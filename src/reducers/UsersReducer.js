@@ -2,6 +2,7 @@ import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
   USER_VERIFIED,
+  EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
   HANDLE_USER_DONATION,
   REDIRECT,
@@ -20,6 +21,7 @@ const INITIAL_STATE = {
     }
   */
   userData: null,
+  notifications: {},
   userVerified: false,
   activeDonation: null,
   recipientEmail: '',
@@ -46,6 +48,12 @@ export default (state = INITIAL_STATE, action) => {
             entry: action.payload.parameter.entry
           });
           return state;
+        case 'EmailVerifyScene':
+          Actions.EmailVerifyScene({
+            currentEmail: state.userData.current_email,
+            signupEmail: state.userData.signup_email
+          });
+          return state;
         default:
           Actions.pop();
           return state;
@@ -63,6 +71,21 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userVerified: action.payload
+      };
+    case EMAIL_NOT_VERIFIED:
+      return {
+        ...state,
+        userVerified: false,
+        notifications: [
+          ...state.notifications,
+          {
+            text: 'Please verify your email',
+            redirect: {
+              scene: 'EmailVerifyScene',
+              parameter: action.payload,
+            },
+          },
+        ],
       };
     case HANDLE_USER_LOGOUT:
       return INITIAL_STATE;

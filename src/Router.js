@@ -13,6 +13,7 @@ import LoginScene from './components/Scenes/LoginScene';
 import LoadingScene from './components/Scenes/LoadingScene';
 import UploadingScene from './components/Scenes/UploadingScene';
 import InstructionsScene from './components/Scenes/InstructionsScene';
+import EmailVerifyScene from './components/Scenes/EmailVerifyScene';
 
 const RouterComponent = () => {
   return (
@@ -25,6 +26,10 @@ const RouterComponent = () => {
       <Scene
         key="InstructionsScene"
         component={InstructionsScene}
+      />
+      <Scene
+        key="EmailVerifyScene"
+        component={EmailVerifyScene}
       />
       <Scene
         key="LoadingScene"
