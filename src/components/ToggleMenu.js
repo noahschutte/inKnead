@@ -5,6 +5,10 @@ import { defaultProfileImage } from '../assets';
 import SideMenuButton from './SideMenuButton';
 
 const ToggleMenu = (props) => {
+  let notificationAlert;
+  if (props.doesHaveNotifications) {
+    notificationAlert = '!';
+  }
   return (
     <View style={styles.container}>
 
@@ -17,7 +21,9 @@ const ToggleMenu = (props) => {
       </SideMenuButton>
 
       <SideMenuButton onPress={() => Actions.NotificationsScene()}>
-        <Text style={styles.textStyle}>Notifications</Text>
+        <Text style={styles.textStyle}>
+          Notifications <Text style={styles.notificationAlertStyle}> {notificationAlert}</Text>
+        </Text>
       </SideMenuButton>
 
       <SideMenuButton onPress={() => Actions.HowToScene()}>
@@ -51,6 +57,10 @@ const styles = {
     fontSize: 20,
     color: 'white',
     fontFamily: 'Gillsans',
+  },
+  notificationAlertStyle: {
+    fontWeight: 'bold',
+    fontSize: 25,
   },
 };
 
