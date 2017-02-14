@@ -31,6 +31,9 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REDIRECT:
       switch (action.payload.scene) {
+        case 'MainScene':
+          Actions.MainScene({ type: 'reset' });
+          return state;
         case 'EntryScene':
           Actions.EntryScene({ entry: action.payload.parameter });
           return state;

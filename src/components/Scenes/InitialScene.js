@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import {
@@ -9,8 +8,8 @@ import {
 } from '../../actions';
 import SpinningPizza from '../SpinningPizza';
 
-const InitialScene = props => {
-  props.getEntries();
+const InitialScene = ({ getEntries, createSession }) => {
+  getEntries();
   AccessToken.getCurrentAccessToken().then(
     data => {
       if (data) {
@@ -19,7 +18,7 @@ const InitialScene = props => {
           if (error) {
             alert(`Error fetching data: ${error.toSTring()}`);
           } else {
-            props.createSession(result);
+            createSession(result, { scene: 'MainScene' });
           }
         };
         const infoRequest = new GraphRequest(
@@ -37,12 +36,7 @@ const InitialScene = props => {
         new GraphRequestManager().addRequest(infoRequest).start();
       }
     }
-  )
-  .then(() => {
-    setTimeout(() => {
-      Actions.MainScene({ type: 'reset' });
-    }, 2000);
-  });
+  );
   return (
     <View style={styles.containerStyle}>
       <SpinningPizza />

@@ -56,6 +56,7 @@ class EntryScene extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { entry } = this.props;
     const showUserHistory = (this.props.origin === 'MainScene');
     return (
