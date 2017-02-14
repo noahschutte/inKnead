@@ -25,9 +25,9 @@ class MainScene extends Component {
       thankYous,
       userRequests,
       userFulfilled,
-      userData,
       userThankYous
-    } = this.props;
+    } = this.props.entries;
+    const userID = this.props.user.userData.id;
 
     switch (shown) {
       case 'All':
@@ -46,7 +46,7 @@ class MainScene extends Component {
       case 'Received':
         return userFulfilled;
       case 'Donated':
-        return requests.filter(request => (request.donor_id === userData.id));
+        return requests.filter(request => (request.donor_id === userID));
       case 'Gratitude':
         return userThankYous;
       default:
@@ -57,27 +57,17 @@ class MainScene extends Component {
   assembleOptions = () => {
     const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
     const userHistoryOptions = ['Requested', 'Received', 'Donated', 'Gratitude'];
-    if (this.props.scope === 'requests_and_thank_yous') {
+    if (this.props.entries.scope === 'requests_and_thank_yous') {
       return globalOptions;
     }
     return userHistoryOptions;
   }
 
   render() {
-    const {
-      shown,
-      toggleScope,
-      scope,
-      loading,
-      getEntries,
-      sortEntries,
-      sideMenuOpen,
-      sideMenuToggle,
-      userData
-    } = this.props;
-
+    const { shown, scope, loading, sideMenuOpen } = this.props.entries;
+    const userData = this.props.user.userData;
     const togglePress = () => {
-      sideMenuToggle(sideMenuOpen);
+      this.props.sideMenuToggle(sideMenuOpen);
     };
     const menu = <ToggleMenu togglePress={togglePress} userData={userData} />;
     const entryRows = this.getEntryRows();
@@ -96,17 +86,17 @@ class MainScene extends Component {
             title={scope}
             onRightPress={Actions.EntryCreationScene}
             onLeftPress={togglePress}
-            onTitlePress={() => toggleScope(scope, userData)}
+            onTitlePress={() => this.props.toggleScope(scope, userData)}
           />
           <SortBar
             options={this.assembleOptions()}
             shown={shown}
-            onPress={sortEntries}
+            onPress={this.props.sortEntries}
           />
           <Entries
             origin='MainScene'
             entryRows={entryRows}
-            getEntries={getEntries}
+            getEntries={this.props.getEntries}
             loading={loading}
           />
         </View>
@@ -116,41 +106,7 @@ class MainScene extends Component {
 }
 
 const mapStateToProps = ({ entries, user }) => {
-  const {
-    requests,
-    thankYous,
-    userRequests,
-    userThankYous,
-    userFulfilled,
-    shown,
-    loading,
-    scope,
-    sideMenuOpen
-  } = entries;
-  const {
-    userData,
-    activeDonation,
-    recipientEmail,
-    recentSuccessfulRequest,
-    recentThankYou,
-  } = user;
-
-  return {
-    userData,
-    activeDonation,
-    recipientEmail,
-    recentSuccessfulRequest,
-    recentThankYou,
-    requests,
-    thankYous,
-    userRequests,
-    userThankYous,
-    userFulfilled,
-    shown,
-    loading,
-    scope,
-    sideMenuOpen
-  };
+  return { user, entries };
 };
 
 export default connect(mapStateToProps, {
