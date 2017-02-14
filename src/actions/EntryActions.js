@@ -93,22 +93,23 @@ export const toggleScope = (currentScope, userData = null) => {
   if (currentScope === 'requests_and_thank_yous') {
     if (!userData) {
       Actions.LoginScene();
-    }
-    return (dispatch) => {
-      dispatch({
-        type: TOGGLE_SCOPE,
-        payload: {
-          scope: 'user_history',
-          shown: 'Requested',
-        }
-      });
-      if (userData) {
+    } else {
+      return (dispatch) => {
         dispatch({
-          type: GET_USER_ENTRIES,
-          payload: userData.id
+          type: TOGGLE_SCOPE,
+          payload: {
+            scope: 'user_history',
+            shown: 'Requested',
+          }
         });
-      }
-    };
+        if (userData) {
+          dispatch({
+            type: GET_USER_ENTRIES,
+            payload: userData.id
+          });
+        }
+      };
+    }
   }
   return ({
     type: TOGGLE_SCOPE,

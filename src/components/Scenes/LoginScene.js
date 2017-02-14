@@ -25,7 +25,7 @@ class LoginScene extends Component {
       <View style={container}>
         <NavBar
           leftButton='backButton'
-          onLeftPress={() => Actions.pop()}
+          onLeftPress={Actions.pop}
         />
         <View style={top}>
           <Image style={image} source={pizzaOnPlate} />
