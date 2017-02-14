@@ -39,10 +39,7 @@ export default (state = INITIAL_STATE, action) => {
         uploadPercentage: action.payload
       };
     case UPLOAD_COMPLETE:
-      return {
-        ...state,
-        uploadPercentage: 101,
-      };
+      return INITIAL_STATE;
     case HANDLE_ERRORS:
       return {
         ...state,
