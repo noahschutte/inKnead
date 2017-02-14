@@ -83,7 +83,6 @@ export default (state = INITIAL_STATE, action) => {
             text: 'Please verify your email',
             redirect: {
               scene: 'EmailVerifyScene',
-              parameter: action.payload,
             },
           },
         ],

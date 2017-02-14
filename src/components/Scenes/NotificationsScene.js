@@ -8,7 +8,6 @@ import Button from '../Button2';
 
 class NotificationsScene extends Component {
   render() {
-    console.log(this.props);
     const { redirectTo } = this.props;
     let content;
     if (this.props.notifications.length > 0) {
