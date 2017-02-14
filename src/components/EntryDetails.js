@@ -6,7 +6,13 @@ import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
-const EntryDetails = ({ entryData, navigateToUser, onButtonPress, buttonText, showUserHistory }) => {
+const EntryDetails = ({
+  entryData,
+  navigateToUser,
+  onButtonPress,
+  buttonText,
+  showUserHistory
+}) => {
   const { pizzas, vendor, seconds, creator_id } = entryData;
   let userHistoryButton;
   let bannerText;
@@ -15,7 +21,7 @@ const EntryDetails = ({ entryData, navigateToUser, onButtonPress, buttonText, sh
     userHistoryButton = (
       <Button
          touchableOpacity
-         style={{ buttonStyle: styles.userHistoryButton }}
+         buttonStyle={styles.userHistoryButton}
          onPress={() => navigateToUser(creator_id)}
       >
         <Text
@@ -39,7 +45,7 @@ const EntryDetails = ({ entryData, navigateToUser, onButtonPress, buttonText, sh
 
   return (
     <View style={{ flex: 5 }}>
-      <DetailSection style={{ justifyContent: 'space-between' }}>
+      <DetailSection contentStyle={{ justifyContent: 'space-between' }}>
         <TimeAgo secondsOld={seconds} />
         {userHistoryButton}
       </DetailSection>

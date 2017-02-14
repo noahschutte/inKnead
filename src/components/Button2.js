@@ -40,30 +40,13 @@ class Button extends Component {
     return result;
   }
 
-  determineStyles = () => {
-    const { style } = this.props;
-    if (style) {
-      return style;
-    }
-    return {
-      textStyle: {
-        alignSelf: 'center',
-        color: '#007aff',
-        fontSize: 16,
-        fontWeight: '600',
-        paddingTop: 10,
-        paddingBottom: 10,
-      },
-    };
-  }
-
   assembleButton = (props) => {
     const {
       children,
       onPress,
-      buttonStyle
+      buttonStyle,
+      textStyle
     } = props;
-    const { textStyle } = this.determineStyles();
 
     let content;
     const { touchType, childType } = this.determineButtonType(props);
