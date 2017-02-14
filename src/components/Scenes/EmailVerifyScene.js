@@ -28,13 +28,29 @@ class EmailVerifyScene extends Component {
               onChangeText={this.updateEmailText}
               maxLength={254}
               autoCorrect={false}
+              keyboardType='email-address'
               autOCapitalize='none'
               value={this.state.newEmailText}
+              style={{ flex: 1, marginHorizontal: 15, textAlign: 'center' }}
             />
           </DetailSection>
-          <DetailSection style={styles.buttonSectionStyle} contentStyle={{ justifyContent: 'space-around' }}>
-            <Button touchableOpacity buttonStyle={{ backgroundColor: '#bebebe', borderColor: '#bebebe' }} ><Text style={[styles.buttonStyle]}>Cancel</Text></Button>
-            <Button touchableOpacity buttonStyle={{ backgroundColor: '#ce0000' }} ><Text style={styles.buttonStyle}>Save</Text></Button>
+          <DetailSection
+            style={styles.buttonSectionStyle}
+            contentStyle={{ justifyContent: 'space-around' }}
+          >
+            <Button
+              touchableOpacity
+              onPress={Actions.pop}
+              buttonStyle={{ backgroundColor: '#bebebe', borderColor: '#bebebe' }}
+            >
+              <Text style={[styles.buttonStyle]}>Cancel</Text>
+            </Button>
+            <Button
+              touchableOpacity
+              buttonStyle={{ backgroundColor: '#ce0000' }}
+            >
+              <Text style={styles.buttonStyle}>Save</Text>
+            </Button>
           </DetailSection>
         </View>
       </View>
