@@ -27,7 +27,10 @@ class MainScene extends Component {
       userFulfilled,
       userThankYous
     } = this.props.entries;
-    const userID = this.props.user.userData.id;
+    let userID;
+    if (this.props.user.userData) {
+      userID = this.props.user.userData.id;
+    }
 
     switch (shown) {
       case 'All':
@@ -54,6 +57,10 @@ class MainScene extends Component {
     }
   }
 
+  doesHaveNotifications = () => {
+    return this.props.user.notifications.length > 0;
+  }
+
   assembleOptions = () => {
     const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
     const userHistoryOptions = ['Requested', 'Received', 'Donated', 'Gratitude'];
@@ -69,7 +76,13 @@ class MainScene extends Component {
     const togglePress = () => {
       this.props.sideMenuToggle(sideMenuOpen);
     };
-    const menu = <ToggleMenu togglePress={togglePress} userData={userData} />;
+    const menu = (
+      <ToggleMenu
+        doesHaveNotifications={this.doesHaveNotifications()}
+        togglePress={togglePress}
+        userData={userData}
+      />
+    );
     const entryRows = this.getEntryRows();
 
     return (
