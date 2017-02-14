@@ -4,17 +4,17 @@ import { Actions } from 'react-native-router-flux';
 import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 
-const Entry = ({ selectedRequest, origin }) => {
+const Entry = ({ userEntry, selectedRequest, origin }) => {
   const {
     seconds,
     pizzas,
     thumbnail,
   } = selectedRequest;
-  console.log(selectedRequest);
+  console.log(userEntry);
   return (
     <TouchableOpacity
       onPress={() => Actions.EntryScene({ entry: selectedRequest, origin })}
-      style={styles.container}
+      style={[styles.container, (userEntry ? styles.userEntry : null)]}
     >
 
       <View style={styles.thumbnailContainer}>
@@ -42,6 +42,9 @@ const styles = {
     borderBottomColor: '#BDBDBD',
     borderBottomWidth: 1,
     padding: 5,
+  },
+  userEntry: {
+    backgroundColor: '#ceabab',
   },
   thumbnailContainer: {
     flex: 3,

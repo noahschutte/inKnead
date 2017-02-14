@@ -54,7 +54,11 @@ class Entries extends Component {
           dataSource={dataSource}
           renderRow={
             (rowData) => (
-              <Entry origin={this.props.origin} selectedRequest={rowData} />
+              <Entry
+                userEntry={this.props.userID === rowData.creator_id}
+                origin={this.props.origin}
+                selectedRequest={rowData}
+              />
             )
           }
           enableEmptySections
