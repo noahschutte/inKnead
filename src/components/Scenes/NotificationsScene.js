@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { redirectTo } from '../../actions';
@@ -10,18 +10,23 @@ class NotificationsScene extends Component {
   render() {
     console.log(this.props);
     const { redirectTo } = this.props;
-    const content = this.props.notifications.map(notification => {
-      return (
-        <View key={notification.text} style={{ marginTop: 5 }}>
-          <Button
-            touchableOpacity
-            onPress={() => redirectTo(notification.redirect)}
-          >
-            {notification.text}
-          </Button>
-        </View>
-      );
-    });
+    let content;
+    if (this.props.notifications.length > 0) {
+      content = this.props.notifications.map(notification => {
+        return (
+          <View key={notification.text} style={{ marginTop: 5 }}>
+            <Button
+              touchableOpacity
+              onPress={() => redirectTo(notification.redirect)}
+            >
+              {notification.text}
+            </Button>
+          </View>
+        );
+      });
+    } else {
+      content = <Text style={{ textAlign: 'center', marginTop: 50 }}>Nothing to show...</Text>;
+    }
     return (
       <View style={{ flex: 1 }}>
         <NavBar
