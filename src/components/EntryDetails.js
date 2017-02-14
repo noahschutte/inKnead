@@ -6,9 +6,11 @@ import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
-const EntryDetails = ({ entryData, navigateToUser, onDonatePress, showUserHistory }) => {
+const EntryDetails = ({ entryData, navigateToUser, onButtonPress, buttonText, showUserHistory }) => {
   const { pizzas, vendor, seconds, creator_id } = entryData;
   let userHistoryButton;
+  let bannerText;
+
   if (showUserHistory) {
     userHistoryButton = (
       <Button
@@ -24,26 +26,37 @@ const EntryDetails = ({ entryData, navigateToUser, onDonatePress, showUserHistor
       </Button>
     );
   }
-    return (
-      <View style={{ flex: 5 }}>
-        <DetailSection style={{ justifyContent: 'space-between' }}>
-          <TimeAgo secondsOld={seconds} />
-          {userHistoryButton}
-        </DetailSection>
 
-        <DetailSection bannerText='REQUESTED'>
-          <RequestPizzas size='large' pizzas={pizzas} />
-          <Text style={styles.requestTextStyle}>from</Text>
-          <Vendor size='large' vendor={vendor} />
-        </DetailSection>
+  if (entryData.type === 'request') {
+    if (entryData.donor_id === null) {
+      bannerText = 'REQUESTED';
+    } else {
+      bannerText = 'RECEIVED';
+    }
+  } else {
+    bannerText = 'THANKS FOR';
+  }
 
-        <View style={styles.buttonWrapper}>
-          <Button touchableOpacity onPress={onDonatePress}>
-            <Text style={styles.donateTextStyle}>DONATE!</Text>
-          </Button>
-        </View>
+  return (
+    <View style={{ flex: 5 }}>
+      <DetailSection style={{ justifyContent: 'space-between' }}>
+        <TimeAgo secondsOld={seconds} />
+        {userHistoryButton}
+      </DetailSection>
+
+      <DetailSection bannerText={bannerText}>
+        <RequestPizzas size='large' pizzas={pizzas} />
+        <Text style={styles.requestTextStyle}>from</Text>
+        <Vendor size='large' vendor={vendor} />
+      </DetailSection>
+
+      <View style={styles.buttonWrapper}>
+        <Button touchableOpacity onPress={onButtonPress}>
+          <Text style={styles.donateTextStyle}>{buttonText}</Text>
+        </Button>
       </View>
-    );
+    </View>
+  );
 };
 
 const styles = {

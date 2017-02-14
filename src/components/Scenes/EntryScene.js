@@ -10,6 +10,7 @@ import EntryDetails from '../EntryDetails';
 class EntryScene extends Component {
   state = {
     paused: true,
+    thanksText: 'YAY PIZZA!'
   };
 
   onDonatePress = () => {
@@ -42,6 +43,12 @@ class EntryScene extends Component {
     }
   }
 
+  onThankYouPress = () => {
+    let thanksText = this.state.thanksText;
+    thanksText += ' PIZZA!';
+    this.setState({ thanksText });
+  }
+
   confirmDonation = () => {
     this.props.confirmDonation(this.props.userData.id, this.props.entry);
   }
@@ -56,9 +63,24 @@ class EntryScene extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { entry } = this.props;
     const showUserHistory = (this.props.origin === 'MainScene');
+    let onButtonPress;
+    let buttonText;
+
+    if (entry.type === 'request') {
+      if (entry.donor_id === null) {
+        onButtonPress = this.onDonatePress;
+        buttonText = 'DONATE!';
+      } else {
+        onButtonPress = null;
+        buttonText = 'RECEIVED!';
+      }
+    } else {
+      onButtonPress = this.onThankYouPress;
+      buttonText = this.state.thanksText;
+    }
+
     return (
       <View style={styles.container}>
         <NavBar
@@ -75,7 +97,8 @@ class EntryScene extends Component {
             showUserHistory={showUserHistory}
             entryData={entry}
             navigateToUser={this.navigateToUser}
-            onDonatePress={this.onDonatePress}
+            onButtonPress={onButtonPress}
+            buttonText={buttonText}
           />
         </View>
       </View>
