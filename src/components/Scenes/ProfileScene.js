@@ -36,7 +36,7 @@ class ProfileScene extends Component {
           <ProfileImage image={defaultProfileImage} />
           <View style={{ flex: 5 }}>
             <DetailSection bannerText='Email Address'>
-              <ProfileDetailButton>
+              <ProfileDetailButton onPress={Actions.EmailVerifyScene}>
                 {email}
               </ProfileDetailButton>
             </DetailSection>

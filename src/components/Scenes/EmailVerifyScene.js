@@ -23,7 +23,7 @@ class EmailVerifyScene extends Component {
         <NavBar />
         <View style={{ flex: 9 }}>
           <DetailSection style={styles.sectionStyle} bannerText='Current Email'>
-            <Text>{this.props.signupEmail}</Text>
+            <Text>{this.props.currentEmail}</Text>
           </DetailSection>
           <DetailSection style={styles.sectionStyle} bannerText='New Email'>
             <TextInput

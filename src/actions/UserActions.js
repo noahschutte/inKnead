@@ -48,7 +48,7 @@ export const updateEmail = (updatedEmail, userID) => {
     .then(responseJson => {
       if (responseJson.currentEmail) {
         dispatch({ type: UPDATE_EMAIL, payload: responseJson.currentEmail });
-        dispatch({ type: REDIRECT, payload: { scene: 'ProfileScene' }});
+        dispatch({ type: REDIRECT, payload: { scene: 'ProfileScene' } });
       } else {
         alert('failed to update email');
       }
