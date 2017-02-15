@@ -23,11 +23,8 @@ import {
 
 
 class CameraScene extends Component {
-  constructor(props) {
-    super(props);
+  camera = null;
 
-    this.camera = null;
-  }
   beginRecording = () => {
     const { handleVideoData, startRecording } = this.props;
     if (this.camera) {
@@ -152,8 +149,8 @@ class CameraScene extends Component {
       );
     }
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <StatusBar hidden />
+      <View style={{ flex: 1 }}>
+        <StatusBar backgroundColor='#ce0000' />
         <Camera
           captureAudio
           ref={cam => {
@@ -193,15 +190,12 @@ const mapStateToProps = (state) => {
 };
 
 const styles = {
-  container: {
-    flex: 1,
-  },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
+    alignItems: 'center',
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
-    alignItems: 'center',
   },
   overlay: {
     position: 'absolute',

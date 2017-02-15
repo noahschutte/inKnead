@@ -8,7 +8,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  aspect: Camera.constants.Aspect.fit,
+  aspect: Camera.constants.Aspect.fill,
   mode: Camera.constants.CaptureMode.video,
   captureTarget: Camera.constants.CaptureTarget.disk,
   type: Camera.constants.Type.front,
