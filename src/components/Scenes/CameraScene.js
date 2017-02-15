@@ -136,9 +136,9 @@ class CameraScene extends Component {
       );
     }
 
-    // let typeDisplay;
-    // if (!isRecording) {
-      const typeDisplay = (
+    let typeDisplay;
+    if (!isRecording) {
+      typeDisplay = (
         <TouchableOpacity
           style={styles.typeButton}
           onPress={this.switchType}
@@ -146,7 +146,7 @@ class CameraScene extends Component {
           <Image source={this.typeIcon} />
         </TouchableOpacity>
       );
-    // }
+    }
     return (
       <View style={{ flex: 1 }}>
         <StatusBar backgroundColor='#ce0000' />
