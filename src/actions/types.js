@@ -24,6 +24,7 @@ export const HANDLE_ERRORS = 'handle_errors';
 
 export const START_RECORDING = 'start_recording';
 export const STOP_RECORDING = 'stop_recording';
+export const RESET_CAMERA_STATE = 'reset_camera_state';
 export const SWITCH_CAMERA_TYPE = 'switch_camera_type';
 export const CHANGE_FLASH_MODE = 'change_flash_mode';
 export const HANDLE_VIDEO_DATA = 'handle_video_data';

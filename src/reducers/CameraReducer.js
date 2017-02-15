@@ -2,6 +2,7 @@ import Camera from 'react-native-camera';
 import {
   START_RECORDING,
   STOP_RECORDING,
+  RESET_CAMERA_STATE,
   SWITCH_CAMERA_TYPE,
   CHANGE_FLASH_MODE,
   HANDLE_VIDEO_DATA,
@@ -22,6 +23,14 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case RESET_CAMERA_STATE:
+      return {
+        ...state,
+        type: Camera.constants.Type.front,
+        flashMode: Camera.constants.FlashMode.off,
+        torchMode: Camera.constants.TorchMode.off,
+        isRecording: false,
+      };
     case START_RECORDING:
       return {
         ...state,
