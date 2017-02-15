@@ -55,9 +55,9 @@ class CameraScene extends Component {
     let newType;
     const { back, front } = Camera.constants.Type;
 
-    if (this.state.camera.type === back) {
+    if (this.camera.type === back) {
       newType = front;
-    } else if (this.state.camera.type === front) {
+    } else if (this.camera.type === front) {
       newType = back;
     }
     this.props.switchCameraType(newType);
@@ -213,7 +213,7 @@ const styles = {
   },
   bottomOverlay: {
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    // backgroundColor: 'rgba(0,0,0,0.4)',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
