@@ -1,19 +1,21 @@
 import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import InitialScene from './components/Scenes/InitialScene';
-import CameraScene from './components/Scenes/CameraScene';
-import MainScene from './components/Scenes/MainScene';
-import EntryCreationScene from './components/Scenes/EntryCreationScene';
-import EntryScene from './components/Scenes/EntryScene';
-import HowToScene from './components/Scenes/HowToScene';
-import NotificationsScene from './components/Scenes/NotificationsScene';
-import ProfileScene from './components/Scenes/ProfileScene';
-import UserHistoryScene from './components/Scenes/UserHistoryScene';
-import LoginScene from './components/Scenes/LoginScene';
-import LoadingScene from './components/Scenes/LoadingScene';
-import UploadingScene from './components/Scenes/UploadingScene';
-import InstructionsScene from './components/Scenes/InstructionsScene';
-import EmailVerifyScene from './components/Scenes/EmailVerifyScene';
+import {
+  CameraScene,
+  EmailVerifyScene,
+  EntryCreationScene,
+  EntryScene,
+  HowToScene,
+  InitialScene,
+  InstructionsScene,
+  LoadingScene,
+  LoginScene,
+  MainScene,
+  NotificationsScene,
+  ProfileScene,
+  UploadingScene,
+  UserHistoryScene,
+} from './components/Scenes';
 
 const RouterComponent = () => {
   return (
