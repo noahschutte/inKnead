@@ -10,6 +10,7 @@ import {
   uploadComplete,
   handleVideoData,
   handleErrors,
+  resetCameraState,
 } from '../../actions';
 import { camcorderImage } from '../../assets';
 import NavBar from '../NavBar';
@@ -124,6 +125,7 @@ class EntryCreationScene extends Component {
     }
   }
   openVideoRec = () => {
+    this.props.resetCameraState();
     if (Platform.OS === 'ios') {
       Camera.checkDeviceAuthorizationStatus()
       .then(response => {
@@ -229,4 +231,5 @@ export default connect(mapStateToProps, {
   uploadComplete,
   handleVideoData,
   handleErrors,
+  resetCameraState,
 })(EntryCreationScene);

@@ -23,11 +23,8 @@ import {
 
 
 class CameraScene extends Component {
-  constructor(props) {
-    super(props);
+  camera = null;
 
-    this.camera = null;
-  }
   beginRecording = () => {
     const { handleVideoData, startRecording } = this.props;
     if (this.camera) {
@@ -57,10 +54,9 @@ class CameraScene extends Component {
   switchType = () => {
     let newType;
     const { back, front } = Camera.constants.Type;
-
-    if (this.state.camera.type === back) {
+    if (this.props.camera.type === back) {
       newType = front;
-    } else if (this.state.camera.type === front) {
+    } else if (this.props.camera.type === front) {
       newType = back;
     }
     this.props.switchCameraType(newType);
@@ -152,8 +148,8 @@ class CameraScene extends Component {
       );
     }
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <StatusBar hidden />
+      <View style={{ flex: 1 }}>
+        <StatusBar backgroundColor='#ce0000' />
         <Camera
           captureAudio
           ref={cam => {
@@ -187,21 +183,13 @@ class CameraScene extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const camera = state.camera;
-  return { camera };
-};
-
 const styles = {
-  container: {
-    flex: 1,
-  },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
+    alignItems: 'center',
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
-    alignItems: 'center',
   },
   overlay: {
     position: 'absolute',
@@ -219,7 +207,7 @@ const styles = {
   },
   bottomOverlay: {
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    // backgroundColor: 'rgba(0,0,0,0.4)',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -229,6 +217,11 @@ const styles = {
     backgroundColor: 'white',
     borderRadius: 40,
   }
+};
+
+const mapStateToProps = (state) => {
+  const camera = state.camera;
+  return { camera };
 };
 
 export default connect(mapStateToProps, {
