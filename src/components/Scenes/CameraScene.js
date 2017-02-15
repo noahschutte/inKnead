@@ -54,10 +54,9 @@ class CameraScene extends Component {
   switchType = () => {
     let newType;
     const { back, front } = Camera.constants.Type;
-
-    if (this.camera.type === back) {
+    if (this.props.camera.type === back) {
       newType = front;
-    } else if (this.camera.type === front) {
+    } else if (this.props.camera.type === front) {
       newType = back;
     }
     this.props.switchCameraType(newType);
@@ -184,11 +183,6 @@ class CameraScene extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const camera = state.camera;
-  return { camera };
-};
-
 const styles = {
   preview: {
     flex: 1,
@@ -223,6 +217,11 @@ const styles = {
     backgroundColor: 'white',
     borderRadius: 40,
   }
+};
+
+const mapStateToProps = (state) => {
+  const camera = state.camera;
+  return { camera };
 };
 
 export default connect(mapStateToProps, {

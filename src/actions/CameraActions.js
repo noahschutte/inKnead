@@ -1,4 +1,3 @@
-
 import {
   START_RECORDING,
   STOP_RECORDING,
