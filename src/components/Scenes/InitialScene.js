@@ -19,7 +19,7 @@ const InitialScene = ({ getEntries, createSession, redirectTo }) => {
           if (error) {
             alert(`Error fetching data: ${error.toSTring()}`);
           } else {
-            createSession(result, { scene: 'MainScene' });
+            createSession(result, { scene: 'MainScene', parameter: 'root' });
           }
         };
         const infoRequest = new GraphRequest(
@@ -36,7 +36,7 @@ const InitialScene = ({ getEntries, createSession, redirectTo }) => {
         );
         new GraphRequestManager().addRequest(infoRequest).start();
       } else {
-        redirectTo({ scene: 'MainScene' });
+        redirectTo({ scene: 'MainScene', parameter: 'root' });
       }
     }
   );
