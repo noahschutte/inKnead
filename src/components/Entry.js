@@ -10,7 +10,6 @@ const Entry = ({ userEntry, selectedRequest, origin }) => {
     pizzas,
     thumbnail,
   } = selectedRequest;
-  console.log(userEntry);
   return (
     <TouchableOpacity
       onPress={() => Actions.EntryScene({ entry: selectedRequest, origin })}
