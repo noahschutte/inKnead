@@ -28,3 +28,5 @@ export const RESET_CAMERA_STATE = 'reset_camera_state';
 export const SWITCH_CAMERA_TYPE = 'switch_camera_type';
 export const CHANGE_FLASH_MODE = 'change_flash_mode';
 export const HANDLE_VIDEO_DATA = 'handle_video_data';
+
+export const GET_PROPS = 'get_props';

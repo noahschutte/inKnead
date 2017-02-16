@@ -11,7 +11,6 @@ const RouterComponent = () => {
     rightButton: 'newRequest',
     leftButton: 'sideMenu',
     title: 'requests_and_thank_yous',
-    onRightPress: Actions.EntryCreationScene,
   };
   return (
     <Router >
@@ -25,6 +24,7 @@ const RouterComponent = () => {
         <Scene
           initial
           navBarProps={mainSceneNavProps}
+          sideMenuOpen={false}
           sceneStyle={sceneStyle}
           key="MainScene"
           component={Scenes.MainScene}

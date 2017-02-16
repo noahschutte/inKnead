@@ -8,7 +8,6 @@ import {
   getEntries,
   sortEntries,
   toggleScope,
-  sideMenuToggle
 } from '../../actions';
 import ToggleMenu from '../ToggleMenu';
 import SortBar from '../SortBar';
@@ -70,26 +69,20 @@ class MainScene extends Component {
   }
 
   render() {
-    const { shown, scope, loading, sideMenuOpen } = this.props.entries;
+    const { shown, scope, loading } = this.props.entries;
     const userData = this.props.user.userData;
-    const togglePress = () => {
-      this.props.sideMenuToggle(sideMenuOpen);
-    };
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
-        togglePress={togglePress}
         userData={userData}
       />
     );
     const entryRows = this.getEntryRows();
-
     return (
       <SideMenu
         disableGestures
         menu={menu}
-        isOpen={sideMenuOpen}
-        onChange={togglePress}
+        isOpen={this.props.sideMenuOpen}
       >
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           {/* <NavBar
@@ -127,5 +120,4 @@ export default connect(mapStateToProps, {
   sortEntries,
   createSession,
   toggleScope,
-  sideMenuToggle
 })(MainScene);

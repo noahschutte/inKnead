@@ -6,6 +6,9 @@ import {
   TouchableWithoutFeedback,
   Dimensions
 } from 'react-native';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import { sideMenuToggle } from '../actions';
 import {
   globalButton,
   historyButton,
@@ -52,9 +55,9 @@ class NavBar extends Component {
   }
 
   renderLeftButton = () => {
-    const { leftButton, onLeftPress } = this.props.navBarProps;
+    const { leftButton } = this.props.navBarProps;
     let result;
-
+    let onPress;
     switch (leftButton) {
       case 'backButton':
         result = (
@@ -72,21 +75,22 @@ class NavBar extends Component {
             source={menuButton}
           />
         );
+        onPress = () => Actions.refresh({ key: 'MainScene', sideMenuOpen: value => !value });
         break;
       default:
         return null;
     }
     return (
-      <TouchableWithoutFeedback onPress={onLeftPress}>
+      <TouchableWithoutFeedback onPress={onPress}>
         {result}
       </TouchableWithoutFeedback>
     );
   }
 
   renderRightButton = () => {
-    const { rightButton, onRightPress } = this.props.navBarProps;
+    const { rightButton } = this.props.navBarProps;
     let result;
-
+    let onPress;
     switch (rightButton) {
       case 'newRequest':
         result = (
@@ -95,19 +99,20 @@ class NavBar extends Component {
             source={newRequestButton}
           />
         );
+        onPress = Actions.EntryCreationScene;
         break;
       default:
         return null;
     }
     return (
-      <TouchableWithoutFeedback onPress={onRightPress}>
+      <TouchableWithoutFeedback onPress={onPress}>
         {result}
       </TouchableWithoutFeedback>
     );
   }
 
   render() {
-    console.log(this);
+    // console.log(this);
     let content;
     if (this.props.navBarProps) {
       content = (
@@ -162,4 +167,9 @@ const styles = {
   }
 };
 
-export default NavBar;
+const mapStateToProps = ({ navBar, entries }) => {
+  const { scope, sideMenuOpen } = entries;
+  return { navBar, scope };
+};
+
+export default connect(mapStateToProps, { sideMenuToggle })(NavBar);
