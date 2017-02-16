@@ -13,19 +13,15 @@ import {
   resetCameraState,
 } from '../../actions';
 import { camcorderImage } from '../../assets';
-import NavBar from '../NavBar';
 import EntryVideo from '../EntryVideo';
 import EntryCreationForm from '../EntryCreationForm';
 import Button from '../Button2';
 
 class EntryCreationScene extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      paused: true,
-    };
-  }
+  state = {
+    paused: true
+  };
+  
   onPress = () => {
     this.setState({ paused: true });
     this.handleRequestSubmission();
@@ -173,16 +169,14 @@ class EntryCreationScene extends Component {
     const videoDisplay = this.renderVideoContent();
     return (
       <View style={{ flex: 1 }} >
-        <View style={{ flex: 9 }}>
-          {videoDisplay}
-          <EntryCreationForm
-            updateSelectedPizzas={updateSelectedPizzas}
-            pizzas={pizzas}
-            updateSelectedVendor={updateSelectedVendor}
-            vendor={vendor}
-            handleRequestSubmission={this.handleRequestSubmission}
-          />
-        </View>
+        {videoDisplay}
+        <EntryCreationForm
+          updateSelectedPizzas={updateSelectedPizzas}
+          pizzas={pizzas}
+          updateSelectedVendor={updateSelectedVendor}
+          vendor={vendor}
+          handleRequestSubmission={this.handleRequestSubmission}
+        />
       </View>
     );
   }

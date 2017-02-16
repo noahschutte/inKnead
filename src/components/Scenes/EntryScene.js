@@ -3,7 +3,6 @@ import { View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { confirmDonation } from '../../actions';
-import NavBar from '../NavBar';
 import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
 
@@ -83,20 +82,18 @@ class EntryScene extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={{ flex: 9, backgroundColor: 'white' }}>
-          <EntryVideo
-            togglePlay={this.togglePlay}
-            source={entry.compressed_video}
-            paused={this.state.paused}
-          />
-          <EntryDetails
-            showUserHistory={showUserHistory}
-            entryData={entry}
-            navigateToUser={this.navigateToUser}
-            onButtonPress={onButtonPress}
-            buttonText={buttonText}
-          />
-        </View>
+        <EntryVideo
+          togglePlay={this.togglePlay}
+          source={entry.compressed_video}
+          paused={this.state.paused}
+        />
+        <EntryDetails
+          showUserHistory={showUserHistory}
+          entryData={entry}
+          navigateToUser={this.navigateToUser}
+          onButtonPress={onButtonPress}
+          buttonText={buttonText}
+        />
       </View>
     );
   }
