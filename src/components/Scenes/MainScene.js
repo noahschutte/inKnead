@@ -16,6 +16,10 @@ import Entries from '../Entries';
 
 class MainScene extends Component {
 
+  state = {
+    sideMenuOpen: this.props.sideMenuOpen,
+  }
+
   getEntryRows = () => {
     const {
       shown,
@@ -25,10 +29,7 @@ class MainScene extends Component {
       userFulfilled,
       userThankYous
     } = this.props.entries;
-    let userID;
-    if (this.props.user.userData) {
-      userID = this.props.user.userData.id;
-    }
+    const { userID } = this.props;
 
     switch (shown) {
       case 'All':
@@ -56,7 +57,7 @@ class MainScene extends Component {
   }
 
   doesHaveNotifications = () => {
-    return this.props.user.notifications.length > 0;
+    return this.props.notifications.length > 0;
   }
 
   assembleOptions = () => {
@@ -71,6 +72,9 @@ class MainScene extends Component {
   render() {
     const { userID, userData, entries } = this.props;
     const { shown, loading } = entries;
+    const onChange = () => {
+      this.setState({ sideMenuOpen: !this.props.sideMenuOpen });
+    };
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
@@ -81,7 +85,7 @@ class MainScene extends Component {
     return (
       <SideMenu
         disableGestures
-        onChange={() => Actions.refresh({ key: 'MainScene', sideMenuOpen: value => !value })}
+        onChange={onChange}
         menu={menu}
         isOpen={this.props.sideMenuOpen}
       >
@@ -105,8 +109,8 @@ class MainScene extends Component {
 }
 
 const mapStateToProps = ({ entries, user }) => {
-  const { userID, userData } = user;
-  return { userID, userData, entries };
+  const { userID, userData, notifications } = user;
+  return { userID, userData, notifications, entries };
 };
 
 export default connect(mapStateToProps, {
