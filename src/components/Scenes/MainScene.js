@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
 import {
   createSession,
@@ -69,7 +68,7 @@ class MainScene extends Component {
   }
 
   render() {
-    const { shown, scope, loading } = this.props.entries;
+    const { shown, loading } = this.props.entries;
     const userData = this.props.user.userData;
     const menu = (
       <ToggleMenu

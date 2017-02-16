@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { defaultProfileImage, facebookImage } from '../../assets';
-import NavBar from '../NavBar';
 import ProfileImage from '../ProfileImage';
 import DetailSection from '../DetailSection';
 import ProfileDetailButton from '../ProfileDetailButton';
@@ -28,23 +27,21 @@ class ProfileScene extends Component {
     }
     return (
       <View style={{ flex: 1, backgroundColor: '#cfcfcf' }}>
-        <View style={{ flex: 9 }}>
-          <ProfileImage image={defaultProfileImage} />
-          <View style={{ flex: 5 }}>
-            <DetailSection bannerText='Email Address'>
-              <ProfileDetailButton onPress={Actions.EmailVerifyScene}>
-                {email}
-              </ProfileDetailButton>
-            </DetailSection>
-            <DetailSection bannerText='Linked Accounts'>
-              <ProfileDetailButton
-                onPress={() => Actions.LoginScene({ logOut: true })}
-                marginImage={facebookImage}
-              >
-                {social}
-              </ProfileDetailButton>
-            </DetailSection>
-          </View>
+        <ProfileImage image={defaultProfileImage} />
+        <View style={{ flex: 5 }}>
+          <DetailSection bannerText='Email Address'>
+            <ProfileDetailButton onPress={Actions.EmailVerifyScene}>
+              {email}
+            </ProfileDetailButton>
+          </DetailSection>
+          <DetailSection bannerText='Linked Accounts'>
+            <ProfileDetailButton
+              onPress={() => Actions.LoginScene({ logOut: true })}
+              marginImage={facebookImage}
+            >
+              {social}
+            </ProfileDetailButton>
+          </DetailSection>
         </View>
       </View>
     );

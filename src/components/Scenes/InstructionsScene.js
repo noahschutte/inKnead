@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Clipboard, Linking, TouchableOpacity, View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import NavBar from '../NavBar';
 import DetailSection from '../DetailSection';
 
 const vendors = {
