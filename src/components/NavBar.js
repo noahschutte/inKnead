@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { sideMenuToggle } from '../actions';
+import { toggleScope } from '../actions';
 import {
   globalButton,
   historyButton,
@@ -20,25 +20,36 @@ import {
 class NavBar extends Component {
 
   renderTitle = () => {
-    const { title, onTitlePress } = this.props.navBarProps;
+    const { title } = this.props.navBarProps;
+    const { scope, toggleScope } = this.props;
     let result;
+    let onPress;
 
     switch (title) {
-      case 'requests_and_thank_yous':
-        result = (
-          <Image
-            style={styles.centerButtonStyle}
-            source={globalButton}
-          />
-        );
-        break;
-      case 'user_history':
-        result = (
-          <Image
-            style={styles.centerButtonStyle}
-            source={historyButton}
-          />
-        );
+
+      case 'scope':
+      onPress = toggleScope.bind(this, this.props.scope);
+        switch (scope) {
+          case 'requests_and_thank_yous':
+          result = (
+            <Image
+              style={styles.centerButtonStyle}
+              source={globalButton}
+            />
+          );
+          break;
+          case 'user_history':
+          result = (
+            <Image
+              style={styles.centerButtonStyle}
+              source={historyButton}
+            />
+          );
+          break;
+          default:
+            result = null;
+            break;
+        }
         break;
       case null:
         return null;
@@ -48,7 +59,7 @@ class NavBar extends Component {
         );
     }
     return (
-      <TouchableWithoutFeedback onPress={onTitlePress}>
+      <TouchableWithoutFeedback onPress={onPress}>
         {result}
       </TouchableWithoutFeedback>
     );
@@ -151,16 +162,15 @@ const styles = {
     flex: 4,
     resizeMode: 'contain',
     height: 40,
-    width: null
   },
   rightButtonStyle: {
-    flex: 1,
+    flex: 1.5,
     resizeMode: 'contain',
     height: 30,
     width: null,
   },
   leftButtonStyle: {
-    flex: 1,
+    flex: 1.5,
     resizeMode: 'contain',
     height: 30,
     width: null,
@@ -168,8 +178,8 @@ const styles = {
 };
 
 const mapStateToProps = ({ navBar, entries }) => {
-  const { scope, sideMenuOpen } = entries;
+  const { scope } = entries;
   return { navBar, scope };
 };
 
-export default connect(mapStateToProps, { sideMenuToggle })(NavBar);
+export default connect(mapStateToProps, { toggleScope })(NavBar);

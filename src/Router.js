@@ -1,17 +1,14 @@
 import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import * as Scenes from './components/Scenes';
+import * as NavProps from './components/Scenes/NavProps';
 import NavBar from './components/NavBar';
 
 const RouterComponent = () => {
   const sceneStyle = {
     marginTop: 54,
   };
-  const mainSceneNavProps = {
-    rightButton: 'newRequest',
-    leftButton: 'sideMenu',
-    title: 'requests_and_thank_yous',
-  };
+
   return (
     <Router >
       <Scene
@@ -23,7 +20,7 @@ const RouterComponent = () => {
       <Scene key="root" navBar={NavBar}>
         <Scene
           initial
-          navBarProps={mainSceneNavProps}
+          navBarProps={NavProps.mainScene}
           sideMenuOpen={false}
           sceneStyle={sceneStyle}
           key="MainScene"
