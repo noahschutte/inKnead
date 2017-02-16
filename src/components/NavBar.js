@@ -3,8 +3,13 @@ import {
   View,
   Text,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Dimensions,
+  StatusBar
 } from 'react-native';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import { toggleScope } from '../actions';
 import {
   globalButton,
   historyButton,
@@ -16,25 +21,36 @@ import {
 class NavBar extends Component {
 
   renderTitle = () => {
-    const { title, onTitlePress } = this.props;
+    const { title } = this.props.navBarProps;
+    const { scope, toggleScope } = this.props;
     let result;
+    let onPress;
 
     switch (title) {
-      case 'requests_and_thank_yous':
-        result = (
-          <Image
-            style={styles.centerButtonStyle}
-            source={globalButton}
-          />
-        );
-        break;
-      case 'user_history':
-        result = (
-          <Image
-            style={styles.centerButtonStyle}
-            source={historyButton}
-          />
-        );
+
+      case 'scope':
+      onPress = toggleScope.bind(this, this.props.scope);
+        switch (scope) {
+          case 'requests_and_thank_yous':
+          result = (
+            <Image
+              style={styles.centerButtonStyle}
+              source={globalButton}
+            />
+          );
+          break;
+          case 'user_history':
+          result = (
+            <Image
+              style={styles.centerButtonStyle}
+              source={historyButton}
+            />
+          );
+          break;
+          default:
+            result = null;
+            break;
+        }
         break;
       case null:
         return null;
@@ -44,16 +60,16 @@ class NavBar extends Component {
         );
     }
     return (
-      <TouchableWithoutFeedback onPress={onTitlePress}>
+      <TouchableWithoutFeedback onPress={onPress}>
         {result}
       </TouchableWithoutFeedback>
     );
   }
 
   renderLeftButton = () => {
-    const { leftButton, onLeftPress } = this.props;
+    const { leftButton } = this.props.navBarProps;
     let result;
-
+    let onPress;
     switch (leftButton) {
       case 'backButton':
         result = (
@@ -62,6 +78,7 @@ class NavBar extends Component {
             source={backButton}
           />
         );
+        onPress = Actions.pop;
         break;
       case 'sideMenu':
       case 'menuButton':
@@ -71,21 +88,22 @@ class NavBar extends Component {
             source={menuButton}
           />
         );
+        onPress = () => Actions.refresh({ key: 'MainScene', sideMenuOpen: value => !value });
         break;
       default:
         return null;
     }
     return (
-      <TouchableWithoutFeedback onPress={onLeftPress}>
+      <TouchableWithoutFeedback onPress={onPress}>
         {result}
       </TouchableWithoutFeedback>
     );
   }
 
   renderRightButton = () => {
-    const { rightButton, onRightPress } = this.props;
+    const { rightButton } = this.props.navBarProps;
     let result;
-
+    let onPress;
     switch (rightButton) {
       case 'newRequest':
         result = (
@@ -94,44 +112,48 @@ class NavBar extends Component {
             source={newRequestButton}
           />
         );
+        onPress = Actions.EntryCreationScene;
         break;
       default:
         return null;
     }
     return (
-      <TouchableWithoutFeedback onPress={onRightPress}>
+      <TouchableWithoutFeedback onPress={onPress}>
         {result}
       </TouchableWithoutFeedback>
     );
   }
 
   render() {
-    const content = (
-      <View style={styles.navBarStyle}>
-        {this.renderLeftButton()}
-        {this.renderTitle()}
-        {this.renderRightButton()}
-      </View>
-    );
+    // console.log(this);
+    let content;
+    if (this.props.navBarProps) {
+      content = (
+        <View style={styles.navBarStyle}>
+          <StatusBar backgroundColor='#ce0000' />
+          {this.renderLeftButton()}
+          {this.renderTitle()}
+          {this.renderRightButton()}
+        </View>
+      );
+    } else {
+      content = <View style={styles.navBarStyle}><Text>No Nav Props</Text></View>;
+    }
 
-    return (
-      <View style={{ flex: 1 }}>
-        {content}
-      </View>
-    );
+    return content;
   }
 }
 
 const styles = {
   navBarStyle: {
-    flex: 1,
+    position: 'absolute',
+    height: 54,
+    width: Dimensions.get('window').width,
+    top: 0,
     flexDirection: 'row',
     backgroundColor: '#ce0000',
     alignItems: 'center',
     padding: 5,
-    elevation: 1,
-    shadowOffset: { width: 0, height: 2 },  // Don't know how this looks, don't work on Android
-    shadowOpacity: 0.1,  // Don't know how this looks, don't work on Android
   },
   titleStyle: {
     color: '#fff',
@@ -143,20 +165,24 @@ const styles = {
     flex: 4,
     resizeMode: 'contain',
     height: 40,
-    width: null
   },
   rightButtonStyle: {
-    flex: 1,
+    flex: 1.5,
     resizeMode: 'contain',
     height: 30,
     width: null,
   },
   leftButtonStyle: {
-    flex: 1,
+    flex: 1.5,
     resizeMode: 'contain',
     height: 30,
     width: null,
   }
 };
 
-export default NavBar;
+const mapStateToProps = ({ navBar, entries }) => {
+  const { scope } = entries;
+  return { navBar, scope };
+};
+
+export default connect(mapStateToProps, { toggleScope })(NavBar);

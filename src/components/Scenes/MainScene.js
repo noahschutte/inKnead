@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
 import {
   createSession,
   getEntries,
   sortEntries,
   toggleScope,
-  sideMenuToggle
 } from '../../actions';
 import ToggleMenu from '../ToggleMenu';
-import NavBar from '../NavBar';
 import SortBar from '../SortBar';
 import Entries from '../Entries';
 
@@ -71,36 +68,22 @@ class MainScene extends Component {
   }
 
   render() {
-    const { shown, scope, loading, sideMenuOpen } = this.props.entries;
+    const { shown, loading } = this.props.entries;
     const userData = this.props.user.userData;
-    const togglePress = () => {
-      this.props.sideMenuToggle(sideMenuOpen);
-    };
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
-        togglePress={togglePress}
         userData={userData}
       />
     );
     const entryRows = this.getEntryRows();
-
     return (
       <SideMenu
         disableGestures
         menu={menu}
-        isOpen={sideMenuOpen}
-        onChange={togglePress}
+        isOpen={this.props.sideMenuOpen}
       >
         <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <NavBar
-            rightButton='newRequest'
-            leftButton='sideMenu'
-            title={scope}
-            onRightPress={Actions.EntryCreationScene}
-            onLeftPress={togglePress}
-            onTitlePress={() => this.props.toggleScope(scope, userData)}
-          />
           <SortBar
             options={this.assembleOptions()}
             shown={shown}
@@ -128,5 +111,4 @@ export default connect(mapStateToProps, {
   sortEntries,
   createSession,
   toggleScope,
-  sideMenuToggle
 })(MainScene);

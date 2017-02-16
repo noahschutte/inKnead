@@ -28,13 +28,7 @@ class NotificationsScene extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <NavBar
-          leftButton='backButton'
-          onLeftPress={Actions.pop}
-        />
-        <View style={{ flex: 9 }}>
           {content}
-        </View>
       </View>
     );
   }

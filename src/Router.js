@@ -1,82 +1,106 @@
 import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import {
-  CameraScene,
-  EmailVerifyScene,
-  EntryCreationScene,
-  EntryScene,
-  HowToScene,
-  InitialScene,
-  InstructionsScene,
-  LoadingScene,
-  LoginScene,
-  MainScene,
-  NotificationsScene,
-  ProfileScene,
-  UploadingScene,
-  UserHistoryScene,
-} from './components/Scenes';
+import * as Scenes from './components/Scenes';
+import * as NavProps from './components/Scenes/NavProps';
+import NavBar from './components/NavBar';
 
 const RouterComponent = () => {
+  const sceneStyle = {
+    marginTop: 54,
+  };
+
   return (
-    <Router hideNavBar >
+    <Router >
+
       <Scene
         initial
+        hideNavBar
         key="InitialScene"
-        component={InitialScene}
+        component={Scenes.InitialScene}
       />
-      <Scene
-        key="InstructionsScene"
-        component={InstructionsScene}
-      />
-      <Scene
-        key="EmailVerifyScene"
-        component={EmailVerifyScene}
-      />
-      <Scene
-        key="LoadingScene"
-        component={LoadingScene}
-      />
-      <Scene
-        key="UploadingScene"
-        component={UploadingScene}
-      />
-      <Scene
-        key="MainScene"
-        component={MainScene}
-      />
-      <Scene
-        key="EntryCreationScene"
-        component={EntryCreationScene}
-      />
-      <Scene
-        key="EntryScene"
-        component={EntryScene}
-      />
-      <Scene
-        key="HowToScene"
-        component={HowToScene}
-      />
-      <Scene
-        key="NotificationsScene"
-        component={NotificationsScene}
-      />
-      <Scene
-        key="ProfileScene"
-        component={ProfileScene}
-      />
-      <Scene
-        key="UserHistoryScene"
-        component={UserHistoryScene}
-      />
-      <Scene
-        key="LoginScene"
-        component={LoginScene}
-      />
-      <Scene
-        key="CameraScene"
-        component={CameraScene}
-      />
+      <Scene key="root" navBar={NavBar}>
+
+        <Scene
+          initial
+          navBarProps={NavProps.mainScene}
+          sideMenuOpen={false}
+          sceneStyle={sceneStyle}
+          key="MainScene"
+          component={Scenes.MainScene}
+        />
+        <Scene
+          navBarProps={NavProps.backButton}
+          sceneStyle={sceneStyle}
+          key="InstructionsScene"
+          component={Scenes.InstructionsScene}
+        />
+        <Scene
+          navBarProps={NavProps.emailVerifyScene}
+          sceneStyle={sceneStyle}
+          key="EmailVerifyScene"
+          component={Scenes.EmailVerifyScene}
+        />
+        <Scene
+          hideNavBar
+          sceneStyle={sceneStyle}
+          key="LoadingScene"
+          component={Scenes.LoadingScene}
+        />
+        <Scene
+          hideNavBar
+          sceneStyle={sceneStyle}
+          key="UploadingScene"
+          component={Scenes.UploadingScene}
+        />
+        <Scene
+          navBarProps={NavProps.entryCreationScene}
+          sceneStyle={sceneStyle}
+          key="EntryCreationScene"
+          component={Scenes.EntryCreationScene}
+        />
+        <Scene
+          navBarProps={NavProps.backButton}
+          sceneStyle={sceneStyle}
+          key="EntryScene"
+          component={Scenes.EntryScene}
+        />
+        <Scene
+          navBarProps={NavProps.backButton}
+          sceneStyle={sceneStyle}
+          key="HowToScene"
+          component={Scenes.HowToScene}
+        />
+        <Scene
+          navBarProps={NavProps.backButton}
+          sceneStyle={sceneStyle}
+          key="NotificationsScene"
+          component={Scenes.NotificationsScene}
+        />
+        <Scene
+          navBarProps={NavProps.profileScene}
+          sceneStyle={sceneStyle}
+          key="ProfileScene"
+          component={Scenes.ProfileScene}
+        />
+        <Scene
+          navBarProps={NavProps.backButton}
+          sceneStyle={sceneStyle}
+          key="UserHistoryScene"
+          component={Scenes.UserHistoryScene}
+        />
+        <Scene
+          navBarProps={NavProps.backButton}
+          sceneStyle={sceneStyle}
+          key="LoginScene"
+          component={Scenes.LoginScene}
+        />
+        <Scene
+          hideNavBar
+          key="CameraScene"
+          component={Scenes.CameraScene}
+        />
+
+      </Scene>
     </Router>
   );
 };
