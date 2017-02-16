@@ -3,7 +3,8 @@ import {
   View,
   Text,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Dimensions
 } from 'react-native';
 import {
   globalButton,
@@ -16,7 +17,7 @@ import {
 class NavBar extends Component {
 
   renderTitle = () => {
-    const { title, onTitlePress } = this.props;
+    const { title, onTitlePress } = this.props.navBarProps;
     let result;
 
     switch (title) {
@@ -51,7 +52,7 @@ class NavBar extends Component {
   }
 
   renderLeftButton = () => {
-    const { leftButton, onLeftPress } = this.props;
+    const { leftButton, onLeftPress } = this.props.navBarProps;
     let result;
 
     switch (leftButton) {
@@ -83,7 +84,7 @@ class NavBar extends Component {
   }
 
   renderRightButton = () => {
-    const { rightButton, onRightPress } = this.props;
+    const { rightButton, onRightPress } = this.props.navBarProps;
     let result;
 
     switch (rightButton) {
@@ -106,32 +107,34 @@ class NavBar extends Component {
   }
 
   render() {
-    const content = (
-      <View style={styles.navBarStyle}>
-        {this.renderLeftButton()}
-        {this.renderTitle()}
-        {this.renderRightButton()}
-      </View>
-    );
+    console.log(this);
+    let content;
+    if (this.props.navBarProps) {
+      content = (
+        <View style={styles.navBarStyle}>
+          {this.renderLeftButton()}
+          {this.renderTitle()}
+          {this.renderRightButton()}
+        </View>
+      );
+    } else {
+      content = <View style={styles.navBarStyle}><Text>No Nav Props</Text></View>;
+    }
 
-    return (
-      <View style={{ flex: 1 }}>
-        {content}
-      </View>
-    );
+    return content;
   }
 }
 
 const styles = {
   navBarStyle: {
-    flex: 1,
+    position: 'absolute',
+    height: 54,
+    width: Dimensions.get('window').width,
+    top: 0,
     flexDirection: 'row',
     backgroundColor: '#ce0000',
     alignItems: 'center',
     padding: 5,
-    elevation: 1,
-    shadowOffset: { width: 0, height: 2 },  // Don't know how this looks, don't work on Android
-    shadowOpacity: 0.1,  // Don't know how this looks, don't work on Android
   },
   titleStyle: {
     color: '#fff',

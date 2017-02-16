@@ -1,83 +1,93 @@
 import React from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import {
-  CameraScene,
-  EmailVerifyScene,
-  EntryCreationScene,
-  EntryScene,
-  HowToScene,
-  InitialScene,
-  InstructionsScene,
-  LoadingScene,
-  LoginScene,
-  MainScene,
-  NotificationsScene,
-  ProfileScene,
-  UploadingScene,
-  UserHistoryScene,
-} from './components/Scenes';
+import * as Scenes from './components/Scenes';
+import NavBar from './components/NavBar';
 
 const RouterComponent = () => {
+  const sceneStyle = {
+    marginTop: 54,
+  };
+  const mainSceneNavProps = {
+    rightButton: 'newRequest',
+    leftButton: 'sideMenu',
+    title: 'requests_and_thank_yous',
+    onRightPress: Actions.EntryCreationScene,
+  };
   return (
-    <Router hideNavBar >
+    <Router >
       <Scene
         initial
+        hideNavBar
         key="InitialScene"
-        component={InitialScene}
+        component={Scenes.InitialScene}
       />
-      <Scene key="root" sceneStyle={{ borderColor: 'green', borderWidth: 3 }}>
-        <Scene
-          key="InstructionsScene"
-          component={InstructionsScene}
-        />
-        <Scene
-          key="EmailVerifyScene"
-          component={EmailVerifyScene}
-        />
-        <Scene
-          key="LoadingScene"
-          component={LoadingScene}
-        />
-        <Scene
-          key="UploadingScene"
-          component={UploadingScene}
-        />
+      <Scene key="root" navBar={NavBar}>
         <Scene
           initial
+          navBarProps={mainSceneNavProps}
+          sceneStyle={sceneStyle}
           key="MainScene"
-          component={MainScene}
+          component={Scenes.MainScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
+          key="InstructionsScene"
+          component={Scenes.InstructionsScene}
+        />
+        <Scene
+          sceneStyle={sceneStyle}
+          key="EmailVerifyScene"
+          component={Scenes.EmailVerifyScene}
+        />
+        <Scene
+          sceneStyle={sceneStyle}
+          key="LoadingScene"
+          component={Scenes.LoadingScene}
+        />
+        <Scene
+          sceneStyle={sceneStyle}
+          key="UploadingScene"
+          component={Scenes.UploadingScene}
+        />
+        <Scene
+          sceneStyle={sceneStyle}
           key="EntryCreationScene"
-          component={EntryCreationScene}
+          component={Scenes.EntryCreationScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
           key="EntryScene"
-          component={EntryScene}
+          component={Scenes.EntryScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
           key="HowToScene"
-          component={HowToScene}
+          component={Scenes.HowToScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
           key="NotificationsScene"
-          component={NotificationsScene}
+          component={Scenes.NotificationsScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
           key="ProfileScene"
-          component={ProfileScene}
+          component={Scenes.ProfileScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
           key="UserHistoryScene"
-          component={UserHistoryScene}
+          component={Scenes.UserHistoryScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
           key="LoginScene"
-          component={LoginScene}
+          component={Scenes.LoginScene}
         />
         <Scene
+          sceneStyle={sceneStyle}
           key="CameraScene"
-          component={CameraScene}
+          component={Scenes.CameraScene}
         />
       </Scene>
     </Router>

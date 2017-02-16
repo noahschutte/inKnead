@@ -11,7 +11,6 @@ import {
   sideMenuToggle
 } from '../../actions';
 import ToggleMenu from '../ToggleMenu';
-import NavBar from '../NavBar';
 import SortBar from '../SortBar';
 import Entries from '../Entries';
 
@@ -93,14 +92,14 @@ class MainScene extends Component {
         onChange={togglePress}
       >
         <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <NavBar
+          {/* <NavBar
             rightButton='newRequest'
             leftButton='sideMenu'
             title={scope}
             onRightPress={Actions.EntryCreationScene}
             onLeftPress={togglePress}
             onTitlePress={() => this.props.toggleScope(scope, userData)}
-          />
+          /> */}
           <SortBar
             options={this.assembleOptions()}
             shown={shown}
