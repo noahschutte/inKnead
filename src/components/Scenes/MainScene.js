@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
 import {
   createSession,
@@ -68,8 +69,8 @@ class MainScene extends Component {
   }
 
   render() {
-    const { shown, loading } = this.props.entries;
-    const userData = this.props.user.userData;
+    const { userID, userData, entries } = this.props;
+    const { shown, loading } = entries;
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
@@ -80,6 +81,7 @@ class MainScene extends Component {
     return (
       <SideMenu
         disableGestures
+        onChange={() => Actions.refresh({ key: 'MainScene', sideMenuOpen: value => !value })}
         menu={menu}
         isOpen={this.props.sideMenuOpen}
       >
@@ -90,7 +92,7 @@ class MainScene extends Component {
             onPress={this.props.sortEntries}
           />
           <Entries
-            userID={userData.id}
+            userID={userID}
             origin='MainScene'
             entryRows={entryRows}
             getEntries={this.props.getEntries}
@@ -103,7 +105,8 @@ class MainScene extends Component {
 }
 
 const mapStateToProps = ({ entries, user }) => {
-  return { user, entries };
+  const { userID, userData } = user;
+  return { userID, userData, entries };
 };
 
 export default connect(mapStateToProps, {
