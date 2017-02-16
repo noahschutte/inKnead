@@ -16,21 +16,21 @@ const ToggleMenu = (props) => {
         source={defaultProfileImage}
         style={styles.image}
       />
-      <SideMenuButton onPress={props.togglePress}>
+      <SideMenuButton onPress={() => Actions.refresh({ key: 'MainScene', sideMenuOpen: false })}>
         <Text style={styles.textStyle}>Requests</Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={() => Actions.NotificationsScene()}>
+      <SideMenuButton onPress={Actions.NotificationsScene}>
         <Text style={styles.textStyle}>
           Notifications <Text style={styles.notificationAlertStyle}> {notificationAlert}</Text>
         </Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={() => Actions.HowToScene()}>
+      <SideMenuButton onPress={Actions.HowToScene}>
         <Text style={styles.textStyle}>How To</Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={props.userData ? () => Actions.ProfileScene() : () => Actions.LoginScene()}>
+      <SideMenuButton onPress={props.userData ? Actions.ProfileScene : Actions.LoginScene}>
         <Text style={styles.textStyle}>Profile</Text>
       </SideMenuButton>
 
@@ -44,8 +44,8 @@ const styles = {
     backgroundColor: '#424242',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingTop: 100,
-    paddingBottom: 100,
+    paddingTop: 75,
+    paddingBottom: 75,
   },
   image: {
     height: 100,

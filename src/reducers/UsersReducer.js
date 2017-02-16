@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
       switch (action.payload.scene) {
         case 'MainScene':
           if (action.payload.parameter === 'root') {
-            Actions.root();
+            Actions.root({ type: 'reset' });
           } else {
             Actions.MainScene({ type: 'reset' });
           }
