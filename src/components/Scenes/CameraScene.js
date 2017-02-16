@@ -149,7 +149,6 @@ class CameraScene extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar backgroundColor='#ce0000' />
         <Camera
           captureAudio
           ref={cam => {

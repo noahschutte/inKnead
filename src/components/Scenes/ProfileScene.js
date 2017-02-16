@@ -28,10 +28,6 @@ class ProfileScene extends Component {
     }
     return (
       <View style={{ flex: 1, backgroundColor: '#cfcfcf' }}>
-        <NavBar
-          onLeftPress={Actions.pop}
-          leftButton='backButton'
-        />
         <View style={{ flex: 9 }}>
           <ProfileImage image={defaultProfileImage} />
           <View style={{ flex: 5 }}>

@@ -85,14 +85,6 @@ class MainScene extends Component {
         isOpen={this.props.sideMenuOpen}
       >
         <View style={{ flex: 1, backgroundColor: 'white' }}>
-          {/* <NavBar
-            rightButton='newRequest'
-            leftButton='sideMenu'
-            title={scope}
-            onRightPress={Actions.EntryCreationScene}
-            onLeftPress={togglePress}
-            onTitlePress={() => this.props.toggleScope(scope, userData)}
-          /> */}
           <SortBar
             options={this.assembleOptions()}
             shown={shown}

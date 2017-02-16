@@ -11,6 +11,7 @@ const RouterComponent = () => {
 
   return (
     <Router >
+
       <Scene
         initial
         hideNavBar
@@ -18,6 +19,7 @@ const RouterComponent = () => {
         component={Scenes.InitialScene}
       />
       <Scene key="root" navBar={NavBar}>
+
         <Scene
           initial
           navBarProps={NavProps.mainScene}
@@ -27,65 +29,77 @@ const RouterComponent = () => {
           component={Scenes.MainScene}
         />
         <Scene
+          navBarProps={NavProps.backButton}
           sceneStyle={sceneStyle}
           key="InstructionsScene"
           component={Scenes.InstructionsScene}
         />
         <Scene
+          navBarProps={NavProps.emailVerifyScene}
           sceneStyle={sceneStyle}
           key="EmailVerifyScene"
           component={Scenes.EmailVerifyScene}
         />
         <Scene
+          hideNavBar
           sceneStyle={sceneStyle}
           key="LoadingScene"
           component={Scenes.LoadingScene}
         />
         <Scene
+          hideNavBar
           sceneStyle={sceneStyle}
           key="UploadingScene"
           component={Scenes.UploadingScene}
         />
         <Scene
+          navBarProps={NavProps.entryCreationScene}
           sceneStyle={sceneStyle}
           key="EntryCreationScene"
           component={Scenes.EntryCreationScene}
         />
         <Scene
+          navBarProps={NavProps.backButton}
           sceneStyle={sceneStyle}
           key="EntryScene"
           component={Scenes.EntryScene}
         />
         <Scene
+          navBarProps={NavProps.backButton}
           sceneStyle={sceneStyle}
           key="HowToScene"
           component={Scenes.HowToScene}
         />
         <Scene
+          navBarProps={NavProps.backButton}
           sceneStyle={sceneStyle}
           key="NotificationsScene"
           component={Scenes.NotificationsScene}
         />
         <Scene
+          navBarProps={NavProps.profileScene}
           sceneStyle={sceneStyle}
           key="ProfileScene"
           component={Scenes.ProfileScene}
         />
         <Scene
+          navBarProps={NavProps.backButton}
           sceneStyle={sceneStyle}
           key="UserHistoryScene"
           component={Scenes.UserHistoryScene}
         />
         <Scene
+          navBarProps={NavProps.backButton}
           sceneStyle={sceneStyle}
           key="LoginScene"
           component={Scenes.LoginScene}
         />
         <Scene
-          sceneStyle={sceneStyle}
+          hideNavBar
           key="CameraScene"
           component={Scenes.CameraScene}
         />
+
       </Scene>
     </Router>
   );

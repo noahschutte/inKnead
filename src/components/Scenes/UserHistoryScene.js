@@ -23,10 +23,6 @@ class UserHistoryScene extends Component {
     const entryRows = [...userRequests, ...userFulfilled, ...userThankYous];
     return (
       <View style={{ flex: 1 }}>
-        <NavBar
-          leftButton='backButton'
-          onLeftPress={Actions.pop}
-        />
         <View style={{ flex: 9 }}>
           <Entries
             origin='UserHistoryScene'

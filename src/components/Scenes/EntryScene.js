@@ -83,10 +83,6 @@ class EntryScene extends Component {
 
     return (
       <View style={styles.container}>
-        <NavBar
-          leftButton='backButton'
-          onLeftPress={Actions.pop}
-        />
         <View style={{ flex: 9, backgroundColor: 'white' }}>
           <EntryVideo
             togglePlay={this.togglePlay}

@@ -4,7 +4,8 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -77,6 +78,7 @@ class NavBar extends Component {
             source={backButton}
           />
         );
+        onPress = Actions.pop;
         break;
       case 'sideMenu':
       case 'menuButton':
@@ -128,6 +130,7 @@ class NavBar extends Component {
     if (this.props.navBarProps) {
       content = (
         <View style={styles.navBarStyle}>
+          <StatusBar backgroundColor='#ce0000' />
           {this.renderLeftButton()}
           {this.renderTitle()}
           {this.renderRightButton()}

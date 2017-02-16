@@ -173,10 +173,6 @@ class EntryCreationScene extends Component {
     const videoDisplay = this.renderVideoContent();
     return (
       <View style={{ flex: 1 }} >
-        <NavBar
-          leftButton='backButton'
-          onLeftPress={Actions.pop}
-        />
         <View style={{ flex: 9 }}>
           {videoDisplay}
           <EntryCreationForm

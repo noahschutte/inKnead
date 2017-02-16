@@ -76,10 +76,6 @@ class InstructionsScene extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <NavBar
-          leftButton='backButton'
-          onLeftPress={Actions.pop}
-        />
         <View style={{ flex: 9 }}>
           <DetailSection style={{ flexDirection: 'column', alignItems: 'center' }}>
             <Text style={[stepOneStyle, completed]}>Step 1: Tap the email below to copy it</Text>

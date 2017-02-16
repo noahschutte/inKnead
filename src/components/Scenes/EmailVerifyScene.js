@@ -20,7 +20,6 @@ class EmailVerifyScene extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <NavBar />
         <View style={{ flex: 9 }}>
           <DetailSection style={styles.sectionStyle} bannerText='Current Email'>
             <Text>{this.props.currentEmail}</Text>

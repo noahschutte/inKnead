@@ -9,7 +9,7 @@ const UploadingScene = () => {
       <View style={styles.animationContainer}>
         <SpinningPizza />
       </View>
-      <Text style={styles.textStyle}>Uploading...</Text>
+      <Text style={styles.textStyle}>Uploading your video now...</Text>
     </View>
   );
 };
