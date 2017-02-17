@@ -18,6 +18,8 @@ class ReduxLogin extends Component {
     } else {
       this.props.userLogout();
       console.log('reached');
+      Actions.refresh({ key: 'root' });
+      Actions.root({ type: 'reset' });
       // this.props.redirectTo({ scene: 'MainScene', parameter: 'root' });
     }
   }
