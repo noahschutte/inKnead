@@ -14,7 +14,6 @@ export const UPDATE_EMAIL = 'update_email';
 export const EMAIL_NOT_VERIFIED = 'email_not_verified';
 export const HANDLE_USER_LOGOUT = 'handle_user_logout';
 export const HANDLE_USER_DONATION = 'handle_user_donation';
-export const REDIRECT = 'redirect';
 
 export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';
 export const UPDATE_SELECTED_VENDOR = 'update_selected_vendor';
@@ -29,4 +28,4 @@ export const SWITCH_CAMERA_TYPE = 'switch_camera_type';
 export const CHANGE_FLASH_MODE = 'change_flash_mode';
 export const HANDLE_VIDEO_DATA = 'handle_video_data';
 
-export const GET_PROPS = 'get_props';
+export const REDIRECT = 'redirect';

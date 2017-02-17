@@ -8,15 +8,17 @@ import {
 } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { userLogout, createSession } from '../actions';
+import { userLogout, createSession, redirectTo } from '../actions';
 
 class ReduxLogin extends Component {
   handleLogoutFinished = (error, result) => {
-    Actions.MainScene({ type: 'reset' });
+    // Actions.MainScene({ type: 'reset' });
     if (error) {
       alert(`Logout failed with error: ${result.error}`);
     } else {
       this.props.userLogout();
+      console.log('reached');
+      // this.props.redirectTo({ scene: 'MainScene', parameter: 'root' });
     }
   }
   handleLoginFinished = (error, result) => {
@@ -68,4 +70,4 @@ class ReduxLogin extends Component {
   }
 }
 
-export default connect(null, { userLogout, createSession })(ReduxLogin);
+export default connect(null, { userLogout, createSession, redirectTo })(ReduxLogin);

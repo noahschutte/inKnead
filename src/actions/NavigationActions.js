@@ -1,8 +1,9 @@
-import { GET_PROPS } from './types';
+import { REDIRECT } from './types';
 
-export const getProps = (something) => {
-  console.log(something);
+export const redirectTo = (redirect) => {
+  const { scene, parameter = null } = redirect;
   return {
-    type: GET_PROPS,
+    type: REDIRECT,
+    payload: { scene, parameter },
   };
 };

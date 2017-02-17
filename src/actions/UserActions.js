@@ -57,14 +57,6 @@ export const updateEmail = (updatedEmail, userID) => {
   };
 };
 
-export const redirectTo = (redirect) => {
-  const { scene, parameter = null } = redirect;
-  return {
-    type: REDIRECT,
-    payload: { scene, parameter },
-  };
-};
-
 export const userLogout = () => {
   return {
     type: HANDLE_USER_LOGOUT,

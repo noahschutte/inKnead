@@ -36,7 +36,13 @@ class ProfileScene extends Component {
           </DetailSection>
           <DetailSection bannerText='Linked Accounts'>
             <ProfileDetailButton
-              onPress={() => Actions.LoginScene({ logOut: true })}
+              onPress={Actions.LoginScene.bind(this, {
+                type: 'reset',
+                backScene: {
+                  scene: 'ProfileScene',
+                },
+                logOut: true
+              })}
               marginImage={facebookImage}
             >
               {social}

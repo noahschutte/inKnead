@@ -5,11 +5,10 @@ import {
   Image,
   TouchableWithoutFeedback,
   Dimensions,
-  StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { toggleScope } from '../actions';
+import { toggleScope, redirectTo } from '../actions';
 import {
   globalButton,
   historyButton,
@@ -67,10 +66,11 @@ class NavBar extends Component {
   }
 
   renderLeftButton = () => {
-    const { leftButton } = this.props.navBarProps;
+    const { navBarProps, backScene, redirectTo } = this.props;
+    console.log(this.props);
     let result;
     let onPress;
-    switch (leftButton) {
+    switch (navBarProps.leftButton) {
       case 'backButton':
         result = (
           <Image
@@ -78,7 +78,11 @@ class NavBar extends Component {
             source={backButton}
           />
         );
-        onPress = Actions.pop;
+        if (backScene) {
+          onPress = () => redirectTo(backScene);
+        } else {
+          onPress = Actions.pop;
+        }
         break;
       case 'sideMenu':
       case 'menuButton':
@@ -130,7 +134,6 @@ class NavBar extends Component {
     if (this.props.navBarProps) {
       content = (
         <View style={styles.navBarStyle}>
-          <StatusBar backgroundColor='#ce0000' />
           {this.renderLeftButton()}
           {this.renderTitle()}
           {this.renderRightButton()}
@@ -180,10 +183,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ navBar, entries, user }) => {
+const mapStateToProps = ({ entries, user }) => {
   const { scope } = entries;
   const { userData } = user;
-  return { navBar, scope, userData };
+  return { scope, userData };
 };
 
-export default connect(mapStateToProps, { toggleScope })(NavBar);
+export default connect(mapStateToProps, { toggleScope, redirectTo })(NavBar);
