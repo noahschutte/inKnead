@@ -28,7 +28,8 @@ export default (state = INITIAL_STATE, action) => {
           }
           return state;
         case 'EntryScene':
-          Actions.root().EntryScene({ entry: action.payload.parameter });
+          Actions.root({ type: 'reset' });
+          Actions.EntryScene({ entry: action.payload.parameter });
           return state;
         case 'ProfileScene':
           Actions.root({ type: 'reset' });

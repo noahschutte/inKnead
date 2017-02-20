@@ -19,6 +19,7 @@ class ReduxLogin extends Component {
     }
   }
   handleLoginFinished = (error, result) => {
+    console.log(this.props.redirect);
     if (error) {
       alert(`Login failed with error ${error}`);
     } else if (result.isCancelled) {
@@ -49,6 +50,7 @@ class ReduxLogin extends Component {
             );
             new GraphRequestManager().addRequest(infoRequest).start();
           } else {
+            alert('reached');
             Actions.root({ type: 'reset' });
           }
         }
