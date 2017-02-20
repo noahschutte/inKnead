@@ -1,12 +1,23 @@
 import { Actions } from 'react-native-router-flux';
-import { REDIRECT } from '../actions/types';
+import { REDIRECT, TOGGLE_SIDE_MENU, CLOSE_SIDE_MENU } from '../actions/types';
 
 const INITIAL_STATE = {
   scene: 'MainScene',
+  sideMenuOpen: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case TOGGLE_SIDE_MENU:
+      return {
+        ...state,
+        sideMenuOpen: action.payload
+      };
+    case CLOSE_SIDE_MENU:
+      return {
+        ...state,
+        sideMenuOpen: action.payload
+      };
     case REDIRECT:
       switch (action.payload.scene) {
         case 'MainScene':

@@ -30,7 +30,6 @@ const RouterComponent = () => {
         <Scene
           initial
           navBarProps={NavProps.mainScene}
-          sideMenuOpen={false}
           sceneStyle={sceneStyle}
           key="MainScene"
           component={Scenes.MainScene}

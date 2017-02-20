@@ -5,7 +5,6 @@ export const GET_USER_ENTRIES_SUCCESS = 'get_user_entries_success';
 export const UPDATE_ENTRIES = 'update_entries';
 export const SHOW_ENTRIES = 'show_entries';
 export const TOGGLE_SCOPE = 'toggle_scope';
-export const TOGGLE_SIDE_MENU = 'toggle_side_menu';
 
 export const CREATE_SESSION_START = 'create_session_start';
 export const CREATE_SESSION_SUCCESS = 'create_session_success';
@@ -29,3 +28,5 @@ export const CHANGE_FLASH_MODE = 'change_flash_mode';
 export const HANDLE_VIDEO_DATA = 'handle_video_data';
 
 export const REDIRECT = 'redirect';
+export const TOGGLE_SIDE_MENU = 'toggle_side_menu';
+export const CLOSE_SIDE_MENU = 'close_side_menu';
