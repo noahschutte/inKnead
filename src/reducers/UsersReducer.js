@@ -1,4 +1,3 @@
-import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
   USER_VERIFIED,
@@ -6,7 +5,6 @@ import {
   UPDATE_EMAIL,
   HANDLE_USER_LOGOUT,
   HANDLE_USER_DONATION,
-  REDIRECT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -32,37 +30,6 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case REDIRECT:
-      switch (action.payload.scene) {
-        case 'MainScene':
-          if (action.payload.parameter === 'root') {
-            Actions.root({ type: 'reset' });
-          } else {
-            Actions.MainScene({ type: 'reset' });
-          }
-          return state;
-        case 'EntryScene':
-          Actions.EntryScene({ entry: action.payload.parameter });
-          return state;
-        case 'ProfileScene':
-          Actions.ProfileScene({ type: 'reset' });
-          return state;
-        case 'InstructionsScene':
-          Actions.InstructionsScene({
-            recipientEmail: action.payload.parameter.recipientEmail,
-            entry: action.payload.parameter.entry
-          });
-          return state;
-        case 'EmailVerifyScene':
-          Actions.EmailVerifyScene({
-            currentEmail: state.userData.current_email,
-            signupEmail: state.userData.signup_email
-          });
-          return state;
-        default:
-          Actions.pop();
-          return state;
-      }
     case CREATE_SESSION_SUCCESS:
       return {
         ...state,
@@ -87,6 +54,10 @@ export default (state = INITIAL_STATE, action) => {
             text: 'Please verify your email',
             redirect: {
               scene: 'EmailVerifyScene',
+              parameter: {
+                currentEmail: state.userData.current_email,
+                signupEmail: state.userData.signup_email,
+              }
             },
           },
         ],

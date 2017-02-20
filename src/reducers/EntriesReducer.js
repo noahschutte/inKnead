@@ -5,7 +5,8 @@ import {
   UPDATE_ENTRIES,
   SHOW_ENTRIES,
   TOGGLE_SCOPE,
-  TOGGLE_SIDE_MENU
+  TOGGLE_SIDE_MENU,
+  HANDLE_USER_LOGOUT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -76,6 +77,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
          sideMenuOpen: action.payload
+      };
+    case HANDLE_USER_LOGOUT:
+      return {
+        ...state,
+        scope: 'requests_and_thank_yous',
+        shown: 'Requests',
       };
     default:
       return state;

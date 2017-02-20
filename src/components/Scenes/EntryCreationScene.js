@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Platform } from 'react-native';
+import { View, Image, Platform, Alert } from 'react-native';
 import Camera from 'react-native-camera';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -21,13 +21,29 @@ class EntryCreationScene extends Component {
   state = {
     paused: true
   };
-  
+
   onPress = () => {
     this.setState({ paused: true });
+    this.verifiedUser();
     this.handleRequestSubmission();
   }
   togglePlay = (toggle) => {
     this.setState({ paused: toggle });
+  }
+  verifiedUser = () => {
+    if (this.props.userData.current_email === null) {
+      Alert.alert(
+        'No verified email address!',
+        'You must have a verified email to request pizza!',
+        [
+          { text: 'Cancel' },
+          {
+            text: 'Verify Now',
+            onPress: Actions.EmailVerifyScene
+          }
+        ]
+      );
+    }
   }
   dispatchRequest = () => {
     const {
@@ -175,7 +191,7 @@ class EntryCreationScene extends Component {
           pizzas={pizzas}
           updateSelectedVendor={updateSelectedVendor}
           vendor={vendor}
-          handleRequestSubmission={this.handleRequestSubmission}
+          handleRequestSubmission={this.onPress}
         />
       </View>
     );

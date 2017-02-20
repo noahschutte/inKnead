@@ -8,6 +8,14 @@ import DetailSection from '../DetailSection';
 import ProfileDetailButton from '../ProfileDetailButton';
 
 class ProfileScene extends Component {
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.user.userData === null) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     /* eslint camelcase: off */
     const {
@@ -15,12 +23,7 @@ class ProfileScene extends Component {
       signup_email,
       fb_userID,
     } = this.props.user.userData;
-    let email;
-    if (current_email) {
-      email = current_email;
-    } else {
-      email = signup_email;
-    }
+    const email = current_email || signup_email;
     let social;
     if (fb_userID) {
       social = 'Facebook';
@@ -36,7 +39,7 @@ class ProfileScene extends Component {
           </DetailSection>
           <DetailSection bannerText='Linked Accounts'>
             <ProfileDetailButton
-              onPress={() => Actions.LoginScene({ logOut: true })}
+              onPress={Actions.LoginScene.bind(this, { logOut: true })}
               marginImage={facebookImage}
             >
               {social}

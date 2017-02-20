@@ -18,12 +18,18 @@ const RouterComponent = () => {
         key="InitialScene"
         component={Scenes.InitialScene}
       />
+      <Scene
+        navBar={NavBar}
+        navBarProps={NavProps.backButton}
+        sceneStyle={sceneStyle}
+        key="LoginScene"
+        component={Scenes.LoginScene}
+      />
       <Scene key="root" navBar={NavBar}>
 
         <Scene
           initial
           navBarProps={NavProps.mainScene}
-          sideMenuOpen={false}
           sceneStyle={sceneStyle}
           key="MainScene"
           component={Scenes.MainScene}
@@ -87,12 +93,6 @@ const RouterComponent = () => {
           sceneStyle={sceneStyle}
           key="UserHistoryScene"
           component={Scenes.UserHistoryScene}
-        />
-        <Scene
-          navBarProps={NavProps.backButton}
-          sceneStyle={sceneStyle}
-          key="LoginScene"
-          component={Scenes.LoginScene}
         />
         <Scene
           hideNavBar

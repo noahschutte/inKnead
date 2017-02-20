@@ -12,15 +12,32 @@ class EmailVerifyScene extends Component {
     newEmailText: ''
   };
 
+  onPress = () => {
+    const { currentEmail, signupEmail, userID } = this.props;
+    if (this.state.newEmailText === '') {
+      const newEmail = currentEmail || signupEmail;
+      this.props.updateEmail(newEmail, userID);
+    } else {
+      this.props.updateEmail(this.state.newEmailText, userID);
+    }
+  }
+
   updateEmailText = (newEmailText) => {
     this.setState({ newEmailText });
   }
 
   render() {
+    const currentEmail = this.props.currentEmail || this.props.signupEmail;
+    let submitButtonText;
+    if (this.state.newEmailText === '') {
+      submitButtonText = 'Verify!';
+    } else {
+      submitButtonText = 'Update!';
+    }
     return (
       <View style={{ flex: 1 }}>
         <DetailSection style={styles.sectionStyle} bannerText='Current Email'>
-          <Text>{this.props.currentEmail}</Text>
+          <Text>{currentEmail}</Text>
         </DetailSection>
         <DetailSection style={styles.sectionStyle} bannerText='New Email'>
           <TextInput
@@ -46,10 +63,10 @@ class EmailVerifyScene extends Component {
           </Button>
           <Button
             touchableOpacity
-            onPress={() => this.props.updateEmail(this.state.newEmailText, this.props.userID)}
+            onPress={this.onPress}
             buttonStyle={{ backgroundColor: '#ce0000' }}
           >
-            <Text style={styles.buttonStyle}>Save</Text>
+            <Text style={styles.buttonStyle}>{submitButtonText}</Text>
           </Button>
         </DetailSection>
       </View>
@@ -74,8 +91,9 @@ const styles = {
 
 const mapStateToProps = ({ user }) => {
   const currentEmail = user.userData.current_email;
+  const signupEmail = user.userData.signup_email;
   const userID = user.userData.id;
-  return { currentEmail, userID };
+  return { currentEmail, signupEmail, userID };
 };
 
 export default connect(mapStateToProps, { updateEmail })(EmailVerifyScene);

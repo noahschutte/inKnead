@@ -5,11 +5,10 @@ import {
   Image,
   TouchableWithoutFeedback,
   Dimensions,
-  StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { toggleScope } from '../actions';
+import { toggleScope, redirectTo, toggleSideMenu } from '../actions';
 import {
   globalButton,
   historyButton,
@@ -67,10 +66,10 @@ class NavBar extends Component {
   }
 
   renderLeftButton = () => {
-    const { leftButton } = this.props.navBarProps;
+    const { navBarProps, backScene, redirectTo, sideMenuOpen } = this.props;
     let result;
     let onPress;
-    switch (leftButton) {
+    switch (navBarProps.leftButton) {
       case 'backButton':
         result = (
           <Image
@@ -78,7 +77,11 @@ class NavBar extends Component {
             source={backButton}
           />
         );
-        onPress = Actions.pop;
+        if (backScene) {
+          onPress = () => redirectTo(backScene);
+        } else {
+          onPress = Actions.pop;
+        }
         break;
       case 'sideMenu':
       case 'menuButton':
@@ -88,7 +91,7 @@ class NavBar extends Component {
             source={menuButton}
           />
         );
-        onPress = () => Actions.refresh({ key: 'MainScene', sideMenuOpen: value => !value });
+        onPress = () => this.props.toggleSideMenu(sideMenuOpen);
         break;
       default:
         return null;
@@ -112,7 +115,11 @@ class NavBar extends Component {
             source={newRequestButton}
           />
         );
-        onPress = Actions.EntryCreationScene;
+        if (this.props.userData) {
+          onPress = Actions.EntryCreationScene;
+        } else {
+          onPress = Actions.LoginScene;
+        }
         break;
       default:
         return null;
@@ -125,12 +132,10 @@ class NavBar extends Component {
   }
 
   render() {
-    // console.log(this);
     let content;
     if (this.props.navBarProps) {
       content = (
         <View style={styles.navBarStyle}>
-          <StatusBar backgroundColor='#ce0000' />
           {this.renderLeftButton()}
           {this.renderTitle()}
           {this.renderRightButton()}
@@ -180,10 +185,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ navBar, entries, user }) => {
+const mapStateToProps = ({ entries, user, nav }) => {
   const { scope } = entries;
   const { userData } = user;
-  return { navBar, scope, userData };
+  const { sideMenuOpen } = nav;
+  return { scope, userData, sideMenuOpen };
 };
 
-export default connect(mapStateToProps, { toggleScope })(NavBar);
+export default connect(mapStateToProps, { toggleScope, redirectTo, toggleSideMenu })(NavBar);

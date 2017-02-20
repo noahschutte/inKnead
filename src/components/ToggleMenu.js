@@ -5,10 +5,16 @@ import { defaultProfileImage } from '../assets';
 import SideMenuButton from './SideMenuButton';
 
 const ToggleMenu = (props) => {
+  const onPress = (action) => {
+    action();
+    props.toggle(true);
+  };
+
   let notificationAlert;
   if (props.doesHaveNotifications) {
     notificationAlert = '!';
   }
+
   return (
     <View style={styles.container}>
 
@@ -16,21 +22,21 @@ const ToggleMenu = (props) => {
         source={defaultProfileImage}
         style={styles.image}
       />
-      <SideMenuButton onPress={() => Actions.refresh({ key: 'MainScene', sideMenuOpen: false })}>
+      <SideMenuButton onPress={onPress.bind(this, () => Actions.refresh({ key: 'MainScene' }))}>
         <Text style={styles.textStyle}>Requests</Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={Actions.NotificationsScene}>
+      <SideMenuButton onPress={onPress.bind(this, Actions.NotificationsScene)}>
         <Text style={styles.textStyle}>
           Notifications <Text style={styles.notificationAlertStyle}> {notificationAlert}</Text>
         </Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={Actions.HowToScene}>
+      <SideMenuButton onPress={onPress.bind(this, Actions.HowToScene)}>
         <Text style={styles.textStyle}>How To</Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={props.userData ? Actions.ProfileScene : Actions.LoginScene}>
+      <SideMenuButton onPress={props.userData ? onPress.bind(this, Actions.ProfileScene) : onPress.bind(this, Actions.LoginScene)}>
         <Text style={styles.textStyle}>Profile</Text>
       </SideMenuButton>
 

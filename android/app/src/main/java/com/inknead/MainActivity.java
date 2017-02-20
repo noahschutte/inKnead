@@ -17,15 +17,6 @@ public class MainActivity extends ReactActivity {
      */
 
     @Override
-    public void onStart() {
-      super.onStart();
-
-      View decorView = getWindow().getDecorView();
-
-      decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);

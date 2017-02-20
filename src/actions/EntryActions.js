@@ -26,7 +26,6 @@ export const confirmDonation = (donatorId, entry) => {
       if (responseJson.errorMessage) {
         console.error(responseJson.errorMessage);
       } else {
-        console.log(responseJson);
         const { requests, thankYous, anonEmail } = responseJson;
         dispatch({
           type: UPDATE_ENTRIES,
