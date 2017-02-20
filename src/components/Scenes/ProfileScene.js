@@ -23,12 +23,7 @@ class ProfileScene extends Component {
       signup_email,
       fb_userID,
     } = this.props.user.userData;
-    let email;
-    if (current_email) {
-      email = current_email;
-    } else {
-      email = signup_email;
-    }
+    const email = current_email || signup_email;
     let social;
     if (fb_userID) {
       social = 'Facebook';
