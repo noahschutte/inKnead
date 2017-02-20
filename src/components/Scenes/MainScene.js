@@ -7,6 +7,7 @@ import {
   getEntries,
   sortEntries,
   toggleScope,
+  toggleSideMenu,
 } from '../../actions';
 import ToggleMenu from '../ToggleMenu';
 import SortBar from '../SortBar';
@@ -15,8 +16,10 @@ import Entries from '../Entries';
 
 class MainScene extends Component {
 
-  state = {
-    sideMenuOpen: this.props.sideMenuOpen,
+  onChange = (isOpen) => {
+    if (isOpen === false) {
+      this.props.toggleSideMenu(true);
+    }
   }
 
   getEntryRows = () => {
@@ -68,12 +71,10 @@ class MainScene extends Component {
     return userHistoryOptions;
   }
 
+
   render() {
-    const { userID, userData, entries } = this.props;
+    const { userID, userData, entries, sideMenuOpen } = this.props;
     const { shown, loading } = entries;
-    const onChange = () => {
-      this.setState({ sideMenuOpen: !this.props.sideMenuOpen });
-    };
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
@@ -81,12 +82,12 @@ class MainScene extends Component {
       />
     );
     const entryRows = this.getEntryRows();
+
     return (
       <SideMenu
-        disableGestures
-        onChange={onChange}
+        onChange={this.onChange}
         menu={menu}
-        isOpen={this.props.sideMenuOpen}
+        isOpen={sideMenuOpen}
       >
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           <SortBar
@@ -107,9 +108,10 @@ class MainScene extends Component {
   }
 }
 
-const mapStateToProps = ({ entries, user }) => {
+const mapStateToProps = ({ entries, user, nav }) => {
   const { userID, userData, notifications } = user;
-  return { userID, userData, notifications, entries };
+  const { sideMenuOpen } = nav;
+  return { userID, userData, notifications, entries, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, {
@@ -117,4 +119,5 @@ export default connect(mapStateToProps, {
   sortEntries,
   createSession,
   toggleScope,
+  toggleSideMenu,
 })(MainScene);
