@@ -115,7 +115,11 @@ class NavBar extends Component {
             source={newRequestButton}
           />
         );
-        onPress = Actions.EntryCreationScene;
+        if (this.props.userData) {
+          onPress = Actions.EntryCreationScene;
+        } else {
+          onPress = Actions.LoginScene;
+        }
         break;
       default:
         return null;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { defaultProfileImage, facebookImage } from '../../assets';
@@ -8,15 +8,15 @@ import DetailSection from '../DetailSection';
 import ProfileDetailButton from '../ProfileDetailButton';
 
 class ProfileScene extends Component {
-  render() {
-    if (!this.props.user.userData) {
-      console.log('reached');
-      return (
-        <View>
-          <Text>How did you get here</Text>
-        </View>
-      );
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.user.userData === null) {
+      return false;
     }
+    return true;
+  }
+
+  render() {
     /* eslint camelcase: off */
     const {
       current_email,

@@ -66,6 +66,7 @@ export const userLogout = () => {
   return dispatch => {
     redirectToMainScene.then(() => {
       dispatch({ type: HANDLE_USER_LOGOUT });
-    });
+    })
+    .catch(err => console.log(err));
   };
 };
