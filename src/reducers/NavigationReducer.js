@@ -18,10 +18,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         sideMenuOpen: action.payload
       };
-    case REDIRECT:
-      switch (action.payload.scene) {
+    case REDIRECT: {
+      const { scene, parameter } = action.payload;
+      switch (scene) {
         case 'MainScene':
-          if (action.payload.parameter === 'root') {
+          if (parameter === 'root') {
             Actions.root({ type: 'reset' });
           } else {
             Actions.MainScene({ type: 'reset' });
@@ -29,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
           return state;
         case 'EntryScene':
           Actions.root({ type: 'reset' });
-          Actions.EntryScene({ entry: action.payload.parameter });
+          Actions.EntryScene({ entry: parameter });
           return state;
         case 'ProfileScene':
           Actions.root({ type: 'reset' });
@@ -37,19 +38,20 @@ export default (state = INITIAL_STATE, action) => {
           return state;
         case 'InstructionsScene':
           Actions.InstructionsScene({
-            recipientEmail: action.payload.parameter.recipientEmail,
-            entry: action.payload.parameter.entry
+            recipientEmail: parameter.recipientEmail,
+            entry: parameter.entry
           });
           return state;
         case 'EmailVerifyScene':
           Actions.EmailVerifyScene({
-            currentEmail: state.userData.current_email,
-            signupEmail: state.userData.signup_email
+            currentEmail: parameter.currentEmail,
+            signupEmail: parameter.signupEmail,
           });
           return state;
         default:
           Actions.pop();
           return state;
+        }
       }
     default:
       return state;

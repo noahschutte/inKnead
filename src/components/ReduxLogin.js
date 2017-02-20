@@ -19,7 +19,6 @@ class ReduxLogin extends Component {
     }
   }
   handleLoginFinished = (error, result) => {
-    console.log(this.props.redirect);
     if (error) {
       alert(`Login failed with error ${error}`);
     } else if (result.isCancelled) {

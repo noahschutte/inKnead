@@ -54,6 +54,10 @@ export default (state = INITIAL_STATE, action) => {
             text: 'Please verify your email',
             redirect: {
               scene: 'EmailVerifyScene',
+              parameter: {
+                currentEmail: state.userData.current_email,
+                signupEmail: state.userData.signup_email,
+              }
             },
           },
         ],

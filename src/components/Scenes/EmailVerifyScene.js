@@ -17,10 +17,11 @@ class EmailVerifyScene extends Component {
   }
 
   render() {
+    const currentEmail = this.props.currentEmail || this.props.signupEmail;
     return (
       <View style={{ flex: 1 }}>
         <DetailSection style={styles.sectionStyle} bannerText='Current Email'>
-          <Text>{this.props.currentEmail}</Text>
+          <Text>{currentEmail}</Text>
         </DetailSection>
         <DetailSection style={styles.sectionStyle} bannerText='New Email'>
           <TextInput
