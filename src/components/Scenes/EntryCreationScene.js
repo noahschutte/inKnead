@@ -31,7 +31,6 @@ class EntryCreationScene extends Component {
     this.setState({ paused: toggle });
   }
   verifiedUser = () => {
-    console.log(this.props.userData);
     if (this.props.userData.current_email === null) {
       Alert.alert(
         'No verified email address!',
