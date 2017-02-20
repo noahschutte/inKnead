@@ -8,6 +8,7 @@ import {
   sortEntries,
   toggleScope,
   toggleSideMenu,
+  userLogout,
 } from '../../actions';
 import ToggleMenu from '../ToggleMenu';
 import SortBar from '../SortBar';
@@ -15,6 +16,13 @@ import Entries from '../Entries';
 
 
 class MainScene extends Component {
+
+  componentWillReceiveProps(nextProps) {
+    // console.log('nextProps:', nextProps);
+    if (nextProps.logOut) {
+      this.props.userLogout();
+    }
+  }
 
   onChange = (isOpen) => {
     if (isOpen === false) {
@@ -73,12 +81,14 @@ class MainScene extends Component {
 
 
   render() {
+    console.log(this.props);
     const { userID, userData, entries, sideMenuOpen } = this.props;
     const { shown, loading } = entries;
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
         userData={userData}
+        toggle={this.props.toggleSideMenu}
       />
     );
     const entryRows = this.getEntryRows();
@@ -120,4 +130,5 @@ export default connect(mapStateToProps, {
   createSession,
   toggleScope,
   toggleSideMenu,
+  userLogout
 })(MainScene);

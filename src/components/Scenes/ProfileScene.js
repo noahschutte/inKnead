@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { defaultProfileImage, facebookImage } from '../../assets';
@@ -9,6 +9,14 @@ import ProfileDetailButton from '../ProfileDetailButton';
 
 class ProfileScene extends Component {
   render() {
+    if (!this.props.user.userData) {
+      console.log('reached');
+      return (
+        <View>
+          <Text>How did you get here</Text>
+        </View>
+      );
+    }
     /* eslint camelcase: off */
     const {
       current_email,
@@ -37,10 +45,10 @@ class ProfileScene extends Component {
           <DetailSection bannerText='Linked Accounts'>
             <ProfileDetailButton
               onPress={Actions.LoginScene.bind(this, {
-                type: 'reset',
-                backScene: {
-                  scene: 'ProfileScene',
-                },
+                // type: 'reset',
+                // backScene: {
+                //   scene: 'ProfileScene',
+                // },
                 logOut: true
               })}
               marginImage={facebookImage}

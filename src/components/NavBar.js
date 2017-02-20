@@ -67,7 +67,6 @@ class NavBar extends Component {
 
   renderLeftButton = () => {
     const { navBarProps, backScene, redirectTo, sideMenuOpen } = this.props;
-    console.log(this.props);
     let result;
     let onPress;
     switch (navBarProps.leftButton) {
@@ -129,7 +128,6 @@ class NavBar extends Component {
   }
 
   render() {
-    // console.log(this);
     let content;
     if (this.props.navBarProps) {
       content = (
