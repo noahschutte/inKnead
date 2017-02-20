@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { toggleScope, redirectTo } from '../actions';
+import { toggleScope, redirectTo, toggleSideMenu } from '../actions';
 import {
   globalButton,
   historyButton,
@@ -66,7 +66,7 @@ class NavBar extends Component {
   }
 
   renderLeftButton = () => {
-    const { navBarProps, backScene, redirectTo } = this.props;
+    const { navBarProps, backScene, redirectTo, sideMenuOpen } = this.props;
     console.log(this.props);
     let result;
     let onPress;
@@ -92,7 +92,7 @@ class NavBar extends Component {
             source={menuButton}
           />
         );
-        onPress = () => Actions.refresh({ key: 'MainScene', sideMenuOpen: value => !value });
+        onPress = () => this.props.toggleSideMenu(sideMenuOpen);
         break;
       default:
         return null;
@@ -183,10 +183,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ entries, user }) => {
+const mapStateToProps = ({ entries, user, nav }) => {
   const { scope } = entries;
   const { userData } = user;
-  return { scope, userData };
+  const { sideMenuOpen } = nav;
+  return { scope, userData, sideMenuOpen };
 };
 
-export default connect(mapStateToProps, { toggleScope, redirectTo })(NavBar);
+export default connect(mapStateToProps, { toggleScope, redirectTo, toggleSideMenu })(NavBar);
