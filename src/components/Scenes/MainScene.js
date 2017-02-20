@@ -17,13 +17,6 @@ import Entries from '../Entries';
 
 class MainScene extends Component {
 
-  componentWillReceiveProps(nextProps) {
-    // console.log('nextProps:', nextProps);
-    if (nextProps.logOut) {
-      this.props.userLogout();
-    }
-  }
-
   onChange = (isOpen) => {
     if (isOpen === false) {
       this.props.toggleSideMenu(true);
@@ -81,7 +74,6 @@ class MainScene extends Component {
 
 
   render() {
-    console.log(this.props);
     const { userID, userData, entries, sideMenuOpen } = this.props;
     const { shown, loading } = entries;
     const menu = (
@@ -119,9 +111,9 @@ class MainScene extends Component {
 }
 
 const mapStateToProps = ({ entries, user, nav }) => {
-  const { userID, userData, notifications } = user;
+  const { userID, userData, notifications, logOut } = user;
   const { sideMenuOpen } = nav;
-  return { userID, userData, notifications, entries, sideMenuOpen };
+  return { userID, userData, notifications, logOut, entries, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, {

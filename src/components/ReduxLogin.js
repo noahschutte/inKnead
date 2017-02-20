@@ -8,15 +8,14 @@ import {
 } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { createSession, redirectTo } from '../actions';
+import { createSession, redirectTo, userLogout } from '../actions';
 
 class ReduxLogin extends Component {
   handleLogoutFinished = (error, result) => {
     if (error) {
       alert(`Logout failed with error: ${result.error}`);
     } else {
-      Actions.root();
-      Actions.refresh({ key: 'MainScene', logOut: true });
+      this.props.userLogout();
     }
   }
   handleLoginFinished = (error, result) => {
@@ -29,11 +28,11 @@ class ReduxLogin extends Component {
         data => {
           if (data) {
             const accessToken = data.accessToken;
-            const responseInfoCallback = (error, result) => {
-              if (error) {
-                alert(`Error fetching data: ${error.toString()}`);
+            const responseInfoCallback = (err, res) => {
+              if (err) {
+                alert(`Error fetching data: ${err.toString()}`);
               } else {
-                this.props.createSession(result, this.props.redirect);
+                this.props.createSession(res, this.props.redirect);
               }
             };
             const infoRequest = new GraphRequest(
@@ -49,6 +48,8 @@ class ReduxLogin extends Component {
               responseInfoCallback
             );
             new GraphRequestManager().addRequest(infoRequest).start();
+          } else {
+            Actions.root({ type: 'reset' });
           }
         }
       );
@@ -68,4 +69,4 @@ class ReduxLogin extends Component {
   }
 }
 
-export default connect(null, { createSession, redirectTo })(ReduxLogin);
+export default connect(null, { createSession, redirectTo, userLogout })(ReduxLogin);

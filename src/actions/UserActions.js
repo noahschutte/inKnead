@@ -1,3 +1,4 @@
+import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
   USER_VERIFIED,
@@ -7,7 +8,7 @@ import {
   REDIRECT,
 } from './types';
 
-export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: null }) => {
+export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: 'root' }) => {
   return (dispatch) => {
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
       headers: {
@@ -58,7 +59,13 @@ export const updateEmail = (updatedEmail, userID) => {
 };
 
 export const userLogout = () => {
-  return {
-    type: HANDLE_USER_LOGOUT,
+  const redirectToMainScene = new Promise((resolve) => {
+    Actions.root({ type: 'reset' });
+    resolve('success');
+  });
+  return dispatch => {
+    redirectToMainScene.then(() => {
+      dispatch({ type: HANDLE_USER_LOGOUT });
+    });
   };
 };
