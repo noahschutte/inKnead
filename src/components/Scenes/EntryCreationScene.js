@@ -19,17 +19,19 @@ import Button from '../Button2';
 
 class EntryCreationScene extends Component {
   state = {
-    paused: true
+    paused: true,
   };
 
   onPress = () => {
     this.setState({ paused: true });
-    this.verifiedUser();
-    this.handleRequestSubmission();
+    if (this.verifiedUser()) {
+      this.handleRequestSubmission();
+    }
   }
   togglePlay = (toggle) => {
     this.setState({ paused: toggle });
   }
+
   verifiedUser = () => {
     if (this.props.userData.current_email === null) {
       Alert.alert(
@@ -43,7 +45,9 @@ class EntryCreationScene extends Component {
           }
         ]
       );
+      return false;
     }
+    return true;
   }
   dispatchRequest = () => {
     const {
@@ -119,6 +123,7 @@ class EntryCreationScene extends Component {
       console.error(error);
     });
   }
+
   handleRequestSubmission = () => {
     const { videoData, pizzas, vendor, handleErrors } = this.props;
     const errorMessages = [];

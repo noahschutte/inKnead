@@ -20,14 +20,11 @@ export const updateSelectedVendor = (selectedVendor) => {
   };
 };
 
-export const uploadProgress = (evt) => {
-  if (evt.lengthComputable) {
-    const percentComplete = Math.round((evt.loaded * 100) / evt.total);
-    return {
-      type: UPLOAD_PROGRESS,
-      payload: percentComplete
-    };
-  }
+export const uploadProgress = (pct) => {
+  return {
+    type: UPLOAD_PROGRESS,
+    payload: pct,
+  };
 };
 
 export const uploadComplete = () => {
