@@ -86,6 +86,20 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         activeDonation: action.payload.activeDonation,
         recipientEmail: action.payload.recipientEmail,
+        notifications: [
+          ...state.notifications,
+          {
+            id: 1,
+            text: 'You have an outstanding donation',
+            redirect: {
+              scene: 'InstructionsScene',
+              parameter: {
+                recipientEmail: action.payload.recipientEmail,
+                entry: action.payload.activeDonation,
+              }
+            }
+          }
+        ]
       };
     default:
       return state;

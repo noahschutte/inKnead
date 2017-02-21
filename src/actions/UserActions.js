@@ -1,6 +1,7 @@
 import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
+  HANDLE_USER_DONATION,
   EMAIL_VERIFIED,
   EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
@@ -25,6 +26,15 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
         dispatch({ type: EMAIL_VERIFIED });
       } else {
         dispatch({ type: EMAIL_NOT_VERIFIED, payload: responseJson.user.signupEmail });
+      }
+      if (responseJson.activeDonation) {
+        dispatch({
+          type: HANDLE_USER_DONATION,
+          payload: {
+            activeDonation: responseJson.activeDonation,
+            recipientEmail: responseJson.anonEmail,
+          }
+        });
       }
     })
     .then(() => {
