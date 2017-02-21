@@ -1,7 +1,7 @@
 import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
-  USER_VERIFIED,
+  EMAIL_VERIFIED,
   EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
   UPDATE_EMAIL,
@@ -22,7 +22,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
     .then(responseJson => {
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
       if (responseJson.user.current_email) {
-        dispatch({ type: USER_VERIFIED });
+        dispatch({ type: EMAIL_VERIFIED });
       } else {
         dispatch({ type: EMAIL_NOT_VERIFIED, payload: responseJson.user.signupEmail });
       }
@@ -36,7 +36,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
 
 export const updateEmail = (updatedEmail, userID, redirect = null) => {
   return (dispatch) => {
-    dispatch({ type: USER_VERIFIED });
+    dispatch({ type: EMAIL_VERIFIED });
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
       headers: {
         Accept: 'application/json',

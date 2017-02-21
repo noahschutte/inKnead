@@ -8,7 +8,7 @@ export const TOGGLE_SCOPE = 'toggle_scope';
 
 export const CREATE_SESSION_START = 'create_session_start';
 export const CREATE_SESSION_SUCCESS = 'create_session_success';
-export const USER_VERIFIED = 'user_verified';
+export const EMAIL_VERIFIED = 'user_verified';
 export const UPDATE_EMAIL = 'update_email';
 export const EMAIL_NOT_VERIFIED = 'email_not_verified';
 export const HANDLE_USER_LOGOUT = 'handle_user_logout';

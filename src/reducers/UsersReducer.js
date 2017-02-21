@@ -1,6 +1,6 @@
 import {
   CREATE_SESSION_SUCCESS,
-  USER_VERIFIED,
+  EMAIL_VERIFIED,
   EMAIL_NOT_VERIFIED,
   UPDATE_EMAIL,
   HANDLE_USER_LOGOUT,
@@ -20,7 +20,7 @@ const INITIAL_STATE = {
     }
   */
   userData: null,
-  notifications: {},
+  notifications: [],
   userVerified: false,
   activeDonation: null,
   recipientEmail: '',
@@ -39,11 +39,19 @@ export default (state = INITIAL_STATE, action) => {
         recentSuccessfulRequest: action.payload.recentSuccessfulRequest,
         recentThankYou: action.payload.recentThankYou,
       };
-    case USER_VERIFIED:
+    case EMAIL_VERIFIED: {
+      const notifications = [];
+      for (const notification of state.notifications) {
+        if (notification.id !== 0) {
+          notifications.push(notification);
+        }
+      }
       return {
         ...state,
-        userVerified: true
+        userVerified: true,
+        notifications,
       };
+    }
     case EMAIL_NOT_VERIFIED:
       return {
         ...state,
@@ -51,6 +59,7 @@ export default (state = INITIAL_STATE, action) => {
         notifications: [
           ...state.notifications,
           {
+            id: 0,
             text: 'Please verify your email',
             redirect: {
               scene: 'EmailVerifyScene',
