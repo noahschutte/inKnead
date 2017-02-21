@@ -19,6 +19,7 @@ export const emailVerifyScene = {
 
 export const profileScene = {
   leftButton: 'backButton',
+  specify: 'MainScene',
 };
 
 export const instructionsScene = {
