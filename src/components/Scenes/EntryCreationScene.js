@@ -41,7 +41,10 @@ class EntryCreationScene extends Component {
           { text: 'Cancel' },
           {
             text: 'Verify Now',
-            onPress: Actions.EmailVerifyScene
+            onPress: Actions.EmailVerifyScene.bind(this, {
+              redirect: {
+                scene: 'EntryCreationScene',
+              } })
           }
         ]
       );

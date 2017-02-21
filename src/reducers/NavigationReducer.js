@@ -33,8 +33,8 @@ export default (state = INITIAL_STATE, action) => {
           Actions.EntryScene({ entry: parameter });
           return state;
         case 'ProfileScene':
-          Actions.root({ type: 'reset' });
-          Actions.ProfileScene();
+          Actions.root();
+          Actions.ProfileScene({ type: 'reset' });
           return state;
         case 'InstructionsScene':
           Actions.InstructionsScene({
@@ -47,6 +47,9 @@ export default (state = INITIAL_STATE, action) => {
             currentEmail: parameter.currentEmail,
             signupEmail: parameter.signupEmail,
           });
+          return state;
+        case 'EntryCreationScene':
+          Actions.EntryCreationScene();
           return state;
         default:
           Actions.pop();

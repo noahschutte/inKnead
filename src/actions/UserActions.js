@@ -34,7 +34,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
   };
 };
 
-export const updateEmail = (updatedEmail, userID) => {
+export const updateEmail = (updatedEmail, userID, redirect = null) => {
   return (dispatch) => {
     dispatch({ type: USER_VERIFIED });
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
@@ -49,7 +49,11 @@ export const updateEmail = (updatedEmail, userID) => {
     .then(responseJson => {
       if (responseJson.currentEmail) {
         dispatch({ type: UPDATE_EMAIL, payload: responseJson.currentEmail });
-        dispatch({ type: REDIRECT, payload: { scene: 'ProfileScene' } });
+        if (!redirect) {
+          dispatch({ type: REDIRECT, payload: { scene: 'ProfileScene' } });
+        } else {
+          dispatch({ type: REDIRECT, payload: redirect });
+        }
       } else {
         alert('failed to update email');
       }

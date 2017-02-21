@@ -19,7 +19,9 @@ export const emailVerifyScene = {
 
 export const profileScene = {
   leftButton: 'backButton',
-  specify: 'MainScene',
+  redirect: {
+    scene: 'MainScene',
+  },
 };
 
 export const instructionsScene = {

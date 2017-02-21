@@ -66,7 +66,7 @@ class NavBar extends Component {
   }
 
   renderLeftButton = () => {
-    const { navBarProps, redirectTo, sideMenuOpen } = this.props;
+    const { navBarProps, sideMenuOpen } = this.props;
     let result;
     let onPress;
     switch (navBarProps.leftButton) {
@@ -77,8 +77,8 @@ class NavBar extends Component {
             source={backButton}
           />
         );
-        if (navBarProps.specify) {
-          onPress = () => redirectTo(navBarProps.specify);
+        if (navBarProps.redirect) {
+          onPress = () => this.props.redirectTo(navBarProps.redirect);
         } else {
           onPress = Actions.pop;
         }
