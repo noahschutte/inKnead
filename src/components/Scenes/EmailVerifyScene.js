@@ -13,12 +13,12 @@ class EmailVerifyScene extends Component {
   };
 
   onPress = () => {
-    const { currentEmail, signupEmail, userID } = this.props;
+    const { currentEmail, signupEmail, userID, redirect } = this.props;
     if (this.state.newEmailText === '') {
       const newEmail = currentEmail || signupEmail;
-      this.props.updateEmail(newEmail, userID);
+      this.props.updateEmail(newEmail, userID, redirect);
     } else {
-      this.props.updateEmail(this.state.newEmailText, userID);
+      this.props.updateEmail(this.state.newEmailText, userID, redirect);
     }
   }
 
