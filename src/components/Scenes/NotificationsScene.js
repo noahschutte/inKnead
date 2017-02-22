@@ -11,18 +11,22 @@ class NotificationsScene extends Component {
     expanded: [],
   }
 
-  onPress = (action) => {
-    const { userID, recentSuccessfulRequest } = this.props;
+  onPress = (action, notificationID, redirect = null) => {
+    const { userData, recentSuccessfulRequest } = this.props;
     switch (action) {
+      case 'verifyEmail':
+        return () => this.props.redirectTo(redirect);
       case 'confirmDonation':
-        return () => this.props.confirmDonationReceived(userID, recentSuccessfulRequest.id);
+        return () => this.props.confirmDonationReceived(userData.id, recentSuccessfulRequest.id);
+      case 'nothing':
+        return () => this.collapseNotification(this.state.expanded.indexOf(notificationID));
       default:
         return () => alert('this will work eventually');
     }
   }
 
   buttonContent = (notification) => {
-    const { text, expandable, id } = notification;
+    const { text, expandable, id, redirect } = notification;
     if (expandable && this.state.expanded.indexOf(id) !== -1) {
       return (
         <DetailSection contentStyle={{ flexDirection: 'column' }}>
@@ -36,7 +40,7 @@ class NotificationsScene extends Component {
                   key={id + button.type}
                   touchableOpacity
                   buttonType={button.type}
-                  onPress={this.onPress(button.action)}
+                  onPress={this.onPress(button.action, id, redirect)}
                 >
                   {button.text}
                 </Button>
@@ -71,7 +75,7 @@ class NotificationsScene extends Component {
     if (notifications.length > 0) {
       content = notifications.map(notification => {
         let onPress;
-        if (notification.redirect) {
+        if (notification.redirect && !notification.expandable) {
           onPress = () => redirectTo(notification.redirect);
         } else if (notification.expandable) {
           const index = this.state.expanded.indexOf(notification.id);
@@ -118,7 +122,7 @@ const styles = {
 
 const mapStateToProps = ({ user }) => {
   const { notifications, userData, recentSuccessfulRequest } = user;
-  return { notifications, userID: userData.id, recentSuccessfulRequest };
+  return { notifications, userData, recentSuccessfulRequest };
 };
 
 export default connect(mapStateToProps, {

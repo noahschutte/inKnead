@@ -83,7 +83,6 @@ export default (state = INITIAL_STATE, action) => {
         ]
       };
     case CONFIRM_DONATION_RECEIVED:
-      console.log('reached here');
       return {
         ...state
       };
@@ -100,6 +99,21 @@ export default (state = INITIAL_STATE, action) => {
           {
             id: 0,
             text: 'Please verify your email',
+            expandable: {
+              text: 'Gift cards are sent to you by email, it\'s important that yours is up to date!',
+              buttons: [
+                {
+                  type: 'cancel',
+                  text: 'Not Now',
+                  action: 'nothing',
+                },
+                {
+                  type: 'confirm',
+                  text: 'Verify',
+                  action: 'verifyEmail'
+                }
+              ]
+            },
             redirect: {
               scene: 'EmailVerifyScene',
               parameter: {

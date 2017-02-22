@@ -85,6 +85,7 @@ export const confirmDonationReceived = (userID, requestID) => {
     .then(response => response.json())
     .then(responseJson => {
       dispatch({ type: CONFIRM_DONATION_RECEIVED, payload: responseJson.recentSuccessfulRequest });
+      Actions.EntryCreationScene({ createThankYou: true });
     })
     .catch(error => {
       console.error(error);
