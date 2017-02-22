@@ -19,6 +19,8 @@ class NotificationsScene extends Component {
         return () => this.props.redirectTo(redirect);
       case 'confirmDonation':
         return () => this.props.confirmDonationReceived(userData.id, recentSuccessfulRequest.id);
+      case 'createThankYou':
+        return () => this.props.redirectTo(redirect);
       case 'nothing':
         return () => this.collapseNotification(this.state.expanded.indexOf(notificationID));
       default:
@@ -116,6 +118,7 @@ const styles = {
   },
   subText: {
     fontSize: 14,
+    lineHeight: 22,
     fontWeight: 'normal',
     color: 'black',
   },
