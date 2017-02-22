@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { redirectTo } from '../../actions';
+import { redirectTo, confirmDonationReceived } from '../../actions';
 import Button from '../Button2';
 import DetailSection from '../DetailSection';
 
@@ -12,11 +12,12 @@ class NotificationsScene extends Component {
   }
 
   onPress = (action) => {
+    const { userID, recentSuccessfulRequest } = this.props;
     switch (action) {
-      case 'nothing':
-        return () => alert('this will work eventually');
+      case 'confirmDonation':
+        return () => this.props.confirmDonationReceived(userID, recentSuccessfulRequest.id);
       default:
-        return action;
+        return () => alert('this will work eventually');
     }
   }
 
@@ -116,8 +117,11 @@ const styles = {
 };
 
 const mapStateToProps = ({ user }) => {
-  const { notifications } = user;
-  return { notifications };
+  const { notifications, userData, recentSuccessfulRequest } = user;
+  return { notifications, userID: userData.id, recentSuccessfulRequest };
 };
 
-export default connect(mapStateToProps, { redirectTo })(NotificationsScene);
+export default connect(mapStateToProps, {
+  redirectTo,
+  confirmDonationReceived
+})(NotificationsScene);

@@ -9,7 +9,6 @@ import {
   CONFIRM_DONATION_RECEIVED,
   CREATE_THANK_YOU_REMINDER,
 } from '../actions/types';
-import { confirmDonationReceived } from '../actions';
 
 const INITIAL_STATE = {
   /* userData, when not null looks something like:
@@ -76,7 +75,7 @@ export default (state = INITIAL_STATE, action) => {
                 {
                   type: 'confirm',
                   text: 'Got it!',
-                  action: () => confirmDonationReceived(action.payload.userID, action.payload.requestID),
+                  action: 'confirmDonation',
                 }
               ]
             }
@@ -84,6 +83,7 @@ export default (state = INITIAL_STATE, action) => {
         ]
       };
     case CONFIRM_DONATION_RECEIVED:
+      console.log('reached here');
       return {
         ...state
       };

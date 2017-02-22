@@ -70,7 +70,6 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
 };
 
 export const confirmDonationReceived = (userID, requestID) => {
-  alert('invoked');
   return dispatch => {
     fetch(`https://in-knead-jamowelling.c9users.io/requests/${requestID}`, {
       headers: {
