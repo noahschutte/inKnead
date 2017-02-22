@@ -15,6 +15,7 @@ import {
 import { camcorderImage } from '../../assets';
 import EntryVideo from '../EntryVideo';
 import EntryCreationForm from '../EntryCreationForm';
+import ThankYouCreationForm from '../ThankYouCreationForm';
 import Button from '../Button2';
 
 class EntryCreationScene extends Component {
@@ -67,7 +68,7 @@ class EntryCreationScene extends Component {
       name: videoKey,
       type: 'video/quicktime'
     };
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
+    fetch('https://in-knead-jamowelling.c9users.io/requests', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -104,7 +105,7 @@ class EntryCreationScene extends Component {
               Actions.MainScene({ type: 'reset' });
             } else {
               console.log('failure');
-              fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests/1', {
+              fetch('https://in-knead-jamowelling.c9users.io/requests/1', {
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json'
@@ -143,6 +144,9 @@ class EntryCreationScene extends Component {
     if (errorMessages.length === 0) {
       this.dispatchRequest();
     }
+  }
+  handleThankYouSubmission = () => {
+    alert('pressed!');
   }
   openVideoRec = () => {
     this.props.resetCameraState();
@@ -189,11 +193,18 @@ class EntryCreationScene extends Component {
       updateSelectedPizzas,
       vendor,
       updateSelectedVendor,
+      createThankYou
     } = this.props;
     const videoDisplay = this.renderVideoContent();
-    return (
-      <View style={{ flex: 1 }} >
-        {videoDisplay}
+    let entryCreationForm;
+    if (createThankYou) {
+      entryCreationForm = (
+        <ThankYouCreationForm
+          handleThankYouSubmission={this.handleThankYouSubmission}
+        />
+      );
+    } else {
+      entryCreationForm = (
         <EntryCreationForm
           updateSelectedPizzas={updateSelectedPizzas}
           pizzas={pizzas}
@@ -201,6 +212,12 @@ class EntryCreationScene extends Component {
           vendor={vendor}
           handleRequestSubmission={this.onPress}
         />
+      );
+    }
+    return (
+      <View style={{ flex: 1 }} >
+        {videoDisplay}
+        {entryCreationForm}
       </View>
     );
   }

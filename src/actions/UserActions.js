@@ -14,7 +14,7 @@ import {
 
 export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: 'root' }) => {
   return (dispatch) => {
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
+    fetch('https://in-knead-jamowelling.c9users.io/users', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
 
 export const confirmDonationReceived = (userID, requestID) => {
   return dispatch => {
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${requestID}`, {
+    fetch(`https://in-knead-jamowelling.c9users.io/requests/${requestID}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export const confirmDonationReceived = (userID, requestID) => {
 export const updateEmail = (updatedEmail, userID, redirect = null) => {
   return (dispatch) => {
     dispatch({ type: EMAIL_VERIFIED });
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
+    fetch(`https://in-knead-jamowelling.c9users.io/users/${userID}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
