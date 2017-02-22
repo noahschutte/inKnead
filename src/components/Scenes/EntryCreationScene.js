@@ -92,7 +92,6 @@ class EntryCreationScene extends Component {
         xhr.addEventListener('load', uploadComplete, false);
         xhr.addEventListener('error', (evt) => console.log('Error:', evt), false);
         xhr.addEventListener('abort', (evt) => console.log(evt), false);
-        const that = this;
         Actions.UploadingScene();
         xhr.open('PUT', url);
         // Explicitly set request header for android compatibility
@@ -116,7 +115,6 @@ class EntryCreationScene extends Component {
               .catch((error) => {
                 console.error(error);
               });
-              that.setState({ uploading: false });
             }
           }
         };
@@ -126,6 +124,69 @@ class EntryCreationScene extends Component {
     .catch((error) => {
       console.error(error);
     });
+  }
+
+  dispatchThankYou = () => {
+    const { userData, videoData, entry } = this.props;
+    const userID = userData.id;
+    const videoKey = `${userData.fb_userID + Date.now()}`;
+    const file = {
+      uri: videoData.path,
+      name: videoKey,
+      type: 'video/quicktime'
+    };
+    const { pizzas, vendor } = entry;
+
+    fetch('https://in-knead-jamowelling.c9users.io/thank_you', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        userID,
+        pizzas,
+        vendor,
+        videoKey
+      })
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      if (responseJson.errorMessage) {
+        console.log('error: ', responseJson.errorMessage);
+      } else {
+        const url = responseJson.signedRequest;
+        const xhr = new XMLHttpRequest();
+        Actions.UploadingScene();
+        xhr.open('PUT', url);
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              console.log('success');
+              this.props.handleVideoData(null);
+              Actions.MainScene({ type: 'reset' });
+            } else {
+              console.log('failure');
+              fetch('https://in-knead-jamowelling.c9users.io/thank_you/1', {
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                method: 'DELETE',
+                body: JSON.stringify({ videoKey }),
+              })
+              .then(response => response.json())
+              .then(responseJSON => {
+                console.log('error: ', responseJSON.errorMessage);
+              })
+              .catch(err => console.error(err));
+            }
+          }
+        };
+        xhr.send(file);
+      }
+    })
+    .catch(error => console.error(error));
   }
 
   handleRequestSubmission = () => {
@@ -145,8 +206,18 @@ class EntryCreationScene extends Component {
       this.dispatchRequest();
     }
   }
+  
   handleThankYouSubmission = () => {
-    alert('pressed!');
+    this.setState({ paused: true });
+    const { videoData, handleErrors } = this.props;
+    const errorMessages = [];
+    if (!videoData) {
+      errorMessages.push('Please record a video.');
+    }
+    handleErrors(errorMessages);
+    if (errorMessages.length === 0) {
+      this.dispatchThankYou();
+    }
   }
   openVideoRec = () => {
     this.props.resetCameraState();

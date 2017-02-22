@@ -49,8 +49,8 @@ export default (state = INITIAL_STATE, action) => {
           });
           return state;
         case 'EntryCreationScene':
-          if (parameter === 'createThankYou') {
-            Actions.EntryCreationScene({ createThankYou: true });
+          if (parameter.createThankYou) {
+            Actions.EntryCreationScene({ createThankYou: true, entry: parameter.entry });
             return state;
           }
           Actions.EntryCreationScene();

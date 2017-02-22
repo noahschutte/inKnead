@@ -108,7 +108,10 @@ export default (state = INITIAL_STATE, action) => {
             },
             redirect: {
               scene: 'EntryCreationScene',
-              parameter: 'createThankYou',
+              parameter: {
+                createThankYou: true,
+                entry: state.recentSuccessfulRequest,
+              },
             }
           }
         ]
