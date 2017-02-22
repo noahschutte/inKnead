@@ -15,6 +15,7 @@ class NotificationsScene extends Component {
     const { userData, recentSuccessfulRequest } = this.props;
     switch (action) {
       case 'verifyEmail':
+      case 'completeDonation':
         return () => this.props.redirectTo(redirect);
       case 'confirmDonation':
         return () => this.props.confirmDonationReceived(userData.id, recentSuccessfulRequest.id);

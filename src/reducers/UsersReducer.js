@@ -144,6 +144,21 @@ export default (state = INITIAL_STATE, action) => {
           {
             id: 1,
             text: 'You have an outstanding donation',
+            expandable: {
+              text: 'Once your recipient acknowledges the donation, they\'ll send you a thank you video!',
+              buttons: [
+                {
+                  type: 'cancel',
+                  text: 'Close',
+                  action: 'nothing'
+                },
+                {
+                  type: 'confirm',
+                  text: 'Instructions',
+                  action: 'completeDonation',
+                }
+              ]
+            },
             redirect: {
               scene: 'InstructionsScene',
               parameter: {
