@@ -45,15 +45,32 @@ class Button extends Component {
       children,
       onPress,
       buttonStyle,
-      textStyle
+      textStyle,
+      buttonType,
     } = props;
+    let tStyle;
+    let bStyle;
+    switch (buttonType) {
+      case 'confirm':
+        tStyle = [styles.defaultTextStyle, styles.confirmTextStyle, textStyle];
+        bStyle = [styles.defaultButtonStyle, styles.confirmButtonStyle, buttonStyle];
+        break;
+      case 'cancel':
+        tStyle = [styles.defaultTextStyle, styles.cancelTextStyle, textStyle];
+        bStyle = [styles.defaultButtonStyle, styles.cancelButtonStyle, buttonStyle];
+        break;
+      default:
+        tStyle = [styles.defaultTextStyle, textStyle];
+        bStyle = [styles.defaultButtonStyle, buttonStyle];
+        break;
+    }
 
     let content;
     const { touchType, childType } = this.determineButtonType(props);
 
     if (childType === 'Raw Text') {
       content = (
-        <Text style={[styles.textStyle, textStyle]}>{children}</Text>
+        <Text style={tStyle}>{children}</Text>
       );
     } else {
       content = children;
@@ -62,21 +79,21 @@ class Button extends Component {
     switch (touchType) {
       case 'touchableOpacity':
         content = (
-          <TouchableOpacity style={[styles.buttonStyle, buttonStyle]} onPress={onPress}>
+          <TouchableOpacity style={bStyle} onPress={onPress}>
             {content}
           </TouchableOpacity>
         );
         break;
       case 'touchableHighlight':
         content = (
-          <TouchableHighlight style={[styles.buttonStyle, buttonStyle]} onPress={onPress}>
+          <TouchableHighlight style={bStyle} onPress={onPress}>
             {content}
           </TouchableHighlight>
         );
         break;
       default:
         content = (
-          <TouchableWithoutFeedback style={[styles.buttonStyle, buttonStyle]} onPress={onPress}>
+          <TouchableWithoutFeedback style={bStyle} onPress={onPress}>
             {content}
           </TouchableWithoutFeedback>
         );
@@ -92,15 +109,15 @@ class Button extends Component {
 }
 
 const styles = {
-  textStyle: {
+  defaultTextStyle: {
     alignSelf: 'center',
-    color: '#007aff',
+    color: '#00cece',
     fontSize: 16,
     fontWeight: '600',
     paddingTop: 10,
     paddingBottom: 10,
   },
-  buttonStyle: {
+  defaultButtonStyle: {
     alignSelf: 'stretch',
     backgroundColor: '#fff',
     borderRadius: 5,
@@ -109,6 +126,21 @@ const styles = {
     marginLeft: 5,
     marginRight: 5,
   },
+  cancelButtonStyle: {
+    backgroundColor: '#00cece',
+    borderColor: '#00cece',
+  },
+  confirmButtonStyle: {
+    backgroundColor: '#ce0000',
+  },
+  cancelTextStyle: {
+    color: '#fff',
+    padding: 10,
+  },
+  confirmTextStyle: {
+    color: '#fff',
+    padding: 10,
+  }
 };
 
 export default Button;

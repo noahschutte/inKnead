@@ -13,6 +13,9 @@ export const UPDATE_EMAIL = 'update_email';
 export const EMAIL_NOT_VERIFIED = 'email_not_verified';
 export const HANDLE_USER_LOGOUT = 'handle_user_logout';
 export const HANDLE_USER_DONATION = 'handle_user_donation';
+export const AWAITING_DONATION = 'awaiting_donation';
+export const CONFIRM_DONATION_RECEIVED = 'confirm_donation_received';
+export const CREATE_THANK_YOU_REMINDER = 'create_thank_you_reminder';
 
 export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';
 export const UPDATE_SELECTED_VENDOR = 'update_selected_vendor';
