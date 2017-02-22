@@ -1,7 +1,11 @@
 import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
-  USER_VERIFIED,
+  HANDLE_USER_DONATION,
+  AWAITING_DONATION,
+  CONFIRM_DONATION_RECEIVED,
+  CREATE_THANK_YOU_REMINDER,
+  EMAIL_VERIFIED,
   EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
   UPDATE_EMAIL,
@@ -10,7 +14,7 @@ import {
 
 export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: 'root' }) => {
   return (dispatch) => {
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/users', {
+    fetch('https://in-knead-jamowelling.c9users.io/users', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -20,11 +24,42 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
     })
     .then((response) => response.json())
     .then(responseJson => {
+      const {
+        user,
+        activeDonation,
+        anonEmail,
+        recentSuccessfulRequest,
+        recentThankYou
+      } = responseJson;
+
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
-      if (responseJson.user.current_email) {
-        dispatch({ type: USER_VERIFIED });
+      if (user.current_email) {
+        dispatch({ type: EMAIL_VERIFIED });
       } else {
-        dispatch({ type: EMAIL_NOT_VERIFIED, payload: responseJson.user.signupEmail });
+        dispatch({ type: EMAIL_NOT_VERIFIED, payload: user.signupEmail });
+      }
+      if (activeDonation) {
+        dispatch({
+          type: HANDLE_USER_DONATION,
+          payload: {
+            activeDonation,
+            recipientEmail: anonEmail,
+          }
+        });
+      }
+      if (recentSuccessfulRequest) {
+        if (!recentSuccessfulRequest.received) {
+          dispatch({
+            type: AWAITING_DONATION,
+            payload: {
+              userID: user.id,
+              requestID: recentSuccessfulRequest.id
+            }
+          });
+        }
+        if (recentSuccessfulRequest.received && !recentThankYou) {
+          dispatch({ type: CREATE_THANK_YOU_REMINDER });
+        }
       }
     })
     .then(() => {
@@ -34,10 +69,34 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
   };
 };
 
+export const confirmDonationReceived = (userID, requestID) => {
+  return dispatch => {
+    fetch(`https://in-knead-jamowelling.c9users.io/requests/${requestID}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        userID,
+        receivedDonation: true,
+      })
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      dispatch({ type: CONFIRM_DONATION_RECEIVED, payload: responseJson.recentSuccessfulRequest });
+      Actions.EntryCreationScene({ createThankYou: true });
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+};
+
 export const updateEmail = (updatedEmail, userID, redirect = null) => {
   return (dispatch) => {
-    dispatch({ type: USER_VERIFIED });
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
+    dispatch({ type: EMAIL_VERIFIED });
+    fetch(`https://in-knead-jamowelling.c9users.io/users/${userID}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'

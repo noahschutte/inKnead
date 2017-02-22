@@ -1,24 +1,96 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
-import { redirectTo } from '../../actions';
-import NavBar from '../NavBar';
+import { redirectTo, confirmDonationReceived } from '../../actions';
 import Button from '../Button2';
+import DetailSection from '../DetailSection';
 
 class NotificationsScene extends Component {
+
+  state = {
+    expanded: [],
+  }
+
+  onPress = (action, notificationID, redirect = null) => {
+    const { userData, recentSuccessfulRequest } = this.props;
+    switch (action) {
+      case 'verifyEmail':
+      case 'completeDonation':
+        return () => this.props.redirectTo(redirect);
+      case 'confirmDonation':
+        return () => this.props.confirmDonationReceived(userData.id, recentSuccessfulRequest.id);
+      case 'nothing':
+        return () => this.collapseNotification(this.state.expanded.indexOf(notificationID));
+      default:
+        return () => alert('this will work eventually');
+    }
+  }
+
+  buttonContent = (notification) => {
+    const { text, expandable, id, redirect } = notification;
+    if (expandable && this.state.expanded.indexOf(id) !== -1) {
+      return (
+        <DetailSection contentStyle={{ flexDirection: 'column' }}>
+          <Text style={styles.text}>{text}</Text>
+          <Text style={[styles.text, styles.subText]}>{expandable.text}</Text>
+          <DetailSection contentStyle={{ justifyContent: 'space-around' }}>
+
+            {expandable.buttons.map(button => {
+              return (
+                <Button
+                  key={id + button.type}
+                  touchableOpacity
+                  buttonType={button.type}
+                  onPress={this.onPress(button.action, id, redirect)}
+                >
+                  {button.text}
+                </Button>
+              );
+            })}
+
+          </DetailSection>
+        </DetailSection>
+      );
+    }
+    return (
+      <DetailSection>
+        <Text style={styles.text}>{text}</Text>
+      </DetailSection>
+    );
+  }
+
+  expandNotification = (id) => {
+    const expanded = [id, ...this.state.expanded];
+    this.setState({ expanded });
+  }
+
+  collapseNotification = (index) => {
+    const expanded = [...this.state.expanded];
+    expanded.splice(index, 1);
+    this.setState({ expanded });
+  }
+
   render() {
-    const { redirectTo } = this.props;
+    const { redirectTo, notifications } = this.props;
     let content;
-    if (this.props.notifications.length > 0) {
-      content = this.props.notifications.map(notification => {
+    if (notifications.length > 0) {
+      content = notifications.map(notification => {
+        let onPress;
+        if (notification.redirect && !notification.expandable) {
+          onPress = () => redirectTo(notification.redirect);
+        } else if (notification.expandable) {
+          const index = this.state.expanded.indexOf(notification.id);
+          if (index === -1) {
+            onPress = () => this.expandNotification(notification.id);
+          } else {
+            onPress = () => this.collapseNotification(index);
+          }
+        }
+        const buttonContent = this.buttonContent(notification);
         return (
-          <View key={notification.text} style={{ marginTop: 5 }}>
-            <Button
-              touchableOpacity
-              onPress={() => redirectTo(notification.redirect)}
-            >
-              {notification.text}
+          <View key={notification.text} style={{ marginTop: 10 }}>
+            <Button touchableOpacity onPress={onPress}>
+              {buttonContent}
             </Button>
           </View>
         );
@@ -34,9 +106,27 @@ class NotificationsScene extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => {
-  const { notifications } = user;
-  return { notifications };
+const styles = {
+  text: {
+    textAlign: 'center',
+    fontSize: 22,
+    padding: 5,
+    fontWeight: 'bold',
+    color: '#00cece',
+  },
+  subText: {
+    fontSize: 14,
+    fontWeight: 'normal',
+    color: 'black',
+  },
 };
 
-export default connect(mapStateToProps, { redirectTo })(NotificationsScene);
+const mapStateToProps = ({ user }) => {
+  const { notifications, userData, recentSuccessfulRequest } = user;
+  return { notifications, userData, recentSuccessfulRequest };
+};
+
+export default connect(mapStateToProps, {
+  redirectTo,
+  confirmDonationReceived
+})(NotificationsScene);

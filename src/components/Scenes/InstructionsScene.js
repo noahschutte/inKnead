@@ -74,18 +74,18 @@ class InstructionsScene extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 9 }}>
-          <DetailSection style={{ flexDirection: 'column', alignItems: 'center' }}>
+        <DetailSection>
+          <View style={{ alignItems: 'center' }}>
             <Text style={[stepOneStyle, completed]}>Step 1: Tap the email below to copy it</Text>
             <Text style={[stepOneStyle, email, completed]} onPress={this._setClipboardContent}>
               {this.props.recipientEmail}
             </Text>
             <Text style={status}>Status: {statusText}</Text>
-          </DetailSection>
-          <DetailSection>
-            {stepTwo}
-          </DetailSection>
-        </View>
+          </View>
+        </DetailSection>
+        <DetailSection>
+          {stepTwo}
+        </DetailSection>
       </View>
     );
   }

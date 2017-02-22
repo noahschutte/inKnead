@@ -1,10 +1,13 @@
 import {
   CREATE_SESSION_SUCCESS,
-  USER_VERIFIED,
+  EMAIL_VERIFIED,
   EMAIL_NOT_VERIFIED,
   UPDATE_EMAIL,
   HANDLE_USER_LOGOUT,
   HANDLE_USER_DONATION,
+  AWAITING_DONATION,
+  CONFIRM_DONATION_RECEIVED,
+  CREATE_THANK_YOU_REMINDER,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,7 +23,7 @@ const INITIAL_STATE = {
     }
   */
   userData: null,
-  notifications: {},
+  notifications: [],
   userVerified: false,
   activeDonation: null,
   recipientEmail: '',
@@ -39,10 +42,53 @@ export default (state = INITIAL_STATE, action) => {
         recentSuccessfulRequest: action.payload.recentSuccessfulRequest,
         recentThankYou: action.payload.recentThankYou,
       };
-    case USER_VERIFIED:
+    case EMAIL_VERIFIED: {
+      const notifications = [];
+      for (const notification of state.notifications) {
+        if (notification.id !== 0) {
+          notifications.push(notification);
+        }
+      }
       return {
         ...state,
-        userVerified: true
+        userVerified: true,
+        notifications,
+      };
+    }
+    case AWAITING_DONATION:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications,
+          {
+            id: 2,
+            text: 'Incoming Pizza!',
+            expandable: {
+              /* eslint max-len: "off" */
+              text: 'Someone has donated to a recent request of yours, watch for a gift card to arrive in your email!',
+              buttons: [
+                {
+                  type: 'cancel',
+                  text: 'Not yet...',
+                  action: 'nothing',
+                },
+                {
+                  type: 'confirm',
+                  text: 'Got it!',
+                  action: 'confirmDonation',
+                }
+              ]
+            }
+          }
+        ]
+      };
+    case CONFIRM_DONATION_RECEIVED:
+      return {
+        ...state
+      };
+    case CREATE_THANK_YOU_REMINDER:
+      return {
+        ...state
       };
     case EMAIL_NOT_VERIFIED:
       return {
@@ -51,7 +97,23 @@ export default (state = INITIAL_STATE, action) => {
         notifications: [
           ...state.notifications,
           {
+            id: 0,
             text: 'Please verify your email',
+            expandable: {
+              text: 'Gift cards are sent to you by email, it\'s important that yours is up to date!',
+              buttons: [
+                {
+                  type: 'cancel',
+                  text: 'Not Now',
+                  action: 'nothing',
+                },
+                {
+                  type: 'confirm',
+                  text: 'Verify',
+                  action: 'verifyEmail'
+                }
+              ]
+            },
             redirect: {
               scene: 'EmailVerifyScene',
               parameter: {
@@ -77,6 +139,35 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         activeDonation: action.payload.activeDonation,
         recipientEmail: action.payload.recipientEmail,
+        notifications: [
+          ...state.notifications,
+          {
+            id: 1,
+            text: 'You have an outstanding donation',
+            expandable: {
+              text: 'Once your recipient acknowledges the donation, they\'ll send you a thank you video!',
+              buttons: [
+                {
+                  type: 'cancel',
+                  text: 'Close',
+                  action: 'nothing'
+                },
+                {
+                  type: 'confirm',
+                  text: 'Instructions',
+                  action: 'completeDonation',
+                }
+              ]
+            },
+            redirect: {
+              scene: 'InstructionsScene',
+              parameter: {
+                recipientEmail: action.payload.recipientEmail,
+                entry: action.payload.activeDonation,
+              }
+            }
+          }
+        ]
       };
     default:
       return state;
