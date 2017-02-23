@@ -68,7 +68,7 @@ class EntryCreationScene extends Component {
       name: videoKey,
       type: 'video/quicktime'
     };
-    fetch('https://in-knead-jamowelling.c9users.io/requests', {
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ class EntryCreationScene extends Component {
               Actions.MainScene({ type: 'reset' });
             } else {
               console.log('failure');
-              fetch('https://in-knead-jamowelling.c9users.io/requests/1', {
+              fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests/1', {
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json'
@@ -137,7 +137,7 @@ class EntryCreationScene extends Component {
     };
     const { pizzas, vendor } = entry;
 
-    fetch('https://in-knead-jamowelling.c9users.io/thank_you', {
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/thank_you', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -161,13 +161,14 @@ class EntryCreationScene extends Component {
         xhr.open('PUT', url);
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
+            console.log('164');
             if (xhr.status === 200) {
               console.log('success');
               this.props.handleVideoData(null);
               Actions.MainScene({ type: 'reset' });
             } else {
-              console.log('failure');
-              fetch('https://in-knead-jamowelling.c9users.io/thank_you/1', {
+              console.log('failure, status: ', xhr.status);
+              fetch('https://d1dpbg9jbgrqy5.cloudfront.net/thank_you/1', {
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json',
@@ -206,7 +207,7 @@ class EntryCreationScene extends Component {
       this.dispatchRequest();
     }
   }
-  
+
   handleThankYouSubmission = () => {
     this.setState({ paused: true });
     const { videoData, handleErrors } = this.props;
