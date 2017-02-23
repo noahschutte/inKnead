@@ -34,7 +34,6 @@ export default (state = INITIAL_STATE, action) => {
         uploading: true,
       };
     case UPLOAD_PROGRESS:
-      console.log('reached');
       return {
         ...state,
         uploadPercentage: action.payload

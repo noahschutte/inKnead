@@ -83,12 +83,38 @@ export default (state = INITIAL_STATE, action) => {
         ]
       };
     case CONFIRM_DONATION_RECEIVED:
-      return {
-        ...state
-      };
     case CREATE_THANK_YOU_REMINDER:
       return {
-        ...state
+        ...state,
+        notifications: [
+          ...state.notifications,
+          {
+            id: 3,
+            text: 'Thank your Donor!',
+            expandable: {
+              text: 'Reward the community by letting them see the impact of their good will',
+              buttons: [
+                {
+                  type: 'cancel',
+                  text: 'Not Yet',
+                  action: 'nothing',
+                },
+                {
+                  type: 'confirm',
+                  text: 'Okay!',
+                  action: 'createThankYou',
+                }
+              ]
+            },
+            redirect: {
+              scene: 'EntryCreationScene',
+              parameter: {
+                createThankYou: true,
+                entry: state.recentSuccessfulRequest,
+              },
+            }
+          }
+        ]
       };
     case EMAIL_NOT_VERIFIED:
       return {

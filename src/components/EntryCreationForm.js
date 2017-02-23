@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, Image } from 'react-native';
 import { wholePizzaImage } from '../assets';
 import DetailSection from './DetailSection';
@@ -6,49 +6,47 @@ import PizzaRadioButton from './PizzaRadioButton';
 import VendorRadioButton from './VendorRadioButton';
 import Button from './Button2';
 
-class EntryCreationForm extends Component {
+const EntryCreationForm = props => {
+  const {
+    updateSelectedPizzas,
+    pizzas,
+    updateSelectedVendor,
+    vendor,
+    handleRequestSubmission
+  } = props;
+  const { selectedImageStyle, unselectedImageStyle } = styles;
 
-  render() {
-    const {
-      updateSelectedPizzas,
-      pizzas,
-      updateSelectedVendor,
-      vendor
-    } = this.props;
-    const { selectedImageStyle, unselectedImageStyle } = styles;
+  const selectedPizzaImage = (
+    <Image source={wholePizzaImage} style={selectedImageStyle} />
+  );
+  const unselectedPizzaImage = (
+    <Image source={wholePizzaImage} style={unselectedImageStyle} />
+  );
 
-    const selectedPizzaImage = (
-      <Image source={wholePizzaImage} style={selectedImageStyle} />
-    );
-    const unselectedPizzaImage = (
-      <Image source={wholePizzaImage} style={unselectedImageStyle} />
-    );
-
-    return (
-      <View style={{ flex: 5 }}>
-        <DetailSection bannerText='# OF PIZZAS' />
-        <PizzaRadioButton
-          selectedImage={selectedPizzaImage}
-          unselectedImage={unselectedPizzaImage}
-          options={[1, 2, 3]}
-          selectedOption={pizzas}
-          onPress={updateSelectedPizzas}
-        />
-        <DetailSection bannerText='VENDOR NEAR YOU' />
-        <VendorRadioButton
-          vendors={['Dominos', 'Papa Johns', 'Pizza Hut']}
-          onPress={updateSelectedVendor}
-          selectedVendor={vendor}
-        />
-        <View style={{ marginLeft: 20, marginRight: 20 }}>
-          <Button onPress={this.props.handleRequestSubmission} touchableOpacity>
-            <Text style={styles.buttonTextStyle}>Submit Request</Text>
-          </Button>
-        </View>
+  return (
+    <View style={{ flex: 5 }}>
+      <DetailSection bannerText='# OF PIZZAS' />
+      <PizzaRadioButton
+        selectedImage={selectedPizzaImage}
+        unselectedImage={unselectedPizzaImage}
+        options={[1, 2, 3]}
+        selectedOption={pizzas}
+        onPress={updateSelectedPizzas}
+      />
+      <DetailSection bannerText='VENDOR NEAR YOU' />
+      <VendorRadioButton
+        vendors={['Dominos', 'Papa Johns', 'Pizza Hut']}
+        onPress={updateSelectedVendor}
+        selectedVendor={vendor}
+      />
+      <View style={{ marginLeft: 20, marginRight: 20 }}>
+        <Button onPress={handleRequestSubmission} touchableOpacity>
+          <Text style={styles.buttonTextStyle}>Submit Request</Text>
+        </Button>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = {
   selectedImageStyle: {

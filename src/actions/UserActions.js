@@ -48,7 +48,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
         });
       }
       if (recentSuccessfulRequest) {
-        if (!recentSuccessfulRequest.received) {
+        if (recentSuccessfulRequest.status === 'active') {
           dispatch({
             type: AWAITING_DONATION,
             payload: {
@@ -57,7 +57,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
             }
           });
         }
-        if (recentSuccessfulRequest.received && !recentThankYou) {
+        if (recentSuccessfulRequest.status === 'received' && !recentThankYou) {
           dispatch({ type: CREATE_THANK_YOU_REMINDER });
         }
       }
