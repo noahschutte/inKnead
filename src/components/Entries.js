@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, RefreshControl } from 'react-native';
-import SpinningPizza from './SpinningPizza';
+import { View, ListView, RefreshControl, Text } from 'react-native';
 import Entry from './Entry';
 
 class Entries extends Component {
@@ -36,13 +35,20 @@ class Entries extends Component {
   render() {
     const { dataSource } = this.state;
     let content;
+    let refreshPrompt;
+
     if (dataSource === null) {
       content = (
-        <View style={{ flex: 1, padding: 50 }}>
-          <SpinningPizza />
-        </View>
+        <View />
       );
     } else {
+      if (dataSource._cachedRowCount === 0) {
+        refreshPrompt = (
+          <Text style={{ textAlign: 'center', paddingTop: 20 }}>
+            There doesn't seem to be anything here... {'\n'}Pull down to refresh
+          </Text>
+        );
+      }
       content = (
         <ListView
           refreshControl={
@@ -67,6 +73,7 @@ class Entries extends Component {
     }
     return (
       <View style={{ flex: 8 }}>
+        {refreshPrompt}
         {content}
       </View>
     );
