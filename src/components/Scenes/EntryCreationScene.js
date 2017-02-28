@@ -239,6 +239,14 @@ class EntryCreationScene extends Component {
     handleErrors(errorMessages);
     if (errorMessages.length === 0) {
       this.dispatchThankYou();
+    } else {
+      Alert.alert(
+        'Problem!',
+        `${errorMessages.map(message => `\n${message}`)}`,
+        [
+          { text: 'Got it' }
+        ]
+      );
     }
   }
 

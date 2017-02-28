@@ -114,7 +114,7 @@ export const updateEmail = (updatedEmail, userID, redirect = null) => {
           dispatch({ type: REDIRECT, payload: redirect });
         }
       } else {
-        alert('failed to update email');
+        alert(`${responseJson.errorMessage}`);
       }
     })
     .catch(error => console.err(error));
