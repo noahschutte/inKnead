@@ -64,7 +64,7 @@ class MainScene extends Component {
   }
 
   assembleOptions = () => {
-    const globalOptions = ['Requests', 'Thanks', 'Fulfilled', 'All'];
+    const globalOptions = ['Requests', 'Fulfilled', 'Thanks', 'All'];
     const userHistoryOptions = ['Requested', 'Received', 'Donated', 'Gratitude'];
     if (this.props.entries.scope === 'requests_and_thank_yous') {
       return globalOptions;
