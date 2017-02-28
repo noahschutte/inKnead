@@ -19,7 +19,9 @@ const ToggleMenu = (props) => {
 
   return (
     <View style={styles.container}>
-
+      <Text style={styles.donatedPizzasText}>
+        {props.totalDonatedPizzas} pizzas have been donated through this app!
+      </Text>
       <Image
         source={defaultProfileImage}
         style={styles.image}
@@ -66,6 +68,9 @@ const styles = {
     fontSize: 20,
     color: 'white',
     fontFamily: 'Gillsans',
+  },
+  donatedPizzasText: {
+    color: 'white',
   },
   notificationStyle: {
     flexDirection: 'row',

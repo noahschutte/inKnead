@@ -8,6 +8,7 @@ import {
   TOGGLE_SIDE_MENU,
   HANDLE_USER_LOGOUT,
   DELETE_ENTRY,
+  UPDATE_TOTAL_DONATED_PIZZAS,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,10 +21,16 @@ const INITIAL_STATE = {
   userRequests: [],
   userThankYous: [],
   userFulfilled: [],
+  totalDonatedPizzas: 0,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case UPDATE_TOTAL_DONATED_PIZZAS:
+      return {
+        ...state,
+        totalDonatedPizzas: action.payload,
+      };
     case GET_ENTRIES:
       return {
         ...state,
