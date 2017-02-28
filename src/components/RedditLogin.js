@@ -4,10 +4,10 @@ import Button from './Button';
 
 export default class RedditLogin extends Component {
   redditAuthorization() {
-    const cliendId = "djH1sd6Q0amUNw"
-    const uri = "inkneadscheme://response"
-    const scope = "identity"
-    this.props.navigator.push({ name: 'webViewExample' })
+    const cliendId = 'djH1sd6Q0amUNw';
+    const uri = 'inkneadscheme://response';
+    const scope = 'identity';
+    this.props.navigator.push({ name: 'webViewExample' });
   }
   render() {
     return (
@@ -15,9 +15,9 @@ export default class RedditLogin extends Component {
         <Button
           text={'Log in with Reddit'}
           onPress={this.redditAuthorization.bind(this)}
-          />
+        />
       </View>
-    )
+    );
   }
 }
 
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
   },
-})
+});

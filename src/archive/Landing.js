@@ -7,11 +7,11 @@ export default class Landing extends Component {
     let noRequests;
     if (this.props.noRequests) {
       noRequests =
-        <View style={styles.noRequestsContainer}>
+        (<View style={styles.noRequestsContainer}>
           <Text style={styles.noRequests}>
             There are no current requests. Please come back later or submit a request of your own.
           </Text>
-        </View>
+        </View>);
     }
     return (
       <View style={styles.container}>
@@ -30,7 +30,7 @@ export default class Landing extends Component {
         {noRequests}
 
       </View>
-    )
+    );
   }
 }
 
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
     color: 'white',
     padding: 5,
   },
-})
+});

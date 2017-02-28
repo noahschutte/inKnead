@@ -11,20 +11,20 @@ export default class Activity extends Component {
 
   render() {
     const scope = [
-      "Requests",
-      "History",
-    ]
+      'Requests',
+      'History',
+    ];
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.toggleActivity.bind(this)} style={styles.activityButton} activeOpacity={1}>
-          <Image source={this.activityImage()} resizeMode='cover' style={styles.activityDisplay}/>
+          <Image source={this.activityImage()} resizeMode='cover' style={styles.activityDisplay} />
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 
   activityImage() {
-    switch(this.props.currentScope) {
+    switch (this.props.currentScope) {
       case 'Requests':
         return assets.requests;
       case 'History':
@@ -33,7 +33,7 @@ export default class Activity extends Component {
   }
 
   toggleActivity() {
-    let scope = this.props.currentScope;
+    const scope = this.props.currentScope;
     if (scope === 'Requests') {
       this.props.changeScope('History');
     } else {
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
     height: 50,
     resizeMode: 'contain',
   }
-})
+});

@@ -7,29 +7,29 @@ import TimeAgo from 'TimeAgo';
 
 export default class RequestShow extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       paused: true,
       errorMessage: '',
     };
-    this.requestShowToggle = this.requestShowToggle.bind(this)
+    this.requestShowToggle = this.requestShowToggle.bind(this);
   }
   requestShowToggle(toggle) {
-    this.setState({paused: toggle})
+    this.setState({ paused: toggle });
   }
   onDonatePress(request) {
     if (this.props.user === null) {
-      this.props.handleGuestDonation(true)
-      this.props.navigator.push({name: 'profile'})
+      this.props.handleGuestDonation(true);
+      this.props.navigator.push({ name: 'profile' });
     } else if (this.props.user.id === this.props.request.creator_id) {
-      this.setState({errorMessage: 'Really, you want to donate to yourself?'})
+      this.setState({ errorMessage: 'Really, you want to donate to yourself?' });
     } else if (this.props.activeDonation) {
-      this.setState({errorMessage: 'You have recently made a donation.'})
+      this.setState({ errorMessage: 'You have recently made a donation.' });
     } else {
       Alert.alert(
         `Are you sure you want to donate ${request.pizzas} pizza(s)?`,
-        `You will have 30 minutes to send an online gift card. Failure to complete the donation could have you removed from the community.`,
+        'You will have 30 minutes to send an online gift card. Failure to complete the donation could have you removed from the community.',
         [
           {
             text: 'Cancel',
@@ -39,34 +39,33 @@ export default class RequestShow extends Component {
             onPress: this.onConfirmPress.bind(this, request),
           }
         ]
-      )
+      );
     }
   }
   onConfirmPress(request) {
-    this.requestShowToggle(true)
+    this.requestShowToggle(true);
     const userID = this.props.user.id;
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${request.id}`, {
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'PATCH',
-      body: JSON.stringify({userID})
+      body: JSON.stringify({ userID })
     })
-    .then((response) => {
-      return response.json()})
+    .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage) {
-        this.setState({errorMessage: responseJson.errorMessage})
+        this.setState({ errorMessage: responseJson.errorMessage });
       } else {
-        this.setState({errorMessage: ' '})
-        this.props.collectRequests(responseJson.requests)
-        this.props.collectThankYous(responseJson.thankYous)
-        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas)
-        this.props.collectActiveDonation(request)
-        this.props.collectAnonEmail(responseJson.anonEmail)
-        this.props.navigator.push({name: 'instructions'})
-        this.props.collectRequest(responseJson.request)
+        this.setState({ errorMessage: ' ' });
+        this.props.collectRequests(responseJson.requests);
+        this.props.collectThankYous(responseJson.thankYous);
+        this.props.sumDonatedPizzas(responseJson.totalDonatedPizzas);
+        this.props.collectActiveDonation(request);
+        this.props.collectAnonEmail(responseJson.anonEmail);
+        this.props.navigator.push({ name: 'instructions' });
+        this.props.collectRequest(responseJson.request);
       }
     })
     .catch((error) => {
@@ -74,70 +73,70 @@ export default class RequestShow extends Component {
     });
   }
   handleInstructions() {
-    this.setState({paused: true})
-    this.props.navigator.push({name: 'instructions'})
+    this.setState({ paused: true });
+    this.props.navigator.push({ name: 'instructions' });
   }
   showAnonHistory() {
-    this.setState({paused: true})
-    this.props.selectAnon(this.props.request.creator_id)
-    this.props.navigator.push({name: 'anonHistory'})
+    this.setState({ paused: true });
+    this.props.selectAnon(this.props.request.creator_id);
+    this.props.navigator.push({ name: 'anonHistory' });
   }
   render() {
     let hasDonor;
     let showDonateButton;
-    let request = this.props.request;
+    const request = this.props.request;
     let activeDonation;
 
-    if (request.type === "thankYou") {
+    if (request.type === 'thankYou') {
 
     } else if (request.donor_id) {
       hasDonor =
-        <Image
+        (<Image
           style={styles.received}
           source={require('../../assets/received.png')}
-          />
+        />);
       showDonateButton =
-        <Image
+        (<Image
           style={styles.disabledDonateButton}
           source={require('../../assets/donate.png')}
-          />
+        />);
     } else if (this.props.user === null || this.props.user.id === request.creator_id || this.props.activeDonation) {
       showDonateButton =
-        <TouchableOpacity onPress={this.onDonatePress.bind(this)} >
+        (<TouchableOpacity onPress={this.onDonatePress.bind(this)} >
           <Image
             style={styles.disabledDonateButton}
             source={require('../../assets/donate.png')}
-            />
-        </TouchableOpacity>
+          />
+        </TouchableOpacity>);
     } else {
       showDonateButton =
-      <TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
+      (<TouchableOpacity onPress={this.onDonatePress.bind(this, request)} >
         <Image
           style={styles.donateButton}
           source={require('../../assets/donate.png')}
-          />
-      </TouchableOpacity>
+        />
+      </TouchableOpacity>);
     }
 
     if (this.props.activeDonation) {
       activeDonation =
-      <View style={styles.instructionsContainer}>
+      (<View style={styles.instructionsContainer}>
         <Button
           text="Complete your recent donation now."
           backgroundColor='green'
           onPress={this.handleInstructions.bind(this)}
-          />
-      </View>
+        />
+      </View>);
     }
 
     let userHistoryDisplay;
-    if ( !this.props.user || this.props.user && request.creator_id != this.props.user.id) {
+    if (!this.props.user || this.props.user && request.creator_id != this.props.user.id) {
       userHistoryDisplay =
-        <TouchableOpacity onPress={this.showAnonHistory.bind(this)} >
+        (<TouchableOpacity onPress={this.showAnonHistory.bind(this)} >
           <Text style={styles.history}>
             User History
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>);
     }
 
     return (
@@ -171,7 +170,7 @@ export default class RequestShow extends Component {
             </View>
 
             <View style={styles.pizzaPlaceholder}>
-              <Text style={{textAlign: 'center'}}>
+              <Text style={{ textAlign: 'center' }}>
                 (Image Placeholder)
               </Text>
             </View>
@@ -183,7 +182,7 @@ export default class RequestShow extends Component {
             </View>
 
             <View style={styles.logoPlaceholder}>
-              <Text style={{textAlign: 'center'}}>
+              <Text style={{ textAlign: 'center' }}>
                 (Image Placeholder)
               </Text>
             </View>
@@ -207,7 +206,7 @@ export default class RequestShow extends Component {
           </View>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -294,4 +293,4 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
   },
-})
+});

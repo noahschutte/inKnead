@@ -12,7 +12,7 @@ export default class HowTo extends Component {
           <Swiper {...this.props} />
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 9,
   },
-})
+});

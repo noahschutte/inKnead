@@ -11,7 +11,7 @@ import SortHistory from './SortHistory';
 
 export default class Main extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       activity: [],
@@ -20,7 +20,7 @@ export default class Main extends Component {
       scope: 'Requests',
       requestType: 'Requests',
       historyType: 'doughnated',
-    }
+    };
     this.toggleMenu = this.toggleMenu.bind(this);
     this.changeScope = this.changeScope.bind(this);
     this.changeRequestType = this.changeRequestType.bind(this);
@@ -30,78 +30,79 @@ export default class Main extends Component {
   }
 
   toggleMenu(isOpen) {
-    this.setState({isOpen})
+    this.setState({ isOpen });
   }
 
   changeScope(scope) {
     if (this.state.scope !== scope) {
-      this.setState({scope})
+      this.setState({ scope });
     }
   }
 
   changeRequestType(requestType) {
     if (this.state.requestType !== requestType) {
-      this.setState({requestType})
+      this.setState({ requestType });
     }
   }
 
   changeHistoryType(historyType) {
     if (this.state.historyType !== historyType) {
-      this.setState({historyType})
+      this.setState({ historyType });
     }
   }
 
   assembleRequests() {
-    const activity = []
+    const activity = [];
     if (this.props.requests) {
-      activity.push(...this.props.requests)
+      activity.push(...this.props.requests);
     }
     if (this.props.thankYous) {
-      activity.push(...this.props.thankYous)
+      activity.push(...this.props.thankYous);
     }
-    this.setState({activity})
+    this.setState({ activity });
   }
 
   assembleHistory() {
-    const userHistory = []
+    const userHistory = [];
     if (this.props.userRequests) {
-      userHistory.push(...this.props.userRequests)
+      userHistory.push(...this.props.userRequests);
     }
     if (this.props.userThankYous) {
-      userHistory.push(...this.props.userThankYous)
+      userHistory.push(...this.props.userThankYous);
     }
-    this.setState({userHistory})
+    this.setState({ userHistory });
   }
 
   render() {
     const menu =
-      <Menu toggleMenu={this.toggleMenu} changeScope={this.changeScope} {...this.props} />
+      <Menu toggleMenu={this.toggleMenu} changeScope={this.changeScope} {...this.props} />;
 
     let display;
-    let sort
+    let sort;
     if (this.state.scope === 'Requests') {
-      display = <Requests assembleRequests={this.assembleRequests} activity={this.state.activity} requestType={this.state.requestType} scope={this.state.scope} {...this.props} />
-      sort = <SortRequests
+      display = <Requests assembleRequests={this.assembleRequests} activity={this.state.activity} requestType={this.state.requestType} scope={this.state.scope} {...this.props} />;
+      sort = (<SortRequests
         requestType={this.state.requestType}
         changeRequestType={this.changeRequestType}
         style={styles.container} {...this.props}
-        />
+      />);
     } else if (this.state.scope === 'History' && !this.props.user) {
-      display = <GuestView {...this.props} />
+      display = <GuestView {...this.props} />;
     } else if (this.state.scope === 'History') {
-      display = <History assembleHistory={this.assembleHistory} userHistory={this.state.userHistory} historyType={this.state.historyType} scope={this.state.scope} {...this.props} />
-      sort = <SortHistory
+      display = <History assembleHistory={this.assembleHistory} userHistory={this.state.userHistory} historyType={this.state.historyType} scope={this.state.scope} {...this.props} />;
+      sort = (<SortHistory
         historyType={this.state.historyType}
         changeHistoryType={this.changeHistoryType}
         style={styles.container} {...this.props}
-        />
+      />);
     }
 
     return (
       <SideMenu
         menu={menu}
         isOpen={this.state.isOpen}
-        {...this.props} >
+        {...this.props}
+      >
 
         <View style={styles.container}>
 
@@ -114,13 +115,12 @@ export default class Main extends Component {
         </View>
       </SideMenu>
     );
-  };
+  }
 }
-
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-})
+});

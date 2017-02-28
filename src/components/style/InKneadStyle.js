@@ -49,4 +49,4 @@ module.exports = PlatformStyleSheet.create({
       flexDirection: 'row',
       paddingTop: 10,
     },
-  })
+  });

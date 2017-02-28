@@ -4,116 +4,115 @@ import Video from 'react-native-video';
 
 export default class VideoDisplay extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       paused: true
     };
-    this.playVideo = this.playVideo.bind(this)
-    this.onEnd = this.onEnd.bind(this)
+    this.playVideo = this.playVideo.bind(this);
+    this.onEnd = this.onEnd.bind(this);
   }
 
   playVideo() {
     if (this.props.requestShow) {
-      this.props.requestShowToggle(!this.props.requestShowPaused)
+      this.props.requestShowToggle(!this.props.requestShowPaused);
     } else if (this.props.entryShow) {
-      this.props.entryShowToggle(!this.props.entryShowPaused)
+      this.props.entryShowToggle(!this.props.entryShowPaused);
     } else if (this.props.newRequestShow) {
-      this.props.newRequestShowToggle(!this.props.newRequestShowPaused)
+      this.props.newRequestShowToggle(!this.props.newRequestShowPaused);
     } else if (this.props.createThankYouShow) {
-      this.props.createThankYouShowToggle(!this.props.createThankYouShowPaused)
+      this.props.createThankYouShowToggle(!this.props.createThankYouShowPaused);
     } else {
-      this.setState({paused: !this.state.paused});
+      this.setState({ paused: !this.state.paused });
     }
   }
   onEnd() {
     if (this.props.requestShow) {
-      this.props.requestShowToggle(true)
+      this.props.requestShowToggle(true);
     } else if (this.props.entryShow) {
-      this.props.entryShowToggle(true)
+      this.props.entryShowToggle(true);
     } else if (this.props.newRequestShow) {
-      this.props.newRequestShowToggle(true)
+      this.props.newRequestShowToggle(true);
     } else if (this.props.createThankYouShow) {
-      this.props.createThankYouShowToggle(true)
+      this.props.createThankYouShowToggle(true);
     } else {
-      this.setState({paused: true});
+      this.setState({ paused: true });
     }
   }
 
   render() {
     let originPaused;
     if (this.props.requestShow) {
-      originPaused = this.props.requestShowPaused
+      originPaused = this.props.requestShowPaused;
     } else if (this.props.entryShow) {
-      originPaused = this.props.entryShowPaused
+      originPaused = this.props.entryShowPaused;
     } else if (this.props.newRequestShow) {
-      originPaused = this.props.newRequestShowPaused
+      originPaused = this.props.newRequestShowPaused;
     } else if (this.props.createThankYouShow) {
-      originPaused = this.props.createThankYouShowPaused
+      originPaused = this.props.createThankYouShowPaused;
     } else {
-      originPaused = this.state.paused
+      originPaused = this.state.paused;
     }
 
 
     let playButton;
     if (this.props.requestShowPaused || this.props.entryShowPaused || this.props.newRequestShowPaused || this.props.createThankYouShowPaused) {
       playButton =
-        <Image
+        (<Image
           source={require('../../assets/playButton.png')}
           style={styles.playButton}
-          />
+        />);
     } else {
       playButton =
-        <Image
+        (<Image
           style={styles.playButton}
-          />
+        />);
     }
 
     let content;
     if (this.props.previewNewRequest) {
-      content = this.props.videoData.path
+      content = this.props.videoData.path;
     } else if (this.props.thankYou) {
-      content = this.props.thankYouData.path
+      content = this.props.thankYouData.path;
     } else if (this.props.entryShow) {
-      content = this.props.entry.compressed_video
+      content = this.props.entry.compressed_video;
     } else if (this.props.selectedEntry) {
-      content = this.props.selectedEntry.compressed_video
+      content = this.props.selectedEntry.compressed_video;
     } else if (this.props.requestShow) {
-      content = this.props.request.compressed_video
+      content = this.props.request.compressed_video;
     }
 
     const videoDisplay =
-      <Video
+      (<Video
         source={{ uri: content }}
         paused={originPaused}
         rate={1.0}
         volume={1}
         muted={false}
-        playInBackground={true}
-        playWhenInactive={true}
+        playInBackground
+        playWhenInactive
         resizeMode={'contain'}
         onEnd={this.onEnd}
-        repeat={true}
+        repeat
         style={styles.video}
-        />;
+      />);
 
     const display =
-        <View style={styles.container}>
+        (<View style={styles.container}>
           <TouchableHighlight
             style={styles.playButtonContainer}
             onPress={this.playVideo}
-            >
+          >
             {playButton}
           </TouchableHighlight>
           {videoDisplay}
-        </View>
+        </View>);
 
     return (
       <View style={styles.container}>
         {display}
       </View>
     );
-
   }
 }
 

@@ -4,7 +4,7 @@
 
 import { Platform, StyleSheet } from 'react-native';
 
-const PlatformStyleSheet= {
+const PlatformStyleSheet = {
   create(styles) {
     const styleKeys = Object.keys(styles);
     const keptStyles = {};

@@ -4,13 +4,13 @@ import Nav from './Nav';
 
 const vendors = {
   'Pizza Hut': 'https://pizzahutstore.wgiftcard.com/chrome/pizzahut/',
-  'Dominos': 'https://dominosstore.wgiftcard.com/responsive/personalize_responsive/chooseDesign/dominos_responsive/1',
+  Dominos: 'https://dominosstore.wgiftcard.com/responsive/personalize_responsive/chooseDesign/dominos_responsive/1',
   'Papa Johns': 'https://papajohns-m.cashstar.com/buy/?ref=PJ1',
-}
+};
 
 export default class Instructions extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       vendor: this.props.activeDonation.vendor,
@@ -21,23 +21,23 @@ export default class Instructions extends Component {
   }
 
   handleVendorSite = (vendorURL) => {
-    Linking.openURL(vendorURL)
+    Linking.openURL(vendorURL);
   }
 
   _setClipboardContent = async () => {
-    this.setState({copied: true})
+    this.setState({ copied: true });
     Clipboard.setString(this.props.anonEmail);
     try {
       const content = await Clipboard.getString();
-      this.setState({content});
+      this.setState({ content });
     } catch (e) {
-      this.setState({content:e.message});
+      this.setState({ content: e.message });
     }
   };
 
   stepTwo() {
-    if(this.state.copied) {
-      return(
+    if (this.state.copied) {
+      return (
         <View>
         <Text style={styles.instructions}>
           Step 2:
@@ -48,22 +48,22 @@ export default class Instructions extends Component {
         <TouchableOpacity
           onPress={this.handleVendorSite.bind(this, vendors[this.state.vendor])}
           style={styles.hyperlinkButton}
-          >
+        >
           <Text style={styles.hyperlink}>
             {this.state.vendor}
           </Text>
         </TouchableOpacity>
         </View>
-      )
+      );
     }
-  };
+  }
 
   render() {
     let status;
     if (this.state.copied) {
-      status = "Email copied to clipboard!"
+      status = 'Email copied to clipboard!';
     } else {
-      status = "You have not copied the email."
+      status = 'You have not copied the email.';
     }
 
     return (
@@ -93,7 +93,7 @@ export default class Instructions extends Component {
         </View>
 
       </View>
-    )
+    );
   }
 }
 
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-})
+});

@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 export default class MenuButton extends Component {
   onMenuButtonPress() {
-    this.props.toggleMenu(true)
+    this.props.toggleMenu(true);
   }
   render() {
     return (
@@ -12,10 +12,10 @@ export default class MenuButton extends Component {
           <Image
             style={styles.menuButton}
             source={require('../../assets/menuButton.png')}
-            />
+          />
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-})
+});

@@ -5,9 +5,9 @@ import { SegmentedControls } from 'react-native-radio-buttons';
 export default class SortHistory extends Component {
   render() {
     const scope = [
-      "doughnated",
-      "in knead",
-    ]
+      'doughnated',
+      'in knead',
+    ];
     return (
       <View style={styles.container}>
         <SegmentedControls
@@ -16,12 +16,12 @@ export default class SortHistory extends Component {
           containerBorderRadius={5}
           backTint={'#ce0000'}
           tint={'white'}
-          options={ scope }
-          onSelection={ this.props.changeHistoryType.bind(this) }
-          selectedOption={ this.props.historyType }
-          />
+          options={scope}
+          onSelection={this.props.changeHistoryType.bind(this)}
+          selectedOption={this.props.historyType}
+        />
       </View>
-    )
+    );
   }
 }
 
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
   },
-})
+});

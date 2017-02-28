@@ -7,34 +7,34 @@ import TimeAgo from 'TimeAgo';
 
 export default class EntryShow extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       paused: true,
       errorMessage: '',
     };
-    this.entryShowToggle = this.entryShowToggle.bind(this)
+    this.entryShowToggle = this.entryShowToggle.bind(this);
   }
   entryShowToggle(toggle) {
-    this.setState({paused: toggle})
+    this.setState({ paused: toggle });
   }
   handleInstructions() {
-    this.setState({paused: true})
-    this.props.navigator.push({name: 'instructions'})
+    this.setState({ paused: true });
+    this.props.navigator.push({ name: 'instructions' });
   }
   render() {
-    let entry = this.props.entry;
+    const entry = this.props.entry;
     let activeDonation;
 
     if (this.props.activeDonation) {
       activeDonation =
-      <View style={styles.instructionsContainer}>
+      (<View style={styles.instructionsContainer}>
         <Button
           text="Complete your recent donation now."
           backgroundColor='green'
           onPress={this.handleInstructions.bind(this)}
-          />
-      </View>
+        />
+      </View>);
     }
 
     return (
@@ -68,7 +68,7 @@ export default class EntryShow extends Component {
             </View>
 
             <View style={styles.pizzaPlaceholder}>
-              <Text style={{textAlign: 'center'}}>
+              <Text style={{ textAlign: 'center' }}>
                 (Image Placeholder)
               </Text>
             </View>
@@ -80,7 +80,7 @@ export default class EntryShow extends Component {
             </View>
 
             <View style={styles.logoPlaceholder}>
-              <Text style={{textAlign: 'center'}}>
+              <Text style={{ textAlign: 'center' }}>
                 (Image Placeholder)
               </Text>
             </View>
@@ -91,7 +91,7 @@ export default class EntryShow extends Component {
           </View>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -178,4 +178,4 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
   },
-})
+});
