@@ -20,6 +20,7 @@ import Button from '../Button2';
 
 class EntryCreationScene extends Component {
   state = {
+    modalVisible: false,
     paused: true,
   };
 
@@ -29,6 +30,11 @@ class EntryCreationScene extends Component {
       this.handleRequestSubmission();
     }
   }
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
   togglePlay = (toggle) => {
     this.setState({ paused: toggle });
   }
@@ -53,6 +59,7 @@ class EntryCreationScene extends Component {
     }
     return true;
   }
+
   dispatchRequest = () => {
     const {
       userData,
@@ -84,7 +91,13 @@ class EntryCreationScene extends Component {
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.errorMessage) {
-        console.log(responseJson.errorMessage);
+        Alert.alert(
+          'Problem!',
+          `${responseJson.errorMessage}`,
+          [
+            { text: 'Got it' }
+          ]
+        );
       } else {
         const url = responseJson.signedRequest;
         const xhr = new XMLHttpRequest();
@@ -194,17 +207,25 @@ class EntryCreationScene extends Component {
     const { videoData, pizzas, vendor, handleErrors } = this.props;
     const errorMessages = [];
     if (!videoData) {
-      errorMessages.push('Please record a video.');
+      errorMessages.push('Please record a video');
     }
     if (pizzas === 0) {
-      errorMessages.push('Please select how many pizzas you need.');
+      errorMessages.push('Please select how many pizzas you need');
     }
     if (vendor === '') {
-      errorMessages.push('Please choose a preferred pizza place.');
+      errorMessages.push('Please choose a preferred pizza place');
     }
     handleErrors(errorMessages);
     if (errorMessages.length === 0) {
       this.dispatchRequest();
+    } else {
+      Alert.alert(
+        'Problem!',
+        `${errorMessages.map(message => `\n${message}`)}`,
+        [
+          { text: 'Got it' }
+        ]
+      );
     }
   }
 
@@ -220,6 +241,7 @@ class EntryCreationScene extends Component {
       this.dispatchThankYou();
     }
   }
+
   openVideoRec = () => {
     this.props.resetCameraState();
     if (Platform.OS === 'ios') {
