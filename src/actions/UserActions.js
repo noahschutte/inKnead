@@ -20,7 +20,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({ userInfo }),
+      body: JSON.stringify({ userInfo })
     })
     .then((response) => response.json())
     .then(responseJson => {
