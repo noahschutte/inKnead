@@ -70,7 +70,8 @@ export const getEntries = () => {
     .then(data => data.json())
     .then(entries => {
       dispatch({ type: GET_ENTRIES_SUCCESS, payload: entries });
-    });
+    })
+    .catch(err => console.error(err));
   };
 };
 

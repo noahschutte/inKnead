@@ -140,7 +140,7 @@ class EntryCreationScene extends Component {
     fetch('https://d1dpbg9jbgrqy5.cloudfront.net/thank_you', {
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       method: 'POST',
       body: JSON.stringify({
@@ -159,9 +159,9 @@ class EntryCreationScene extends Component {
         const xhr = new XMLHttpRequest();
         Actions.UploadingScene();
         xhr.open('PUT', url);
+        xhr.setRequestHeader('Content-type', 'application/json');
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
-            console.log('164');
             if (xhr.status === 200) {
               console.log('success');
               this.props.handleVideoData(null);
