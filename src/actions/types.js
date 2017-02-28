@@ -4,6 +4,7 @@ export const GET_USER_ENTRIES = 'get_user_entries';
 export const GET_USER_ENTRIES_SUCCESS = 'get_user_entries_success';
 export const UPDATE_ENTRIES = 'update_entries';
 export const SHOW_ENTRIES = 'show_entries';
+export const DELETE_ENTRY = 'delete_entry';
 export const TOGGLE_SCOPE = 'toggle_scope';
 
 export const CREATE_SESSION_START = 'create_session_start';

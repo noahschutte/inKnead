@@ -6,8 +6,10 @@ import TimeAgo from './TimeAgo';
 import RequestPizzas from './RequestPizzas';
 import Vendor from './Vendor';
 
+
 const EntryDetails = ({
   entryData,
+  deleteEntry,
   navigateToUser,
   onButtonPress,
   buttonText,
@@ -54,6 +56,10 @@ const EntryDetails = ({
         <RequestPizzas size='large' pizzas={pizzas} />
         <Text style={styles.requestTextStyle}>from</Text>
         <Vendor size='large' vendor={vendor} />
+      </DetailSection>
+
+      <DetailSection>
+        <Button touchableOpacity onPress={ () => deleteEntry(entryData.id) }>Delete</Button>
       </DetailSection>
 
       <View style={styles.buttonWrapper}>

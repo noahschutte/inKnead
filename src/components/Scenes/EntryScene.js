@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { confirmDonation } from '../../actions';
+import { confirmDonation, deleteEntry } from '../../actions';
 import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
 
@@ -90,6 +90,7 @@ class EntryScene extends Component {
         <EntryDetails
           showUserHistory={showUserHistory}
           entryData={entry}
+          deleteEntry={this.props.deleteEntry}
           navigateToUser={this.navigateToUser}
           onButtonPress={onButtonPress}
           buttonText={buttonText}
@@ -109,4 +110,4 @@ const styles = {
   },
 };
 
-export default connect(mapStateToProps, { confirmDonation })(EntryScene);
+export default connect(mapStateToProps, { confirmDonation, deleteEntry })(EntryScene);

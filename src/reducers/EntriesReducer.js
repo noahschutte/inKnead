@@ -7,6 +7,7 @@ import {
   TOGGLE_SCOPE,
   TOGGLE_SIDE_MENU,
   HANDLE_USER_LOGOUT,
+  DELETE_ENTRY,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -66,6 +67,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         shown: action.payload,
+      };
+    case DELETE_ENTRY:
+      return {
+        ...state,
+        requests: action.payload.requests,
+        thankYous: action.payload.thankYous
       };
     case TOGGLE_SCOPE:
       return {
