@@ -43,13 +43,14 @@ const EntryVideo = (props) => {
       (<Video
         source={{ uri: source }}
         paused={originPaused}
+        repeat
         rate={1.0}
         volume={1}
         muted={false}
         playInBackground
         playWhenInactive
         resizeMode={'contain'}
-        onEnd={() => togglePlay(false)}
+        onEnd={() => togglePlay(true)}
         style={styles.video}
       />);
 
