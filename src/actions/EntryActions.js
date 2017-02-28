@@ -9,6 +9,7 @@ import {
   SHOW_ENTRIES,
   TOGGLE_SIDE_MENU,
   REDIRECT,
+  DELETE_ENTRY,
 } from './types';
 
 export const confirmDonation = (donatorId, entry) => {
@@ -54,6 +55,26 @@ export const confirmDonation = (donatorId, entry) => {
       }
     })
     .catch(error => console.error(error));
+  };
+};
+
+export const deleteEntry = (entryId) => {
+  return (dispatch) => {
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entryId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      if (responseJson.requests) {
+        dispatch({ type: DELETE_ENTRY, payload: responseJson });
+      }
+      Actions.MainScene({ type: 'reset' });
+    })
+    .catch(err => console.error(err));
   };
 };
 
