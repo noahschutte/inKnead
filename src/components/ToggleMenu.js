@@ -12,7 +12,9 @@ const ToggleMenu = (props) => {
 
   let notificationAlert;
   if (props.doesHaveNotifications) {
-    notificationAlert = '!';
+    notificationAlert = <View style={styles.notificationAlertStyle}>
+      <Text style={styles.textStyle}>!</Text>
+    </View>;
   }
 
   return (
@@ -27,9 +29,10 @@ const ToggleMenu = (props) => {
       </SideMenuButton>
 
       <SideMenuButton onPress={onPress.bind(this, Actions.NotificationsScene)}>
-        <Text style={styles.textStyle}>
-          Notifications <Text style={styles.notificationAlertStyle}> {notificationAlert}</Text>
-        </Text>
+        <View style={styles.notificationStyle}>
+          <Text style={styles.textStyle}>Notifications </Text>
+          {notificationAlert}
+        </View>
       </SideMenuButton>
 
       <SideMenuButton onPress={onPress.bind(this, Actions.HowToScene)}>
@@ -64,9 +67,17 @@ const styles = {
     color: 'white',
     fontFamily: 'Gillsans',
   },
+  notificationStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   notificationAlertStyle: {
-    fontWeight: 'bold',
-    fontSize: 25,
+    width: 25,
+    borderRadius: 25/2,
+    backgroundColor: 'red',
+    borderWidth: 1,
+    borderColor: 'red',
+    overflow: 'hidden',
   },
 };
 
