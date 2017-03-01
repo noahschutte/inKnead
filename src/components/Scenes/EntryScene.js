@@ -15,14 +15,14 @@ class EntryScene extends Component {
 
   onDonatePress = () => {
     this.setState({ paused: true });
-    const { userData, entry } = this.props;
+    const { user, userID, entry } = this.props;
     // Direct user to log in if not logged in already
-    if (!userData) {
+    if (user && !user.userData) {
       Actions.LoginScene({ redirect: {
         scene: 'EntryScene',
         parameter: entry
       } });
-    } else if (userData.id === entry.creator_id) {
+    } else if (userID === entry.creator_id) {
       alert('You can\'t donate to yourself!');
     } else if (this.props.activeDonation) {
       alert('You must complete your recent donation commitment!');
@@ -50,7 +50,7 @@ class EntryScene extends Component {
   }
 
   confirmDonation = () => {
-    this.props.confirmDonation(this.props.userData.id, this.props.entry);
+    this.props.confirmDonation(this.props.userID, this.props.entry);
   }
 
   navigateToUser = () => {
