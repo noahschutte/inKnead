@@ -51,7 +51,9 @@ class EntryCreationScene extends Component {
             onPress: Actions.EmailVerifyScene.bind(this, {
               redirect: {
                 scene: 'EntryCreationScene',
-              } })
+                parameter: null,
+              }
+            })
           }
         ]
       );
