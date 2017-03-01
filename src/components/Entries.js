@@ -44,7 +44,7 @@ class Entries extends Component {
     } else {
       if (dataSource._cachedRowCount === 0) {
         refreshPrompt = (
-          <Text style={{ textAlign: 'center', paddingTop: 20 }}>
+          <Text style={{ position: 'absolute', marginHorizontal: 30, textAlign: 'center', paddingTop: 20 }}>
             There doesn't seem to be anything here... {'\n'}Pull down to refresh
           </Text>
         );
