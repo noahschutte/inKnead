@@ -28,5 +28,8 @@ export const profileScene = {
 };
 
 export const instructionsScene = {
-  leftButton: 'backButton'
+  leftButton: 'backButton',
+  redirect: {
+    scene: 'MainScene',
+  },
 };
