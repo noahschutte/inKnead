@@ -58,10 +58,6 @@ const EntryDetails = ({
         <Vendor size='large' vendor={vendor} />
       </DetailSection>
 
-      <DetailSection>
-        <Button touchableOpacity onPress={ () => deleteEntry(entryData.id) }>Delete</Button>
-      </DetailSection>
-
       <View style={styles.buttonWrapper}>
         <Button touchableOpacity onPress={onButtonPress}>
           <Text style={styles.donateTextStyle}>{buttonText}</Text>

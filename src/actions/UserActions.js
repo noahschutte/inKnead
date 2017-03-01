@@ -117,7 +117,7 @@ export const updateEmail = (updatedEmail, userID, redirect = null) => {
         alert(`${responseJson.errorMessage}`);
       }
     })
-    .catch(error => console.err(error));
+    .catch(error => console.error(error));
   };
 };
 
