@@ -12,15 +12,19 @@ const ToggleMenu = (props) => {
 
   let notificationAlert;
   if (props.doesHaveNotifications) {
-    notificationAlert = <View style={styles.notificationAlertStyle}>
-      <Text style={styles.textStyle}>!</Text>
-    </View>;
+    notificationAlert = (
+      <View style={styles.notificationAlertStyle}>
+        <Text style={styles.textStyle}>!</Text>
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.donatedPizzasText}>
-        {props.totalDonatedPizzas} pizzas have been donated through this app!
+        <Text style={{ fontWeight: 'bold', fontSize: 14, color: '#ffffff' }}>
+          {props.totalDonatedPizzas}
+        </Text> pizzas have been donated through this app!
       </Text>
       <Image
         source={defaultProfileImage}
@@ -71,6 +75,10 @@ const styles = {
   },
   donatedPizzasText: {
     color: 'white',
+    top: 25,
+    textAlign: 'center',
+    marginHorizontal: 5,
+    position: 'absolute',
   },
   notificationStyle: {
     flexDirection: 'row',
@@ -78,7 +86,7 @@ const styles = {
   },
   notificationAlertStyle: {
     width: 25,
-    borderRadius: 25/2,
+    borderRadius: 25 / 2,
     backgroundColor: 'red',
     borderWidth: 1,
     borderColor: 'red',
