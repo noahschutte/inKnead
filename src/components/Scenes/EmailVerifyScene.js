@@ -33,16 +33,18 @@ class EmailVerifyScene extends Component {
     if (this.props.userVerified || this.state.update) {
       bottomHalf = (
         <View style={{ flex: 4 }}>
-          <DetailSection style={{ flex: 5 }} bannerText='New Email'>
-            <TextInput
-              onChangeText={this.updateEmailText}
-              maxLength={254}
-              autoCorrect={false}
-              keyboardType='email-address'
-              autOCapitalize='none'
-              value={this.state.newEmailText}
-              style={{ flex: 1, marginHorizontal: 15, textAlign: 'center' }}
-            />
+          <DetailSection style={{ flex: 5, flexDirection: 'column' }} bannerText='New Email'>
+            <View style={{ height: 25, borderColor: 'black', borderWidth: 0.5 }}>
+              <TextInput
+                onChangeText={this.updateEmailText}
+                maxLength={254}
+                autoCorrect={false}
+                keyboardType='email-address'
+                autoCapitalize='none'
+                value={this.state.newEmailText}
+                style={{ flex: 1, width: 150, textAlign: 'center' }}
+              />
+            </View>
           </DetailSection>
           <DetailSection
             style={styles.buttonSectionStyle}
