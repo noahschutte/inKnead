@@ -9,7 +9,6 @@ import Vendor from './Vendor';
 
 const EntryDetails = ({
   entryData,
-  deleteEntry,
   navigateToUser,
   onButtonPress,
   buttonText,
