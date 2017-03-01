@@ -29,7 +29,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
         activeDonation,
         anonEmail,
         recentSuccessfulRequest,
-        recentThankYou
+        recentThankYou,
       } = responseJson;
 
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });

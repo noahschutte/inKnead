@@ -10,6 +10,7 @@ import {
   TOGGLE_SIDE_MENU,
   REDIRECT,
   DELETE_ENTRY,
+  UPDATE_TOTAL_DONATED_PIZZAS,
 } from './types';
 
 export const confirmDonation = (donatorId, entry) => {
@@ -91,6 +92,7 @@ export const getEntries = () => {
     .then(data => data.json())
     .then(entries => {
       dispatch({ type: GET_ENTRIES_SUCCESS, payload: entries });
+      dispatch({ type: UPDATE_TOTAL_DONATED_PIZZAS, payload: entries.totalDonatedPizzas });
     })
     .catch(err => console.error(err));
   };

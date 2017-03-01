@@ -81,6 +81,7 @@ class MainScene extends Component {
         doesHaveNotifications={this.doesHaveNotifications()}
         userData={userData}
         toggle={this.props.toggleSideMenu}
+        totalDonatedPizzas={entries.totalDonatedPizzas}
       />
     );
     const entryRows = this.getEntryRows();
