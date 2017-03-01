@@ -8,6 +8,7 @@ import EntryDetails from '../EntryDetails';
 
 class EntryScene extends Component {
   state = {
+    ownEntry: (this.props.entry.creator_id === this.props.userID),
     paused: true,
     thanksText: 'YAY PIZZA!'
   };
@@ -67,14 +68,15 @@ class EntryScene extends Component {
     let onButtonPress;
     let buttonText;
 
-    if (entry.type === 'request') {
-      if (entry.donor_id === null) {
-        onButtonPress = this.onDonatePress;
-        buttonText = 'DONATE!';
-      } else {
-        onButtonPress = null;
-        buttonText = 'RECEIVED!';
-      }
+    if (entry.status === 'active' && this.state.ownEntry) {
+      onButtonPress = this.props.deleteEntry.bind(this, entry.id);
+      buttonText = 'REMOVE';
+    } else if (entry.status === 'received') {
+      onButtonPress = null;
+      buttonText = 'RECEIVED';
+    } else if (entry.type === 'request' && entry.donor_id === null) {
+      onButtonPress = this.onDonatePress;
+      buttonText = 'DONATE';
     } else {
       onButtonPress = this.onThankYouPress;
       buttonText = this.state.thanksText;
@@ -101,7 +103,11 @@ class EntryScene extends Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  return user;
+  let userID;
+  if (user.userData) {
+    userID = user.userData.id;
+  }
+  return { user, userID };
 };
 
 const styles = {
