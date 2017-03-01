@@ -98,11 +98,24 @@ export const getEntries = () => {
   };
 };
 
-export const getUserEntries = (userId) => {
-  return ({
-    type: GET_USER_ENTRIES,
-    payload: userId
-  });
+export const getUserEntries = (userID) => {
+  return (dispatch) => {
+    dispatch({ type: GET_ENTRIES });
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET',
+    })
+    .then(data => data.json())
+    .then(entries => {
+      dispatch({ type: GET_ENTRIES_SUCCESS, payload: entries });
+      dispatch({ type: UPDATE_TOTAL_DONATED_PIZZAS, payload: entries.totalDonatedPizzas });
+      dispatch({ type: GET_USER_ENTRIES, payload: userID });
+    })
+    .catch(err => console.error(err));
+  };
 };
 
 export const sortEntries = (key) => {

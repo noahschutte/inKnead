@@ -5,6 +5,7 @@ import SideMenu from 'react-native-side-menu';
 import {
   createSession,
   getEntries,
+  getUserEntries,
   sortEntries,
   toggleScope,
   toggleSideMenu,
@@ -16,6 +17,14 @@ import Entries from '../Entries';
 
 
 class MainScene extends Component {
+
+  getEntries = () => {
+    if (this.props.userID) {
+      this.props.getUserEntries(this.props.userID);
+    } else {
+      this.props.getEntries();
+    }
+  }
 
   onChange = (isOpen) => {
     if (isOpen === false) {
@@ -102,7 +111,7 @@ class MainScene extends Component {
             userID={userID}
             origin='MainScene'
             entryRows={entryRows}
-            getEntries={this.props.getEntries}
+            getEntries={() => this.getEntries()}
             loading={loading}
           />
         </View>
@@ -112,13 +121,15 @@ class MainScene extends Component {
 }
 
 const mapStateToProps = ({ entries, user, nav }) => {
-  const { userID, userData, notifications, logOut } = user;
+  const { userData, notifications, logOut } = user;
+  const userID = userData.id;
   const { sideMenuOpen } = nav;
   return { userID, userData, notifications, logOut, entries, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, {
   getEntries,
+  getUserEntries,
   sortEntries,
   createSession,
   toggleScope,
