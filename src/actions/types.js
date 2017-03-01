@@ -18,6 +18,7 @@ export const HANDLE_USER_DONATION = 'handle_user_donation';
 export const AWAITING_DONATION = 'awaiting_donation';
 export const CONFIRM_DONATION_RECEIVED = 'confirm_donation_received';
 export const CREATE_THANK_YOU_REMINDER = 'create_thank_you_reminder';
+export const AWAITING_THANK_YOUS = 'awaiting_thank_yous';
 
 export const UPDATE_SELECTED_PIZZAS = 'update_selected_pizzas';
 export const UPDATE_SELECTED_VENDOR = 'update_selected_vendor';

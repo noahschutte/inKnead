@@ -6,6 +6,7 @@ import {
   HANDLE_USER_LOGOUT,
   HANDLE_USER_DONATION,
   AWAITING_DONATION,
+  AWAITING_THANK_YOUS,
   CONFIRM_DONATION_RECEIVED,
   CREATE_THANK_YOU_REMINDER,
 } from '../actions/types';
@@ -55,6 +56,32 @@ export default (state = INITIAL_STATE, action) => {
         notifications,
       };
     }
+    case AWAITING_THANK_YOUS:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications,
+          {
+            id: 4,
+            text: 'Your donation has received',
+            expandable: {
+              text: 'You\ve successful made a donation! Be on the lookout for a thank you from your recipient!',
+              buttons: [
+                {
+                  type: 'cancel',
+                  text: 'Cool',
+                  action: 'nothing'
+                },
+                {
+                  type: 'confirm',
+                  text: 'Clear',
+                  action: 'clear',
+                }
+              ]
+            }
+          }
+        ]
+      };
     case AWAITING_DONATION:
       return {
         ...state,

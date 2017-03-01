@@ -5,6 +5,7 @@ import {
   AWAITING_DONATION,
   CONFIRM_DONATION_RECEIVED,
   CREATE_THANK_YOU_REMINDER,
+  AWAITING_THANK_YOUS,
   EMAIL_VERIFIED,
   EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
@@ -30,8 +31,9 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
         anonEmail,
         recentSuccessfulRequest,
         recentThankYou,
+        awaitingThankYous,
       } = responseJson;
-
+      console.log('resposneJson: ', responseJson);
       dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
       if (user.current_email) {
         dispatch({ type: EMAIL_VERIFIED });
@@ -59,6 +61,9 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
         }
         if (recentSuccessfulRequest.status === 'received' && !recentThankYou) {
           dispatch({ type: CREATE_THANK_YOU_REMINDER });
+        }
+        if (awaitingThankYous.length > 0) {
+          dispatch({ type: AWAITING_THANK_YOUS });
         }
       }
     })
