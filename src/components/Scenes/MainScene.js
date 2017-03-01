@@ -122,7 +122,10 @@ class MainScene extends Component {
 
 const mapStateToProps = ({ entries, user, nav }) => {
   const { userData, notifications, logOut } = user;
-  const userID = userData.id;
+  let userID;
+  if (userData) {
+    userID = userData.id;
+  }
   const { sideMenuOpen } = nav;
   return { userID, userData, notifications, logOut, entries, sideMenuOpen };
 };

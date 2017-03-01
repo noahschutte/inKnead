@@ -39,7 +39,8 @@ export default (state = INITIAL_STATE, action) => {
         case 'InstructionsScene':
           Actions.InstructionsScene({
             recipientEmail: parameter.recipientEmail,
-            entry: parameter.entry
+            entry: parameter.entry,
+            type: 'reset',
           });
           return state;
         case 'EmailVerifyScene':
