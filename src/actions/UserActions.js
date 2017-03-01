@@ -95,7 +95,6 @@ export const confirmDonationReceived = (userID, requestID) => {
 
 export const updateEmail = (updatedEmail, userID, redirect = null) => {
   return (dispatch) => {
-    dispatch({ type: EMAIL_VERIFIED });
     fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
       headers: {
         Accept: 'application/json',
@@ -113,6 +112,7 @@ export const updateEmail = (updatedEmail, userID, redirect = null) => {
         } else {
           dispatch({ type: REDIRECT, payload: redirect });
         }
+        dispatch({ type: EMAIL_VERIFIED });
       } else {
         alert(`${responseJson.errorMessage}`);
       }
