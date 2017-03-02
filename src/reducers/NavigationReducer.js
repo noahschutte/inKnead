@@ -44,10 +44,7 @@ export default (state = INITIAL_STATE, action) => {
           });
           return state;
         case 'EmailVerifyScene':
-          Actions.EmailVerifyScene({
-            currentEmail: parameter.currentEmail,
-            signupEmail: parameter.signupEmail,
-          });
+          Actions.EmailVerifyScene();
           return state;
         case 'EntryCreationScene':
           if (parameter && parameter.createThankYou) {
