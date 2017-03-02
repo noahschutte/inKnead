@@ -21,6 +21,8 @@ class NotificationsScene extends Component {
         return () => this.props.confirmDonationReceived(userData.id, recentSuccessfulRequest.id);
       case 'createThankYou':
         return () => this.props.redirectTo(redirect);
+      case 'viewThankYou':
+        return () => this.props.redirectTo(redirect);
       case 'nothing':
         return () => this.collapseNotification(this.state.expanded.indexOf(notificationID));
       default:
@@ -124,9 +126,9 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ user }) => {
-  const { notifications, userData, recentSuccessfulRequest } = user;
-  return { notifications, userData, recentSuccessfulRequest };
+const mapStateToProps = (state) => {
+  const notifications = state.notifications.userNotifications;
+  return { notifications };
 };
 
 export default connect(mapStateToProps, {
