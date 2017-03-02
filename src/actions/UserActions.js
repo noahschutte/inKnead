@@ -35,8 +35,8 @@ export const retrieveNotifications = (userID) => {
 
       const {
         currentEmail, // The user's current email. Returns null if email has not yet been verified
-        userRequests, // An array of requests for which the user is either the donor OR recipient
-        userThankYous, // An array of thankYous for which the user is either donor OR recipient
+        // userRequests, An array of requests for which the user is either the donor OR recipient
+        // userThankYous, An array of thankYous for which the user is either donor OR recipient
         recentSuccessfulRequests, // An array containing a user's request that has been donated to, but not yet received
         thankYouReminders, // An array of requests the user has received but not uploaded a thankYou for
         recentDonations,  // An array of donations that have not been received
@@ -96,47 +96,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
     })
     .then((response) => response.json())
     .then(responseJson => {
-      const {
-        user,
-        activeDonation,
-        anonEmail,
-        recentSuccessfulRequest,
-        recentThankYou,
-        awaitingThankYous,
-      } = responseJson;
-      console.log('resposneJson: ', responseJson);
-      dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
-      if (user.current_email) {
-        dispatch({ type: EMAIL_VERIFIED });
-      } else {
-        dispatch({ type: EMAIL_NOT_VERIFIED, payload: user.signupEmail });
-      }
-      if (activeDonation) {
-        dispatch({
-          type: HANDLE_USER_DONATION,
-          payload: {
-            activeDonation,
-            recipientEmail: anonEmail,
-          }
-        });
-      }
-      if (recentSuccessfulRequest) {
-        if (recentSuccessfulRequest.status === 'active') {
-          dispatch({
-            type: INCOMING_PIZZA,
-            payload: {
-              userID: user.id,
-              requestID: recentSuccessfulRequest.id
-            }
-          });
-        }
-        if (recentSuccessfulRequest.status === 'received' && !recentThankYou) {
-          dispatch({ type: CREATE_THANK_YOU_REMINDER });
-        }
-        if (awaitingThankYous.length > 0) {
-          dispatch({ type: AWAITING_THANK_YOUS });
-        }
-      }
+      dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson.user });
     })
     .then(() => {
       dispatch({ type: REDIRECT, payload: redirect });
