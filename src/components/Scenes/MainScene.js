@@ -84,7 +84,6 @@ class MainScene extends Component {
         totalDonatedPizzas={totalDonatedPizzas}
       />
     );
-    const entryRows = this.getEntryRows();
 
     return (
       <SideMenu
@@ -101,7 +100,7 @@ class MainScene extends Component {
           <Entries
             userID={userID}
             origin='MainScene'
-            entryRows={entryRows}
+            entryRows={this.getEntryRows()}
             getEntries={() => this.props.getEntries(userID)}
             loading={loading}
           />
@@ -114,7 +113,7 @@ class MainScene extends Component {
 const mapStateToProps = ({ entries, user, nav, notifications }) => {
   const { userID, logOut } = user;
   const { sideMenuOpen } = nav;
-  return { userID, notifications, logOut, entries, sideMenuOpen };
+  return { entries, userID, notifications, logOut, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, {
