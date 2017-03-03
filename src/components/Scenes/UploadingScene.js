@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { connect } from 'react-redux';
 import SpinningPizza from '../SpinningPizza';
 
 const UploadingScene = () => {
@@ -28,9 +27,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ newEntry }) => {
-  const { uploadPercentage } = newEntry;
-  return { uploadPercentage };
-};
-
-export default connect(mapStateToProps, {})(UploadingScene);
+export default UploadingScene;
