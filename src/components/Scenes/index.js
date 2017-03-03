@@ -5,7 +5,6 @@ import EntryScene from './EntryScene';
 import HowToScene from './HowToScene';
 import InitialScene from './InitialScene';
 import InstructionsScene from './InstructionsScene';
-import LoadingScene from './LoadingScene';
 import LoginScene from './LoginScene';
 import MainScene from './MainScene';
 import NotificationsScene from './NotificationsScene';
@@ -21,7 +20,6 @@ export {
   HowToScene,
   InitialScene,
   InstructionsScene,
-  LoadingScene,
   LoginScene,
   MainScene,
   NotificationsScene,
