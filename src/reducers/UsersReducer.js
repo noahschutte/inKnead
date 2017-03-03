@@ -37,7 +37,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         userData: {
           ...state.userData,
-          current_email: action.payload,
+          currentEmail: action.payload,
         }
       };
     case HANDLE_USER_LOGOUT:
