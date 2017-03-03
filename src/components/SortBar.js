@@ -5,7 +5,7 @@ import SortButton from './SortButton';
 class SortBar extends Component {
 
   mapOptionsToButtons = () => {
-    const { shown, options, onPress } = this.props
+    const { shown, options, onPress } = this.props;
 
     return options.map(option => {
       return (
