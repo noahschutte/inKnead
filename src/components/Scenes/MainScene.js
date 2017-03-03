@@ -58,8 +58,9 @@ class MainScene extends Component {
     }
   }
 
+  // Returns a boolean describing whether a user has waiting notifications
   doesHaveNotifications = () => {
-    return this.props.notifications.length > 0;
+    return this.props.notifications.userNotifications.length > 0;
   }
 
   assembleOptions = () => {
@@ -73,14 +74,14 @@ class MainScene extends Component {
 
 
   render() {
-    const { userID, userData, entries, sideMenuOpen } = this.props;
-    const { shown, loading } = entries;
+    const { userID, entries, sideMenuOpen } = this.props;
+    const { shown, loading, totalDonatedPizzas } = entries;
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
-        userData={userData}
+        userID={userID}
         toggle={this.props.toggleSideMenu}
-        totalDonatedPizzas={entries.totalDonatedPizzas}
+        totalDonatedPizzas={totalDonatedPizzas}
       />
     );
     const entryRows = this.getEntryRows();
@@ -110,14 +111,10 @@ class MainScene extends Component {
   }
 }
 
-const mapStateToProps = ({ entries, user, nav }) => {
-  const { userData, notifications, logOut } = user;
-  let userID;
-  if (userData) {
-    userID = userData.id;
-  }
+const mapStateToProps = ({ entries, user, nav, notifications }) => {
+  const { userID, logOut } = user;
   const { sideMenuOpen } = nav;
-  return { userID, userData, notifications, logOut, entries, sideMenuOpen };
+  return { userID, notifications, logOut, entries, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, {
