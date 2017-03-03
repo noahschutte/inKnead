@@ -5,7 +5,7 @@ export default class TimeAgo extends Component {
 
   formatDigits() {
     const age = this.props.secondsOld;
-    if (age == 1 || age == 60 || age == 3600 || age == 86400 || age == 604800) {
+    if (age === 1 || age === 60 || age === 3600 || age === 86400 || age === 604800) {
       return 1;
     }
     if (age < 60) {
@@ -39,7 +39,7 @@ export default class TimeAgo extends Component {
     } else {
       ago = 'weeks';
     }
-    if (time == 1) {
+    if (time === 1) {
       const timeAgo = `${time} ${ago}`;
       return timeAgo.substring(0, timeAgo.length - 1);
     }
