@@ -102,7 +102,7 @@ class EntryScene extends Component {
       <View style={styles.container}>
         <EntryVideo
           togglePlay={this.togglePlay}
-          source={entry.compressed_video}
+          source={entry.compressedVideo}
           paused={this.state.paused}
         />
         <EntryDetails
