@@ -61,7 +61,7 @@ class Entries extends Component {
           renderRow={
             (rowData) => (
               <Entry
-                userEntry={this.props.userID === rowData.creator_id}
+                userEntry={this.props.userID === rowData.creatorId}
                 origin={this.props.origin}
                 selectedRequest={rowData}
               />

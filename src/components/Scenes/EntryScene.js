@@ -8,24 +8,21 @@ import EntryDetails from '../EntryDetails';
 
 class EntryScene extends Component {
   state = {
-    ownEntry: (this.props.entry.creator_id === this.props.userID),
     paused: true,
     thanksText: 'YAY PIZZA!'
   };
 
   onDonatePress = () => {
     this.setState({ paused: true });
-    const { user, userID, entry } = this.props;
+    const { userID, entry } = this.props;
     // Direct user to log in if not logged in already
-    if (user && !user.userData) {
-      Actions.LoginScene({ redirect: {
-        scene: 'EntryScene',
-        parameter: entry
-      } });
-    } else if (userID === entry.creator_id) {
-      alert('You can\'t donate to yourself!');
-    } else if (this.props.activeDonation) {
-      alert('You must complete your recent donation commitment!');
+    if (!userID) {
+      Actions.LoginScene({
+        redirect: {
+          scene: 'EntryScene',
+          parameter: entry
+        }
+      });
     } else {
       Alert.alert(
         `Are you sure you want to donate ${entry.pizzas} pizza(s)?`,
@@ -69,7 +66,7 @@ class EntryScene extends Component {
 
   navigateToUser = () => {
     this.setState({ paused: true });
-    Actions.UserHistoryScene({ userID: this.props.entry.creator_id });
+    Actions.UserHistoryScene({ userID: this.props.entry.creatorId });
   }
 
   togglePlay = (toggle) => {
@@ -78,17 +75,22 @@ class EntryScene extends Component {
 
   render() {
     const { entry } = this.props;
+    // showUserHistory: a boolean that determines whether to show a  link to the history
+    // of this entry's creator, depending on how you reached this particular entry.
     const showUserHistory = (this.props.origin === 'MainScene');
+    // ownEntry: a boolean that determines whether the user viewing this entry
+    // is the user that created the entry.
+    const ownEntry = (this.props.entry.creatorId === this.props.userID);
     let onButtonPress;
     let buttonText;
 
-    if (entry.status === 'active' && this.state.ownEntry) {
+    if (entry.status === 'active' && ownEntry) {
       onButtonPress = this.deleteEntry.bind(this, entry.id);
       buttonText = 'REMOVE';
     } else if (entry.status === 'received') {
       onButtonPress = null;
       buttonText = 'RECEIVED';
-    } else if (entry.type === 'request' && entry.donor_id === null) {
+    } else if (entry.type === 'request' && entry.donorId === null) {
       onButtonPress = this.onDonatePress;
       buttonText = 'DONATE';
     } else {
@@ -117,11 +119,8 @@ class EntryScene extends Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  let userID;
-  if (user.userData) {
-    userID = user.userData.id;
-  }
-  return { user, userID };
+  const { userID } = user;
+  return { userID };
 };
 
 const styles = {

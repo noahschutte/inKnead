@@ -6,7 +6,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  id: null,
+  userID: null,
   currentEmail: null,
   signupEmail: null,
   fb_userID: null,
@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
       const user = action.payload;
       return {
         ...state,
-        id: user.id,
+        userID: user.id,
         currentEmail: user.currentEmail,
         signupEmail: user.signupEmail,
         fb_userID: user.fb_userID,

@@ -23,7 +23,7 @@ export const confirmDonation = (donatorId, entry) => {
     .then(response => response.json())
     .then(responseJson => {
       if (responseJson.errorMessage) {
-        console.error(responseJson.errorMessage);
+        alert(responseJson.errorMessage);
       } else {
         const { anonEmail } = responseJson;
         dispatch({

@@ -327,7 +327,7 @@ const styles = {
 const mapStateToProps = ({ newEntry, camera, user }) => {
   const { pizzas, vendor, videoKey } = newEntry;
   const { videoData } = camera;
-  const { userVerified, fb_userID, id: userID } = user;
+  const { userVerified, fb_userID, userID } = user;
 
   return {
     pizzas,

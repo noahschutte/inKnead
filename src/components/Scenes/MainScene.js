@@ -5,9 +5,7 @@ import SideMenu from 'react-native-side-menu';
 import {
   createSession,
   getEntries,
-  getUserEntries,
   sortEntries,
-  toggleScope,
   toggleSideMenu,
   userLogout,
 } from '../../actions';
@@ -17,14 +15,6 @@ import Entries from '../Entries';
 
 
 class MainScene extends Component {
-
-  getEntries = () => {
-    if (this.props.userID) {
-      this.props.getUserEntries(this.props.userID);
-    } else {
-      this.props.getEntries();
-    }
-  }
 
   onChange = (isOpen) => {
     if (isOpen === false) {
@@ -48,19 +38,19 @@ class MainScene extends Component {
         return [...requests, ...thankYous];
       case 'Requests':
         if (requests) {
-          return requests.filter(request => request.donor_id === null);
+          return requests.filter(request => request.donorId === null);
         }
         return [];
       case 'Thanks':
         return thankYous;
       case 'Fulfilled':
-        return requests.filter(request => request.donor_id !== null);
+        return requests.filter(request => request.donorId !== null);
       case 'Requested':
         return userRequests;
       case 'Received':
         return userFulfilled;
       case 'Donated':
-        return requests.filter(request => (request.donor_id === userID));
+        return requests.filter(request => (request.donorId === userID));
       case 'Gratitude':
         return userThankYous;
       default:
@@ -111,7 +101,7 @@ class MainScene extends Component {
             userID={userID}
             origin='MainScene'
             entryRows={entryRows}
-            getEntries={() => this.getEntries()}
+            getEntries={() => this.props.getEntries(userID)}
             loading={loading}
           />
         </View>
@@ -132,10 +122,8 @@ const mapStateToProps = ({ entries, user, nav }) => {
 
 export default connect(mapStateToProps, {
   getEntries,
-  getUserEntries,
   sortEntries,
   createSession,
-  toggleScope,
   toggleSideMenu,
   userLogout
 })(MainScene);
