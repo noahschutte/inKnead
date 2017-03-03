@@ -2,7 +2,6 @@ import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
   NOTIFICATIONS_REFRESHING,
-  HANDLE_USER_DONATION,
   INCOMING_PIZZA,
   CREATE_THANK_YOU_REMINDER,
   AWAITING_THANK_YOUS,
@@ -32,7 +31,6 @@ export const retrieveNotifications = (userID) => {
     .then(responseJson => {
       console.log('responseJson: ', responseJson);
       //  Expect:
-
       const {
         currentEmail, // The user's current email. Returns null if email has not yet been verified
         // userRequests, An array of requests for which the user is either the donor OR recipient
@@ -58,7 +56,13 @@ export const retrieveNotifications = (userID) => {
         }
       }
       if (recentSuccessfulRequests.length > 0) {
-        dispatch({ type: INCOMING_PIZZA });
+        dispatch({
+          type: INCOMING_PIZZA,
+          payload: {
+            requestID: recentSuccessfulRequests[0].id,
+            userID,
+          }
+        });
       }
       if (thankYouReminders.length > 0) {
         for (const thankYouReminder of thankYouReminders) {
