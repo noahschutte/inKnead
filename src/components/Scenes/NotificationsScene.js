@@ -74,13 +74,13 @@ class NotificationsScene extends Component {
   }
 
   render() {
-    const { redirectTo, notifications } = this.props;
+    const { notifications } = this.props;
     let content;
     if (notifications.length > 0) {
       content = notifications.map(notification => {
         let onPress;
         if (notification.redirect && !notification.expandable) {
-          onPress = () => redirectTo(notification.redirect);
+          onPress = () => this.props.redirectTo(notification.redirect);
         } else if (notification.expandable) {
           const index = this.state.expanded.indexOf(notification.id);
           if (index === -1) {
