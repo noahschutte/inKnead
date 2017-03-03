@@ -6,15 +6,14 @@ import Entries from '../Entries';
 
 class UserHistoryScene extends Component {
   componentDidMount() {
-    const { getEntries, userID } = this.props;
-    getEntries(userID);
+    this.props.getEntries(this.props.userID);
   }
+
   render() {
     const {
       userRequests,
       userFulfilled,
       userThankYous,
-      getEntries,
       userID,
       loading
     } = this.props;
@@ -24,7 +23,7 @@ class UserHistoryScene extends Component {
         <Entries
           origin='UserHistoryScene'
           entryRows={entryRows}
-          getEntries={() => getEntries(userID)}
+          getEntries={() => this.props.getEntries(userID)}
           loading={loading}
         />
       </View>
