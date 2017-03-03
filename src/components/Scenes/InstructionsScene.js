@@ -4,7 +4,7 @@ import DetailSection from '../DetailSection';
 
 const vendors = {
   'Pizza Hut': 'https://pizzahutstore.wgiftcard.com/chrome/pizzahut/',
-  'Dominos': 'https://dominosstore.wgiftcard.com/responsive/personalize_responsive/chooseDesign/dominos_responsive/1',
+  Dominos: 'https://dominosstore.wgiftcard.com/responsive/personalize_responsive/chooseDesign/dominos_responsive/1',
   'Papa Johns': 'https://papajohns-m.cashstar.com/buy/?ref=PJ1',
 };
 

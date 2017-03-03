@@ -21,14 +21,14 @@ class NavBar extends Component {
 
   renderTitle = () => {
     const { title } = this.props.navBarProps;
-    const { scope, toggleScope, userData } = this.props;
+    const { scope, toggleScope, userID } = this.props;
     let result;
     let onPress;
 
     switch (title) {
 
       case 'scope':
-      onPress = toggleScope.bind(this, this.props.scope, userData);
+      onPress = toggleScope.bind(this, this.props.scope, userID);
         switch (scope) {
           case 'requests_and_thank_yous':
           result = (
@@ -187,9 +187,9 @@ const styles = {
 
 const mapStateToProps = ({ entries, user, nav }) => {
   const { scope } = entries;
-  const { userData } = user;
+  const userID = user.id;
   const { sideMenuOpen } = nav;
-  return { scope, userData, sideMenuOpen };
+  return { scope, userID, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, { toggleScope, redirectTo, toggleSideMenu })(NavBar);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { confirmDonation, deleteEntry } from '../../actions';
+import { confirmDonation } from '../../actions';
 import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
 
@@ -53,9 +53,23 @@ class EntryScene extends Component {
     this.props.confirmDonation(this.props.userID, this.props.entry);
   }
 
+  deleteEntry = (entryId) => {
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entryId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+    })
+    .then(() => {
+      Actions.MainScene({ type: 'reset' });
+    })
+    .catch(err => alert(err));
+  };
+
   navigateToUser = () => {
     this.setState({ paused: true });
-    Actions.UserHistoryScene({ userId: this.props.entry.creator_id });
+    Actions.UserHistoryScene({ userID: this.props.entry.creator_id });
   }
 
   togglePlay = (toggle) => {
@@ -69,7 +83,7 @@ class EntryScene extends Component {
     let buttonText;
 
     if (entry.status === 'active' && this.state.ownEntry) {
-      onButtonPress = this.props.deleteEntry.bind(this, entry.id);
+      onButtonPress = this.deleteEntry.bind(this, entry.id);
       buttonText = 'REMOVE';
     } else if (entry.status === 'received') {
       onButtonPress = null;
@@ -116,4 +130,4 @@ const styles = {
   },
 };
 
-export default connect(mapStateToProps, { confirmDonation, deleteEntry })(EntryScene);
+export default connect(mapStateToProps, { confirmDonation })(EntryScene);

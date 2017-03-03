@@ -116,10 +116,8 @@ const styles = {
 };
 
 const mapStateToProps = ({ user }) => {
-  const currentEmail = user.userData.current_email;
-  const signupEmail = user.userData.signup_email;
-  const userID = user.userData.id;
-  const userVerified = user.userVerified;
+  const { currentEmail, signupEmail, userVerified } = user;
+  const userID = user.id;
   return { currentEmail, signupEmail, userID, userVerified };
 };
 

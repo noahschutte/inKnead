@@ -12,13 +12,12 @@ class NotificationsScene extends Component {
   }
 
   onPress = (action, notificationID, redirect = null) => {
-    const { userData, recentSuccessfulRequest } = this.props;
     switch (action) {
       case 'verifyEmail':
       case 'completeDonation':
         return () => this.props.redirectTo(redirect);
       case 'confirmDonation':
-        return () => this.props.confirmDonationReceived(userData.id, recentSuccessfulRequest.id);
+        return () => this.props.confirmDonationReceived(redirect.userID, redirect.requestID);
       case 'createThankYou':
         return () => this.props.redirectTo(redirect);
       case 'viewThankYou':
