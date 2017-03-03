@@ -49,12 +49,6 @@ const RouterComponent = () => {
         <Scene
           hideNavBar
           sceneStyle={sceneStyle}
-          key="LoadingScene"
-          component={Scenes.LoadingScene}
-        />
-        <Scene
-          hideNavBar
-          sceneStyle={sceneStyle}
           key="UploadingScene"
           component={Scenes.UploadingScene}
         />

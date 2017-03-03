@@ -12,14 +12,15 @@ class NotificationsScene extends Component {
   }
 
   onPress = (action, notificationID, redirect = null) => {
-    const { userData, recentSuccessfulRequest } = this.props;
     switch (action) {
       case 'verifyEmail':
       case 'completeDonation':
         return () => this.props.redirectTo(redirect);
       case 'confirmDonation':
-        return () => this.props.confirmDonationReceived(userData.id, recentSuccessfulRequest.id);
+        return () => this.props.confirmDonationReceived(redirect.userID, redirect.requestID);
       case 'createThankYou':
+        return () => this.props.redirectTo(redirect);
+      case 'viewThankYou':
         return () => this.props.redirectTo(redirect);
       case 'nothing':
         return () => this.collapseNotification(this.state.expanded.indexOf(notificationID));
@@ -73,13 +74,13 @@ class NotificationsScene extends Component {
   }
 
   render() {
-    const { redirectTo, notifications } = this.props;
+    const { notifications } = this.props;
     let content;
     if (notifications.length > 0) {
       content = notifications.map(notification => {
         let onPress;
         if (notification.redirect && !notification.expandable) {
-          onPress = () => redirectTo(notification.redirect);
+          onPress = () => this.props.redirectTo(notification.redirect);
         } else if (notification.expandable) {
           const index = this.state.expanded.indexOf(notification.id);
           if (index === -1) {
@@ -124,9 +125,9 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ user }) => {
-  const { notifications, userData, recentSuccessfulRequest } = user;
-  return { notifications, userData, recentSuccessfulRequest };
+const mapStateToProps = (state) => {
+  const notifications = state.notifications.userNotifications;
+  return { notifications };
 };
 
 export default connect(mapStateToProps, {

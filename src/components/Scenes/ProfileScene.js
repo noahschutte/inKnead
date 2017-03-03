@@ -10,21 +10,21 @@ import ProfileDetailButton from '../ProfileDetailButton';
 class ProfileScene extends Component {
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.user.userData === null) {
+    if (!nextProps.user.userID) {
       return false;
     }
     return true;
   }
 
   render() {
-    /* eslint camelcase: off */
     const {
-      current_email,
-      signup_email,
+      currentEmail,
+      signupEmail,
       fb_userID,
-    } = this.props.user.userData;
-    const email = current_email || signup_email;
+    } = this.props.user;
+    const email = currentEmail || signupEmail;
     let social;
+    /* eslint camelcase: off */
     if (fb_userID) {
       social = 'Facebook';
     }

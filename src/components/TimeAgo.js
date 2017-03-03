@@ -1,56 +1,38 @@
-/*
-* @providesModule TimeAgo
-*/
-
-import React, { Component } from 'react';
+import React from 'react';
 import { Text } from 'react-native';
 
-export default class TimeAgo extends Component {
-
-  formatDigits() {
-    const age = this.props.secondsOld;
-    if (age == 1 || age == 60 || age == 3600 || age == 86400 || age == 604800) {
-      return 1;
-    }
-    if (age < 60) {
-      return age;
-    }
-    if (age < 3600) {
-      return Math.floor(age / 60);
-    }
-    if (age < 84600) {
-      return Math.floor(age / 3600);
-    }
-    if (age < 604800) {
-      return Math.floor(age / 86400);
-    }
-    return Math.floor(age / 604800);
+const TimeAgo = ({ secondsOld }) => {
+  let time;
+  let ago;
+  /* eslint no-multi-spaces: off */
+  if (secondsOld === 1     ||
+      secondsOld === 60    ||
+      secondsOld === 3600  ||
+      secondsOld === 86400 ||
+      secondsOld === 604800) {
+        time = 1;
+  } else if (secondsOld < 60) {
+    time = secondsOld;
+    ago = 'seconds';
+  } else if (secondsOld < 3600) {
+    time = Math.floor(secondsOld / 60);
+    ago = 'minutes';
+  } else if (secondsOld < 86400) {
+    time = Math.floor(secondsOld / 3600);
+    ago = 'hours';
+  } else if (secondsOld < 604800) {
+    time = Math.floor(secondsOld / 86400);
+    ago = 'days';
+  } else {
+    time = Math.floor(secondsOld / 604800);
+    ago = 'weeks';
   }
-
-  formatTimeAgo() {
-    const seconds = this.props.secondsOld;
-    const time = this.formatDigits();
-    let ago;
-
-    if (seconds < 60) {
-      ago = 'seconds';
-    } else if (seconds < 3600) {
-      ago = 'minutes';
-    } else if (seconds < 86400) {
-      ago = 'hours';
-    } else if (seconds < 604800) {
-      ago = 'days';
-    } else {
-      ago = 'weeks';
-    }
-    if (time == 1) {
-      const timeAgo = `${time} ${ago}`;
-      return timeAgo.substring(0, timeAgo.length - 1);
-    }
-    return `${time} ${ago}`;
+  if (time === 1) {
+    ago = ago.substring(0, ago.length - 1);
   }
+  return (
+    <Text>{time} {ago} ago</Text>
+  );
+};
 
-  render() {
-    return <Text>{this.formatTimeAgo()} ago</Text>;
-  }
-}
+export default TimeAgo;

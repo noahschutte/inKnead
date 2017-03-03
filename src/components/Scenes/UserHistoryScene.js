@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { getUserEntries } from '../../actions';
+import { getEntries } from '../../actions';
 import Entries from '../Entries';
 
 class UserHistoryScene extends Component {
   componentDidMount() {
-    const { getUserEntries, userId } = this.props;
-    getUserEntries(userId);
+    this.props.getEntries(this.props.userID);
   }
+
   render() {
     const {
       userRequests,
       userFulfilled,
       userThankYous,
-      getUserEntries,
-      userId,
+      userID,
       loading
     } = this.props;
     const entryRows = [...userRequests, ...userFulfilled, ...userThankYous];
@@ -24,7 +23,7 @@ class UserHistoryScene extends Component {
         <Entries
           origin='UserHistoryScene'
           entryRows={entryRows}
-          getEntries={() => getUserEntries(userId)}
+          getEntries={() => this.props.getEntries(userID)}
           loading={loading}
         />
       </View>
@@ -47,4 +46,4 @@ const mapStateToProps = ({ entries }) => {
   };
 };
 
-export default connect(mapStateToProps, { getUserEntries })(UserHistoryScene);
+export default connect(mapStateToProps, { getEntries })(UserHistoryScene);

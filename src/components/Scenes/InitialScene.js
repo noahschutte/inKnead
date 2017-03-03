@@ -9,8 +9,8 @@ import {
 } from '../../actions';
 import SpinningPizza from '../SpinningPizza';
 
-const InitialScene = ({ getEntries, createSession, redirectTo }) => {
-  getEntries();
+const InitialScene = (props) => {
+  props.getEntries();
   AccessToken.getCurrentAccessToken().then(
     data => {
       if (data) {
@@ -19,7 +19,7 @@ const InitialScene = ({ getEntries, createSession, redirectTo }) => {
           if (error) {
             alert(`Error fetching data: ${error.toSTring()}`);
           } else {
-            createSession(result);
+            props.createSession(result);
           }
         };
         const infoRequest = new GraphRequest(
@@ -36,7 +36,7 @@ const InitialScene = ({ getEntries, createSession, redirectTo }) => {
         );
         new GraphRequestManager().addRequest(infoRequest).start();
       } else {
-        redirectTo({ scene: 'MainScene', parameter: 'root' });
+        props.redirectTo({ scene: 'MainScene', parameter: 'root' });
       }
     }
   );

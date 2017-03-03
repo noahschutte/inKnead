@@ -45,17 +45,17 @@ export default (state = INITIAL_STATE, action) => {
       };
     case GET_USER_ENTRIES: {
       const userEntries = [
-        ...state.requests.filter(request => request.creator_id === action.payload),
-        ...state.thankYous.filter(thankYou => thankYou.creator_id === action.payload)
+        ...state.requests.filter(request => request.creatorId === action.payload),
+        ...state.thankYous.filter(thankYou => thankYou.creatorId === action.payload)
       ];
       const userRequests =
-      userEntries.filter(entry => (entry.type === 'request' && entry.donor_id === null));
+      userEntries.filter(entry => (entry.type === 'request' && entry.donorId === null));
 
       const userThankYous =
       userEntries.filter(entry => entry.type === 'thankYou');
 
       const userFulfilled =
-      userEntries.filter(entry => entry.type === 'request' && entry.donor_id !== null);
+      userEntries.filter(entry => entry.type === 'request' && entry.donorId !== null);
 
       return {
         ...state,

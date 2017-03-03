@@ -45,7 +45,7 @@ const ToggleMenu = (props) => {
         <Text style={styles.textStyle}>How To</Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={props.userData ? onPress.bind(this, Actions.ProfileScene) : onPress.bind(this, Actions.LoginScene)}>
+      <SideMenuButton onPress={props.userID ? onPress.bind(this, Actions.ProfileScene) : onPress.bind(this, Actions.LoginScene)}>
         <Text style={styles.textStyle}>Profile</Text>
       </SideMenuButton>
 

@@ -116,11 +116,8 @@ const styles = {
 };
 
 const mapStateToProps = ({ user }) => {
-  const currentEmail = user.userData.current_email;
-  const signupEmail = user.userData.signup_email;
-  const userID = user.userData.id;
-  const userVerified = user.userVerified;
-  return { currentEmail, signupEmail, userID, userVerified };
+  const { currentEmail, signupEmail, userVerified, userID } = user;
+  return { currentEmail, signupEmail, userVerified, userID };
 };
 
 export default connect(mapStateToProps, { updateEmail })(EmailVerifyScene);

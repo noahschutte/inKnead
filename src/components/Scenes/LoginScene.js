@@ -1,47 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { pizzaOnPlate } from '../../assets';
 import ReduxLogin from '../ReduxLogin';
 
-class LoginScene extends Component {
-  render() {
-    const {
-      container,
-      top,
-      bottom,
-      image,
-      title,
-      text
-    } = styles;
-    let prompt;
-    if (this.props.logOut) {
-      prompt = 'Log out: ';
-    } else {
-      prompt = 'Please log in: ';
-    }
-    return (
-      <View style={container}>
-        <View style={top}>
-          <Image style={image} source={pizzaOnPlate} />
-          <Text style={title}>
-            in knead
-          </Text>
-          <Text style={text}>
-            "The power of kindness,{'\n'} one pizza at a time"
-          </Text>
-        </View>
-        <View style={bottom}>
-          <Text style={[text, { marginBottom: 0, marginTop: 30 }]}>
-            {prompt}
-          </Text>
-          <View>
-            <ReduxLogin redirect={this.props.redirect} />
-          </View>
+const LoginScene = ({ logOut, redirect }) => {
+  const { container, top, bottom, image, title, text } = styles;
+  let prompt;
+  if (logOut) {
+    prompt = 'Log out: ';
+  } else {
+    prompt = 'Please log in: ';
+  }
+  return (
+    <View style={container}>
+      <View style={top}>
+        <Image style={image} source={pizzaOnPlate} />
+        <Text style={title}>
+          in knead
+        </Text>
+        <Text style={text}>
+          "The power of kindness,{'\n'} one pizza at a time"
+        </Text>
+      </View>
+      <View style={bottom}>
+        <Text style={[text, { marginBottom: 0, marginTop: 30 }]}>
+          {prompt}
+        </Text>
+        <View>
+          <ReduxLogin redirect={redirect} />
         </View>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = {
   container: {

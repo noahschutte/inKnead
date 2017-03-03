@@ -14,7 +14,7 @@ const EntryDetails = ({
   buttonText,
   showUserHistory
 }) => {
-  const { pizzas, vendor, seconds, creator_id } = entryData;
+  const { pizzas, vendor, seconds, creatorId } = entryData;
   let userHistoryButton;
   let bannerText;
 
@@ -23,7 +23,7 @@ const EntryDetails = ({
       <Button
          touchableOpacity
          buttonStyle={styles.userHistoryButton}
-         onPress={() => navigateToUser(creator_id)}
+         onPress={() => navigateToUser(creatorId)}
       >
         <Text
           style={styles.userHistoryText}
@@ -35,7 +35,7 @@ const EntryDetails = ({
   }
 
   if (entryData.type === 'request') {
-    if (entryData.donor_id === null) {
+    if (entryData.donorId === null) {
       bannerText = 'REQUESTED';
     } else {
       bannerText = 'RECEIVED';

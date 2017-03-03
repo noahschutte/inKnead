@@ -21,14 +21,13 @@ class NavBar extends Component {
 
   renderTitle = () => {
     const { title } = this.props.navBarProps;
-    const { scope, toggleScope, userData } = this.props;
+    const { scope, userID } = this.props;
     let result;
     let onPress;
-
     switch (title) {
 
       case 'scope':
-      onPress = toggleScope.bind(this, this.props.scope, userData);
+      onPress = this.props.toggleScope.bind(this, scope, userID);
         switch (scope) {
           case 'requests_and_thank_yous':
           result = (
@@ -115,7 +114,7 @@ class NavBar extends Component {
             source={newRequestButton}
           />
         );
-        if (this.props.userData) {
+        if (this.props.userID) {
           onPress = Actions.EntryCreationScene;
         } else {
           onPress = Actions.LoginScene;
@@ -187,9 +186,9 @@ const styles = {
 
 const mapStateToProps = ({ entries, user, nav }) => {
   const { scope } = entries;
-  const { userData } = user;
+  const { userID } = user;
   const { sideMenuOpen } = nav;
-  return { scope, userData, sideMenuOpen };
+  return { scope, userID, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, { toggleScope, redirectTo, toggleSideMenu })(NavBar);

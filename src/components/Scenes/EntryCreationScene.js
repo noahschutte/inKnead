@@ -6,10 +6,8 @@ import { Actions } from 'react-native-router-flux';
 import {
   updateSelectedPizzas,
   updateSelectedVendor,
-  uploadProgress,
   uploadComplete,
   handleVideoData,
-  handleErrors,
   resetCameraState,
 } from '../../actions';
 import { camcorderImage } from '../../assets';
@@ -20,7 +18,6 @@ import Button from '../Button2';
 
 class EntryCreationScene extends Component {
   state = {
-    modalVisible: false,
     paused: true,
   };
 
@@ -31,16 +28,12 @@ class EntryCreationScene extends Component {
     }
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
-
   togglePlay = (toggle) => {
     this.setState({ paused: toggle });
   }
 
   verifiedUser = () => {
-    if (this.props.userData.current_email === null) {
+    if (!this.props.userVerified) {
       Alert.alert(
         'No verified email address!',
         'You must have a verified email to request pizza!',
@@ -50,8 +43,7 @@ class EntryCreationScene extends Component {
             text: 'Verify Now',
             onPress: Actions.EmailVerifyScene.bind(this, {
               redirect: {
-                scene: 'EntryCreationScene',
-                parameter: null,
+                scene: 'EntryCreationScene'
               }
             })
           }
@@ -64,14 +56,15 @@ class EntryCreationScene extends Component {
 
   dispatchRequest = () => {
     const {
-      userData,
       videoData,
+      fb_userID,
+      userID,
       pizzas,
       vendor,
-      handleVideoData,
-      uploadComplete,
     } = this.props;
-    const videoKey = `${Date.now() + userData.fb_userID}`;
+
+    /* eslint camelcase: 0 */
+    const videoKey = `${Date.now() + fb_userID}`;
     const file = {
       uri: videoData.path,
       name: videoKey,
@@ -84,7 +77,7 @@ class EntryCreationScene extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
-        userID: userData.id,
+        userID,
         pizzas,
         vendor,
         videoKey
@@ -104,7 +97,7 @@ class EntryCreationScene extends Component {
         const url = responseJson.signedRequest;
         const xhr = new XMLHttpRequest();
         // Add event listeners. Needs upload Progress
-        xhr.addEventListener('load', uploadComplete, false);
+        xhr.addEventListener('load', this.props.uploadComplete, false);
         xhr.addEventListener('error', (evt) => console.log('Error:', evt), false);
         xhr.addEventListener('abort', (evt) => console.log(evt), false);
         Actions.UploadingScene();
@@ -115,7 +108,7 @@ class EntryCreationScene extends Component {
           if (xhr.readyState === 4) {
             if (xhr.status === 200) {
               console.log('success');
-              handleVideoData(null);
+              this.props.handleVideoData(null);
               Actions.MainScene({ type: 'reset' });
             } else {
               console.log('failure');
@@ -142,9 +135,8 @@ class EntryCreationScene extends Component {
   }
 
   dispatchThankYou = () => {
-    const { userData, videoData, entry } = this.props;
-    const userID = userData.id;
-    const videoKey = `${userData.fb_userID + Date.now()}`;
+    const { userID, fb_userID, videoData, entry } = this.props;
+    const videoKey = `${fb_userID + Date.now()}`;
     const file = {
       uri: videoData.path,
       name: videoKey,
@@ -206,7 +198,7 @@ class EntryCreationScene extends Component {
   }
 
   handleRequestSubmission = () => {
-    const { videoData, pizzas, vendor, handleErrors } = this.props;
+    const { videoData, pizzas, vendor } = this.props;
     const errorMessages = [];
     if (!videoData) {
       errorMessages.push('Please record a video');
@@ -217,7 +209,6 @@ class EntryCreationScene extends Component {
     if (vendor === '') {
       errorMessages.push('Please choose a preferred pizza place');
     }
-    handleErrors(errorMessages);
     if (errorMessages.length === 0) {
       this.dispatchRequest();
     } else {
@@ -233,12 +224,11 @@ class EntryCreationScene extends Component {
 
   handleThankYouSubmission = () => {
     this.setState({ paused: true });
-    const { videoData, handleErrors } = this.props;
+    const { videoData } = this.props;
     const errorMessages = [];
     if (!videoData) {
       errorMessages.push('Please record a video.');
     }
-    handleErrors(errorMessages);
     if (errorMessages.length === 0) {
       this.dispatchThankYou();
     } else {
@@ -294,9 +284,7 @@ class EntryCreationScene extends Component {
   render() {
     const {
       pizzas,
-      updateSelectedPizzas,
       vendor,
-      updateSelectedVendor,
       createThankYou
     } = this.props;
     const videoDisplay = this.renderVideoContent();
@@ -310,9 +298,9 @@ class EntryCreationScene extends Component {
     } else {
       entryCreationForm = (
         <EntryCreationForm
-          updateSelectedPizzas={updateSelectedPizzas}
+          updateSelectedPizzas={this.props.updateSelectedPizzas}
           pizzas={pizzas}
-          updateSelectedVendor={updateSelectedVendor}
+          updateSelectedVendor={this.props.updateSelectedVendor}
           vendor={vendor}
           handleRequestSubmission={this.onPress}
         />
@@ -337,34 +325,25 @@ const styles = {
 };
 
 const mapStateToProps = ({ newEntry, camera, user }) => {
-  const {
-    pizzas,
-    vendor,
-    videoKey,
-    uploading,
-    uploadPercentage,
-    errorMessages,
-  } = newEntry;
+  const { pizzas, vendor, videoKey } = newEntry;
   const { videoData } = camera;
-  const { userData } = user;
+  const { userVerified, fb_userID, userID } = user;
+
   return {
     pizzas,
     vendor,
     videoKey,
-    uploading,
-    uploadPercentage,
-    errorMessages,
     videoData,
-    userData
+    userVerified,
+    fb_userID,
+    userID
   };
 };
 
 export default connect(mapStateToProps, {
   updateSelectedPizzas,
   updateSelectedVendor,
-  uploadProgress,
   uploadComplete,
   handleVideoData,
-  handleErrors,
   resetCameraState,
 })(EntryCreationScene);

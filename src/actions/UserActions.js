@@ -1,16 +1,92 @@
 import { Actions } from 'react-native-router-flux';
 import {
   CREATE_SESSION_SUCCESS,
-  HANDLE_USER_DONATION,
-  AWAITING_DONATION,
-  CONFIRM_DONATION_RECEIVED,
+  NOTIFICATIONS_REFRESHING,
+  INCOMING_PIZZA,
   CREATE_THANK_YOU_REMINDER,
+  AWAITING_THANK_YOUS,
   EMAIL_VERIFIED,
+  USER_VERIFIED,
+  ACTIVE_DONATION_REMINDER,
+  INCOMING_GRATITUDE,
   EMAIL_NOT_VERIFIED,
   HANDLE_USER_LOGOUT,
   UPDATE_EMAIL,
   REDIRECT,
 } from './types';
+
+export const retrieveNotifications = (userID) => {
+  return (dispatch) => {
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/users/${userID}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'GET'
+    })
+    .then(response => {
+      dispatch({ type: NOTIFICATIONS_REFRESHING });
+      return response.json();
+    })
+    .then(responseJson => {
+      console.log('responseJson: ', responseJson);
+      //  Expect:
+      const {
+        currentEmail, // The user's current email. Returns null if email has not yet been verified
+        // userRequests, An array of requests for which the user is either the donor OR recipient
+        // userThankYous, An array of thankYous for which the user is either donor OR recipient
+        recentSuccessfulRequests, // An array containing a user's request that has been donated to, but not yet received
+        thankYouReminders, // An array of requests the user has received but not uploaded a thankYou for
+        recentDonations,  // An array of donations that have not been received
+        awaitingThankYous, // An array of requests with status 'received' and no corresponding thankYou
+        receivedThankYous, // An array of thankYous which the user (donor) has yet to view
+      } = responseJson;
+
+      if (currentEmail) {
+        dispatch({ type: USER_VERIFIED });
+      } else {
+        dispatch({ type: EMAIL_NOT_VERIFIED });
+      }
+      if (recentDonations.length > 0) {
+        for (const recentDonation of recentDonations) {
+          dispatch({
+            type: ACTIVE_DONATION_REMINDER,
+            payload: recentDonation,
+          });
+        }
+      }
+      if (recentSuccessfulRequests.length > 0) {
+        dispatch({
+          type: INCOMING_PIZZA,
+          payload: {
+            requestID: recentSuccessfulRequests[0].id,
+            userID,
+          }
+        });
+      }
+      if (thankYouReminders.length > 0) {
+        for (const thankYouReminder of thankYouReminders) {
+          dispatch({
+            type: CREATE_THANK_YOU_REMINDER,
+            payload: thankYouReminder
+          });
+        }
+      }
+      if (awaitingThankYous.length > 0) {
+        dispatch({ type: AWAITING_THANK_YOUS });
+      }
+      if (receivedThankYous.length > 0) {
+        for (const receivedThankYou of receivedThankYous) {
+          dispatch({
+            type: INCOMING_GRATITUDE,
+            payload: receivedThankYou,
+          });
+        }
+      }
+    })
+    .catch(error => console.error(error));
+  };
+};
 
 export const createSession = (userInfo, redirect = { scene: 'MainScene', parameter: 'root' }) => {
   return (dispatch) => {
@@ -24,43 +100,7 @@ export const createSession = (userInfo, redirect = { scene: 'MainScene', paramet
     })
     .then((response) => response.json())
     .then(responseJson => {
-      const {
-        user,
-        activeDonation,
-        anonEmail,
-        recentSuccessfulRequest,
-        recentThankYou,
-      } = responseJson;
-
-      dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson });
-      if (user.current_email) {
-        dispatch({ type: EMAIL_VERIFIED });
-      } else {
-        dispatch({ type: EMAIL_NOT_VERIFIED, payload: user.signupEmail });
-      }
-      if (activeDonation) {
-        dispatch({
-          type: HANDLE_USER_DONATION,
-          payload: {
-            activeDonation,
-            recipientEmail: anonEmail,
-          }
-        });
-      }
-      if (recentSuccessfulRequest) {
-        if (recentSuccessfulRequest.status === 'active') {
-          dispatch({
-            type: AWAITING_DONATION,
-            payload: {
-              userID: user.id,
-              requestID: recentSuccessfulRequest.id
-            }
-          });
-        }
-        if (recentSuccessfulRequest.status === 'received' && !recentThankYou) {
-          dispatch({ type: CREATE_THANK_YOU_REMINDER });
-        }
-      }
+      dispatch({ type: CREATE_SESSION_SUCCESS, payload: responseJson.user });
     })
     .then(() => {
       dispatch({ type: REDIRECT, payload: redirect });
@@ -84,7 +124,7 @@ export const confirmDonationReceived = (userID, requestID) => {
     })
     .then(response => response.json())
     .then(responseJson => {
-      dispatch({ type: CONFIRM_DONATION_RECEIVED, payload: responseJson.recentSuccessfulRequest });
+      dispatch({ type: CREATE_THANK_YOU_REMINDER, payload: responseJson.recentSuccessfulRequest });
       Actions.EntryCreationScene({ createThankYou: true });
     })
     .catch(error => {

@@ -2,30 +2,27 @@ import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { confirmDonation, deleteEntry } from '../../actions';
+import { confirmDonation } from '../../actions';
 import EntryVideo from '../EntryVideo';
 import EntryDetails from '../EntryDetails';
 
 class EntryScene extends Component {
   state = {
-    ownEntry: (this.props.entry.creator_id === this.props.userID),
     paused: true,
     thanksText: 'YAY PIZZA!'
   };
 
   onDonatePress = () => {
     this.setState({ paused: true });
-    const { user, userID, entry } = this.props;
+    const { userID, entry } = this.props;
     // Direct user to log in if not logged in already
-    if (user && !user.userData) {
-      Actions.LoginScene({ redirect: {
-        scene: 'EntryScene',
-        parameter: entry
-      } });
-    } else if (userID === entry.creator_id) {
-      alert('You can\'t donate to yourself!');
-    } else if (this.props.activeDonation) {
-      alert('You must complete your recent donation commitment!');
+    if (!userID) {
+      Actions.LoginScene({
+        redirect: {
+          scene: 'EntryScene',
+          parameter: entry
+        }
+      });
     } else {
       Alert.alert(
         `Are you sure you want to donate ${entry.pizzas} pizza(s)?`,
@@ -53,9 +50,23 @@ class EntryScene extends Component {
     this.props.confirmDonation(this.props.userID, this.props.entry);
   }
 
+  deleteEntry = (entryId) => {
+    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entryId}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+    })
+    .then(() => {
+      Actions.MainScene({ type: 'reset' });
+    })
+    .catch(err => alert(err));
+  };
+
   navigateToUser = () => {
     this.setState({ paused: true });
-    Actions.UserHistoryScene({ userId: this.props.entry.creator_id });
+    Actions.UserHistoryScene({ userID: this.props.entry.creatorId });
   }
 
   togglePlay = (toggle) => {
@@ -64,17 +75,22 @@ class EntryScene extends Component {
 
   render() {
     const { entry } = this.props;
+    // showUserHistory: a boolean that determines whether to show a  link to the history
+    // of this entry's creator, depending on how you reached this particular entry.
     const showUserHistory = (this.props.origin === 'MainScene');
+    // ownEntry: a boolean that determines whether the user viewing this entry
+    // is the user that created the entry.
+    const ownEntry = (this.props.entry.creatorId === this.props.userID);
     let onButtonPress;
     let buttonText;
 
-    if (entry.status === 'active' && this.state.ownEntry) {
-      onButtonPress = this.props.deleteEntry.bind(this, entry.id);
+    if (entry.status === 'active' && ownEntry) {
+      onButtonPress = this.deleteEntry.bind(this, entry.id);
       buttonText = 'REMOVE';
     } else if (entry.status === 'received') {
       onButtonPress = null;
       buttonText = 'RECEIVED';
-    } else if (entry.type === 'request' && entry.donor_id === null) {
+    } else if (entry.type === 'request' && entry.donorId === null) {
       onButtonPress = this.onDonatePress;
       buttonText = 'DONATE';
     } else {
@@ -86,7 +102,7 @@ class EntryScene extends Component {
       <View style={styles.container}>
         <EntryVideo
           togglePlay={this.togglePlay}
-          source={entry.compressed_video}
+          source={entry.compressedVideo}
           paused={this.state.paused}
         />
         <EntryDetails
@@ -103,11 +119,8 @@ class EntryScene extends Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  let userID;
-  if (user.userData) {
-    userID = user.userData.id;
-  }
-  return { user, userID };
+  const { userID } = user;
+  return { userID };
 };
 
 const styles = {
@@ -116,4 +129,4 @@ const styles = {
   },
 };
 
-export default connect(mapStateToProps, { confirmDonation, deleteEntry })(EntryScene);
+export default connect(mapStateToProps, { confirmDonation })(EntryScene);

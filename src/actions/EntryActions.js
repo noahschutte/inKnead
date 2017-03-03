@@ -3,13 +3,10 @@ import {
   GET_ENTRIES,
   GET_ENTRIES_SUCCESS,
   GET_USER_ENTRIES,
-  UPDATE_ENTRIES,
-  HANDLE_USER_DONATION,
   TOGGLE_SCOPE,
   SHOW_ENTRIES,
   TOGGLE_SIDE_MENU,
   REDIRECT,
-  DELETE_ENTRY,
   UPDATE_TOTAL_DONATED_PIZZAS,
 } from './types';
 
@@ -26,30 +23,16 @@ export const confirmDonation = (donatorId, entry) => {
     .then(response => response.json())
     .then(responseJson => {
       if (responseJson.errorMessage) {
-        console.error(responseJson.errorMessage);
+        alert(responseJson.errorMessage);
       } else {
-        const { requests, thankYous, anonEmail } = responseJson;
-        dispatch({
-          type: UPDATE_ENTRIES,
-          payload: {
-            requests,
-            thankYous
-          }
-        });
-        dispatch({
-          type: HANDLE_USER_DONATION,
-          payload: {
-            activeDonation: entry,
-            recipientEmail: anonEmail,
-          }
-        });
+        const { anonEmail } = responseJson;
         dispatch({
           type: REDIRECT,
           payload: {
             scene: 'InstructionsScene',
             parameter: {
               recipientEmail: anonEmail,
-              entry,
+              entry: responseJson,
             }
           }
         });
@@ -59,60 +42,23 @@ export const confirmDonation = (donatorId, entry) => {
   };
 };
 
-export const deleteEntry = (entryId) => {
+export const getEntries = (userID = null) => {
   return (dispatch) => {
-    fetch(`https://d1dpbg9jbgrqy5.cloudfront.net/requests/${entryId}`, {
+    dispatch({ type: GET_ENTRIES });
+    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      method: 'DELETE',
+      method: 'GET',
     })
-    .then(response => response.json())
-    .then(responseJson => {
-      if (responseJson.requests) {
-        dispatch({ type: DELETE_ENTRY, payload: responseJson });
+    .then(data => data.json())
+    .then(entries => {
+      dispatch({ type: GET_ENTRIES_SUCCESS, payload: entries });
+      dispatch({ type: UPDATE_TOTAL_DONATED_PIZZAS, payload: entries.totalDonatedPizzas });
+      if (userID) {
+        dispatch({ type: GET_USER_ENTRIES, payload: userID });
       }
-      Actions.MainScene({ type: 'reset' });
-    })
-    .catch(err => console.error(err));
-  };
-};
-
-export const getEntries = () => {
-  return (dispatch) => {
-    dispatch({ type: GET_ENTRIES });
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'GET',
-    })
-    .then(data => data.json())
-    .then(entries => {
-      dispatch({ type: GET_ENTRIES_SUCCESS, payload: entries });
-      dispatch({ type: UPDATE_TOTAL_DONATED_PIZZAS, payload: entries.totalDonatedPizzas });
-    })
-    .catch(err => console.error(err));
-  };
-};
-
-export const getUserEntries = (userID) => {
-  return (dispatch) => {
-    dispatch({ type: GET_ENTRIES });
-    fetch('https://d1dpbg9jbgrqy5.cloudfront.net/requests', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'GET',
-    })
-    .then(data => data.json())
-    .then(entries => {
-      dispatch({ type: GET_ENTRIES_SUCCESS, payload: entries });
-      dispatch({ type: UPDATE_TOTAL_DONATED_PIZZAS, payload: entries.totalDonatedPizzas });
-      dispatch({ type: GET_USER_ENTRIES, payload: userID });
     })
     .catch(err => console.error(err));
   };
@@ -125,9 +71,9 @@ export const sortEntries = (key) => {
   });
 };
 
-export const toggleScope = (currentScope, userData = null) => {
+export const toggleScope = (currentScope, userID = null) => {
   if (currentScope === 'requests_and_thank_yous') {
-    if (!userData) {
+    if (!userID) {
       Actions.LoginScene();
     } else {
       return (dispatch) => {
@@ -138,10 +84,10 @@ export const toggleScope = (currentScope, userData = null) => {
             shown: 'Requested',
           }
         });
-        if (userData) {
+        if (userID) {
           dispatch({
             type: GET_USER_ENTRIES,
-            payload: userData.id
+            payload: userID
           });
         }
       };

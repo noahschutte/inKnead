@@ -3,11 +3,9 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import SideMenu from 'react-native-side-menu';
 import {
-  createSession,
+  retrieveNotifications,
   getEntries,
-  getUserEntries,
   sortEntries,
-  toggleScope,
   toggleSideMenu,
   userLogout,
 } from '../../actions';
@@ -18,11 +16,9 @@ import Entries from '../Entries';
 
 class MainScene extends Component {
 
-  getEntries = () => {
+  componentDidMount() {
     if (this.props.userID) {
-      this.props.getUserEntries(this.props.userID);
-    } else {
-      this.props.getEntries();
+      this.props.retrieveNotifications(this.props.userID);
     }
   }
 
@@ -48,19 +44,19 @@ class MainScene extends Component {
         return [...requests, ...thankYous];
       case 'Requests':
         if (requests) {
-          return requests.filter(request => request.donor_id === null);
+          return requests.filter(request => request.donorId === null);
         }
         return [];
       case 'Thanks':
         return thankYous;
       case 'Fulfilled':
-        return requests.filter(request => request.donor_id !== null);
+        return requests.filter(request => request.donorId !== null);
       case 'Requested':
         return userRequests;
       case 'Received':
         return userFulfilled;
       case 'Donated':
-        return requests.filter(request => (request.donor_id === userID));
+        return requests.filter(request => (request.donorId === userID));
       case 'Gratitude':
         return userThankYous;
       default:
@@ -68,8 +64,9 @@ class MainScene extends Component {
     }
   }
 
+  // Returns a boolean describing whether a user has waiting notifications
   doesHaveNotifications = () => {
-    return this.props.notifications.length > 0;
+    return this.props.notifications.userNotifications.length > 0;
   }
 
   assembleOptions = () => {
@@ -83,17 +80,16 @@ class MainScene extends Component {
 
 
   render() {
-    const { userID, userData, entries, sideMenuOpen } = this.props;
-    const { shown, loading } = entries;
+    const { userID, entries, sideMenuOpen } = this.props;
+    const { shown, loading, totalDonatedPizzas } = entries;
     const menu = (
       <ToggleMenu
         doesHaveNotifications={this.doesHaveNotifications()}
-        userData={userData}
+        userID={userID}
         toggle={this.props.toggleSideMenu}
-        totalDonatedPizzas={entries.totalDonatedPizzas}
+        totalDonatedPizzas={totalDonatedPizzas}
       />
     );
-    const entryRows = this.getEntryRows();
 
     return (
       <SideMenu
@@ -110,8 +106,8 @@ class MainScene extends Component {
           <Entries
             userID={userID}
             origin='MainScene'
-            entryRows={entryRows}
-            getEntries={() => this.getEntries()}
+            entryRows={this.getEntryRows()}
+            getEntries={() => this.props.getEntries(userID)}
             loading={loading}
           />
         </View>
@@ -120,22 +116,16 @@ class MainScene extends Component {
   }
 }
 
-const mapStateToProps = ({ entries, user, nav }) => {
-  const { userData, notifications, logOut } = user;
-  let userID;
-  if (userData) {
-    userID = userData.id;
-  }
+const mapStateToProps = ({ entries, user, nav, notifications }) => {
+  const { userID, logOut } = user;
   const { sideMenuOpen } = nav;
-  return { userID, userData, notifications, logOut, entries, sideMenuOpen };
+  return { entries, userID, notifications, logOut, sideMenuOpen };
 };
 
 export default connect(mapStateToProps, {
   getEntries,
-  getUserEntries,
   sortEntries,
-  createSession,
-  toggleScope,
+  retrieveNotifications,
   toggleSideMenu,
   userLogout
 })(MainScene);

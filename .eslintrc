@@ -8,7 +8,7 @@
     "global-require": "warn",
     "arrow-body-style": 0,
     "no-shadow": "warn",
-    "max-len": "warn",
+    "max-len": 0,
     "no-underscore-dangle": ["error", "allowAfterThis": true]
     }
 }
