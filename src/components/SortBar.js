@@ -1,33 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import SortButton from './SortButton';
 
-class SortBar extends Component {
-
-  mapOptionsToButtons = () => {
-    const { shown, options, onPress } = this.props;
-
-    return options.map(option => {
-      return (
-        <SortButton
-          key={option}
-          onPress={onPress}
-          shown={option === shown}
-        >
-          {option}
-        </SortButton>
-      );
-    });
-  }
-
-  render() {
-    return (
-      <View style={styles.sortBarStyle}>
-        {this.mapOptionsToButtons()}
-      </View>
-    );
-  }
-}
+const SortBar = ({ shown, options, onPress }) => {
+  return (
+    <View style={styles.sortBarStyle}>
+      {options.map(option => {
+        return (
+          <SortButton
+            key={option}
+            onPress={onPress}
+            shown={option === shown}
+          >
+            {option}
+          </SortButton>
+        );
+      })}
+    </View>
+  );
+};
 
 const styles = {
   sortBarStyle: {
