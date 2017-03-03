@@ -31,7 +31,7 @@ const TimeAgo = ({ secondsOld }) => {
     ago = ago.substring(0, ago.length - 1);
   }
   return (
-    <Text>{time} {ago}</Text>
+    <Text>{time} {ago} ago</Text>
   );
 };
 

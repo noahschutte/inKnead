@@ -26,7 +26,7 @@ export const retrieveNotifications = (userID) => {
     })
     .then(response => {
       dispatch({ type: NOTIFICATIONS_REFRESHING });
-      response.json();
+      return response.json();
     })
     .then(responseJson => {
       console.log('responseJson: ', responseJson);

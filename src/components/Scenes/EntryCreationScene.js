@@ -33,7 +33,7 @@ class EntryCreationScene extends Component {
   }
 
   verifiedUser = () => {
-    if (!this.props.userData.userVerified) {
+    if (!this.props.userVerified) {
       Alert.alert(
         'No verified email address!',
         'You must have a verified email to request pizza!',

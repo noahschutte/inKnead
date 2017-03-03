@@ -10,7 +10,6 @@ const INITIAL_STATE = {
   currentEmail: null,
   signupEmail: null,
   fb_userID: null,
-  userData: null,
   userVerified: false,
 };
 
@@ -21,8 +20,8 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userID: user.id,
-        currentEmail: user.currentEmail,
-        signupEmail: user.signupEmail,
+        currentEmail: user.current_email,
+        signupEmail: user.signup_email,
         fb_userID: user.fb_userID,
       };
     }
@@ -35,10 +34,7 @@ export default (state = INITIAL_STATE, action) => {
     case UPDATE_EMAIL:
       return {
         ...state,
-        userData: {
-          ...state.userData,
-          currentEmail: action.payload,
-        }
+        currentEmail: action.payload,
       };
     case HANDLE_USER_LOGOUT:
       return INITIAL_STATE;

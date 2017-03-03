@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import SideMenu from 'react-native-side-menu';
 import {
-  createSession,
+  retrieveNotifications,
   getEntries,
   sortEntries,
   toggleSideMenu,
@@ -15,6 +15,12 @@ import Entries from '../Entries';
 
 
 class MainScene extends Component {
+
+  componentDidMount() {
+    if (this.props.userID) {
+      this.props.retrieveNotifications(this.props.userID);
+    }
+  }
 
   onChange = (isOpen) => {
     if (isOpen === false) {
@@ -119,7 +125,7 @@ const mapStateToProps = ({ entries, user, nav, notifications }) => {
 export default connect(mapStateToProps, {
   getEntries,
   sortEntries,
-  createSession,
+  retrieveNotifications,
   toggleSideMenu,
   userLogout
 })(MainScene);

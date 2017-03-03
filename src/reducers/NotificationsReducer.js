@@ -7,6 +7,7 @@ import {
   CREATE_THANK_YOU_REMINDER,
   AWAITING_THANK_YOUS,
   INCOMING_GRATITUDE,
+  HANDLE_USER_LOGOUT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -207,6 +208,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         refreshing: false,
       };
+    case HANDLE_USER_LOGOUT:
+      return INITIAL_STATE;
     default:
       return state;
   }

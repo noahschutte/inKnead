@@ -24,7 +24,6 @@ class NavBar extends Component {
     const { scope, userID } = this.props;
     let result;
     let onPress;
-
     switch (title) {
 
       case 'scope':
@@ -115,7 +114,7 @@ class NavBar extends Component {
             source={newRequestButton}
           />
         );
-        if (this.props.userData) {
+        if (this.props.userID) {
           onPress = Actions.EntryCreationScene;
         } else {
           onPress = Actions.LoginScene;
@@ -187,7 +186,7 @@ const styles = {
 
 const mapStateToProps = ({ entries, user, nav }) => {
   const { scope } = entries;
-  const userID = user.id;
+  const { userID } = user;
   const { sideMenuOpen } = nav;
   return { scope, userID, sideMenuOpen };
 };
