@@ -21,14 +21,14 @@ class NavBar extends Component {
 
   renderTitle = () => {
     const { title } = this.props.navBarProps;
-    const { scope, toggleScope, userID } = this.props;
+    const { scope, userID } = this.props;
     let result;
     let onPress;
 
     switch (title) {
 
       case 'scope':
-      onPress = toggleScope.bind(this, this.props.scope, userID);
+      onPress = this.props.toggleScope.bind(this, scope, userID);
         switch (scope) {
           case 'requests_and_thank_yous':
           result = (
