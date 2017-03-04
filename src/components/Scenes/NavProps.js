@@ -33,3 +33,8 @@ export const instructionsScene = {
     scene: 'MainScene',
   },
 };
+
+export const notificationsScene = {
+  leftButton: 'backButton',
+  rightButton: 'retrieveNotifications',
+};

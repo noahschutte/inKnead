@@ -5,7 +5,6 @@ import {
   INCOMING_PIZZA,
   CREATE_THANK_YOU_REMINDER,
   AWAITING_THANK_YOUS,
-  EMAIL_VERIFIED,
   USER_VERIFIED,
   ACTIVE_DONATION_REMINDER,
   INCOMING_GRATITUDE,
@@ -145,16 +144,15 @@ export const updateEmail = (updatedEmail, userID, redirect = null) => {
     })
     .then(response => response.json())
     .then(responseJson => {
-      if (responseJson.currentEmail) {
-        dispatch({ type: UPDATE_EMAIL, payload: responseJson.currentEmail });
+      if (responseJson.errorMessage) {
+        alert(responseJson.errorMessage);
+      } else {
+        dispatch({ type: UPDATE_EMAIL, payload: updatedEmail });
         if (!redirect) {
           dispatch({ type: REDIRECT, payload: { scene: 'ProfileScene' } });
         } else {
           dispatch({ type: REDIRECT, payload: redirect });
         }
-        dispatch({ type: EMAIL_VERIFIED });
-      } else {
-        alert(`${responseJson.errorMessage}`);
       }
     })
     .catch(error => console.error(error));
