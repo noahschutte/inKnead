@@ -110,7 +110,11 @@ class NavBar extends Component {
     switch (rightButton) {
       case 'retrieveNotifications':
         return (
-          <Button touchableOpacity onPress={() => this.props.retrieveNotifications(userID)}>
+          <Button
+            touchableOpacity
+            buttonStyle={{ backgroundColor: '#ce0000', paddingTop: -3 }}
+            onPress={() => this.props.retrieveNotifications(this.props.userID)}
+          >
             Refresh
           </Button>
         );
