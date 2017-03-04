@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { toggleScope, redirectTo, toggleSideMenu } from '../actions';
+import { toggleScope, redirectTo, toggleSideMenu, retrieveNotifications } from '../actions';
 import {
   globalButton,
   historyButton,
@@ -16,6 +16,7 @@ import {
   menuButton,
   newRequestButton
 } from '../assets';
+import Button from './Button2';
 
 class NavBar extends Component {
 
@@ -107,6 +108,12 @@ class NavBar extends Component {
     let result;
     let onPress;
     switch (rightButton) {
+      case 'retrieveNotifications':
+        return (
+          <Button touchableOpacity onPress={() => this.props.retrieveNotifications(userID)}>
+            Refresh
+          </Button>
+        );
       case 'newRequest':
         result = (
           <Image
@@ -191,4 +198,4 @@ const mapStateToProps = ({ entries, user, nav }) => {
   return { scope, userID, sideMenuOpen };
 };
 
-export default connect(mapStateToProps, { toggleScope, redirectTo, toggleSideMenu })(NavBar);
+export default connect(mapStateToProps, { toggleScope, redirectTo, toggleSideMenu, retrieveNotifications })(NavBar);
