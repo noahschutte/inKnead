@@ -34,7 +34,7 @@ const ToggleMenu = (props) => {
         <Text style={styles.textStyle}>Requests</Text>
       </SideMenuButton>
 
-      <SideMenuButton onPress={onPress.bind(this, Actions.NotificationsScene)}>
+      <SideMenuButton onPress={props.userID ? onPress.bind(this, Actions.NotificationsScene) : onPress.bind(this.Actions.LoginScene)}>
         <View style={styles.notificationStyle}>
           <Text style={styles.textStyle}>Notifications </Text>
           {notificationAlert}
